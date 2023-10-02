@@ -2,5 +2,5 @@ package madChess;
 
 public class main {
 
-	//test de sincro
+	//test de sincro alskdjfasdf
 }
