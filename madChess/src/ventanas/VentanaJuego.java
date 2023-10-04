@@ -1,6 +1,8 @@
-package componentes;
+package ventanas;
 
 import javax.swing.*;
+
+import componentes.Casilla;
 
 public class VentanaJuego {
 	public static void main(String[] args) {
