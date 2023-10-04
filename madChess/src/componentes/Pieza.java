@@ -1,5 +1,10 @@
 package componentes;
 
 public class Pieza {
-	///jijijija giova no le importa suspender
+//<<<<<<< HEAD
+
+//=======
+//	protected String nombre;
+
+//>>>>>>> branch 'master' of https://github.com/proyectoProgIII/madChess.git
 }
