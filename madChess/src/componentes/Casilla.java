@@ -14,7 +14,7 @@ public class Casilla extends JPanel {
 		
 		Graphics2D casillaBlanca = (Graphics2D) grafico;
 		casillaBlanca.setColor(Color.white);
-		for(int i= 0; i < 4; i++) {
+		for(int i= 0; i < 4; i++) { 										//blancas
 			casillaBlanca.fillRect(2 * i * 144, 0, 144, 144);
 			casillaBlanca.fillRect((1 + 2 * i) * 144, 144, 144, 144);
 			casillaBlanca.fillRect(2 * i * 144, 144 * 2, 144, 144);
@@ -27,7 +27,7 @@ public class Casilla extends JPanel {
 		
 		Graphics2D casillaNegra = (Graphics2D) grafico;
 		casillaNegra.setColor(Color.gray);
-		for(int i= 0; i < 4; i++) {
+		for(int i= 0; i < 4; i++) { 										//negras
 			casillaNegra.fillRect((1 + 2 * i)* 144, 0 , 144, 144);
 			casillaBlanca.fillRect(2 * i * 144, 144, 144, 144);
 			casillaNegra.fillRect((1 + 2 * i)* 144, 144 * 2, 144, 144);
