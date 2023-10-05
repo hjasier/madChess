@@ -1,22 +1,36 @@
 package ventanas;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import componentes.*;
 
 
-public class VentanaJuego {
-    public static void main(String[] args) {
-        JFrame pantalla = new JFrame("Mad Chess");
-        pantalla.setSize(1600, 1190);
-        pantalla.setLocation(490, 150);
+public class VentanaJuego extends JFrame {
+    protected Tablero tablero = new Tablero();
 
-        Tablero t = new Tablero();
-        pantalla.add(t);
+    public VentanaJuego() {
+        this.setSize(1000, 800);
+        this.setLocationRelativeTo(null);
 
-        pantalla.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pantalla.setVisible(true);
+
+
+        this.add(tablero, BorderLayout.CENTER);
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 }
+
+
+
