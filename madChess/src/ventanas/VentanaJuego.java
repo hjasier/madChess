@@ -1,8 +1,7 @@
 package ventanas;
 
 import javax.swing.*;
-
-import componentes.Casilla;
+import componentes.DibujaTablero;
 
 public class VentanaJuego {
 	public static void main(String[] args) {
@@ -11,7 +10,7 @@ public class VentanaJuego {
 		pantalla.setLocation(490,150); 
 		
 		
-		Casilla tablero = new Casilla();
+		DibujaTablero tablero = new DibujaTablero();
 		pantalla.add(tablero);
 		
 		pantalla.setVisible(true);

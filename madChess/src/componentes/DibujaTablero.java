@@ -35,5 +35,6 @@ public class DibujaTablero extends JPanel {
 	private void drawSquare(Graphics2D g2, int col, int row, boolean light) {
 		g2.setColor(light ? Color.white : Color.gray);
 		g2.fillRect(originX + col * size, originY + row * size,size, size);
+	
 	}
 }
