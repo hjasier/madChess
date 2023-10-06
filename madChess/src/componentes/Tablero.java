@@ -18,6 +18,11 @@ public class Tablero extends JPanel{
 	public Tablero() {
 		
 		this.setLayout(new GridLayout(8,8)); //Grid de 8x8
+		
+		GridLayout gridLayout = (GridLayout) this.getLayout();
+		gridLayout.setHgap(0);
+		gridLayout.setVgap(0);
+		
 		for (int i = 0; i < 64; i++) {
 			Casilla casilla = new Casilla(Color.red,0,0,100);
 			this.add(casilla);
