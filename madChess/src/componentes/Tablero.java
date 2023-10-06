@@ -1,6 +1,7 @@
 package componentes;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -18,19 +19,24 @@ public class Tablero extends JPanel{
 	
     public Tablero() {
     	
+    	this.setMaximumSize(new Dimension(500,500));
     	int minSize = Math.min(getWidth(), getHeight());
-    	double height = minSize / 1.6 / 8;
+    	int height = minSize / 8;
+    	
+    	this.setSize(minSize, minSize);
     	
         this.setLayout(new GridLayout(8, 8,0,0));
 
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                Color color = (row + col) % 2 == 0 ? c1 : c2;
+                Color color = (row + col) % 2 == 0 ? c1 : c2; // Impar o par
                 Casilla casilla = new Casilla(color,height);
                 this.add(casilla);
             }
         }
     }
+    
+    
     
 	
 	

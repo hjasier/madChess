@@ -9,12 +9,12 @@ import javax.swing.*;
 
 public class Casilla extends JPanel {
     private static final long serialVersionUID = 1L;
-    protected double height;
+    protected int height;
     protected Color color = Color.white;
     
         
 
-	public Casilla(Color color, double height) {
+	public Casilla(Color color, int height) {
 		this.height = height;
 		this.color = color;
 
@@ -30,6 +30,8 @@ public class Casilla extends JPanel {
         g.setColor(this.color);
         //g.fillRect(this.xPos, this.yPos, this.height, this.height);
         int height = Math.min(getWidth(), getHeight());
+        
+        System.out.println(getWidth());
         g.fillRect(0, 0, height, height);
         
     }
