@@ -15,24 +15,21 @@ import javax.swing.JPanel;
 
 public class Tablero extends JPanel{
 	private static final long serialVersionUID = 1L;
-	protected Color c1 = Color.white;
-	protected Color c2 = Color.gray;
+	protected Color c1 = new Color(234,236,209);
+	protected Color c2 = new Color(80, 150, 167);
 	
 	
-    public Tablero() {
-    	
-    	this.setMaximumSize(new Dimension(500,500));
-    	int minSize = Math.min(getWidth(), getHeight());
-    	int height = 100;
-    	
+    public Tablero() {    	
     	this.setSize(600, 600);
     	
         this.setLayout(new GridLayout(8, 8,0,0));
 
         for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Color color = (row + col) % 2 == 0 ? c1 : c2; // Impar o par
-                Casilla casilla = new Casilla(color,height);
+            for (int col = 0; col < 8; col++) { 
+            	
+            	// Para cada pos de columa dentro de cada una de las filas creamos una casilla , si es par blanca y si no negra
+                Color color = (row + col) % 2 == 0 ? c1 : c2;
+                Casilla casilla = new Casilla(color);
                 this.add(casilla);
             }
         }
@@ -41,11 +38,9 @@ public class Tablero extends JPanel{
 	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //this.setSize(600, 600);
-        Container parent = this.getParent();
-
-        int minSize = Math.min(parent.getWidth(), parent.getHeight()) - 100;
-        
+        // igual hay que hacer un debouncer ns la verdad
+        Container ventana = this.getParent();
+        int minSize = Math.min(ventana.getWidth(), ventana.getHeight()) - 100;
         this.setSize(minSize,minSize);
         
         
