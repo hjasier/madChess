@@ -8,6 +8,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,20 +27,29 @@ public class VentanaJuego extends JFrame {
     	int[] ventanaSize = {800,800};
 
         this.setSize(ventanaSize[0], ventanaSize[1]);
+       
+        
         this.setLocationRelativeTo(null);
 
         JPanel div = new JPanel(new BorderLayout());
+        JPanel panelCentral = new JPanel(new BorderLayout());
+        
 
-        panelDerecha.setBackground(Color.red);
         panelAbajo.setBackground(Color.blue);
-        div.add(tablero, BorderLayout.CENTER);
-        div.add(panelDerecha, BorderLayout.EAST);
+        
+        panelCentral.add(tablero);
+        panelCentral.add(panelDerecha);
+        
+        div.add(panelCentral, BorderLayout.CENTER);
+        
         div.add(panelAbajo, BorderLayout.SOUTH);
 
         this.setContentPane(div);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        
+
     }
 }
 

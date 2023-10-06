@@ -28,10 +28,7 @@ public class Casilla extends JPanel {
         super.paintComponent(g);
         
         g.setColor(this.color);
-        //g.fillRect(this.xPos, this.yPos, this.height, this.height);
         int height = Math.min(getWidth(), getHeight());
-        
-        System.out.println(getWidth());
         g.fillRect(0, 0, height, height);
         
     }

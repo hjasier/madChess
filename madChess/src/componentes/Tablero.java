@@ -1,6 +1,7 @@
 package componentes;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.Iterator;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Tablero extends JPanel{
@@ -21,9 +23,9 @@ public class Tablero extends JPanel{
     	
     	this.setMaximumSize(new Dimension(500,500));
     	int minSize = Math.min(getWidth(), getHeight());
-    	int height = minSize / 8;
+    	int height = 100;
     	
-    	this.setSize(minSize, minSize);
+    	this.setSize(600, 600);
     	
         this.setLayout(new GridLayout(8, 8,0,0));
 
@@ -34,6 +36,19 @@ public class Tablero extends JPanel{
                 this.add(casilla);
             }
         }
+    }
+    
+	@Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        //this.setSize(600, 600);
+        Container parent = this.getParent();
+
+        int minSize = Math.min(parent.getWidth(), parent.getHeight()) - 100;
+        
+        this.setSize(minSize,minSize);
+        
+        
     }
     
     
