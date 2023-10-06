@@ -3,40 +3,37 @@ package componentes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.Iterator;
-
 import javax.swing.JPanel;
 
 public class Casilla extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+
+	int originX = 55;
+	int originY = 45;
+	int size = 60;
 	
-	public void paint(Graphics grafico) {	
-		super.paint(grafico);
+	public void paint(Graphics g) {
+		super.paintChildren(g);
 		
-		Graphics2D casillaBlanca = (Graphics2D) grafico;
-		casillaBlanca.setColor(Color.white);
-		for(int i= 0; i < 4; i++) { 										//blancas
-			casillaBlanca.fillRect(2 * i * 144, 0, 144, 144);
-			casillaBlanca.fillRect((1 + 2 * i) * 144, 144, 144, 144);
-			casillaBlanca.fillRect(2 * i * 144, 144 * 2, 144, 144);
-			casillaBlanca.fillRect((1 + 2 * i) * 144, 144 * 3, 144, 144);
-			casillaBlanca.fillRect(2 * i * 144, 144 * 4, 144, 144);
-			casillaBlanca.fillRect((1 + 2 * i) * 144, 144 * 5, 144, 144);
-			casillaBlanca.fillRect(2 * i * 144, 144 * 6, 144, 144);
-			casillaBlanca.fillRect((1 + 2 * i) * 144, 144 * 7, 144, 144);
+		Graphics2D g2 = (Graphics2D) g;	
+		drawBoard(g2);
+	}
+	
+	private void drawBoard(Graphics2D g2) {
+		for (int j = 0; j < 4; j++) {
+			for (int i = 0; i < 4; i++) {
+				drawSquare(g2, 0 + 2 * i, 0 + 2 * j, true);
+				drawSquare(g2, 1 + 2 * i, 1 + 2 * j, true);
+				
+				drawSquare(g2, 1 + 2 * i, 0 + 2 * j, false);
+				drawSquare(g2, 0 + 2 * i, 1 + 2 * j, false);
+			}
 		}
-		
-		casillaBlanca.setColor(Color.gray);
-		for(int i= 0; i < 4; i++) { 										//negras
-			casillaBlanca.fillRect((1 + 2 * i)* 144, 0 , 144, 144);
-			casillaBlanca.fillRect(2 * i * 144, 144, 144, 144);
-			casillaBlanca.fillRect((1 + 2 * i)* 144, 144 * 2, 144, 144);
-			casillaBlanca.fillRect(2 * i * 144, 144 * 3, 144, 144);
-			casillaBlanca.fillRect((1 + 2 * i)* 144, 144 * 4, 144, 144);
-			casillaBlanca.fillRect(2 * i * 144, 144 * 5, 144, 144);
-			casillaBlanca.fillRect((1 + 2 * i)* 144, 144 * 6, 144, 144);
-			casillaBlanca.fillRect(2 * i * 144, 144 * 7, 144, 144);
-			
-		}
-		
+	}
+	
+	private void drawSquare(Graphics2D g2, int col, int row, boolean light) {
+		g2.setColor(light ? Color.white : Color.gray);
+		g2.fillRect(originX + col * size, originY + row * size,size, size);
 	}
 }

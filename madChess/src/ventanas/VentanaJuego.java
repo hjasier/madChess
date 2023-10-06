@@ -7,12 +7,12 @@ import componentes.Casilla;
 public class VentanaJuego {
 	public static void main(String[] args) {
 		JFrame pantalla = new JFrame("Mad Chess");
-		pantalla.setSize(1600,1190);
+		pantalla.setSize(600,600);
 		pantalla.setLocation(490,150); 
 		
 		
-		Casilla casillaBlanca = new Casilla();
-		pantalla.add(casillaBlanca);
+		Casilla tablero = new Casilla();
+		pantalla.add(tablero);
 		
 		pantalla.setVisible(true);
 	}
