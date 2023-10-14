@@ -37,13 +37,13 @@ public class Pieza {
 	        }
 	 }
 	 
-	public void EditarLibro(String nombre, String refe_imagen, Integer cantidad) {
+	public void EditarPieza(String nombre, String refe_imagen, Integer cantidad) {
 		if (BuscarPieza(nombre)) {
 			 AgregarPiezas(nombre, refe_imagen, cantidad);		 
 		}
 	}
 
-	public void EliminarLibro(String titulo) {
+	public void EliminarPieza(String titulo) {
 		mapPiezas.remove(titulo);
 	}
 }
