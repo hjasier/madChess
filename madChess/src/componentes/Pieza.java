@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Pieza {
 //	protected String nombre;
+	//
 	protected Casilla[] despalzamientoDefault;
 	
 	//en el mapa las claves son los nombres de las piezas y los valores mapas que contienen la refe a la imagen y la cantidad 
