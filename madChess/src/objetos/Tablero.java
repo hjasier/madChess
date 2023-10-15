@@ -1,4 +1,4 @@
-package componentes;
+package objetos;
 
 import java.awt.Color;
 import java.awt.Container;

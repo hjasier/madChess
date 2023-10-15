@@ -1,4 +1,6 @@
-package ventanas;
+package juego;
+
+import ventanas.VentanaJuego;
 
 public class main {
 

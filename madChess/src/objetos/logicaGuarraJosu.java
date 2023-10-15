@@ -1,9 +1,27 @@
-package componentes;
+package objetos;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Pieza {
+
+
+// ------------------------------------------------------------
+
+
+
+// SI LO HACEMOS ASÍ DEBUGEAR EN EL FUTURO O AÑADIR NUEVOS ATRIBTUOS VA A SER IMPOSIBLE
+
+
+// DENTRO DE UNA CLASE PIEZA NO  PUEDE HABER "PIEZAS" POR QUE  SI NO PIEZA NO ES UN OBJETO...
+
+// ESTO EN TODO CASO SE TENDRÍA QUE LLAMAR DESDE EL MAIN QUE CREA LA PARTIDA O ALGO SIMILAR
+
+
+//------------------------------------------------------------
+
+
+
+public class logicaGuarraJosu {
 //	protected String nombre;
 	//
 	protected Casilla[] despalzamientoDefault;
@@ -12,7 +30,7 @@ public class Pieza {
 	protected HashMap<String, Map<String, Integer>> mapPiezas;
 	
 	
-	public Pieza() {
+	public logicaGuarraJosu() {
 		mapPiezas = new HashMap<String, Map<String,Integer>>();
 	}
 	
