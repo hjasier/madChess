@@ -1,6 +1,8 @@
 package objetos;
 
 import java.awt.Color;
+import java.awt.Image;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
@@ -14,47 +16,76 @@ import javax.swing.border.LineBorder;
 public class Casilla extends JPanel {
     private static final long serialVersionUID = 1L;
     protected Color color = Color.white;
+    protected int fila;
+    protected char columna;
+    protected Pieza pieza;
     
         
 
-	public Casilla(Color color) {
+	public Casilla(Color color, int fila, int columna) {
 		this.color = color;
+		this.fila = fila;
+		this.columna = posicionToAlfabeto(columna);
+		this.pieza = new Pieza("bb");
+
+		
 		this.setBorder(new LineBorder(Color.GREEN, 2)); // BORDE TEMPORAL PARA DEBUG
-        this.setOpaque(true);
+   
 		
 		
 		
-        this.addMouseMotionListener(new MouseAdapter() {
-        	
-        	
-    	/**
-    	 * 
-    	 * NO se por que mouseEntered y todo eso no funciona, si conseguis que tire avisad, la idea es es que se pueda saber en que casilla esta el cursor 
-    	 */
+		/**
+		 * EVENTOS DE CURSOR EN CASILLA
+		 * */
+		
+		
+        this.addMouseListener(new MouseAdapter() {
         	
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			System.out.println("cursor in en la casilla");
+			iluminarCasilla(true);
+		}
+		@Override
+			public void mouseExited(MouseEvent e) {
+			iluminarCasilla(false);
 		}
 		
-		@Override
-			public void mouseMoved(MouseEvent e) {
-				iluminarCasilla(); 
-			}
-		
-		
-
         });
 	}
 
-
 	
-	protected void iluminarCasilla() {
-		this.color = new Color( color.getRed()+5,color.getGreen()+5,color.getBlue()+5);
-		this.paint(getGraphics());
+	private char posicionToAlfabeto(int columna) {
+		return (char) ('A' + columna);
 		
 	}
+
+
+	// "iluminamos" sumando o restando valores al color RGB actual cuando se hoverea una casilla
+	protected void iluminarCasilla(Boolean status) {
+		int n = status ? 10 : -10;
+		this.color = new Color( color.getRed()+n,color.getGreen()+n,color.getBlue()+n);
+		this.paint(getGraphics());
+	}
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
@@ -65,6 +96,9 @@ public class Casilla extends JPanel {
         g.setColor(this.color);
         int height = Math.min(getWidth(), getHeight());
         g.fillRect(0, 0, height, height); // xPos, yPos W , H
+        
+        Image img = this.pieza.getImg().getImage();
+        g.drawImage(img, 0, 0, this);
         
     }
 	

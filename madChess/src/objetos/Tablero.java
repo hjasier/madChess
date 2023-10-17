@@ -40,21 +40,19 @@ public class Tablero extends JPanel{
             	
             	// Para cada pos de columa dentro de cada una de las filas creamos una casilla , si es par blanca y si no negra
                 Color color = (row + col) % 2 == 0 ? c1 : c2;
-                Casilla casilla = new Casilla(color);
+                Casilla casilla = new Casilla(color,row,col);
                 this.add(casilla);
             }
         }
         
         
-     // Agregar un MouseMotionListener para seguir el movimiento del cursor
-        this.addMouseMotionListener(new MouseAdapter() {
+
+        this.addMouseListener(new MouseAdapter() {
         	
-		
-		
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println("test");
+			System.out.println("[Tablero] Cursor In");
 		}
 
         });

@@ -10,6 +10,8 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 
 import javax.swing.JFrame;
@@ -52,7 +54,13 @@ public class VentanaJuego extends JFrame {
         
         div.add(panelCentral, BorderLayout.CENTER);
         
-   
+        
+        
+     
+
+        
+        
+        
 
         this.setContentPane(div);
 
