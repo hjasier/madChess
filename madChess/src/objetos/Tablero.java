@@ -53,10 +53,10 @@ public class Tablero extends JPanel{
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
 			System.out.println("[Tablero] Cursor In");
+			
 		}
 
         });
-        
 
         
         

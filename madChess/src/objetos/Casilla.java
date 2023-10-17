@@ -39,6 +39,15 @@ public class Casilla extends JPanel {
 		 * */
 		
 		
+		// printea las coordenadas del click
+		this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("Mouse clickeado en: Fila: " + fila + ", Columna: " + columna);
+            }
+        });
+    
+		
         this.addMouseListener(new MouseAdapter() {
         	
 		@Override

@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import objetos.Boost;
 import objetos.Jugador;
+import objetos.Pieza;
 
 public class Partida {
 
@@ -36,6 +37,18 @@ public class Partida {
 		
 		//no tengo tiempo este finde, si alguien quiere intentarlo.. adelante
 		
+		//Soy Giova pruebo esto a ver que os parece, probando el arraylist multidimensional:
+		
+		int filas = 8; 
+	    int columnas = 8; 
+	    curTablero = new Pieza[filas][columnas]; // Dice de hacer curTablero que sea en vez de un int un obejto Pieza, que pensais?
+
+	    // Rellenar el tablero con piezas iniciales
+	    for (int fila = 0; fila < filas; fila++) {
+	        for (int columna = 0; columna < columnas; columna++) {
+	            curTablero[fila][columna] = new Pieza(); // Hay que crear instancias válidas de Pieza :0
+	        }
+	    }
 		
 	}
 	
