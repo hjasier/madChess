@@ -33,12 +33,11 @@ public class Partida {
 	
 	
 	protected void loadInitPiezas() {
-		// Función que crea el arraylist o hashmap (el que prefirais) multidimensional y setea en cada posición del array la pieza correspondiente
-		
-		//no tengo tiempo este finde, si alguien quiere intentarlo.. adelante
+
 		
 		//Soy Giova pruebo esto a ver que os parece, probando el arraylist multidimensional:
 		
+		/**
 		int filas = 8; 
 	    int columnas = 8; 
 	    curTablero = new Pieza[filas][columnas]; // Dice de hacer curTablero que sea en vez de un int un obejto Pieza, que pensais?
@@ -49,6 +48,8 @@ public class Partida {
 	            curTablero[fila][columna] = new Pieza(); // Hay que crear instancias válidas de Pieza :0
 	        }
 	    }
+	    
+	    */
 		
 	}
 	

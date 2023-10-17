@@ -22,10 +22,10 @@ public class Casilla extends JPanel {
     
         
 
-	public Casilla(Color color, int fila, int columna) {
+	public Casilla(Color color, int fila, int c) {
 		this.color = color;
 		this.fila = fila;
-		this.columna = posicionToAlfabeto(columna);
+		this.columna = posicionToAlfabeto(c);
 		this.pieza = new Pieza("bb");
 
 		
@@ -59,7 +59,11 @@ public class Casilla extends JPanel {
 			iluminarCasilla(false);
 		}
 		
+		
+		
         });
+        
+
 	}
 
 	
