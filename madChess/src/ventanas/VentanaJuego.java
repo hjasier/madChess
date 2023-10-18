@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.awt.Panel;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
@@ -37,32 +38,31 @@ public class VentanaJuego extends JFrame {
         
         this.setLocationRelativeTo(null);
 
-        JPanel div = new JPanel(new BorderLayout());
-        div.setBorder(new LineBorder(Color.MAGENTA, 2)); // BORDE TEMPORAL PARA DEBUG
-        
-        JPanel panelCentral = new JPanel(new BorderLayout());
-        panelCentral.setBorder(new LineBorder(Color.orange, 2)); // BORDE TEMPORAL PARA DEBUG
-        
-        div.setBackground(Color.green);
-        panelCentral.setBackground(Color.red);
-        
-
-        panelAbajo.setBackground(Color.blue);
-        
-        panelCentral.add(tablero);
-        panelCentral.add(panelDerecha);
-        
-        div.add(panelCentral, BorderLayout.CENTER);
         
         
         
-     
+        Panel fondo = new Panel();
+        fondo.setBackground(Color.blue);
+        fondo.add(tablero);
+        this.add(fondo);
 
         
+        Panel divEncima = new Panel();
+        divEncima.setBackground(Color.red);
+        divEncima.setSize(300,500);
+        
+        Panel divEncima2 = new Panel();
+        divEncima2.setBackground(Color.green);
+        divEncima2.setSize(200,200);
+        
+        
+        
+        
+        this.getLayeredPane().add(divEncima);
+        this.getLayeredPane().add(divEncima2);
         
         
 
-        this.setContentPane(div);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
