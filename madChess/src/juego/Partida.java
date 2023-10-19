@@ -41,6 +41,10 @@ public class Partida {
 		casillas = ventana.getTableroDiv().getCasillas();
 		loadPiezas();
 		System.out.println(casillas);
+		
+
+
+		
 	}
 
 

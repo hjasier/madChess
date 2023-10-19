@@ -44,7 +44,8 @@ public class Tablero extends JPanel{
     	this.setLayout(null);
     	
     	
-    	
+    	casillasDiv.setSize(this.getSize());
+    	tableroDiv.setSize(this.getSize());
     	
     	
     	
