@@ -39,7 +39,7 @@ public class VentanaJuego extends JFrame {
         this.setLocationRelativeTo(null);
 
         
-        
+        //
         
         Panel fondo = new Panel();
         fondo.setBackground(this.getBackground());
