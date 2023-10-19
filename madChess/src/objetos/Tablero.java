@@ -88,7 +88,8 @@ public class Tablero extends JPanel{
                 double tamanyoCasilla = casillasDiv.getSize().getWidth()/8;
                 int curCasillaCol = (int) (e.getX()/tamanyoCasilla);
                 int curCasillaRow = (int) (e.getY()/tamanyoCasilla);
-                System.out.println("casilla --> "+"Columna "+curCasillaCol+ " Fila "+curCasillaRow);
+                Casilla curCasilla = getCasilla(curCasillaRow, posicionToAlfabeto(curCasillaCol));
+                System.out.println(curCasilla.getFila()+""+curCasilla.getColumna());
         	}
 		});
         
@@ -129,7 +130,7 @@ public class Tablero extends JPanel{
         
     }
     
-    public Casilla getCasilla(char columna, int fila ) {
+    protected Casilla getCasilla(int fila ,char columna) {
     	for (Casilla casilla : casillas) {
     		if (columna == casilla.getColumna() && fila == casilla.getFila()) {
     			return casilla;
@@ -138,6 +139,11 @@ public class Tablero extends JPanel{
 		return null;
     	
     }
+    
+	private char posicionToAlfabeto(int columna) {
+		return (char) ('A' + columna);
+		
+	}
     
 	public ArrayList<Casilla> getCasillas() {
 		return casillas;
