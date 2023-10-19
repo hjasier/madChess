@@ -14,6 +14,7 @@ import java.awt.Panel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,6 +25,8 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.event.MouseInputAdapter;
 
+
+
 public class Tablero extends JPanel{
 	private static final long serialVersionUID = 1L;
 	protected Color c1 = new Color(234,236,209);
@@ -31,23 +34,27 @@ public class Tablero extends JPanel{
 	protected ArrayList<Casilla> casillas = new ArrayList<Casilla>();
 
 
-	protected Panel casillasDiv = new Panel();
-	protected Panel tableroDiv = new Panel(); //Panel por encima de las casillas
+	protected JPanel casillasDiv = new JPanel();
+	protected JPanel tableroDiv = new JPanel(); //Panel por encima de las casillas
 	
 	
 	
     public Tablero() {    	
     	this.setSize(600, 600);
     	this.setLayout(null);
-    	this.setBackground(Color.blue);
+    	
     	
     	
     	
     	casillasDiv.setLayout(new GridLayout(8, 8,0,0));
-    	casillasDiv.setSize(this.getSize());
+    	tableroDiv.setLayout(null);
     	
-    	tableroDiv.setBackground(Color.magenta);
-    	tableroDiv.setSize(this.getSize());
+    	
+    	
+    	tableroDiv.setBackground(Color.magenta); 
+    	tableroDiv.setOpaque(false); // Hace el panel de encima transparente
+    	
+    	
 
 
         for (int row = 0; row < 8; row++) {
@@ -66,6 +73,35 @@ public class Tablero extends JPanel{
         
         this.add(tableroDiv);
         this.add(casillasDiv);
+        
+      /**
+       * GESTIÓN DE EVENTOS DE MOUSE	  
+       */
+        
+        /**
+        this.addMouseMotionListener(new MouseMotionAdapter() {
+        	@Override
+        	public void mouseMoved(MouseEvent e) {
+        		System.out.println("[DIV THIS] mouse en X:"+e.getX()+" Y:"+e.getY());
+        	}
+		});
+        
+        tableroDiv.addMouseMotionListener(new MouseMotionAdapter() {
+        	@Override
+        	public void mouseMoved(MouseEvent e) {
+        		dispatchEvent(e); // Pasa la func al padre this
+        	}
+		});
+        
+        casillasDiv.addMouseMotionListener(new MouseMotionAdapter() {
+        	@Override
+        	public void mouseMoved(MouseEvent e) {
+        		dispatchEvent(e); // Pasa la func al padre this
+        	}
+		});
+        
+        */
+        
 
 
         
@@ -86,6 +122,8 @@ public class Tablero extends JPanel{
         
     }
     
+	
+	
     
     
 	

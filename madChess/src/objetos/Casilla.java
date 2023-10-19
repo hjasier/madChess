@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
@@ -35,17 +36,11 @@ public class Casilla extends JPanel {
 		
 		
 		/**
-		 * EVENTOS DE CURSOR EN CASILLA
+		 * GESTIÓN DE EVENTOS DE CURSOR EN CASILLA
 		 * */
 		
 		
-		// printea las coordenadas del click
-		this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("Mouse clickeado en: Fila: " + fila + ", Columna: " + columna);
-            }
-        });
+
     
 		
         this.addMouseListener(new MouseAdapter() {
@@ -58,6 +53,11 @@ public class Casilla extends JPanel {
 			public void mouseExited(MouseEvent e) {
 			iluminarCasilla(false);
 		}
+		
+		@Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println("Mouse clickeado en: Fila: " + fila + ", Columna: " + columna);
+        }
 		
 		
 		

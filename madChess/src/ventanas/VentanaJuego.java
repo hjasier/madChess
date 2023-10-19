@@ -42,7 +42,7 @@ public class VentanaJuego extends JFrame {
         
         
         Panel fondo = new Panel();
-        fondo.setBackground(Color.blue);
+        fondo.setBackground(new Color(60,60,60));
         fondo.setLayout(null);
         
 
