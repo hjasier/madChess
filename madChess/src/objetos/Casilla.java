@@ -18,10 +18,10 @@ public class Casilla extends JPanel {
     private static final long serialVersionUID = 1L;
     protected Color color = Color.white;
     protected int fila;
-    protected char columna;
+	protected char columna;
     protected Pieza pieza;
     
-        
+   
 
 	public Casilla(Color color, int fila, int c) {
 		this.color = color;
@@ -45,7 +45,7 @@ public class Casilla extends JPanel {
 		 * */
 		
 		
-
+		
     
 		
         this.addMouseListener(new MouseAdapter() {
@@ -68,9 +68,24 @@ public class Casilla extends JPanel {
 		
         });
         
-
+        this.addMouseMotionListener(new MouseMotionAdapter() {
+        	@Override
+        	public void mouseMoved(MouseEvent e) {
+        		//System.out.println("mouse en X:"+e.getX()+" Y:"+e.getY());
+        	}
+		});
 	}
 
+	
+	 public int getFila() {
+	  		return fila;
+	  	}
+
+	  	public char getColumna() {
+	  		return columna;
+	  	}
+
+	
 	public void setPieza(Pieza pieza) {
 		this.pieza = pieza;
 		System.out.println(pieza);

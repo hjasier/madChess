@@ -5,9 +5,9 @@ Opción Lógica de piezas 1:
 	- En la clase partida se llama a VentanaJuego, esta a Tablero
 	- Geteamos tablero como un atributo de la clase Partida
 	
-	- Guardamos las casillas en una variable casillas
+	- Guardamos las casillas en una variable casillas (HECHO)
 	
-	- Una función que loadea las casillas iniciales con las piezas--> 
+	- Una función que loadea las casillas iniciales con las piezas-->  (HECHO)
 			pieza = new Pieza(nombre, url, etc)
 		EJ : loadInitCasilla(casillas[0],pieza)
 		

@@ -78,6 +78,22 @@ public class Tablero extends JPanel{
         this.add(tableroDiv);
         this.add(casillasDiv);
         
+        
+        tableroDiv.addMouseMotionListener(new MouseMotionAdapter() {
+        	@Override
+        	public void mouseMoved(MouseEvent e) {
+        		
+        		System.out.println("mouse en X:"+e.getX()+" Y:"+e.getY());
+                double tamanyoCasilla = casillasDiv.getSize().getWidth()/8;
+                int curCasillaCol = (int) (e.getX()/tamanyoCasilla);
+                int curCasillaRow = (int) (e.getY()/tamanyoCasilla);
+                System.out.println("casilla --> "+"Columna "+curCasillaCol+ " Fila "+curCasillaRow);
+        	}
+		});
+        
+        
+        
+        
       /**
        * GESTIÓN DE EVENTOS DE MOUSE	  
        */
@@ -108,18 +124,23 @@ public class Tablero extends JPanel{
         
 
 
-  
+        
+        
     }
     
-    
-    
+    public Casilla getCasilla(char columna, int fila ) {
+    	for (Casilla casilla : casillas) {
+    		if (columna == casilla.getColumna() && fila == casilla.getFila()) {
+    			return casilla;
+    		}
+    	}
+		return null;
+    	
+    }
     
 	public ArrayList<Casilla> getCasillas() {
 		return casillas;
 	}
-
-
-
 
 	@Override
     protected void paintComponent(Graphics g) {
