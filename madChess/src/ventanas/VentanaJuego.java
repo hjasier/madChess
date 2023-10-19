@@ -43,26 +43,34 @@ public class VentanaJuego extends JFrame {
         
         Panel fondo = new Panel();
         fondo.setBackground(Color.blue);
-        fondo.add(tablero);
+        fondo.setLayout(null);
+        
+        
+        Panel tableroDiv= new Panel();
+        tableroDiv.setBackground(Color.red);
+        tableroDiv.setLayout(null);
+        
+        Panel divEncimaTablero = new Panel();
+        divEncimaTablero.setBackground(Color.magenta);
+        divEncimaTablero.setSize(550,550);
+        
+        
+        
+        
+        fondo.add(tableroDiv);
+        
+        tableroDiv.setSize(600,600);
+        
+        
+        tableroDiv.add(divEncimaTablero);
+        tableroDiv.add(tablero);
+        
+        
+        
         this.add(fondo);
 
         
-        Panel divEncima = new Panel();
-        divEncima.setBackground(Color.red);
-        divEncima.setSize(300,500);
-        
-        Panel divEncima2 = new Panel();
-        divEncima2.setBackground(Color.green);
-        divEncima2.setSize(200,200);
-        
-        
-        
-        
-        this.getLayeredPane().add(divEncima);
-        this.getLayeredPane().add(divEncima2);
-        
-        
-
+  
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
