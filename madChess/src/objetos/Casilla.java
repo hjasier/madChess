@@ -33,6 +33,11 @@ public class Casilla extends JPanel {
 		//this.setBorder(new LineBorder(Color.GREEN, 2)); // BORDE TEMPORAL PARA DEBUG
    
 		
+		//codigo para probar printear las piezas:
+		
+		
+		
+		
 		
 		
 		/**
@@ -66,6 +71,13 @@ public class Casilla extends JPanel {
 
 	}
 
+	public void setPieza(Pieza pieza) {
+		this.pieza = pieza;
+		System.out.println(pieza);
+		//pintar pieza
+		
+	}
+	
 	
 	private char posicionToAlfabeto(int columna) {
 		return (char) ('A' + columna);

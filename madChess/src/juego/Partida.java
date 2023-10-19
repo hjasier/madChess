@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import objetos.Boost;
+import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
+import ventanas.VentanaJuego;
 
 public class Partida {
 
@@ -15,7 +17,7 @@ public class Partida {
 	protected int gameId;
 	protected Date fecha;
 	int[][] curTablero = {  }; // ya se vera pero el tablero podría ser un array multidimentsional en el que hay referencias a objeto pieza
-	
+	protected ArrayList<Casilla> casillas;
 	
 	
 	protected HashMap<Boost, Boolean> boosts;
@@ -29,11 +31,35 @@ public class Partida {
 		this.fecha = fecha;
 		this.curTablero = curTablero;
 		this.boosts = boosts;
+		
 	}
 	
 	
-	protected void loadInitPiezas() {
+	
+	public Partida() {
+		VentanaJuego ventana = new VentanaJuego();
+		casillas = ventana.getTableroDiv().getCasillas();
+		loadPiezas();
+		System.out.println(casillas);
+	}
 
+
+	/** 
+	protected void loadPieza(Casilla casilla,Pieza pieza) {
+		
+		casilla.setPieza(pieza);
+		
+	}
+	*/
+	
+	protected void loadPiezas() {
+
+		
+		casillas.get(0).setPieza(new Pieza("bb"));
+		
+		
+		
+		
 		
 		//Soy Giova pruebo esto a ver que os parece, probando el arraylist multidimensional:
 		

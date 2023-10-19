@@ -108,10 +108,19 @@ public class Tablero extends JPanel{
         
 
 
-        
-        
+  
     }
     
+    
+    
+    
+	public ArrayList<Casilla> getCasillas() {
+		return casillas;
+	}
+
+
+
+
 	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -25,7 +25,7 @@ import objetos.*;
 
 public class VentanaJuego extends JFrame {
     protected Tablero tableroDiv = new Tablero();
-    protected JPanel panelDerecha = new JPanel(); 
+	protected JPanel panelDerecha = new JPanel(); 
     protected JPanel panelAbajo = new JPanel(); 
     
     public VentanaJuego() {
@@ -65,6 +65,12 @@ public class VentanaJuego extends JFrame {
         
 
     }
+    
+    
+    public Tablero getTableroDiv() {
+		return tableroDiv;
+	}
+
 }
 
 
