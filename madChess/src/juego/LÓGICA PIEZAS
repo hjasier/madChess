@@ -1,0 +1,21 @@
+Opción Lógica de piezas 1:
+
+	[LAS CASILLAS TIENEN PIEZAS]
+	
+	- El la clase partida se llama a VentanaJuego, esta a Tablero
+	- Geteamos tablero como un atributo de la clase Partida
+	
+	- Guardamos las casillas en una variable casillas
+	
+	- Una función que loadea las casillas iniciales con las piezas--> 
+			pieza = new Pieza(nombre, url, etc)
+		EJ : loadInitCasilla(casillas[0],pieza)
+		
+		Cuando un jugador clicka en una pieza se retrivea la casilla padre y 
+	
+	- 
+	
+	
+Opción Lógica de piezas 2:
+
+	[LAS PIEZAS TIENEN CASILLAS]

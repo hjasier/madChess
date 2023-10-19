@@ -46,9 +46,13 @@ public class Tablero extends JPanel{
     	
     	
     	
+    	
+    	
     	casillasDiv.setLayout(new GridLayout(8, 8,0,0));
     	tableroDiv.setLayout(null);
     	
+    	
+    	casillasDiv.setBackground(new Color(60,60,60));
     	
     	
     	tableroDiv.setBackground(Color.magenta); 

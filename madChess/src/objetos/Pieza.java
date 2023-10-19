@@ -31,7 +31,7 @@ public class Pieza {
 	}
 
 
-	public ImageIcon getImg() { //giova : que hace esto? osea pillo que tiene que ver con las imagenes, pero que hace en concreto?
+	public ImageIcon getImg() { 
 		return img;
 	}
 

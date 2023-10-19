@@ -33,7 +33,7 @@ public class VentanaJuego extends JFrame {
 
         this.setSize(ventanaSize[0], ventanaSize[1]);
         this.setMinimumSize(new java.awt.Dimension(450, 450));
-        
+        this.setBackground(new Color(60,60,60));
        
         
         this.setLocationRelativeTo(null);
@@ -42,7 +42,7 @@ public class VentanaJuego extends JFrame {
         
         
         Panel fondo = new Panel();
-        fondo.setBackground(new Color(60,60,60));
+        fondo.setBackground(this.getBackground());
         fondo.setLayout(null);
         
 
