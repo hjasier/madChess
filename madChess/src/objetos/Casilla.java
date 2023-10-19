@@ -29,7 +29,7 @@ public class Casilla extends JPanel {
 		this.pieza = new Pieza("bb");
 
 		
-		this.setBorder(new LineBorder(Color.GREEN, 2)); // BORDE TEMPORAL PARA DEBUG
+		//this.setBorder(new LineBorder(Color.GREEN, 2)); // BORDE TEMPORAL PARA DEBUG
    
 		
 		

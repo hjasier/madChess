@@ -24,7 +24,7 @@ import objetos.*;
 
 
 public class VentanaJuego extends JFrame {
-    protected Tablero tablero = new Tablero();
+    protected Tablero tableroDiv = new Tablero();
     protected JPanel panelDerecha = new JPanel(); 
     protected JPanel panelAbajo = new JPanel(); 
     
@@ -45,25 +45,13 @@ public class VentanaJuego extends JFrame {
         fondo.setBackground(Color.blue);
         fondo.setLayout(null);
         
-        
-        Panel tableroDiv= new Panel();
-        tableroDiv.setBackground(Color.red);
-        tableroDiv.setLayout(null);
-        
-        Panel divEncimaTablero = new Panel();
-        divEncimaTablero.setBackground(Color.magenta);
-        divEncimaTablero.setSize(550,550);
-        
+
         
         
         
         fondo.add(tableroDiv);
         
-        tableroDiv.setSize(600,600);
-        
-        
-        tableroDiv.add(divEncimaTablero);
-        tableroDiv.add(tablero);
+
         
         
         
