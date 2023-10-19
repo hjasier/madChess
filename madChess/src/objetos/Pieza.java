@@ -25,14 +25,12 @@ public class Pieza {
 	public Pieza(String nombre) {
 		super();
 		this.nombre = nombre;
-		 this.img = new ImageIcon("../src_piezas/" + nombre + ".png");
-		 
-		 System.out.println("../src_piezas/" + nombre + ".png");
+		 this.img = new ImageIcon(getClass().getResource("../src_piezas/" + nombre + ".png"));
 	}
 
 
 	public ImageIcon getImg() { 
-		return img;
+		return this.img;
 	}
 
 

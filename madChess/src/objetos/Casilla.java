@@ -27,7 +27,6 @@ public class Casilla extends JPanel {
 		this.color = color;
 		this.fila = fila;
 		this.columna = posicionToAlfabeto(c);
-		this.pieza = new Pieza("bb");
 
 		
 		//this.setBorder(new LineBorder(Color.GREEN, 2)); // BORDE TEMPORAL PARA DEBUG
@@ -89,7 +88,7 @@ public class Casilla extends JPanel {
 	public void setPieza(Pieza pieza) {
 		this.pieza = pieza;
 		System.out.println(pieza);
-		//pintar pieza
+		this.repaint();
 		
 	}
 	
@@ -137,8 +136,14 @@ public class Casilla extends JPanel {
         int height = Math.min(getWidth(), getHeight());
         g.fillRect(0, 0, height, height); // xPos, yPos W , H
         
-        Image img = this.pieza.getImg().getImage();
-        g.drawImage(img, 0, 0, this);
+
+        int cuadradoSize = height / 2;
+        int x = (getWidth() - cuadradoSize) / 2;
+        int y = (getHeight() - cuadradoSize) / 2;
+        
+        if (this.pieza != null) {	
+        	g.drawImage(this.pieza.getImg().getImage(), x, y, cuadradoSize, cuadradoSize, this);
+        }
         
     }
 	
