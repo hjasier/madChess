@@ -47,12 +47,11 @@ public class Partida {
 
 
 	/** 
-	protected void loadPieza(Casilla casilla,Pieza pieza) {
-		
-		casilla.setPieza(pieza);
-		
-	}
-	 * @return 
+	
+	Primero rellemanos el hashmap de piezas en loadPiezas y luego metemos las piezas en sus 
+	casillas correspondientes en la función cargarPiezasTablero() asi no repetimos dos veces los atributos
+	 de piezas 
+	
 	*/
 	protected void loadPiezas() {
 		piezas.put("bb",new Pieza("bb"));
