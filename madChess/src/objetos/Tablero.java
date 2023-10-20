@@ -1,29 +1,11 @@
 package objetos;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Panel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.event.MouseInputAdapter;
+
+import javax.swing.*;
 
 
 
@@ -36,7 +18,9 @@ public class Tablero extends JPanel{
 
 	protected JPanel casillasDiv = new JPanel();
 	protected JPanel tableroDiv = new JPanel(); //Panel por encima de las casillas
+	protected JLabel dragImg = new JLabel(); // Label que va a actuar como img dentro de tableroDiv
 	
+	protected Casilla curCasilla;
 	
 	
     public Tablero() {    	
@@ -50,7 +34,7 @@ public class Tablero extends JPanel{
     	
     	
     	casillasDiv.setLayout(new GridLayout(8, 8,0,0));
-    	tableroDiv.setLayout(null);
+    	
     	
     	
     	casillasDiv.setBackground(new Color(60,60,60));
@@ -59,8 +43,9 @@ public class Tablero extends JPanel{
     	tableroDiv.setBackground(Color.magenta); 
     	tableroDiv.setOpaque(false); // Hace el panel de encima transparente
     	
+    	dragImg.setIcon(null);
+    	tableroDiv.add(dragImg);
     	
-
 
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) { 
@@ -74,20 +59,23 @@ public class Tablero extends JPanel{
         }
         
         
-
+        
         
         this.add(tableroDiv);
         this.add(casillasDiv);
-        
-        
+       
         tableroDiv.addMouseMotionListener(new MouseMotionAdapter() {
-        	Casilla prevCasilla;
+        	protected Casilla prevCasilla;
+        	
         	@Override
         	public void mouseMoved(MouseEvent e) {
                 double tamanyoCasilla = casillasDiv.getSize().getWidth()/8;
                 int curCasillaCol = (int) (e.getX()/tamanyoCasilla);
                 int curCasillaRow = (int) (e.getY()/tamanyoCasilla);
-                Casilla curCasilla = getCasilla(curCasillaRow, posicionToAlfabeto(curCasillaCol));
+                
+                dragImg.setLocation(e.getX(),e.getY());
+                
+                curCasilla = getCasilla(curCasillaRow, posicionToAlfabeto(curCasillaCol));
                 
                 if (curCasilla!=prevCasilla) {
                 	try {
@@ -96,41 +84,44 @@ public class Tablero extends JPanel{
                 	curCasilla.setHover(true);
                 	prevCasilla = curCasilla;
                 }
-                System.out.println(curCasilla.getFila()+""+curCasilla.getColumna());
+                
         	}
+        	
+        	
 		});
         
-        
-        
-        
-      /**
-       * GESTIÓN DE EVENTOS DE MOUSE	  
-       */
-        
-        /**
-        this.addMouseMotionListener(new MouseMotionAdapter() {
+        tableroDiv.addMouseListener(new MouseAdapter() {
+        	protected Casilla movCasilla;
+        	
+        	
         	@Override
-        	public void mouseMoved(MouseEvent e) {
-        		System.out.println("[DIV THIS] mouse en X:"+e.getX()+" Y:"+e.getY());
+        	public void mousePressed(MouseEvent e) {
+        		movCasilla = curCasilla;
+        		movCasilla.setDragging(true);
+        		
+        		
+
+
+        		Image piezaImg = movCasilla.getPieza().getImg().getImage();
+        		int escala = movCasilla.imgSize;
+        		ImageIcon imgReEscalada = new ImageIcon(piezaImg.getScaledInstance(escala, escala, Image.SCALE_SMOOTH));
+        		
+        		dragImg.setIcon(imgReEscalada);
+        		
+        		
         	}
-		});
-        
-        tableroDiv.addMouseMotionListener(new MouseMotionAdapter() {
+        	
         	@Override
-        	public void mouseMoved(MouseEvent e) {
-        		dispatchEvent(e); // Pasa la func al padre this
+        	public void mouseReleased(MouseEvent e) {
+        		movCasilla.setDragging(false);
         	}
+
 		});
         
-        casillasDiv.addMouseMotionListener(new MouseMotionAdapter() {
-        	@Override
-        	public void mouseMoved(MouseEvent e) {
-        		dispatchEvent(e); // Pasa la func al padre this
-        	}
-		});
         
-        */
         
+        
+
 
 
         

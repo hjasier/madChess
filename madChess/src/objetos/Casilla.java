@@ -21,7 +21,8 @@ public class Casilla extends JPanel {
     protected int fila;
 	protected char columna;
     protected Pieza pieza;
-    
+    protected Boolean dragging = false;
+    public int imgSize;
    
 
 	public Casilla(Color color, int fila, int c) {
@@ -125,9 +126,12 @@ public class Casilla extends JPanel {
 	}
 	
 	
+	public void setDragging(Boolean status) {
+		this.dragging = status;
+		repaint();
+	}
 	
-	
-	
+
 	
 	
 	
@@ -135,6 +139,11 @@ public class Casilla extends JPanel {
 	
 	
 
+
+
+	public Pieza getPieza() {
+		return pieza;
+	}
 
 
 	@Override
@@ -146,11 +155,11 @@ public class Casilla extends JPanel {
         g.fillRect(0, 0, height, height); // xPos, yPos W , H
         
 
-        int imgSize = (int)(height / 2 * 1.55);
+        imgSize = (int)(height / 2 * 1.55);
         int x = (getWidth() - imgSize) / 2;
         int y = (getHeight() - imgSize) / 2;
         
-        if (this.pieza != null) {	
+        if (this.pieza != null && !dragging) {	
         	g.drawImage(this.pieza.getImg().getImage(), x, y, imgSize, imgSize, this);
         }
         
