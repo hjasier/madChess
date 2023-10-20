@@ -137,12 +137,12 @@ public class Casilla extends JPanel {
         g.fillRect(0, 0, height, height); // xPos, yPos W , H
         
 
-        int cuadradoSize = height / 2;
-        int x = (getWidth() - cuadradoSize) / 2;
-        int y = (getHeight() - cuadradoSize) / 2;
+        int imgSize = (int)(height / 2 * 1.55);
+        int x = (getWidth() - imgSize) / 2;
+        int y = (getHeight() - imgSize) / 2;
         
         if (this.pieza != null) {	
-        	g.drawImage(this.pieza.getImg().getImage(), x, y, cuadradoSize, cuadradoSize, this);
+        	g.drawImage(this.pieza.getImg().getImage(), x, y, imgSize, imgSize, this);
         }
         
     }

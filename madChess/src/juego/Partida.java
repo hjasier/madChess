@@ -18,7 +18,7 @@ public class Partida {
 	protected Date fecha;
 	int[][] curTablero = {  }; // ya se vera pero el tablero podría ser un array multidimentsional en el que hay referencias a objeto pieza
 	protected ArrayList<Casilla> casillas;
-	
+	protected HashMap<String,Pieza> piezas = new HashMap<String,Pieza>();
 	
 	protected HashMap<Boost, Boolean> boosts;
 
@@ -32,6 +32,7 @@ public class Partida {
 		this.curTablero = curTablero;
 		this.boosts = boosts;
 		
+		
 	}
 	
 	
@@ -40,6 +41,7 @@ public class Partida {
 		VentanaJuego ventana = new VentanaJuego();
 		casillas = ventana.getTableroDiv().getCasillas();
 		loadPiezas();
+		cargarPiezasTablero();
 		System.out.println(casillas);
 	}
 
@@ -50,32 +52,22 @@ public class Partida {
 		casilla.setPieza(pieza);
 		
 	}
+	 * @return 
 	*/
-	
 	protected void loadPiezas() {
+		piezas.put("bb",new Pieza("bb"));
+		piezas.put("bk",new Pieza("bk"));
+		piezas.put("bn",new Pieza("bn"));
 
 		
-		casillas.get(0).setPieza(new Pieza("bb"));
-		
-		
-		
-		
-		
-		//Soy Giova pruebo esto a ver que os parece, probando el arraylist multidimensional:
-		
-		/**
-		int filas = 8; 
-	    int columnas = 8; 
-	    curTablero = new Pieza[filas][columnas]; // Dice de hacer curTablero que sea en vez de un int un obejto Pieza, que pensais?
+	}
+	
+	protected void cargarPiezasTablero() {
 
-	    // Rellenar el tablero con piezas iniciales
-	    for (int fila = 0; fila < filas; fila++) {
-	        for (int columna = 0; columna < columnas; columna++) {
-	            curTablero[fila][columna] = new Pieza(); // Hay que crear instancias válidas de Pieza :0
-	        }
-	    }
-	    
-	    */
+		
+		casillas.get(0).setPieza(piezas.get("bb"));
+
+		
 		
 	}
 	
