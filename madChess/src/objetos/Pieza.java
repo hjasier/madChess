@@ -1,6 +1,8 @@
 package objetos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.ImageIcon;
 
 public class Pieza {
@@ -8,11 +10,11 @@ public class Pieza {
 	
 	protected String nombre;
 	protected ImageIcon img;
-	protected ArrayList<Casilla> movimientos;
+	protected HashMap<String , Integer> movimientos;
 	
 	protected Jugador propietario;
 	
-	protected Casilla initPos;
+	
 
 	
 	/**

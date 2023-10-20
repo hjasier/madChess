@@ -3,6 +3,7 @@ package juego;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import objetos.Boost;
 import objetos.Casilla;
@@ -54,17 +55,39 @@ public class Partida {
 	
 	*/
 	protected void loadPiezas() {
+		//Movimientos
+        Map<String, Integer> brMov = Map.ofEntries(
+                Map.entry("arriba", 1),
+                Map.entry("down", 0),
+                Map.entry("derecha", 0),
+                Map.entry("izq", 0),
+                Map.entry("diagonal", 0)
+            );
+        
+        
+		
+		
+		//Piezas
 		piezas.put("bb",new Pieza("bb"));
 		piezas.put("bk",new Pieza("bk"));
 		piezas.put("bn",new Pieza("bn"));
-
+		piezas.put("bp",new Pieza("bp"));
+		piezas.put("bq",new Pieza("bq"));
+		piezas.put("br",new Pieza("br"));
+		
+		piezas.put("wb",new Pieza("wb"));
+		piezas.put("wk",new Pieza("wk"));
+		piezas.put("wn",new Pieza("wn"));
+		piezas.put("wp",new Pieza("wp"));
+		piezas.put("wq",new Pieza("wq"));
+		piezas.put("wr",new Pieza("wr"));
 		
 	}
 	
 	protected void cargarPiezasTablero() {
 
 		
-		casillas.get(0).setPieza(piezas.get("bb"));
+		casillas.get(1).setPieza(piezas.get("bb"));
 
 		
 		

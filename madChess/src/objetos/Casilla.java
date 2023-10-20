@@ -1,6 +1,7 @@
 package objetos;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Image;
 
 import java.awt.Dimension;
@@ -113,7 +114,15 @@ public class Casilla extends JPanel {
 	
 	
 	
-	
+	public void setHover(boolean status) {
+		if (this.pieza!=null) {
+			this.getParent().getParent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+		}else {			
+			this.getParent().getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			iluminarCasilla(status);
+		}
+		
+	}
 	
 	
 	
@@ -146,6 +155,9 @@ public class Casilla extends JPanel {
         }
         
     }
+
+
+
 	
 
 }
