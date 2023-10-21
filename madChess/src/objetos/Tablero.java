@@ -89,9 +89,9 @@ public class Tablero extends JPanel{
         	public void mouseDragged(MouseEvent e) {
         		
         		curCasilla = getCurCasilla(e);
-        		if (prevCasilla==null) {
+        		
         			prevCasilla.setDragging(true);
-        		}
+        		
         		
         		
 
@@ -128,8 +128,10 @@ public class Tablero extends JPanel{
         		prevCasilla.eliminarPieza();
         		curCasilla = getCurCasilla(e);
         		curCasilla.setPieza(pieza);
+        		dragImg.setIcon(null);
         		
         	}
+        		
         }
         
         });
