@@ -166,7 +166,14 @@ public class Casilla extends JPanel {
     }
 
 
+	public void eliminarPieza() {
+		this.pieza = null;
+		repaint();
+		
+	}
 
+
+	
 	
 
 }

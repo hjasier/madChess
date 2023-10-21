@@ -22,6 +22,8 @@ public class Tablero extends JPanel{
 	
 	protected Casilla curCasilla;
 	
+	protected Casilla prevCasilla;
+	
 	
     public Tablero() {    	
     	this.setSize(600, 600);
@@ -64,18 +66,13 @@ public class Tablero extends JPanel{
         this.add(tableroDiv);
         this.add(casillasDiv);
        
-        tableroDiv.addMouseMotionListener(new MouseMotionAdapter() {
-        	protected Casilla prevCasilla;
+        tableroDiv.addMouseMotionListener(new MouseAdapter() {
+        	
+        	
         	
         	@Override
         	public void mouseMoved(MouseEvent e) {
-                double tamanyoCasilla = casillasDiv.getSize().getWidth()/8;
-                int curCasillaCol = (int) (e.getX()/tamanyoCasilla);
-                int curCasillaRow = (int) (e.getY()/tamanyoCasilla);
-                
-                dragImg.setLocation(e.getX(),e.getY());
-                
-                curCasilla = getCasilla(curCasillaRow, posicionToAlfabeto(curCasillaCol));
+        		curCasilla = getCurCasilla(e);
                 
                 if (curCasilla!=prevCasilla) {
                 	try {
@@ -88,47 +85,70 @@ public class Tablero extends JPanel{
         	}
         	
         	
-		});
-        
-        tableroDiv.addMouseListener(new MouseAdapter() {
-        	protected Casilla movCasilla;
-        	
-        	
         	@Override
-        	public void mousePressed(MouseEvent e) {
-        		movCasilla = curCasilla;
-        		movCasilla.setDragging(true);
+        	public void mouseDragged(MouseEvent e) {
+        		
+        		curCasilla = getCurCasilla(e);
+        		if (prevCasilla==null) {
+        			prevCasilla.setDragging(true);
+        		}
         		
         		
 
-
-        		Image piezaImg = movCasilla.getPieza().getImg().getImage();
-        		int escala = movCasilla.imgSize;
+        		Image piezaImg = prevCasilla.getPieza().getImg().getImage();
+        		int escala = prevCasilla.imgSize;
         		ImageIcon imgReEscalada = new ImageIcon(piezaImg.getScaledInstance(escala, escala, Image.SCALE_SMOOTH));
         		
+        		
         		dragImg.setIcon(imgReEscalada);
+
         		
+				dragImg.setLocation(e.getX(),e.getY());
         		
+        				
         	}
         	
-        	@Override
-        	public void mouseReleased(MouseEvent e) {
-        		movCasilla.setDragging(false);
-        	}
+        	
+        	
+        	
+        	
+        	
+        	
 
 		});
         
+       
+        tableroDiv.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseReleased(MouseEvent e) {
+        		System.out.println("Mouse released");
+        		
+        		if(prevCasilla != null) {
+        		Pieza pieza= prevCasilla.getPieza();
+        		prevCasilla.eliminarPieza();
+        		curCasilla = getCurCasilla(e);
+        		curCasilla.setPieza(pieza);
+        		
+        	}
+        }
         
-        
-        
-
-
+        });
 
         
         
     }
     
-    protected Casilla getCasilla(int fila ,char columna) {
+    protected Casilla getCurCasilla(MouseEvent e) {
+        double tamanyoCasilla = casillasDiv.getSize().getWidth()/8;
+        int curCasillaCol = (int) (e.getX()/tamanyoCasilla);
+        int curCasillaRow = (int) (e.getY()/tamanyoCasilla);
+        curCasilla = getCasilla(curCasillaRow, posicionToAlfabeto(curCasillaCol));
+		return curCasilla;
+	}
+    
+    
+
+	protected Casilla getCasilla(int fila ,char columna) {
     	for (Casilla casilla : casillas) {
     		if (columna == casilla.getColumna() && fila == casilla.getFila()) {
     			return casilla;
