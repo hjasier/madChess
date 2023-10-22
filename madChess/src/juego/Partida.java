@@ -3,6 +3,7 @@ package juego;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import objetos.Boost;
@@ -85,13 +86,38 @@ public class Partida {
 	}
 	
 	protected void cargarPiezasTablero() {
-
+		//negras
+		//primera fila
+		casillas.get(0).setPieza(piezas.get("br"));
+		casillas.get(1).setPieza(piezas.get("bn"));
+		casillas.get(2).setPieza(piezas.get("bb"));
+		casillas.get(3).setPieza(piezas.get("bq"));
+		casillas.get(4).setPieza(piezas.get("bk"));
+		casillas.get(5).setPieza(piezas.get("bb"));
+		casillas.get(6).setPieza(piezas.get("bn"));
+		casillas.get(7).setPieza(piezas.get("br"));
+		casillas.get(7).setPieza(piezas.get("br"));
+		//seegunda fila
+		for (int i = 8; i <= 15; i++) {
+			casillas.get(i).setPieza(piezas.get("bp"));
+		}
+		//blancas
+		//tercera fila
+		for (int i = 48; i <= 55; i++) {
+			casillas.get(i).setPieza(piezas.get("wp"));
+		}
 		
-		casillas.get(1).setPieza(piezas.get("bb"));
-
-		
-		
+		//cuarta fila
+		casillas.get(56).setPieza(piezas.get("wr"));
+		casillas.get(57).setPieza(piezas.get("wn"));
+		casillas.get(58).setPieza(piezas.get("wb"));
+		casillas.get(59).setPieza(piezas.get("wq"));
+		casillas.get(60).setPieza(piezas.get("wk"));
+		casillas.get(61).setPieza(piezas.get("wb"));
+		casillas.get(62).setPieza(piezas.get("wn"));
+		casillas.get(63).setPieza(piezas.get("wr"));
 	}
+	
 	
 	
 
