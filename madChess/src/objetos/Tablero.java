@@ -68,7 +68,7 @@ public class Tablero extends JPanel{
         this.add(casillasDiv);
        
         tableroDiv.addMouseMotionListener(new MouseAdapter() {
-        	protected Casilla lastCasilla = prevCasilla;
+        	protected Casilla lastCasilla;
         	
         	
         	@Override
@@ -90,9 +90,8 @@ public class Tablero extends JPanel{
         	public void mouseDragged(MouseEvent e) {
         		
         		curCasilla = getCurCasilla(e);
-        		if (lastCasilla==null) {
-        			lastCasilla = prevCasilla;
-        		}
+        		if (lastCasilla==null) {lastCasilla = prevCasilla;}
+        		
         		if (lastCasilla!=curCasilla) { //Ilumina la casilla que esta debajo de la pieza
         			lastCasilla.iluminarCasilla(false);
         			lastCasilla = curCasilla;
