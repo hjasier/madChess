@@ -155,7 +155,7 @@ public class Casilla extends JPanel {
         g.fillRect(0, 0, height, height); // xPos, yPos W , H
         
 
-        imgSize = (int)(height / 2 * 1.55);
+        imgSize = (int)(height / 2 * 1.85);
         int x = (getWidth() - imgSize) / 2;
         int y = (getHeight() - imgSize) / 2;
         
