@@ -86,8 +86,8 @@ public class Partida {
 	}
 	
 	protected void cargarPiezasTablero() {
-		//Se puede hacer un random entre uno y dos, depende del resultado establece que lado va cada color
-		//Negras
+		//negras
+		//primera fila
 		casillas.get(0).setPieza(piezas.get("br"));
 		casillas.get(1).setPieza(piezas.get("bn"));
 		casillas.get(2).setPieza(piezas.get("bb"));
@@ -96,23 +96,18 @@ public class Partida {
 		casillas.get(5).setPieza(piezas.get("bb"));
 		casillas.get(6).setPieza(piezas.get("bn"));
 		casillas.get(7).setPieza(piezas.get("br"));
-		casillas.get(8).setPieza(piezas.get("bp"));
-		casillas.get(9).setPieza(piezas.get("bp"));
-		casillas.get(10).setPieza(piezas.get("bp"));
-		casillas.get(11).setPieza(piezas.get("bp"));
-		casillas.get(12).setPieza(piezas.get("bp"));
-		casillas.get(13).setPieza(piezas.get("bp"));
-		casillas.get(14).setPieza(piezas.get("bp"));
-		casillas.get(15).setPieza(piezas.get("bp"));
-		//Blancas
-		casillas.get(48).setPieza(piezas.get("wp"));
-		casillas.get(49).setPieza(piezas.get("wp"));
-		casillas.get(50).setPieza(piezas.get("wp"));
-		casillas.get(51).setPieza(piezas.get("wp"));
-		casillas.get(52).setPieza(piezas.get("wp"));
-		casillas.get(53).setPieza(piezas.get("wp"));
-		casillas.get(54).setPieza(piezas.get("wp"));
-		casillas.get(55).setPieza(piezas.get("wp"));
+		casillas.get(7).setPieza(piezas.get("br"));
+		//seegunda fila
+		for (int i = 8; i <= 15; i++) {
+			casillas.get(i).setPieza(piezas.get("bp"));
+		}
+		//blancas
+		//tercera fila
+		for (int i = 48; i <= 55; i++) {
+			casillas.get(i).setPieza(piezas.get("wp"));
+		}
+		
+		//cuarta fila
 		casillas.get(56).setPieza(piezas.get("wr"));
 		casillas.get(57).setPieza(piezas.get("wn"));
 		casillas.get(58).setPieza(piezas.get("wb"));
