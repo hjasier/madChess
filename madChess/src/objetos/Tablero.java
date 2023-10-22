@@ -20,9 +20,10 @@ public class Tablero extends JPanel{
 	protected JPanel tableroDiv = new JPanel(); //Panel por encima de las casillas
 	protected JLabel dragImg = new JLabel(); // Label que va a actuar como img dentro de tableroDiv
 	
+	//Eventos mouse variables
 	protected Casilla curCasilla;
-	
 	protected Casilla prevCasilla;
+	protected Boolean dragging = false;
 	
 	
     public Tablero() {    	
@@ -67,7 +68,7 @@ public class Tablero extends JPanel{
         this.add(casillasDiv);
        
         tableroDiv.addMouseMotionListener(new MouseAdapter() {
-        	
+        	protected Casilla lastCasilla = prevCasilla;
         	
         	
         	@Override
@@ -89,23 +90,31 @@ public class Tablero extends JPanel{
         	public void mouseDragged(MouseEvent e) {
         		
         		curCasilla = getCurCasilla(e);
+        		if (lastCasilla==null) {
+        			lastCasilla = prevCasilla;
+        		}
+        		if (lastCasilla!=curCasilla) { //Ilumina la casilla que esta debajo de la pieza
+        			lastCasilla.iluminarCasilla(false);
+        			lastCasilla = curCasilla;
+        			lastCasilla.iluminarCasilla(true);
+        		}
         		
+        		if (prevCasilla.getPieza()!=null && !dragging) {
         			prevCasilla.setDragging(true);
+        			Image piezaImg = prevCasilla.getPieza().getImg().getImage();
+            		int escala = prevCasilla.imgSize;
+            		ImageIcon imgReEscalada = new ImageIcon(piezaImg.getScaledInstance(escala, escala, Image.SCALE_SMOOTH));
+            		dragImg.setLocation(e.getX(),e.getY());
+            		dragImg.setIcon(imgReEscalada);
+        		}
         		
         		
+        		int imgOffset = dragImg.getWidth()/2;
+        		
+				dragImg.setLocation(e.getX()-imgOffset,e.getY()-imgOffset);
         		
 
-        		Image piezaImg = prevCasilla.getPieza().getImg().getImage();
-        		int escala = prevCasilla.imgSize;
-        		ImageIcon imgReEscalada = new ImageIcon(piezaImg.getScaledInstance(escala, escala, Image.SCALE_SMOOTH));
-        		
-        		
-        		dragImg.setIcon(imgReEscalada);
-
-        		
-				dragImg.setLocation(e.getX(),e.getY());
-        		
-        				
+				
         	}
         	
         	
@@ -121,16 +130,20 @@ public class Tablero extends JPanel{
         tableroDiv.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent e) {
-        		System.out.println("Mouse released");
-        		
-        		if(prevCasilla != null) {
-        		Pieza pieza= prevCasilla.getPieza();
-        		prevCasilla.eliminarPieza();
         		curCasilla = getCurCasilla(e);
-        		curCasilla.setPieza(pieza);
-        		dragImg.setIcon(null);
-        		
+        		if(prevCasilla != null) {
+        			 if (prevCasilla != curCasilla){
+                		Pieza pieza= prevCasilla.getPieza();
+                		prevCasilla.setPieza(null);
+                		curCasilla.setPieza(pieza);
+        			}
+        			prevCasilla.setDragging(false);
+        			
+        			 dragImg.setIcon(null);
+
+        			 
         	}
+        		dragging = false;
         		
         }
         
