@@ -26,7 +26,12 @@ public class Tablero extends JPanel{
 	protected Boolean dragging = false;
 	
 	
-    public Tablero() {    	
+    public Tablero() { 
+
+    	/*
+    	 * DEFINICIONES DE LA VENTANA
+    	 */
+    	
     	this.setSize(600, 600);
     	this.setLayout(null);
     	
@@ -34,22 +39,20 @@ public class Tablero extends JPanel{
     	casillasDiv.setSize(this.getSize());
     	tableroDiv.setSize(this.getSize());
     	
-    	
-    	
     	casillasDiv.setLayout(new GridLayout(8, 8,0,0));
-    	
-    	
-    	
     	casillasDiv.setBackground(new Color(60,60,60));
-    	
     	
     	tableroDiv.setBackground(Color.magenta); 
     	tableroDiv.setOpaque(false); // Hace el panel de encima transparente
-    	
-    	dragImg.setIcon(null);
     	tableroDiv.add(dragImg);
     	
-
+        this.add(tableroDiv);
+        this.add(casillasDiv);
+        
+        
+    	/*
+    	 * CREACIÓN DEL TABLERO
+    	 */
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) { 
             	
@@ -64,8 +67,10 @@ public class Tablero extends JPanel{
         
         
         
-        this.add(tableroDiv);
-        this.add(casillasDiv);
+		/*
+		 * GESTIÓN DE EVENTOS DEL MOUSE
+		 */
+
        
         tableroDiv.addMouseMotionListener(new MouseAdapter() {
         	protected Casilla lastCasilla;
@@ -111,20 +116,9 @@ public class Tablero extends JPanel{
         		
         		
         		int imgOffset = dragImg.getWidth()/2;
-        		
 				dragImg.setLocation(e.getX()-imgOffset,e.getY()-imgOffset);
-        		
 
-				
         	}
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-
 		});
         
        
@@ -153,6 +147,11 @@ public class Tablero extends JPanel{
         
         
     }
+    
+    /*
+     * MÉTODOS DEL TABLERO 
+     */
+    
     
     protected Casilla getCurCasilla(MouseEvent e) {
         double tamanyoCasilla = casillasDiv.getSize().getWidth()/8;
@@ -183,6 +182,8 @@ public class Tablero extends JPanel{
 		return casillas;
 	}
 
+	
+	
 	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -197,11 +198,6 @@ public class Tablero extends JPanel{
         
     }
     
-	
-	
-    
-    
-	
 	
 
 	

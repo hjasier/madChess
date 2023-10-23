@@ -16,14 +16,6 @@ public class Pieza {
 	
 	
 
-	
-	/**
-	 * 
-	 * El resto de atributos posicion etc los añadimos cuando empecemos con la lógica
-	 * 
-	 * */
-	
-	
 	public Pieza(String nombre) {
 		super();
 		this.nombre = nombre;

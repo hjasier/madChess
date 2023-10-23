@@ -19,7 +19,6 @@ public class Partida {
 	
 	protected int gameId;
 	protected Date fecha;
-	int[][] curTablero = {  }; // ya se vera pero el tablero podría ser un array multidimentsional en el que hay referencias a objeto pieza
 	protected ArrayList<Casilla> casillas;
 	protected HashMap<String,Pieza> piezas = new HashMap<String,Pieza>();
 	
@@ -27,15 +26,12 @@ public class Partida {
 
 
 
-	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha, int[][] curTablero,HashMap<Boost, Boolean> boosts) {
+	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha,HashMap<Boost, Boolean> boosts) {
 		super();
 		this.jugadores = jugadores;
 		this.gameId = gameId;
 		this.fecha = fecha;
-		this.curTablero = curTablero;
-		this.boosts = boosts;
-		
-		
+		this.boosts = boosts;	
 	}
 	
 	
@@ -45,7 +41,6 @@ public class Partida {
 		casillas = ventana.getTableroDiv().getCasillas();
 		loadPiezas();
 		cargarPiezasTablero();
-		System.out.println(casillas);
 	}
 
 
@@ -57,18 +52,6 @@ public class Partida {
 	
 	*/
 	protected void loadPiezas() {
-		//Movimientos
-        Map<String, Integer> brMov = Map.ofEntries(
-                Map.entry("arriba", 1),
-                Map.entry("down", 0),
-                Map.entry("derecha", 0),
-                Map.entry("izq", 0),
-                Map.entry("diagonal", 0)
-            );
-        
-        
-		
-		
 		//Piezas
 		piezas.put("bb",new Pieza("bb"));
 		piezas.put("bk",new Pieza("bk"));
@@ -87,8 +70,7 @@ public class Partida {
 	}
 	
 	protected void cargarPiezasTablero() {
-		//negras
-		//primera fila
+		//negras segunda fila
 		casillas.get(0).setPieza(piezas.get("br"));
 		casillas.get(1).setPieza(piezas.get("bn"));
 		casillas.get(2).setPieza(piezas.get("bb"));
@@ -98,17 +80,16 @@ public class Partida {
 		casillas.get(6).setPieza(piezas.get("bn"));
 		casillas.get(7).setPieza(piezas.get("br"));
 		casillas.get(7).setPieza(piezas.get("br"));
-		//seegunda fila
+		//negras primera fila
 		for (int i = 8; i <= 15; i++) {
 			casillas.get(i).setPieza(piezas.get("bp"));
 		}
-		//blancas
-		//tercera fila
+		//blancas primera fila
 		for (int i = 48; i <= 55; i++) {
 			casillas.get(i).setPieza(piezas.get("wp"));
 		}
 		
-		//cuarta fila
+		//blancas segunda fila
 		casillas.get(56).setPieza(piezas.get("wr"));
 		casillas.get(57).setPieza(piezas.get("wn"));
 		casillas.get(58).setPieza(piezas.get("wb"));
@@ -119,3 +100,6 @@ public class Partida {
 		casillas.get(63).setPieza(piezas.get("wr"));
         }
 	}
+
+
+
