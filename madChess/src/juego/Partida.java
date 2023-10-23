@@ -11,7 +11,9 @@ import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
+import piezas.Caballo;
 import piezas.Peon;
+import piezas.Rey;
 import ventanas.VentanaJuego;
 
 public class Partida {
@@ -56,15 +58,15 @@ public class Partida {
 		//Piezas
 		
 		piezas.put("bb",new Pieza("bb"));
-		piezas.put("bk",new Pieza("bk"));
-		piezas.put("bn",new Pieza("bn"));
+		piezas.put("bk",new Rey("bk"));
+		piezas.put("bn",new Caballo("bn"));
 		piezas.put("bp",new Pieza("bp"));
 		piezas.put("bq",new Pieza("bq"));
 		piezas.put("br",new Pieza("br"));
 		
 		piezas.put("wb",new Pieza("wb"));
-		piezas.put("wk",new Pieza("wk"));
-		piezas.put("wn",new Pieza("wn"));
+		piezas.put("wk",new Rey("wk"));
+		piezas.put("wn",new Caballo("wn"));
 		piezas.put("wp",new Peon("wp"));
 		piezas.put("wq",new Pieza("wq"));
 		piezas.put("wr",new Pieza("wr"));
