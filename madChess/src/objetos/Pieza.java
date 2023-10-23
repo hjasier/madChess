@@ -1,5 +1,6 @@
 package objetos;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,16 +37,9 @@ public class Pieza {
 	}
 
 	
-	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla) {
+	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
 
-		int casillaIndex = casillas.indexOf(curCasilla);
-		System.out.println(casillaIndex);
-		
-		ArrayList<Casilla> casillasDisp = new ArrayList<>(); 
-		casillasDisp.add(casillas.get(casillaIndex-8));
-		casillasDisp.add(casillas.get(casillaIndex-16));
-		
-		return casillasDisp;
+		return null;
 		
 	}
 	

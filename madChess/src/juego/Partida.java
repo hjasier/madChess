@@ -11,6 +11,7 @@ import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
+import piezas.Peon;
 import ventanas.VentanaJuego;
 
 public class Partida {
@@ -64,7 +65,7 @@ public class Partida {
 		piezas.put("wb",new Pieza("wb"));
 		piezas.put("wk",new Pieza("wk"));
 		piezas.put("wn",new Pieza("wn"));
-		piezas.put("wp",new Pieza("wp",casillas));
+		piezas.put("wp",new Peon("wp"));
 		piezas.put("wq",new Pieza("wq"));
 		piezas.put("wr",new Pieza("wr"));
 		

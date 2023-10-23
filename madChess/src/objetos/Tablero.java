@@ -115,7 +115,7 @@ public class Tablero extends JPanel{
             		dragImg.setLocation(e.getX(),e.getY());
             		dragImg.setIcon(imgReEscalada);
             		
-            		ArrayList<Casilla> casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla);
+            		ArrayList<Casilla> casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla,casillas);
             		for(Casilla casillaDisp: casillasDisp) {
             			casillaDisp.setDisponible();
             		}
