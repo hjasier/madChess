@@ -8,11 +8,11 @@ import javax.swing.ImageIcon;
 public class Pieza {
 
 	
-	protected String nombre;
-	protected ImageIcon img;
-	protected HashMap<String , Integer> movimientos;
+	public String nombre;
+	public ImageIcon img;
+	public HashMap<String , Integer> movimientos;
 	
-	protected Jugador propietario;
+	public Jugador propietario;
 	
 	
 
