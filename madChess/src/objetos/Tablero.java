@@ -99,6 +99,8 @@ public class Tablero extends JPanel{
         		}
         		
         		if (prevCasilla.getPieza()!=null && !dragging) {
+        			dragging = true;
+        			System.out.println("RUNNING FR");
         			prevCasilla.setDragging(true);
         			Image piezaImg = prevCasilla.getPieza().getImg().getImage();
             		int escala = prevCasilla.imgSize;
@@ -130,7 +132,7 @@ public class Tablero extends JPanel{
         	@Override
         	public void mouseReleased(MouseEvent e) {
         		curCasilla = getCurCasilla(e);
-        		if(prevCasilla != null) {
+        		if(prevCasilla != null && prevCasilla.getPieza()!=null) {
         			 if (prevCasilla != curCasilla){
                 		Pieza pieza= prevCasilla.getPieza();
                 		prevCasilla.setPieza(null);

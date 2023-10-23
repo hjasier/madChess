@@ -17,64 +17,20 @@ import javax.swing.border.LineBorder;
 
 public class Casilla extends JPanel {
     private static final long serialVersionUID = 1L;
-    protected Color color = Color.white;
+    protected Color color;
     protected int fila;
 	protected char columna;
     protected Pieza pieza;
     protected Boolean dragging = false;
+    protected Boolean iluminada = false;
     public int imgSize;
-   
+
 
 	public Casilla(Color color, int fila, int c) {
 		this.color = color;
 		this.fila = fila;
 		this.columna = posicionToAlfabeto(c);
 
-		
-		//this.setBorder(new LineBorder(Color.GREEN, 2)); // BORDE TEMPORAL PARA DEBUG
-   
-		
-		//codigo para probar printear las piezas:
-		
-		
-		
-		
-		
-		
-		/**
-		 * GESTIÓN DE EVENTOS DE CURSOR EN CASILLA
-		 * */
-		
-		
-		
-    
-		
-        this.addMouseListener(new MouseAdapter() {
-        	
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			iluminarCasilla(true);
-		}
-		@Override
-			public void mouseExited(MouseEvent e) {
-			iluminarCasilla(false);
-		}
-		
-		@Override
-        public void mouseClicked(MouseEvent e) {
-            System.out.println("Mouse clickeado en: Fila: " + fila + ", Columna: " + columna);
-        }
-		
-		
-		
-        });
-        
-        this.addMouseMotionListener(new MouseMotionAdapter() {
-        	@Override
-        	public void mouseMoved(MouseEvent e) {
-        		//System.out.println("mouse en X:"+e.getX()+" Y:"+e.getY());
-        	}
-		});
 	}
 
 	
@@ -103,9 +59,13 @@ public class Casilla extends JPanel {
 
 	// "iluminamos" sumando o restando valores al color RGB actual cuando se hoverea una casilla
 	protected void iluminarCasilla(Boolean status) {
-		int n = status ? 10 : -10;
-		this.color = new Color( color.getRed()+n,color.getGreen()+n,color.getBlue()+n);
-		this.paint(getGraphics());
+		if (status&&!iluminada || !status&&iluminada) {
+			iluminada = status;
+			int n = (status) ? 10 : -10;
+			this.color = new Color( color.getRed()+n,color.getGreen()+n,color.getBlue()+n);
+			this.paint(getGraphics());
+		}
+		
 	}
 	
 	
