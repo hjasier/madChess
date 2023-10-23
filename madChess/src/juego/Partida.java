@@ -53,6 +53,7 @@ public class Partida {
 	*/
 	protected void loadPiezas() {
 		//Piezas
+		
 		piezas.put("bb",new Pieza("bb"));
 		piezas.put("bk",new Pieza("bk"));
 		piezas.put("bn",new Pieza("bn"));
@@ -63,7 +64,7 @@ public class Partida {
 		piezas.put("wb",new Pieza("wb"));
 		piezas.put("wk",new Pieza("wk"));
 		piezas.put("wn",new Pieza("wn"));
-		piezas.put("wp",new Pieza("wp"));
+		piezas.put("wp",new Pieza("wp",casillas));
 		piezas.put("wq",new Pieza("wq"));
 		piezas.put("wr",new Pieza("wr"));
 		

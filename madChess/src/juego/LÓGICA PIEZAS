@@ -1,6 +1,6 @@
-Opción Lógica de piezas 1:
+ getCasillas Opción Lógica de piezas 1:
 
-	[LAS CASILLAS TIENEN PIEZAS]
+	[LAS CASILLAS TIENEN PIEZAS] 
 	
 	- En la clase partida se llama a VentanaJuego, esta a Tablero
 	- Geteamos tablero como un atributo de la clase Partida

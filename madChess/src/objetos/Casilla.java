@@ -125,6 +125,12 @@ public class Casilla extends JPanel {
     }
 
 
+	public void setDisponible() {
+		this.color = Color.red;
+		repaint();
+	}
+
+
 
 
 	

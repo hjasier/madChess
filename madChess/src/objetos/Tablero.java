@@ -94,6 +94,7 @@ public class Tablero extends JPanel{
         	@Override
         	public void mouseDragged(MouseEvent e) {
         		
+        		
         		curCasilla = getCurCasilla(e);
         		if (lastCasilla==null) {lastCasilla = prevCasilla;}
         		
@@ -101,6 +102,7 @@ public class Tablero extends JPanel{
         			lastCasilla.iluminarCasilla(false);
         			lastCasilla = curCasilla;
         			lastCasilla.iluminarCasilla(true);
+
         		}
         		
         		if (prevCasilla.getPieza()!=null && !dragging) {
@@ -112,6 +114,11 @@ public class Tablero extends JPanel{
             		ImageIcon imgReEscalada = new ImageIcon(piezaImg.getScaledInstance(escala, escala, Image.SCALE_SMOOTH));
             		dragImg.setLocation(e.getX(),e.getY());
             		dragImg.setIcon(imgReEscalada);
+            		
+            		ArrayList<Casilla> casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla);
+            		for(Casilla casillaDisp: casillasDisp) {
+            			casillaDisp.setDisponible();
+            		}
         		}
         		
         		
