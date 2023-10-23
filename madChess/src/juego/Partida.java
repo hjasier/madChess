@@ -87,12 +87,8 @@ public class Partida {
 	}
 	
 	protected void cargarPiezasTablero() {
-		Random random = new Random();
-		int numeroAleatorio = random.nextInt(2);
-		
 		//negras
 		//primera fila
-        if(numeroAleatorio == 0) {
 		casillas.get(0).setPieza(piezas.get("br"));
 		casillas.get(1).setPieza(piezas.get("bn"));
 		casillas.get(2).setPieza(piezas.get("bb"));
@@ -121,43 +117,5 @@ public class Partida {
 		casillas.get(61).setPieza(piezas.get("wb"));
 		casillas.get(62).setPieza(piezas.get("wn"));
 		casillas.get(63).setPieza(piezas.get("wr"));
-	}
-        else {
-        	
-        	casillas.get(0).setPieza(piezas.get("wr"));
-    		casillas.get(1).setPieza(piezas.get("wn"));
-    		casillas.get(2).setPieza(piezas.get("wb"));
-    		casillas.get(3).setPieza(piezas.get("wq"));
-    		casillas.get(4).setPieza(piezas.get("wk"));
-    		casillas.get(5).setPieza(piezas.get("wb"));
-    		casillas.get(6).setPieza(piezas.get("wn"));
-    		casillas.get(7).setPieza(piezas.get("wr"));
-    		casillas.get(7).setPieza(piezas.get("wr"));
-    		//seegunda fila
-    		for (int i = 8; i <= 15; i++) {
-    			casillas.get(i).setPieza(piezas.get("wp"));
-    		}
-    		//blancas
-    		//tercera fila
-    		for (int i = 48; i <= 55; i++) {
-    			casillas.get(i).setPieza(piezas.get("bp"));
-    		}
-    		
-    		//cuarta fila
-    		casillas.get(56).setPieza(piezas.get("br"));
-    		casillas.get(57).setPieza(piezas.get("bn"));
-    		casillas.get(58).setPieza(piezas.get("bb"));
-    		casillas.get(59).setPieza(piezas.get("bq"));
-    		casillas.get(60).setPieza(piezas.get("bk"));
-    		casillas.get(61).setPieza(piezas.get("bb"));
-    		casillas.get(62).setPieza(piezas.get("bn"));
-    		casillas.get(63).setPieza(piezas.get("br"));
         }
 	}
-	
-	
-
-	
-	
-
-}
