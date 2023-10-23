@@ -25,6 +25,7 @@ public class Tablero extends JPanel{
 	protected Casilla prevCasilla;
 	protected Boolean dragging = false;
 	
+	protected ArrayList<Casilla> casillasDisp;
 	
     public Tablero() { 
 
@@ -115,9 +116,9 @@ public class Tablero extends JPanel{
             		dragImg.setLocation(e.getX(),e.getY());
             		dragImg.setIcon(imgReEscalada);
             		
-            		ArrayList<Casilla> casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla,casillas);
+            		casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla,casillas);
             		for(Casilla casillaDisp: casillasDisp) {
-            			casillaDisp.setDisponible();
+            			casillaDisp.setDisponible(true);
             		}
         		}
         		
@@ -143,7 +144,9 @@ public class Tablero extends JPanel{
         			
         			 dragImg.setIcon(null);
 
-        			 
+             		for(Casilla casillaDisp: casillasDisp) {
+             			casillaDisp.setDisponible(false);
+             		} 
         	}
         		dragging = false;
         		
