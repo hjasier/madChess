@@ -20,10 +20,10 @@ public class Caballo extends Pieza implements MetodosInterfaz {
 		System.out.println(casillaIndex);
 		
 		ArrayList<Casilla> casillasDisp = new ArrayList<>(); 
-		casillasDisp.add(casillas.get(casillaIndex+6));
-		casillasDisp.add(casillas.get(casillaIndex+10));
-		casillasDisp.add(casillas.get(casillaIndex+15));
-		casillasDisp.add(casillas.get(casillaIndex+17));
+		//casillasDisp.add(casillas.get(casillaIndex+6));
+		//casillasDisp.add(casillas.get(casillaIndex+10));
+		//casillasDisp.add(casillas.get(casillaIndex+15));
+		//casillasDisp.add(casillas.get(casillaIndex+17));
 		casillasDisp.add(casillas.get(casillaIndex-6));
 		casillasDisp.add(casillas.get(casillaIndex-10));
 		casillasDisp.add(casillas.get(casillaIndex-15));
@@ -33,5 +33,6 @@ public class Caballo extends Pieza implements MetodosInterfaz {
 		//Da error si alguna de las casillas disponibles no esta dentro del tablero, 
 		//por ejemplo cuando el caballo "puede" moverse fuera del tablero, en su posicion inicial por ejemplo
 		// pero el metodo como tal funciona funciona bien cuando todos sus movimientos tienen sentido, salvo por ese bug
+		// He dejado con barras los tres ultimos para que no explote en su posicion inicial
 	}
 }

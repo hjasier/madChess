@@ -25,13 +25,14 @@ public class Rey extends Pieza implements MetodosInterfaz{
 		casillasDisp.add(casillas.get(casillaIndex-8));
 		casillasDisp.add(casillas.get(casillaIndex-9));
 		casillasDisp.add(casillas.get(casillaIndex+1));
-		casillasDisp.add(casillas.get(casillaIndex+7));
-		casillasDisp.add(casillas.get(casillaIndex+8));
-		casillasDisp.add(casillas.get(casillaIndex+9));
+		//casillasDisp.add(casillas.get(casillaIndex+7));
+		//casillasDisp.add(casillas.get(casillaIndex+8));
+		//casillasDisp.add(casillas.get(casillaIndex+9));
 		
 		return casillasDisp;
 		//Da error si alguna de las casillas disponibles no esta dentro del tablero, 
 		//por ejemplo cuando el rey "puede" moverse fuera del tablero, en su posicion inicial por ejemplo
 		// pero el metodo como tal funciona bien cuando todos sus movimientos tienen sentido, salvo por ese bug
+		// He dejado con barras los tres ultimos para que no explote en su posicion inicial
 	}
 }
