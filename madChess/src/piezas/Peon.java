@@ -24,7 +24,7 @@ public class Peon extends Pieza implements MetodosInterfaz{
 		
 		
 		ArrayList<Casilla> casillasDisp = new ArrayList<>(); 
-		ArrayList<Integer> casillasDispIndex = new ArrayList<>(Arrays.asList(8)); //SETEAMOS AQUÍ LAS CASILLAS 
+		ArrayList<Integer> casillasDispIndex = new ArrayList<>(Arrays.asList(8)); //SETEAMOS AQUÍ LAS CASILLAS
 		if(!pMoved) {
 			casillasDispIndex.add(16);
 			pMoved = true;
@@ -38,8 +38,25 @@ public class Peon extends Pieza implements MetodosInterfaz{
 			if(casillaDisp.getPieza() == null) {
 				casillasDisp.add(casillaDisp);
 			}
-			
 		}
+		ArrayList<Integer> casillasComiblesIndex = new ArrayList<>(Arrays.asList());
+		if(curCasilla.getColumna()!= 'A') {
+			casillasComiblesIndex.add(9);			
+		}
+		if(curCasilla.getColumna()!= 'H') {
+			casillasComiblesIndex.add(7);
+		}
+		for (int casillaComibleIndex : casillasComiblesIndex) {
+			
+			if (this.getIsWhite()) {
+				casillaComibleIndex = casillaComibleIndex*-1;
+			}			
+			Casilla casillaComible = casillas.get(casillaIndex+casillaComibleIndex);
+			if(casillaComible.getPieza() != null) {
+				casillasDisp.add(casillaComible);
+			}
+		}
+		
 		return casillasDisp;
 	
 	}
