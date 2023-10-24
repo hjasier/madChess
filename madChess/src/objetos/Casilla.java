@@ -23,7 +23,8 @@ public class Casilla extends JPanel {
     protected Pieza pieza;
     protected Boolean dragging = false;
     protected Boolean iluminada = false;
-    public int imgSize;
+    protected int imgSize;
+    protected Boolean isDisponible = false;
 
 
 	public Casilla(Color color, int fila, int c) {
@@ -118,17 +119,26 @@ public class Casilla extends JPanel {
         int x = (getWidth() - imgSize) / 2;
         int y = (getHeight() - imgSize) / 2;
         
+
+        if (this.isDisponible) {
+        	final int radius = 25;
+        	g.setColor(new Color(255, 201, 0 ));
+        	g.fillOval(height/2 - radius/2, height/2 - radius/2,radius,radius);
+        }
         if (this.pieza != null && !dragging) {	
         	g.drawImage(this.pieza.getImg().getImage(), x, y, imgSize, imgSize, this);
         }
+        
+        
         
     }
 
 
 	public void setDisponible(boolean status) {
-		this.color = status ? Color.red : Color.blue;
-		
+		isDisponible = status;
+		System.out.println(status);
 		repaint();
+		
 	}
 
 
