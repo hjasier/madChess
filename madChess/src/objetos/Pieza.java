@@ -10,33 +10,36 @@ import javax.swing.ImageIcon;
 public class Pieza {
 
 	
-	public String nombre;
-	public ImageIcon img;
-	public HashMap<String , Integer> movimientos;
-	
-	public Jugador propietario;
-	protected ArrayList<Casilla> casillas;
+	private String nombre;
+	private ImageIcon img;
+	private HashMap<String , Integer> movimientos;
+	private Jugador propietario;
+	private Boolean isWhite;
+
 	
 	
 
-	public Pieza(String nombre) {
-		super();
-		this.nombre = nombre;
-		this.img = new ImageIcon(getClass().getResource("../src_piezas/" + nombre + ".png"));
-	}
 	
-	public Pieza(String nombre, ArrayList<Casilla> casillas) {
+	public Pieza(String nombre, Boolean isWhite) {
 		super();
 		this.nombre = nombre;
-		this.img = new ImageIcon(getClass().getResource("../src_piezas/" + nombre + ".png"));
-		this.casillas = casillas;
+		this.isWhite = isWhite;
+		char isWhiteChar = isWhite ? 'w':'b';
+		this.img = new ImageIcon(getClass().getResource("../src_piezas/" + isWhiteChar+nombre + ".png"));
 	}
 
+	
 	public ImageIcon getImg() { 
 		return this.img;
 	}
 
 	
+	
+	public Boolean getIsWhite() {
+		return isWhite;
+	}
+
+
 	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
 
 		return null;

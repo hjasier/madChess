@@ -8,10 +8,11 @@ import objetos.Pieza;
 
 public class Caballo extends Pieza implements MetodosInterfaz {
 
-	public Caballo(String nombre) {
-		super(nombre);
-		// TODO Auto-generated constructor stub
+	public Caballo(Boolean isWhite) {
+		super("n",isWhite);
 	}
+
+	
 
 	@Override
 	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {

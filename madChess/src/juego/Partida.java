@@ -11,9 +11,12 @@ import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
+import piezas.Alfil;
 import piezas.Caballo;
 import piezas.Peon;
+import piezas.Reina;
 import piezas.Rey;
+import piezas.Torre;
 import ventanas.VentanaJuego;
 
 public class Partida {
@@ -42,66 +45,38 @@ public class Partida {
 	public Partida() {
 		VentanaJuego ventana = new VentanaJuego();
 		casillas = ventana.getTableroDiv().getCasillas();
-		loadPiezas();
 		cargarPiezasTablero();
 	}
 
 
-	/** 
-	
-	Primero rellemanos el hashmap de piezas en loadPiezas y luego metemos las piezas en sus 
-	casillas correspondientes en la función cargarPiezasTablero() asi no repetimos dos veces los atributos
-	 de piezas 
-	
-	*/
-	protected void loadPiezas() {
-		//Piezas
-		
-		piezas.put("bb",new Pieza("bb"));
-		piezas.put("bk",new Rey("bk"));
-		piezas.put("bn",new Caballo("bn"));
-		piezas.put("bp",new Pieza("bp"));
-		piezas.put("bq",new Pieza("bq"));
-		piezas.put("br",new Pieza("br"));
-		
-		piezas.put("wb",new Pieza("wb"));
-		piezas.put("wk",new Rey("wk"));
-		piezas.put("wn",new Caballo("wn"));
-		piezas.put("wp",new Peon("wp"));
-		piezas.put("wq",new Pieza("wq"));
-		piezas.put("wr",new Pieza("wr"));
-		
-	}
 	
 	protected void cargarPiezasTablero() {
-		//negras segunda fila
-		casillas.get(0).setPieza(piezas.get("br"));
-		casillas.get(1).setPieza(piezas.get("bn"));
-		casillas.get(2).setPieza(piezas.get("bb"));
-		casillas.get(3).setPieza(piezas.get("bq"));
-		casillas.get(4).setPieza(piezas.get("bk"));
-		casillas.get(5).setPieza(piezas.get("bb"));
-		casillas.get(6).setPieza(piezas.get("bn"));
-		casillas.get(7).setPieza(piezas.get("br"));
-		casillas.get(7).setPieza(piezas.get("br"));
-		//negras primera fila
+
+		casillas.get(0).setPieza(new Torre(false));
+		casillas.get(1).setPieza(new Caballo(false));
+		casillas.get(2).setPieza(new Alfil(false));
+		casillas.get(3).setPieza(new Reina(false));
+		casillas.get(4).setPieza(new Rey(false));
+		casillas.get(5).setPieza(new Alfil(false));
+		casillas.get(6).setPieza(new Caballo(false));
+		casillas.get(7).setPieza(new Torre(false));
+
 		for (int i = 8; i <= 15; i++) {
-			casillas.get(i).setPieza(piezas.get("bp"));
+			casillas.get(i).setPieza(new Peon(false));
 		}
-		//blancas primera fila
+
 		for (int i = 48; i <= 55; i++) {
-			casillas.get(i).setPieza(piezas.get("wp"));
+			casillas.get(i).setPieza(new Peon(true));
 		}
 		
-		//blancas segunda fila
-		casillas.get(56).setPieza(piezas.get("wr"));
-		casillas.get(57).setPieza(piezas.get("wn"));
-		casillas.get(58).setPieza(piezas.get("wb"));
-		casillas.get(59).setPieza(piezas.get("wq"));
-		casillas.get(60).setPieza(piezas.get("wk"));
-		casillas.get(61).setPieza(piezas.get("wb"));
-		casillas.get(62).setPieza(piezas.get("wn"));
-		casillas.get(63).setPieza(piezas.get("wr"));
+		casillas.get(56).setPieza(new Torre(true));
+		casillas.get(57).setPieza(new Caballo(true));
+		casillas.get(58).setPieza(new Alfil(true));
+		casillas.get(59).setPieza(new Reina(true));
+		casillas.get(60).setPieza(new Rey(true));
+		casillas.get(61).setPieza(new Alfil(true));
+		casillas.get(62).setPieza(new Caballo(true));
+		casillas.get(63).setPieza(new Torre(true));
         }
 	}
 

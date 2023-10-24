@@ -8,10 +8,11 @@ import objetos.Pieza;
 
 public class Rey extends Pieza implements MetodosInterfaz{
 
-	public Rey(String nombre) {
-		super(nombre);
-		// TODO Auto-generated constructor stub
+	public Rey(Boolean isWhite) {
+		super("k",isWhite);
 	}
+
+	
 	
 	@Override
 	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
