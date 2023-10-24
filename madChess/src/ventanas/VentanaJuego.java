@@ -2,13 +2,8 @@ package ventanas;
 
 import java.awt.Color;
 import java.awt.Panel;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -37,14 +32,8 @@ public class VentanaJuego extends JFrame {
         fondo.add(tableroDiv);
         
 
-        try {
-            BufferedImage wPic = ImageIO.read(this.getClass().getResource("../src_piezas/bbb.jpg"));
-            JLabel wIcon = new JLabel(new ImageIcon(wPic));
-             this.add(wIcon);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        this.add(fondo);
+
        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
