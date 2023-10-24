@@ -1,13 +1,16 @@
 package piezas;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import objetos.Casilla;
 import objetos.MetodosInterfaz;
 import objetos.Pieza;
 
 public class Peon extends Pieza implements MetodosInterfaz{
-
+	
+	protected Boolean pMoved = false;
+	
 	public Peon(Boolean isWhite) {
 		super("p",isWhite);
 	}
@@ -18,16 +21,23 @@ public class Peon extends Pieza implements MetodosInterfaz{
 	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
 		
 		int casillaIndex = casillas.indexOf(curCasilla);
-
+		
 		
 		ArrayList<Casilla> casillasDisp = new ArrayList<>(); 
-		int[] casillasDispIndex = new int[]{8,16}; //SETEAMOS AQUÍ LAS CASILLAS 
+		ArrayList<Integer> casillasDispIndex = new ArrayList<>(Arrays.asList(8)); //SETEAMOS AQUÍ LAS CASILLAS 
+		if(!pMoved) {
+			casillasDispIndex.add(16);
+			pMoved = true;
+		}
 		for (int casillaDispIndx : casillasDispIndex) {
 			
 			if (this.getIsWhite()) {
 				casillaDispIndx = casillaDispIndx*-1;
 			}			
-			casillasDisp.add(casillas.get(casillaIndex+casillaDispIndx));
+			Casilla casillaDisp = casillas.get(casillaIndex+casillaDispIndx);
+			if(casillaDisp.getPieza() == null) {
+				casillasDisp.add(casillaDisp);
+			}
 			
 		}
 		return casillasDisp;
