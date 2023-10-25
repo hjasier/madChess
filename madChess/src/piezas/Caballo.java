@@ -16,24 +16,30 @@ public class Caballo extends Pieza implements MetodosInterfaz {
 
 	@Override
 	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
-		
-		int casillaIndex = casillas.indexOf(curCasilla);
-		System.out.println(casillaIndex);
-		
-		ArrayList<Casilla> casillasDisp = new ArrayList<>(); 
-		//casillasDisp.add(casillas.get(casillaIndex+6));
-		//casillasDisp.add(casillas.get(casillaIndex+10));
-		//casillasDisp.add(casillas.get(casillaIndex+15));
-		//casillasDisp.add(casillas.get(casillaIndex+17));
-		casillasDisp.add(casillas.get(casillaIndex-6));
-		casillasDisp.add(casillas.get(casillaIndex-10));
-		casillasDisp.add(casillas.get(casillaIndex-15));
-		casillasDisp.add(casillas.get(casillaIndex-17));
-		
-		return casillasDisp; 
-		//Da error si alguna de las casillas disponibles no esta dentro del tablero, 
-		//por ejemplo cuando el caballo "puede" moverse fuera del tablero, en su posicion inicial por ejemplo
-		// pero el metodo como tal funciona funciona bien cuando todos sus movimientos tienen sentido, salvo por ese bug
-		// He dejado con barras los tres ultimos para que no explote en su posicion inicial
+	    int casillaIndex = casillas.indexOf(curCasilla);
+
+	    ArrayList<Casilla> casillasDisp = new ArrayList<>();
+
+	    int fila = curCasilla.getFila();
+	    char columna = curCasilla.getColumna();
+
+	    // Posibles movimientos del caballo
+	    int[][] movimientos = {
+	        {-1, -2}, {-1, 2}, {1, -2}, {1, 2},
+	        {-2, -1}, {-2, 1}, {2, -1}, {2, 1}
+	    };
+
+	    for (int[] movimiento : movimientos) {
+	        int nuevaFila = fila + movimiento[0];
+	        char nuevaColumna = (char) (columna + movimiento[1]);
+
+	        // Verificar que la casilla resultante esté dentro del tablero (filas 0 a 7 y columnas A a H)
+	        if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+	            Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
+	            casillasDisp.add(casillaDisp);
+	        }
+	    }
+
+	    return casillasDisp;
 	}
 }
