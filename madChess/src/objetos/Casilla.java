@@ -120,7 +120,7 @@ public class Casilla extends JPanel {
         
 
         if (this.isDisponible) {
-        	final int radius = 25;
+        	final int radius = 40;
         	g.setColor(new Color(255, 201, 0 ));
         	g.fillOval(height/2 - radius/2, height/2 - radius/2,radius,radius);
         }
