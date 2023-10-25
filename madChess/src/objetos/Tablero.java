@@ -108,7 +108,6 @@ public class Tablero extends JPanel{
         		
         		if (prevCasilla.getPieza()!=null && !dragging) {
         			dragging = true;
-        			System.out.println("RUNNING FR");
         			prevCasilla.setDragging(true);
         			Image piezaImg = prevCasilla.getPieza().getImg().getImage();
             		int escala = prevCasilla.imgSize;
@@ -195,8 +194,8 @@ public class Tablero extends JPanel{
 	
 	public void recalcularTamanyo() {
         Container ventana = this.getParent();
-        int minSize = Math.min(ventana.getWidth(), ventana.getHeight()) - 100;
-        minSize = (minSize < 400) ? 400 : minSize; // Asi el tamanyo minimo es 400
+        int minSize = Math.min(ventana.getWidth(), ventana.getHeight());
+        minSize = (minSize < 400) ? 400 : minSize;
         this.setSize(minSize,minSize);
         this.casillasDiv.setSize(this.getSize());
         this.tableroDiv.setSize(this.getSize());

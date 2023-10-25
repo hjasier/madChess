@@ -52,7 +52,7 @@ public class Peon extends Pieza implements MetodosInterfaz{
 				casillaComibleIndex = casillaComibleIndex*-1;
 			}			
 			Casilla casillaComible = casillas.get(casillaIndex+casillaComibleIndex);
-			if(casillaComible.getPieza() != null) {
+			if(casillaComible.getPieza() != null && casillaComible.getPieza().getIsWhite()!=this.getIsWhite()) {
 				casillasDisp.add(casillaComible);
 			}
 		}

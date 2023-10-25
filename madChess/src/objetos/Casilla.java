@@ -46,7 +46,6 @@ public class Casilla extends JPanel {
 	
 	public void setPieza(Pieza pieza) {
 		this.pieza = pieza;
-		System.out.println(pieza);
 		this.repaint();
 		
 	}
@@ -115,7 +114,7 @@ public class Casilla extends JPanel {
         g.fillRect(0, 0, height, height); // xPos, yPos W , H
         
 
-        imgSize = (int)(height / 2 * 1.85);
+        imgSize = (int)(height / 2 * 1.70);
         int x = (getWidth() - imgSize) / 2;
         int y = (getHeight() - imgSize) / 2;
         
@@ -125,6 +124,7 @@ public class Casilla extends JPanel {
         	g.setColor(new Color(255, 201, 0 ));
         	g.fillOval(height/2 - radius/2, height/2 - radius/2,radius,radius);
         }
+        
         if (this.pieza != null && !dragging) {	
         	g.drawImage(this.pieza.getImg().getImage(), x, y, imgSize, imgSize, this);
         }

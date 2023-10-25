@@ -4,22 +4,16 @@ import java.awt.Color;
 import java.awt.Panel;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 
 import objetos.*;
 
 
 public class VentanaJuego extends JFrame {
 	private static final long serialVersionUID = 1L;
-	protected Tablero tableroDiv = new Tablero();
-	protected JPanel panelDerecha = new JPanel(); 
-    protected JPanel panelAbajo = new JPanel(); 
-    
+	protected Tablero tablero = new Tablero();
+	
     public VentanaJuego() {
     	int[] ventanaSize = {800,800};
 
@@ -33,7 +27,8 @@ public class VentanaJuego extends JFrame {
         Panel fondo = new Panel();
         fondo.setBackground(this.getBackground());
         fondo.setLayout(null);
-        fondo.add(tableroDiv);
+        
+        fondo.add(tablero);
         
 
         this.add(fondo);
@@ -43,20 +38,26 @@ public class VentanaJuego extends JFrame {
         this.setVisible(true);
         
         
+        
+        
+        
+        
+        
+        tablero.recalcularTamanyo();
         this.addComponentListener(new ComponentAdapter() {
         	@Override
         	public void componentResized(ComponentEvent e) {
-        		tableroDiv.recalcularTamanyo();
+        		tablero.recalcularTamanyo();
         	}
 		});
         
-        tableroDiv.recalcularTamanyo();
+        
         
     }
     
     
     public Tablero getTableroDiv() {
-		return tableroDiv;
+		return tablero;
 	}
 
 }
