@@ -193,20 +193,15 @@ public class Tablero extends JPanel{
 	}
 
 	
-	
-	@Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // igual hay que hacer un debouncer ns la verdad
+	public void recalcularTamanyo() {
         Container ventana = this.getParent();
         int minSize = Math.min(ventana.getWidth(), ventana.getHeight()) - 100;
-        
         minSize = (minSize < 400) ? 400 : minSize; // Asi el tamanyo minimo es 400
         this.setSize(minSize,minSize);
         this.casillasDiv.setSize(this.getSize());
         this.tableroDiv.setSize(this.getSize());
-        
-    }
+        this.repaint();
+	}
     
 	
 

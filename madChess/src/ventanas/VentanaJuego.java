@@ -2,6 +2,10 @@ package ventanas;
 
 import java.awt.Color;
 import java.awt.Panel;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,6 +41,16 @@ public class VentanaJuego extends JFrame {
        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        
+        
+        this.addComponentListener(new ComponentAdapter() {
+        	@Override
+        	public void componentResized(ComponentEvent e) {
+        		tableroDiv.recalcularTamanyo();
+        	}
+		});
+        
+        tableroDiv.recalcularTamanyo();
         
     }
     
