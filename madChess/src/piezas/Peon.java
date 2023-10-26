@@ -16,7 +16,7 @@ public class Peon extends Pieza implements MetodosInterfaz{
 	}
 
 	
-	
+	/**
 	@Override
 	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
 		
@@ -59,5 +59,56 @@ public class Peon extends Pieza implements MetodosInterfaz{
 		
 		return casillasDisp;
 	
-	}
+	}**/
+	
+	
+	
+	@Override
+    public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
+        int casillaIndex = casillas.indexOf(curCasilla);
+        ArrayList<Casilla> casillasDisp = new ArrayList<>();
+        int fila = curCasilla.getFila();
+        char columna = curCasilla.getColumna();
+
+        // Posibles movimientos de la torre: arriba, abajo, izquierda y derecha
+        int[][] movimientos = {
+        			
+        		{-1, -1},
+        		{-1, 0},
+        		{-1, 0}, /**Peon**/
+        		{-1, 1}
+        };
+        if (!pMoved) {
+            movimientos[1][0] = -2; // Cambia el movimiento de una casilla a dos casillas
+            pMoved = true;
+        }
+        
+     // Determina si la pieza es negra
+        boolean isBlack = !this.getIsWhite();
+
+        for (int[] movimiento : movimientos) {
+            int nuevaFila = fila + (isBlack ? -movimiento[0] : movimiento[0]); //si es negra hace lo opuesto que para la blanca
+            char nuevaColumna = (char) (columna + (isBlack ? -movimiento[1] : movimiento[1]));
+
+            
+            // Verifica que la casilla resultante esté dentro del tablero (filas 0 a 7 y columnas A a H)
+            if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+            	
+                Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
+                
+                if (casillaDisp.getPieza()!=null&&casillaDisp.getPieza().getIsWhite()==this.getIsWhite()) {continue;}
+                else if (movimiento[0] == -1 && movimiento[1] == -1 && casillaDisp.getPieza()==null) {continue;} //mira si a la izquierda hay pieza para comer o no
+                else if (movimiento[0] == -1 && movimiento[1] == 1 && casillaDisp.getPieza()==null) {continue;} //mira si a la derecha hay pieza para comer o no
+                else if (movimiento[0] == -1 && movimiento[1] == 0 && casillaDisp.getPieza()!=null) {continue;} //cuando tiene una pieza de frente no se mueve
+                
+                casillasDisp.add(casillaDisp);
+
+                
+                
+            }
+        }
+
+        return casillasDisp;
+    }
+	
 }
