@@ -15,25 +15,39 @@ public class Rey extends Pieza implements MetodosInterfaz{
 	
 	
 	@Override
-	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
-		
-		int casillaIndex = casillas.indexOf(curCasilla);
-		System.out.println(casillaIndex);
-		
-		ArrayList<Casilla> casillasDisp = new ArrayList<>(); 
-		casillasDisp.add(casillas.get(casillaIndex-1));
-		casillasDisp.add(casillas.get(casillaIndex-7));
-		casillasDisp.add(casillas.get(casillaIndex-8));
-		casillasDisp.add(casillas.get(casillaIndex-9));
-		casillasDisp.add(casillas.get(casillaIndex+1));
-		//casillasDisp.add(casillas.get(casillaIndex+7));
-		//casillasDisp.add(casillas.get(casillaIndex+8));
-		//casillasDisp.add(casillas.get(casillaIndex+9));
-		
-		return casillasDisp;
-		//Da error si alguna de las casillas disponibles no esta dentro del tablero, 
-		//por ejemplo cuando el rey "puede" moverse fuera del tablero, en su posicion inicial por ejemplo
-		// pero el metodo como tal funciona bien cuando todos sus movimientos tienen sentido, salvo por ese bug
-		// He dejado con barras los tres ultimos para que no explote en su posicion inicial
-	}
+    public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
+        int casillaIndex = casillas.indexOf(curCasilla);
+        ArrayList<Casilla> casillasDisp = new ArrayList<>();
+        int fila = curCasilla.getFila();
+        char columna = curCasilla.getColumna();
+
+        // Posibles movimientos de la torre: arriba, abajo, izquierda y derecha
+        int[][] movimientos = {
+        			
+        		{-1, -1},{0, -1},{1, -1},
+        		{-1, 0}, /**Rey**/{1, 0}, 
+        		{-1, 1}, {0, 1}, {1, 1}
+        };
+
+        for (int[] movimiento : movimientos) { //Recorre cada movimiento posible desde la posicion de la torre
+            int nuevaFila = fila + movimiento[0];
+            char nuevaColumna = (char) (columna + movimiento[1]);
+
+            // Verifica que la casilla resultante esté dentro del tablero (filas 0 a 7 y columnas A a H)
+            while (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+            	
+                Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
+                
+                if (casillaDisp.getPieza()!=null&&casillaDisp.getPieza().getIsWhite()==this.getIsWhite()) {break;}
+                casillasDisp.add(casillaDisp);
+
+                // Avanzo a la dirección del movimiento
+                nuevaFila += movimiento[0];
+                nuevaColumna = (char) (nuevaColumna + movimiento[1]);
+                if (casillaDisp.getPieza()!=null) {break;}
+            }
+        }
+
+        return casillasDisp;
+    }
 }
