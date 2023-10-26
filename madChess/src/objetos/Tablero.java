@@ -134,11 +134,12 @@ public class Tablero extends JPanel{
         	public void mouseReleased(MouseEvent e) {
         		curCasilla = getCurCasilla(e);
         		if(prevCasilla != null && prevCasilla.getPieza()!=null) {
-        			 if (prevCasilla != curCasilla){
+        			 if (prevCasilla != curCasilla && casillasDisp.contains(curCasilla)){
                 		Pieza pieza= prevCasilla.getPieza();
                 		prevCasilla.setPieza(null);
                 		curCasilla.setPieza(pieza);
         			}
+        			 
         			prevCasilla.setDragging(false);
         			
         			 dragImg.setIcon(null);

@@ -49,6 +49,7 @@ public class VentanaJuego extends JFrame {
         	public void componentResized(ComponentEvent e) {
         		tablero.recalcularTamanyo();
         	}
+        	//FIXME: Al maximizar la ventana también tendría que funcionar
 		});
         
         

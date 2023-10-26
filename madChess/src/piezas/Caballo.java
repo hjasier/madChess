@@ -37,8 +37,8 @@ public class Caballo extends Pieza implements MetodosInterfaz {
 
 	        // Verificar que la casilla resultante esté dentro del tablero (filas 0 a 7 y columnas A a H)
 	        if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
-	        	System.out.println("nueva fila-->"+nuevaFila+"nuevaColr--> "+nuevaColumna);
 	            Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
+	            if (casillaDisp.getPieza()!=null&&casillaDisp.getPieza().getIsWhite()==this.getIsWhite()) {continue;}
 	            casillasDisp.add(casillaDisp);
 	        }
 	    }

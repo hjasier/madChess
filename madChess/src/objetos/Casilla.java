@@ -133,7 +133,7 @@ public class Casilla extends JPanel {
             	g.fillOval(height/2 - radius2/2, height/2 - radius2/2,radius2,radius2);
         	}
         	else {
-            	final int radius = 25;
+            	final int radius = 25; //FIXME: En circulo tendría que tener relación al tamaño de la casilla
             	g.fillOval(height/2 - radius/2, height/2 - radius/2,radius,radius);	
         	}
 
