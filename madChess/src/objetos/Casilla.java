@@ -120,9 +120,19 @@ public class Casilla extends JPanel {
         
 
         if (this.isDisponible) {
-        	final int radius = 40;
         	g.setColor(new Color(255, 201, 0 ));
-        	g.fillOval(height/2 - radius/2, height/2 - radius/2,radius,radius);
+        	if (this.pieza != null) {
+            	final int radius1 = 80;
+            	final int radius2 = 57;
+            	g.fillOval(height/2 - radius1/2, height/2 - radius1/2,radius1,radius1);
+            	g.setColor(this.color);
+            	g.fillOval(height/2 - radius2/2, height/2 - radius2/2,radius2,radius2);
+        	}
+        	else {
+            	final int radius = 40;
+            	g.fillOval(height/2 - radius/2, height/2 - radius/2,radius,radius);	
+        	}
+
         }
         
         if (this.pieza != null && !dragging) {	
@@ -136,7 +146,6 @@ public class Casilla extends JPanel {
 
 	public void setDisponible(boolean status) {
 		isDisponible = status;
-		System.out.println(status);
 		repaint();
 		
 	}
