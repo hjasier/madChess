@@ -126,7 +126,7 @@ public class Casilla extends JPanel {
         if (this.isDisponible) {
         	g.setColor(new Color(255, 201, 0 ));
         	if (this.pieza != null) {
-            	final int radius1 = 80;
+            	final int radius1 = 80;//FIXME: Los circulos tendrían que tener relación al tamaño de la casilla
             	final int radius2 = 58;
             	g.fillOval(height/2 - radius1/2, height/2 - radius1/2,radius1,radius1);
             	g.setColor(this.color);

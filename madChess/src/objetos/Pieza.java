@@ -15,6 +15,7 @@ public class Pieza {
 	private HashMap<String , Integer> movimientos;
 	private Jugador propietario;
 	private Boolean isWhite;
+	protected Boolean pMoved = false;
 
 	
 	
@@ -44,6 +45,19 @@ public class Pieza {
 
 		return null;
 		
+	}
+
+
+	public void setPMoved() {
+		if (!this.pMoved) {
+			this.pMoved = true;
+		}
+		
+	}
+
+
+	public boolean getPMoved() {
+		return this.pMoved;
 	}
 	
 		

@@ -9,8 +9,6 @@ import objetos.Pieza;
 
 public class Peon extends Pieza implements MetodosInterfaz{
 	
-	protected Boolean pMoved = false;
-	
 	public Peon(Boolean isWhite) {
 		super("p",isWhite);
 	}
@@ -34,7 +32,6 @@ public class Peon extends Pieza implements MetodosInterfaz{
         };
         if (!pMoved) {
             movimientos[1][0] = -2; // Cambia el movimiento de una casilla a dos casillas
-            pMoved = true;
         }
         
 

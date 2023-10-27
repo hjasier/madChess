@@ -34,7 +34,7 @@ public class Partida {
 	protected HashMap<String,Pieza> piezas = new HashMap<String,Pieza>();
 	
 	protected HashMap<Boost, Boolean> boosts;
-
+	protected Tablero tablero;
 
 
 	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha,HashMap<Boost, Boolean> boosts) {
@@ -49,30 +49,17 @@ public class Partida {
 	
 	public Partida() {
 		VentanaJuego ventana = new VentanaJuego();
-		casillas = ventana.getTableroDiv().getCasillas();
+		tablero = ventana.getTableroDiv();
+		casillas = tablero.getCasillas();
 		cargarPiezasTablero();
-		Tablero tablero = ventana.getTableroDiv();
+		
 		
 		
         tablero.tableroDiv.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent e) {
         		Casilla curCasilla = tablero.getCurCasilla(e);
-        		if(tablero.prevCasilla != null && tablero.prevCasilla.getPieza()!=null) {
-        			 if (tablero.prevCasilla != curCasilla && tablero.casillasDisp.contains(curCasilla)){
-                		Pieza pieza= tablero.prevCasilla.getPieza();
-                		tablero.prevCasilla.setPieza(null);
-                		curCasilla.setPieza(pieza);
-        			}
-        			 
-        			tablero.prevCasilla.setDragging(false);
-        			
-        			 tablero.dragImg.setIcon(null);
-
-             		for(Casilla casillaDisp: tablero.casillasDisp) {
-             			casillaDisp.setDisponible(false);
-             		} 
-        	}
+        		moverPiezaTablero(tablero.prevCasilla,curCasilla,tablero.casillasDisp);
         		tablero.dragging = false;
         		
         }
@@ -81,7 +68,55 @@ public class Partida {
 		
 		
 	}
+	
+	
+	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla,ArrayList<Casilla> casillasDisp) {
+		
+		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
+			
+			if (prevCasilla != curCasilla && casillasDisp.contains(curCasilla)){ // Si la casilla esta entre las disponibles y no es la casilla de la que sale
+       		Pieza pieza= prevCasilla.getPieza();
+       		Pieza newPieza = curCasilla.getPieza();
+       		if (checkEnroque(pieza,newPieza)) {
+       			newPieza.setPMoved();
+       		}
+       		else{newPieza = null;}
+       		;
 
+       		prevCasilla.setPieza(newPieza);
+       		curCasilla.setPieza(pieza);
+       		
+       		pieza.setPMoved();  
+       		
+       		
+			}
+			 
+			prevCasilla.setDragging(false);
+			
+			tablero.dragImg.setIcon(null); // Borramos la img del panel superior
+
+    		for(Casilla casillaDisp: tablero.casillasDisp) {
+    			casillaDisp.setDisponible(false);
+    		} 
+    		
+    		       
+	}
+		
+	}
+
+
+
+	protected boolean checkEnroque(Pieza curPieza,Pieza newPieza) {
+		return(
+				newPieza!=null&&
+				(((curPieza instanceof Torre) && (newPieza instanceof Rey)  ) ||
+				((curPieza instanceof Rey) && (newPieza instanceof Torre))		)&&
+				
+				!curPieza.getPMoved()&&
+				!newPieza.getPMoved()
+				
+				);
+	}
 
 	
 	protected void cargarPiezasTablero() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import objetos.Casilla;
 import objetos.MetodosInterfaz;
 import objetos.Pieza;
+import piezas.Rey;
 
 public class Torre extends Pieza implements MetodosInterfaz {
 
@@ -34,7 +35,15 @@ public class Torre extends Pieza implements MetodosInterfaz {
             	
                 Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
                 
-                if (casillaDisp.getPieza()!=null&&casillaDisp.getPieza().getIsWhite()==this.getIsWhite()) {break;}
+                
+                if (
+                		casillaDisp.getPieza()!=null&& // Si no existe pieza
+                		casillaDisp.getPieza().getIsWhite()==this.getIsWhite()&& // Si la pieza es tuya
+                		!((casillaDisp.getPieza() instanceof Rey)&&!this.pMoved&&!casillaDisp.getPieza().getPMoved())) // Si existe pieza pero es rey y no se han movido de posición (Enroque)
+                {break;}
+                
+                
+                
                 casillasDisp.add(casillaDisp);
 
                 // Avanzo a la dirección del movimiento

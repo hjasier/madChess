@@ -38,7 +38,11 @@ public class Rey extends Pieza implements MetodosInterfaz{
             	
                 Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
                 
-                if (casillaDisp.getPieza()!=null&&casillaDisp.getPieza().getIsWhite()==this.getIsWhite()) {continue;}
+                if (
+                		casillaDisp.getPieza()!=null&&
+                		casillaDisp.getPieza().getIsWhite()==this.getIsWhite()
+                		
+                	) {continue;}
                 casillasDisp.add(casillaDisp);
 
                 
