@@ -1,5 +1,7 @@
 package juego;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,10 +9,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
+import javax.swing.JPanel;
+
 import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
+import objetos.Tablero;
 import piezas.Alfil;
 import piezas.Caballo;
 import piezas.Peon;
@@ -46,6 +51,35 @@ public class Partida {
 		VentanaJuego ventana = new VentanaJuego();
 		casillas = ventana.getTableroDiv().getCasillas();
 		cargarPiezasTablero();
+		Tablero tablero = ventana.getTableroDiv();
+		
+		
+        tablero.tableroDiv.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseReleased(MouseEvent e) {
+        		Casilla curCasilla = tablero.getCurCasilla(e);
+        		if(tablero.prevCasilla != null && tablero.prevCasilla.getPieza()!=null) {
+        			 if (tablero.prevCasilla != curCasilla && tablero.casillasDisp.contains(curCasilla)){
+                		Pieza pieza= tablero.prevCasilla.getPieza();
+                		tablero.prevCasilla.setPieza(null);
+                		curCasilla.setPieza(pieza);
+        			}
+        			 
+        			tablero.prevCasilla.setDragging(false);
+        			
+        			 tablero.dragImg.setIcon(null);
+
+             		for(Casilla casillaDisp: tablero.casillasDisp) {
+             			casillaDisp.setDisponible(false);
+             		} 
+        	}
+        		tablero.dragging = false;
+        		
+        }
+        
+        });
+		
+		
 	}
 
 

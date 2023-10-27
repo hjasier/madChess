@@ -17,15 +17,15 @@ public class Tablero extends JPanel{
 
 
 	protected JPanel casillasDiv = new JPanel();
-	protected JPanel tableroDiv = new JPanel(); //Panel por encima de las casillas
-	protected JLabel dragImg = new JLabel(); // Label que va a actuar como img dentro de tableroDiv
+	public JPanel tableroDiv = new JPanel(); //Panel por encima de las casillas
+	public JLabel dragImg = new JLabel(); // Label que va a actuar como img dentro de tableroDiv
 	
 	//Eventos mouse variables
 	protected Casilla curCasilla;
-	protected Casilla prevCasilla;
-	protected Boolean dragging = false;
+	public Casilla prevCasilla;
+	public Boolean dragging = false;
 	
-	protected ArrayList<Casilla> casillasDisp;
+	public ArrayList<Casilla> casillasDisp;
 	
     public Tablero() { 
 
@@ -128,31 +128,6 @@ public class Tablero extends JPanel{
         	}
 		});
         
-       
-        tableroDiv.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseReleased(MouseEvent e) {
-        		curCasilla = getCurCasilla(e);
-        		if(prevCasilla != null && prevCasilla.getPieza()!=null) {
-        			 if (prevCasilla != curCasilla && casillasDisp.contains(curCasilla)){
-                		Pieza pieza= prevCasilla.getPieza();
-                		prevCasilla.setPieza(null);
-                		curCasilla.setPieza(pieza);
-        			}
-        			 
-        			prevCasilla.setDragging(false);
-        			
-        			 dragImg.setIcon(null);
-
-             		for(Casilla casillaDisp: casillasDisp) {
-             			casillaDisp.setDisponible(false);
-             		} 
-        	}
-        		dragging = false;
-        		
-        }
-        
-        });
 
         
         
@@ -163,7 +138,7 @@ public class Tablero extends JPanel{
      */
     
     
-    protected Casilla getCurCasilla(MouseEvent e) {
+    public Casilla getCurCasilla(MouseEvent e) {
         double tamanyoCasilla = casillasDiv.getSize().getWidth()/8;
         int curCasillaCol = (int) (e.getX()/tamanyoCasilla);
         int curCasillaRow = (int) (e.getY()/tamanyoCasilla);
