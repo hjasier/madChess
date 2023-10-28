@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -54,6 +55,8 @@ public class VentanaJuegoTesteos extends JFrame {
 	
 	
 	protected JPanel panelMovimentos;
+	protected JTextArea areaMovimientos;
+	protected JLabel labelMovimientos;
 	
 	protected TableroTests tablero = new TableroTests();
 	
@@ -109,7 +112,7 @@ public class VentanaJuegoTesteos extends JFrame {
 	    // panel controles, movimiento y chat
 	    
 	    //panel chat
-	    panelMovimentos = new JPanel();
+	    panelMovimentos = new JPanel(new BorderLayout());
 	    
 	    panelChat = new JPanel( new BorderLayout());
 	    panelControlChat = new JPanel(new GridLayout(2,1));
@@ -155,8 +158,7 @@ public class VentanaJuegoTesteos extends JFrame {
 	    panelMensaje = new JPanel(new BorderLayout());
 	    
 	    panelUsuario.add(comboUsuarios);
-//	    panelUsuario.add(labelUsuario, BorderLayout.WEST);
-//	    panelUsuario.add(textfieldUsuario, BorderLayout.CENTER);
+
 	    panelMensaje.add(labelEscribe, BorderLayout.WEST);
 	    panelMensaje.add(textfieldChat , BorderLayout.CENTER);
 	    
@@ -171,14 +173,27 @@ public class VentanaJuegoTesteos extends JFrame {
 	    
 	    panelChat.add(panelControlChat, BorderLayout.SOUTH);
 	    
+	    areaChat.setBackground(Color.BLACK); 
+	    areaChat.setForeground(Color.WHITE); 
+	    areaChat.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
+	    areaChat.setEditable(false);
+	    
 	    
 	    // panel movimiento de las piezas
 	    
+	    labelMovimientos = new JLabel("MOVIMIENTOS");
+
+	    areaMovimientos = new JTextArea();
+	    areaMovimientos.setBackground(Color.BLACK); 
+	    areaMovimientos.setForeground(Color.WHITE); 
+	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
+	    areaMovimientos.setEditable(false);
+	    
+	    JScrollPane scrollMovimientos = new JScrollPane(areaMovimientos);	
 	    
 	    
-	    
-	    
-	    
+	    panelMovimentos.add(labelMovimientos, BorderLayout.NORTH);
+	    panelMovimentos.add(scrollMovimientos, BorderLayout.CENTER);
 	    
 	    
 	    
