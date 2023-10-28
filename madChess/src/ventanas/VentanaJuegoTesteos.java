@@ -89,6 +89,8 @@ public class VentanaJuegoTesteos extends JFrame {
 
         tablero.recalcularTamanyo();
         
+        //PARA VER EL TABLEOR DE ANTES CAMBIAR EL ARCHIVO MAIN.JAVA	
+        
     
         
         
