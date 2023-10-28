@@ -17,6 +17,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,6 +33,10 @@ public class VentanaJuegoTesteos extends JFrame {
 	protected JPanel panelJuego;
 	protected JPanel panelControles;
 	
+	protected JLabel labelUsuario1;
+	protected JLabel labelUsuario2;
+	
+	
 	protected JPanel panelChat;
 	protected JTextArea areaChat;
 	protected JTextField textfieldChat;
@@ -44,6 +49,8 @@ public class VentanaJuegoTesteos extends JFrame {
 	protected JPanel panelUsuario;
 	protected JPanel panelMensaje;
 	protected JLabel labelUsuario;
+	
+	protected JComboBox<String> comboUsuarios;
 	
 	
 	protected JPanel panelMovimentos;
@@ -89,10 +96,11 @@ public class VentanaJuegoTesteos extends JFrame {
 	    // Agrega algunos elementos a panelJuego (por ejemplo, botones o etiquetas)
 
 
-	    
-	    panelJuego.add(new JLabel("Nombre1"));
+	   labelUsuario1 = new JLabel("Usuario 1");
+	   labelUsuario2 = new JLabel("Usuario 2");
+	    panelJuego.add(labelUsuario1);
 	    panelJuego.add(tablero);
-	    panelJuego.add(new JLabel("Nombre2"));
+	    panelJuego.add(labelUsuario2);
 	
 	    this.add(fondo);
 	    
@@ -114,13 +122,25 @@ public class VentanaJuegoTesteos extends JFrame {
 	    labelEscribe = new JLabel("Mensaje:");
 	    panelDatosChat = new JPanel( new GridLayout(1,2));
 	    textfieldUsuario = new JTextField(0);
+	    
+	    comboUsuarios = new JComboBox<String>();
+	    
+	    String contenidoUsuario1 = labelUsuario1.getText();
+        String contenidoUsuario2 = labelUsuario2.getText();
+
+        // Crear un array y agregar los contenidos de los label
+        String[] contenidoUsuarios = {contenidoUsuario1, contenidoUsuario2};
+	    
+	    comboUsuarios = new JComboBox<String>(contenidoUsuarios);
+	    
+	    
 	    botonEnviar = new JButton("Enviar");
 	    botonEnviar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String texto = textfieldChat.getText();
-				String usuario = textfieldUsuario.getText();
+				String usuario = (String) comboUsuarios.getSelectedItem();
                 areaChat.append(usuario + ": " + texto + "\n"); // Agrega el texto al JTextArea
                 textfieldChat.setText(""); // Limpia el JTextField después de agregar el texto
                 textfieldUsuario.setText("");
@@ -134,8 +154,9 @@ public class VentanaJuegoTesteos extends JFrame {
 	    panelUsuario = new JPanel(new BorderLayout());
 	    panelMensaje = new JPanel(new BorderLayout());
 	    
-	    panelUsuario.add(labelUsuario, BorderLayout.WEST);
-	    panelUsuario.add(textfieldUsuario, BorderLayout.CENTER);
+	    panelUsuario.add(comboUsuarios);
+//	    panelUsuario.add(labelUsuario, BorderLayout.WEST);
+//	    panelUsuario.add(textfieldUsuario, BorderLayout.CENTER);
 	    panelMensaje.add(labelEscribe, BorderLayout.WEST);
 	    panelMensaje.add(textfieldChat , BorderLayout.CENTER);
 	    
