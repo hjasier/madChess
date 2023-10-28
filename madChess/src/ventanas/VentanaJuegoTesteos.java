@@ -100,7 +100,7 @@ public class VentanaJuegoTesteos extends JFrame {
 	    
 	    // panel controles, movimiento y chat
 	    
-	    
+	    //panel chat
 	    panelMovimentos = new JPanel();
 	    
 	    panelChat = new JPanel( new BorderLayout());
@@ -148,7 +148,19 @@ public class VentanaJuegoTesteos extends JFrame {
 	    
 	    panelControlChat.add(botonEnviar);
 	    
-	    panelChat.add(panelControlChat, BorderLayout.SOUTH); 
+	    panelChat.add(panelControlChat, BorderLayout.SOUTH);
+	    
+	    
+	    // panel movimiento de las piezas
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    panelControles.add(panelMovimentos);
 	    panelControles.add(panelChat);
         
