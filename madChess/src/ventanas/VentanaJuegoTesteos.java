@@ -57,14 +57,13 @@ public class VentanaJuegoTesteos extends JPanel {
 	protected JPanel panelMovimentos;
 	protected JTextArea areaMovimientos;
 	protected JLabel labelMovimientos;
-	protected JPanel fondo;
 	
 	protected Tablero tablero = new Tablero();
 	
 	public VentanaJuegoTesteos() {
 
 	    // Panel principal con GridBagLayout
-	    fondo = new JPanel(new GridBagLayout());
+	    this.setLayout(new GridBagLayout());
 	    GridBagConstraints gbc = new GridBagConstraints();
 
 	    // Paneles
@@ -72,7 +71,7 @@ public class VentanaJuegoTesteos extends JPanel {
 	    JPanel panelControles = new JPanel(new GridLayout(2,1));
 
 	    // Colores
-	    fondo.setBackground(Color.red);
+	    this.setBackground(Color.red);
 	    panelJuego.setBackground(Color.blue);
 	    panelControles.setBackground(Color.green);
 
@@ -82,12 +81,12 @@ public class VentanaJuegoTesteos extends JPanel {
 	    gbc.weightx = 1.0; //En panel del juego va a ocupar todo lo que pueda
 	    gbc.weighty = 1.0; // Para que ocupen todo lo que puedan en vertical
 	    gbc.fill = GridBagConstraints.BOTH;
-	    fondo.add(panelJuego, gbc);
+	    this.add(panelJuego, gbc);
 
 	    // PanelControles
 	    gbc.gridx = 1;
 	    gbc.weightx = 0.5; // El espacio que va a ocupar el panelControles
-	    fondo.add(panelControles, gbc);
+	    this.add(panelControles, gbc);
 
 	    
 	    
@@ -199,29 +198,31 @@ public class VentanaJuegoTesteos extends JPanel {
         
         
 
-
        
-
-        
-        
 
         tablero.recalcularTamanyo();
         this.addComponentListener(new ComponentAdapter() {
         	@Override
         	public void componentResized(ComponentEvent e) {
-        		tablero.recalcularTamanyo();
+        		 tablero.recalcularTamanyo();
         	}
         	//FIXME: Al maximizar la ventana también tendría que funcionar
 		});
+        
+        
+
+
     
         
         
         
     }
 	
-	public JPanel getPanel() {
-		return fondo;
+	public Tablero getTablero() {
+		return tablero;
 	}
+	
+
 	
     public Tablero getTableroDiv() {
 		return tablero;

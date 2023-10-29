@@ -1,6 +1,11 @@
 package ventanas;
 
+import java.awt.CardLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class VentanaPrincipal extends JFrame{
 
@@ -15,19 +20,54 @@ public class VentanaPrincipal extends JFrame{
 	 *  
 	 * 
 	 */
+	VentanaJuegoTesteos panelJuego = new VentanaJuegoTesteos();
 	
+    JPanel panelPrincipal = new JPanel();
+    CardLayout cardLayout = new CardLayout();
+    
+    JPanel panelLogin = new VentanaLogin();
+    
 	public VentanaPrincipal() {
 		
-		VentanaJuegoTesteos ventanaJuego = new VentanaJuegoTesteos();
+		
 		this.setLocationRelativeTo(null);
 		this.setSize(1000,800);
-	
 		
-		this.add(ventanaJuego.getPanel());
+		panelPrincipal.setLayout(cardLayout);
+		
+
 		
 		
+        panelPrincipal.add(panelJuego, "PANELJUEGO");
+        panelPrincipal.add(panelLogin, "PANELLOGIN");
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        this.add(panelPrincipal);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
 	}
 		
 }

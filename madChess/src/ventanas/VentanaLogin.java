@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class VentanaLogin extends JFrame{
+public class VentanaLogin extends JPanel{
 	
 	
 	protected JPanel panelLogin;
@@ -80,11 +80,7 @@ public class VentanaLogin extends JFrame{
 		panelLogin.add(panelUsuario);
 		panelLogin.add(panelContrasenya);
 		panelLogin.add(panelBotones);
-		this.add(panelLogin);
 		
-		this.setSize(500,200);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setVisible(true);
-       pack();
+		this.add(panelLogin);
 	}
 }
