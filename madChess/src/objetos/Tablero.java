@@ -33,7 +33,7 @@ public class Tablero extends JPanel{
     	 * DEFINICIONES DE LA VENTANA
     	 */
     	
-    	this.setBackground(Color.pink);
+    	this.setBackground(new Color(16,16,16)); //FIXME Solo devería estar declarado en un sitio
     	this.setLayout(null);
     	
     	

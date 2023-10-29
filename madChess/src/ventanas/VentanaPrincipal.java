@@ -32,7 +32,6 @@ public class VentanaPrincipal extends JFrame{
     Login panelLogin = new Login();
     PanelDemo panelDemo = new PanelDemo();
     
-    
 	public VentanaPrincipal() {
 		
 		this.setSize(1000,800);

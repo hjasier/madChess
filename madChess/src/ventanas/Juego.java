@@ -60,6 +60,7 @@ public class Juego extends JPanel {
 	protected JLabel labelMovimientos;
 	
 	protected Tablero tablero = new Tablero();
+	protected Color colorFondo = new Color(16,16,16);
 	
 	public Juego() {
 
@@ -71,11 +72,15 @@ public class Juego extends JPanel {
 	    JPanel panelJuego = new JPanel();
 	    JPanel panelControles = new JPanel(new GridLayout(2,1));
 
-	    // Colores
-	    this.setBackground(Color.red);
-	    panelJuego.setBackground(Color.blue);
-	    panelControles.setBackground(Color.green);
+	    /*
+	     * COLORES y FONDOS
+	     */
+	    this.setBackground(colorFondo);
+	    panelJuego.setBackground(colorFondo);
+	    panelControles.setBackground(colorFondo);
 
+	    
+	    
 	    // PanelJuego
 	    gbc.gridx = 0;
 	    gbc.gridy = 0;
@@ -170,8 +175,7 @@ public class Juego extends JPanel {
 	    
 	    panelChat.add(panelControlChat, BorderLayout.SOUTH);
 	    
-	    areaChat.setBackground(Color.BLACK); 
-	    areaChat.setForeground(Color.WHITE); 
+
 	    areaChat.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
 	    areaChat.setEditable(false);
 	    
@@ -181,8 +185,7 @@ public class Juego extends JPanel {
 	    labelMovimientos = new JLabel("MOVIMIENTOS");
 
 	    areaMovimientos = new JTextArea();
-	    areaMovimientos.setBackground(Color.BLACK); 
-	    areaMovimientos.setForeground(Color.WHITE); 
+
 	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
 	    areaMovimientos.setEditable(false);
 	    
@@ -193,11 +196,22 @@ public class Juego extends JPanel {
 	    panelMovimentos.add(scrollMovimientos, BorderLayout.CENTER);
 	    
 	    
+	    /*
+	     * COLORES 
+	     */
+	    
+	    areaChat.setBackground(Color.BLACK); 
+	    areaChat.setForeground(Color.WHITE); 
+	    areaMovimientos.setBackground(Color.BLACK); 
+	    areaMovimientos.setForeground(Color.WHITE); 
+	    
+	    
 	    
 	    panelControles.add(panelMovimentos);
 	    panelControles.add(panelChat);
         
         
+	    
 
        
 

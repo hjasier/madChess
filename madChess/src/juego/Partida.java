@@ -85,11 +85,12 @@ public class Partida {
 	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla,ArrayList<Casilla> casillasDisp) {
 		
 		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
-			Pieza piezaComida = null;
+			
 			
 			if (prevCasilla != curCasilla && casillasDisp.contains(curCasilla)){ // Si la casilla esta entre las disponibles y no es la casilla de la que sale
        		Pieza pieza= prevCasilla.getPieza();
        		Pieza newPieza = curCasilla.getPieza();
+       		Pieza piezaComida = null;
        		
        		if (checkEnroque(pieza,newPieza)) {
        			newPieza.setPMoved();
@@ -109,7 +110,7 @@ public class Partida {
        		curCasilla.setPieza(pieza);
        		
        		pieza.setPMoved();  
-       		
+       		guardarMovimiento(prevCasilla,curCasilla,piezaComida);
        		
 			}
 			 
@@ -121,7 +122,7 @@ public class Partida {
     			casillaDisp.setDisponible(false);
     		} 
     		
-    	guardarMovimiento(prevCasilla,curCasilla,piezaComida);	       
+    		       
 		}
 		
 	}
