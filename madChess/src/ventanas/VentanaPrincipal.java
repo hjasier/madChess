@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import juego.Partida;
+import objetos.Jugador;
 
 public class VentanaPrincipal extends JFrame{
 
@@ -34,9 +35,9 @@ public class VentanaPrincipal extends JFrame{
     
 	public VentanaPrincipal() {
 		
-		
-		this.setLocationRelativeTo(null);
 		this.setSize(1000,800);
+		this.setLocationRelativeTo(null);
+		
 		
 		panelPrincipal.setLayout(cardLayout);
 		
@@ -60,9 +61,10 @@ public class VentanaPrincipal extends JFrame{
         });
 
         panelDemo.btn2.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELJUEGO");
-                new Partida(panelJuego.getTablero());
+                new Partida(panelJuego);
             }
         });
         

@@ -43,6 +43,10 @@ public class Casilla extends JPanel {
 	  	public char getColumna() {
 	  		return columna;
 	  	}
+	  	
+	  public String getPos() {
+		  return (this.columna+""+this.getFila());
+	  }
 
 	
 	public void setPieza(Pieza pieza) {

@@ -36,6 +36,7 @@ public class Partida {
 	
 	protected HashMap<Boost, Boolean> boosts;
 	protected Tablero tablero;
+	protected Juego ventana;
 
 
 	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha,HashMap<Boost, Boolean> boosts) {
@@ -50,8 +51,9 @@ public class Partida {
 	
 	
 	
-	public Partida(Tablero tablero) {
-		this.tablero = tablero;
+	public Partida(Juego ventana) {
+		this.ventana = ventana;
+		this.tablero = ventana.getTablero();
 		
 		casillas = tablero.getCasillas();
 		cargarPiezasTablero();
@@ -76,20 +78,33 @@ public class Partida {
 		
 	}
 	
-	
+
+
+
+
 	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla,ArrayList<Casilla> casillasDisp) {
 		
 		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
+			Pieza piezaComida = null;
 			
 			if (prevCasilla != curCasilla && casillasDisp.contains(curCasilla)){ // Si la casilla esta entre las disponibles y no es la casilla de la que sale
        		Pieza pieza= prevCasilla.getPieza();
        		Pieza newPieza = curCasilla.getPieza();
+       		
        		if (checkEnroque(pieza,newPieza)) {
        			newPieza.setPMoved();
        		}
-       		else{newPieza = null;}
+       		else{
+       			if (newPieza!=null) {
+           			//entonces estamos comiento una pieza
+           			piezaComida = curCasilla.getPieza();
+           		}
+       			newPieza = null;
+       			}
        		;
-
+       		
+       		
+       		
        		prevCasilla.setPieza(newPieza);
        		curCasilla.setPieza(pieza);
        		
@@ -106,10 +121,22 @@ public class Partida {
     			casillaDisp.setDisponible(false);
     		} 
     		
-    		       
-	}
+    	guardarMovimiento(prevCasilla,curCasilla,piezaComida);	       
+		}
 		
 	}
+
+
+
+	private void guardarMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida) {
+		//Aquí guardaríamos el movimiento en la base de datos, con su user etc para las analíticas
+		String extra = (piezaComida==null) ? " ":" Pieza comida";
+		ventana.setNewMovimiento(prevCasilla.getPos()+" --> "+curCasilla.getPos()+extra);
+		
+		
+	}
+
+
 
 
 

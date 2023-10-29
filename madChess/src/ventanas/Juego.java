@@ -50,6 +50,7 @@ public class Juego extends JPanel {
 	protected JPanel panelUsuario;
 	protected JPanel panelMensaje;
 	protected JLabel labelUsuario;
+	protected JScrollPane scrollMovimientos;
 	
 	protected JComboBox<String> comboUsuarios;
 	
@@ -185,7 +186,7 @@ public class Juego extends JPanel {
 	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
 	    areaMovimientos.setEditable(false);
 	    
-	    JScrollPane scrollMovimientos = new JScrollPane(areaMovimientos);	
+	    scrollMovimientos = new JScrollPane(areaMovimientos);	
 	    
 	    
 	    panelMovimentos.add(labelMovimientos, BorderLayout.NORTH);
@@ -229,6 +230,10 @@ public class Juego extends JPanel {
 	}
 
 	
+    public void setNewMovimiento(String movimiento) {
+    	areaMovimientos.append(movimiento+ "\n");
+    }
+    
 
 }
 
