@@ -1,6 +1,8 @@
 package ventanas;
 
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -9,8 +11,6 @@ import javax.swing.JPanel;
 
 public class VentanaPrincipal extends JFrame{
 
-
-	
 	/* LA IDEA ES QUE SOLO EXISTA UN JFRAME Y EL RESTO:
 	 *  (lOGIN, JUEGO, PARTIDA ..ETC)
 	 *  
@@ -20,12 +20,15 @@ public class VentanaPrincipal extends JFrame{
 	 *  
 	 * 
 	 */
-	VentanaJuegoTesteos panelJuego = new VentanaJuegoTesteos();
+	JPanel panelPrincipal = new JPanel();
 	
-    JPanel panelPrincipal = new JPanel();
+	
+	VJuego panelJuego = new VJuego();
     CardLayout cardLayout = new CardLayout();
+   
+    Login panelLogin = new Login();
+    PanelDemo panelDemo = new PanelDemo();
     
-    JPanel panelLogin = new VentanaLogin();
     
 	public VentanaPrincipal() {
 		
@@ -37,11 +40,28 @@ public class VentanaPrincipal extends JFrame{
 		
 
 		
+
+		panelPrincipal.add(panelDemo, "PANELDEMO");
+		
+		
+
 		
         panelPrincipal.add(panelJuego, "PANELJUEGO");
         panelPrincipal.add(panelLogin, "PANELLOGIN");
-
         
+        
+        
+        panelDemo.btn1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelPrincipal, "PANELLOGIN");
+            }
+        });
+
+        panelDemo.btn2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelPrincipal, "PANELJUEGO");
+            }
+        });
         
         
         

@@ -1,7 +1,7 @@
 package juego;
 
-import ventanas.VentanaJuegoTesteos;
-import ventanas.VentanaLogin;
+import ventanas.VJuego;
+import ventanas.Login;
 import ventanas.VentanaPrincipal;
 
 public class main {

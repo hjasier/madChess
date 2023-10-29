@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class VentanaLogin extends JPanel{
+public class Login extends JPanel{
 	
 	
 	protected JPanel panelLogin;
@@ -25,7 +25,7 @@ public class VentanaLogin extends JPanel{
 	protected JButton botonLogin;
 	protected JButton botonSignup;
 	
-	public VentanaLogin() {
+	public Login() {
 		panelLogin = new JPanel(new GridLayout(3,1));
 		
 		panelUsuario = new JPanel(new GridLayout(2,1));
