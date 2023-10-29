@@ -9,10 +9,7 @@ public class main {
 		// TODO Auto-generated method stub
 		Partida v1 = new Partida();
 		
-		//new VentanaJuegoTesteos();
-		//Partida v1 = new Partida();
 		new VentanaLogin();
-		new VentanaJuegoTesteos();
 	}
 
 }
