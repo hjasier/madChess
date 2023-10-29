@@ -57,7 +57,8 @@ public class VentanaLogin extends JFrame{
 				String contra = textfieldContrasenya.getText();
 				textfieldUsuario.setText("");
 				textfieldContrasenya.setText("");
-				
+//				VentanaJuego.class.jug
+//				ArrayList<Jugador> juego.Partida.jugadores
 				//hay que comparar con los usuarios existentes
 			}
 		});
