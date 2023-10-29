@@ -29,7 +29,7 @@ import javax.swing.JTextField;
 import objetos.*;
 
 
-public class VentanaJuegoTesteos extends JFrame {
+public class VentanaJuegoTesteos extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected JPanel panelJuego;
 	protected JPanel panelControles;
@@ -57,16 +57,14 @@ public class VentanaJuegoTesteos extends JFrame {
 	protected JPanel panelMovimentos;
 	protected JTextArea areaMovimientos;
 	protected JLabel labelMovimientos;
+	protected JPanel fondo;
 	
 	protected Tablero tablero = new Tablero();
 	
 	public VentanaJuegoTesteos() {
-	    int[] ventanaSize = {1000, 800};
-	    this.setSize(ventanaSize[0], ventanaSize[1]);
-	    this.setLocationRelativeTo(null);
 
 	    // Panel principal con GridBagLayout
-	    JPanel fondo = new JPanel(new GridBagLayout());
+	    fondo = new JPanel(new GridBagLayout());
 	    GridBagConstraints gbc = new GridBagConstraints();
 
 	    // Paneles
@@ -105,9 +103,8 @@ public class VentanaJuegoTesteos extends JFrame {
 	    panelJuego.add(tablero);
 	    panelJuego.add(labelUsuario2);
 	
-	    this.add(fondo);
 	    
-	    System.out.println(panelJuego.getSize());
+
 	    
 	    // panel controles, movimiento y chat
 	    
@@ -204,8 +201,7 @@ public class VentanaJuegoTesteos extends JFrame {
 
 
        
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+
         
         
 
@@ -223,6 +219,9 @@ public class VentanaJuegoTesteos extends JFrame {
         
     }
 	
+	public JPanel getPanel() {
+		return fondo;
+	}
 	
     public Tablero getTableroDiv() {
 		return tablero;

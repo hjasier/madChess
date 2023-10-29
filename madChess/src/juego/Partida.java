@@ -48,6 +48,8 @@ public class Partida {
 	
 	
 	
+	
+	
 	public Partida() {
 		VentanaJuegoTesteos ventana = new VentanaJuegoTesteos();
 		tablero = ventana.getTableroDiv();
@@ -67,6 +69,10 @@ public class Partida {
         
         });
 		
+        
+
+        
+        
 		
 	}
 	

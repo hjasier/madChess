@@ -2,6 +2,27 @@ package objetos;
 
 public class Jugador {
 	
-	//ya se hará se moemnto es para poder usar la clase como atributo
+	private String nombre;
+	private int rank;
+	private String passw;
+	private String img_route;
+	
+	
+	public Jugador(String nombre, int rank, String passw) {
+		super();
+		this.nombre = nombre;
+		this.rank = rank;
+		this.passw = passw;
+	}
+	
+	
+	private Boolean checkPassword(String passwd) {
+		return (this.passw == passwd);
+	}
+	
+	
+	
+	
+	
 
 }
