@@ -17,14 +17,14 @@ import javax.swing.JPanel;
 import objetos.*;
 
 
-public class VentanaJuego extends JFrame {
+public class OLDVentanaJuego extends JFrame {
 	private static final long serialVersionUID = 1L;
 	protected JPanel panelJuego;
 	protected JPanel panelControles;
 	
 	protected Tablero tablero = new Tablero();
 	
-    public VentanaJuego() {
+    public OLDVentanaJuego() {
     	int[] ventanaSize = {800,800};
 
     	

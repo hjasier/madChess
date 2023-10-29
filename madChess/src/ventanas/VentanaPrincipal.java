@@ -9,6 +9,8 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import juego.Partida;
+
 public class VentanaPrincipal extends JFrame{
 
 	/* LA IDEA ES QUE SOLO EXISTA UN JFRAME Y EL RESTO:
@@ -23,7 +25,7 @@ public class VentanaPrincipal extends JFrame{
 	JPanel panelPrincipal = new JPanel();
 	
 	
-	VJuego panelJuego = new VJuego();
+	Juego panelJuego = new Juego();
     CardLayout cardLayout = new CardLayout();
    
     Login panelLogin = new Login();
@@ -60,6 +62,7 @@ public class VentanaPrincipal extends JFrame{
         panelDemo.btn2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELJUEGO");
+                new Partida(panelJuego.getTablero());
             }
         });
         

@@ -22,8 +22,8 @@ import piezas.Peon;
 import piezas.Reina;
 import piezas.Rey;
 import piezas.Torre;
-import ventanas.VentanaJuego;
-import ventanas.VJuego;
+import ventanas.OLDVentanaJuego;
+import ventanas.Juego;
 
 public class Partida {
 
@@ -50,9 +50,9 @@ public class Partida {
 	
 	
 	
-	public Partida() {
-		VJuego ventana = new VJuego();
-		tablero = ventana.getTableroDiv();
+	public Partida(Tablero tablero) {
+		this.tablero = tablero;
+		
 		casillas = tablero.getCasillas();
 		cargarPiezasTablero();
 		

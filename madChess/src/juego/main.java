@@ -1,6 +1,6 @@
 package juego;
 
-import ventanas.VJuego;
+import ventanas.Juego;
 import ventanas.Login;
 import ventanas.VentanaPrincipal;
 

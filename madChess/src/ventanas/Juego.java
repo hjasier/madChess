@@ -29,7 +29,7 @@ import javax.swing.JTextField;
 import objetos.*;
 
 
-public class VJuego extends JPanel {
+public class Juego extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected JPanel panelJuego;
 	protected JPanel panelControles;
@@ -60,7 +60,7 @@ public class VJuego extends JPanel {
 	
 	protected Tablero tablero = new Tablero();
 	
-	public VJuego() {
+	public Juego() {
 
 	    // Panel principal con GridBagLayout
 	    this.setLayout(new GridBagLayout());
