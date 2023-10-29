@@ -1,6 +1,7 @@
 package juego;
 
 import ventanas.VentanaJuegoTesteos;
+import ventanas.VentanaLogin;
 
 public class main {
 
@@ -9,6 +10,9 @@ public class main {
 		Partida v1 = new Partida();
 		
 		//new VentanaJuegoTesteos();
+		//Partida v1 = new Partida();
+		new VentanaLogin();
+		new VentanaJuegoTesteos();
 	}
 
 }
