@@ -33,7 +33,7 @@ public class Tablero extends JPanel{
     	 * DEFINICIONES DE LA VENTANA
     	 */
     	
-    	this.setSize(600, 600);
+    	this.setBackground(Color.pink);
     	this.setLayout(null);
     	
     	
@@ -175,6 +175,7 @@ public class Tablero extends JPanel{
         this.setSize(minSize,minSize);
         this.casillasDiv.setSize(this.getSize());
         this.tableroDiv.setSize(this.getSize());
+        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, minSize)); 
         this.repaint();
 	}
     

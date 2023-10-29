@@ -23,6 +23,7 @@ import piezas.Reina;
 import piezas.Rey;
 import piezas.Torre;
 import ventanas.VentanaJuego;
+import ventanas.VentanaJuegoTesteos;
 
 public class Partida {
 
@@ -48,7 +49,7 @@ public class Partida {
 	
 	
 	public Partida() {
-		VentanaJuego ventana = new VentanaJuego();
+		VentanaJuegoTesteos ventana = new VentanaJuegoTesteos();
 		tablero = ventana.getTableroDiv();
 		casillas = tablero.getCasillas();
 		cargarPiezasTablero();

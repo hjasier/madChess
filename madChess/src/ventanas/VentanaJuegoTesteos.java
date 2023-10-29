@@ -58,7 +58,7 @@ public class VentanaJuegoTesteos extends JFrame {
 	protected JTextArea areaMovimientos;
 	protected JLabel labelMovimientos;
 	
-	protected TableroTests tablero = new TableroTests();
+	protected Tablero tablero = new Tablero();
 	
 	public VentanaJuegoTesteos() {
 	    int[] ventanaSize = {1000, 800};
@@ -207,16 +207,27 @@ public class VentanaJuegoTesteos extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         
+        
 
         tablero.recalcularTamanyo();
-      
-        //PARA VER EL TABLEOR DE ANTES CAMBIAR EL ARCHIVO MAIN.JAVA	
-        
+        this.addComponentListener(new ComponentAdapter() {
+        	@Override
+        	public void componentResized(ComponentEvent e) {
+        		tablero.recalcularTamanyo();
+        	}
+        	//FIXME: Al maximizar la ventana también tendría que funcionar
+		});
     
         
         
         
     }
+	
+	
+    public Tablero getTableroDiv() {
+		return tablero;
+	}
+
 	
 
 }
