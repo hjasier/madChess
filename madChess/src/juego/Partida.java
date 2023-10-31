@@ -64,7 +64,7 @@ public class Partida {
         	@Override
         	public void mouseReleased(MouseEvent e) {
         		Casilla curCasilla = tablero.getCurCasilla(e);
-        		moverPiezaTablero(tablero.prevCasilla,curCasilla,tablero.casillasDisp);
+        		moverPiezaTablero(tablero.prevCasilla,curCasilla,tablero.casillasDisp,e);
         		tablero.dragging = false;
         		
         }
@@ -82,7 +82,7 @@ public class Partida {
 
 
 
-	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla,ArrayList<Casilla> casillasDisp) {
+	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla,ArrayList<Casilla> casillasDisp, MouseEvent e) {
 		
 		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
 			
@@ -103,7 +103,7 @@ public class Partida {
        			newPieza = null;
        			
        			if (checkPromotion(pieza,curCasilla)) {
-           			tablero.initPromocion(curCasilla);
+           			tablero.initPromocion(curCasilla,e);
            			printMovimiento("Pieza promocionada ");
            			// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
            		}
@@ -166,7 +166,8 @@ public class Partida {
 	
 	protected boolean checkPromotion(Pieza curPieza, Casilla curCasilla) {
 		return (curPieza instanceof Peon)&&
-				(curCasilla.getFila() == 0);	
+				(curPieza.getIsWhite()&& curCasilla.getFila() == 0||
+				(!curPieza.getIsWhite())&& curCasilla.getFila() == 7);	
 	}
 
 	

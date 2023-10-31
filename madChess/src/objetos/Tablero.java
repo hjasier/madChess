@@ -207,9 +207,9 @@ public class Tablero extends JPanel{
         this.repaint();
 	}
 
-	public void initPromocion(Casilla promCasilla) {
+	public void initPromocion(Casilla promCasilla, MouseEvent e) {
 		// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
-		promocionPanel.setLocation(tableroDiv.getMousePosition());
+		promocionPanel.setLocation(e.getX(),e.getY());
 		promocionPanel.setVisible(true);
 		repaint();
 		
