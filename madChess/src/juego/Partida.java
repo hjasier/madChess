@@ -101,8 +101,14 @@ public class Partida {
            			piezaComida = curCasilla.getPieza();
            		}
        			newPieza = null;
-       			}
-       		;
+       			
+       			if (checkPromotion(pieza,curCasilla)) {
+           			tablero.initPromocion(curCasilla);
+           			printMovimiento("Pieza promocionada ");
+           			// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
+           		}
+       		}
+       		
        		
        		
        		
@@ -132,10 +138,15 @@ public class Partida {
 	private void guardarMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida) {
 		//Aquí guardaríamos el movimiento en la base de datos, con su user etc para las analíticas
 		String extra = (piezaComida==null) ? " ":" Pieza comida";
-		ventana.setNewMovimiento(prevCasilla.getPos()+" --> "+curCasilla.getPos()+extra);
+		printMovimiento(prevCasilla.getPos()+" --> "+curCasilla.getPos()+extra);
 		
 		
 	}
+	
+	private void printMovimiento(String movimiento) {
+		ventana.setNewMovimiento(movimiento);
+	}
+	
 
 
 
@@ -151,6 +162,11 @@ public class Partida {
 				!newPieza.getPMoved()
 				
 				);
+	}
+	
+	protected boolean checkPromotion(Pieza curPieza, Casilla curCasilla) {
+		return (curPieza instanceof Peon)&&
+				(curCasilla.getFila() == 0);	
 	}
 
 	

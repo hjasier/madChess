@@ -7,6 +7,11 @@ import java.util.*;
 
 import javax.swing.*;
 
+import piezas.Alfil;
+import piezas.Caballo;
+import piezas.Reina;
+import piezas.Torre;
+
 
 
 public class Tablero extends JPanel{
@@ -26,6 +31,16 @@ public class Tablero extends JPanel{
 	public Boolean dragging = false;
 	
 	public ArrayList<Casilla> casillasDisp;
+	
+	private JPanel promocionPanel;
+	
+	
+	private JButton promReina = new JButton("Reina");
+	private JButton promAlfil = new JButton("Alfil");
+	private JButton promCaballo = new JButton("Caballo");
+	private JButton promTorre = new JButton("Torre");
+	
+	
 	
     public Tablero() { 
 
@@ -50,6 +65,19 @@ public class Tablero extends JPanel{
         this.add(tableroDiv);
         this.add(casillasDiv);
         
+        
+        
+  
+        
+        promocionPanel = new JPanel();
+        promocionPanel.setLayout(new GridLayout(4,1));
+        promocionPanel.add(promReina);
+        promocionPanel.add(promAlfil);
+        promocionPanel.add(promCaballo);
+        promocionPanel.add(promTorre);
+        promocionPanel.setVisible(false);
+        
+        tableroDiv.add(promocionPanel);
         
     	/*
     	 * CREACIÓN DEL TABLERO
@@ -177,6 +205,49 @@ public class Tablero extends JPanel{
         this.tableroDiv.setSize(this.getSize());
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, minSize)); 
         this.repaint();
+	}
+
+	public void initPromocion(Casilla promCasilla) {
+		// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
+		promocionPanel.setLocation(tableroDiv.getMousePosition());
+		promocionPanel.setVisible(true);
+		repaint();
+		
+		promReina.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite()));
+				promocionPanel.setVisible(false);
+			}
+		});
+		
+		promAlfil.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite()));
+				promocionPanel.setVisible(false);
+			}
+		});
+		
+		promCaballo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite()));
+				promocionPanel.setVisible(false);
+			}
+		});
+		
+		promTorre.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite()));
+				promocionPanel.setVisible(false);
+			}
+		});
 	}
     
 	
