@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 import objetos.*;
 
@@ -61,6 +64,8 @@ public class Juego extends JPanel {
 	
 	protected Tablero tablero = new Tablero();
 	protected Color colorFondo = new Color(16,16,16);
+	
+	protected boolean vacio = false;
 	
 	public Juego() {
 
@@ -138,20 +143,25 @@ public class Juego extends JPanel {
 	    
 	    comboUsuarios = new JComboBox<String>(contenidoUsuarios);
 	    
-	    
 	    botonEnviar = new JButton("Enviar");
-	    botonEnviar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String texto = textfieldChat.getText();
-				String usuario = (String) comboUsuarios.getSelectedItem();
-                areaChat.append(usuario + ": " + texto + "\n"); // Agrega el texto al JTextArea
-                textfieldChat.setText(""); // Limpia el JTextField después de agregar el texto
-                textfieldUsuario.setText("");
-				
-			}
-		});
+
+        // Para enviar el mensaje al presionar Enter
+        textfieldChat.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    enviarMensaje(); //El metodo esta al final
+                }
+            }
+        });
+
+        botonEnviar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enviarMensaje();
+            }
+        });
+
 	    
 	    panelChat.add(labelChat, BorderLayout.NORTH);
 	    panelChat.add(scrollChat, BorderLayout.CENTER);
@@ -202,8 +212,8 @@ public class Juego extends JPanel {
 	     * COLORES 
 	     */
 	    
-	    areaChat.setBackground(Color.BLACK); 
-	    areaChat.setForeground(Color.WHITE); 
+	    areaChat.setBackground(Color.BLACK);
+	    areaChat.setForeground(Color.WHITE);
 	    areaMovimientos.setBackground(Color.BLACK); 
 	    areaMovimientos.setForeground(Color.WHITE); 
 	    
@@ -233,6 +243,29 @@ public class Juego extends JPanel {
         
         
         
+    }
+	
+	private void enviarMensaje() { //Si se manda un mensaje sin poner texto, se pone el texto en rojo y luego blanco de nuevo, a parte del mensaje de aviso
+        String texto = textfieldChat.getText();
+        String usuario = (String) comboUsuarios.getSelectedItem();
+
+        if (texto.equals("")) {
+            areaChat.setForeground(Color.RED);
+            areaChat.append(usuario + ": Introduzca un texto válido\n");
+
+            // Restaura el color original (blanco) después de 2 segundos
+            int tiempoEspera = 2000; // 2 segundos
+            new Timer(tiempoEspera, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    areaChat.setForeground(Color.WHITE);
+                }
+            }).start();
+        } else {
+            areaChat.append(usuario + ": " + texto + "\n");
+        }
+        textfieldChat.setText("");
+        textfieldUsuario.setText("");
     }
 	
 	public Tablero getTablero() {
