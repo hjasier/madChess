@@ -39,8 +39,9 @@ public class Tablero extends JPanel{
 	private JButton promAlfil = new JButton("Alfil");
 	private JButton promCaballo = new JButton("Caballo");
 	private JButton promTorre = new JButton("Torre");
+	private Jugador nowPlaying;
 	
-	
+	public Boolean DEBUG_MODE;
 	
     public Tablero() { 
 
@@ -134,7 +135,11 @@ public class Tablero extends JPanel{
 
         		}
         		
-        		if (prevCasilla.getPieza()!=null && !dragging) {
+        		if (prevCasilla.getPieza()!=null && !dragging ) {
+        			
+        			if ((nowPlaying==null || (nowPlaying.getIsWhite()!=prevCasilla.getPieza().getIsWhite()))&&!DEBUG_MODE) {return;}
+        			
+        			
         			dragging = true;
         			prevCasilla.setDragging(true);
         			Image piezaImg = prevCasilla.getPieza().getImg().getImage();
@@ -213,41 +218,39 @@ public class Tablero extends JPanel{
 		promocionPanel.setVisible(true);
 		repaint();
 		
-		promReina.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite()));
-				promocionPanel.setVisible(false);
-			}
-		});
-		
-		promAlfil.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite()));
-				promocionPanel.setVisible(false);
-			}
-		});
-		
-		promCaballo.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite()));
-				promocionPanel.setVisible(false);
-			}
-		});
-		
-		promTorre.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite()));
-				promocionPanel.setVisible(false);
-			}
-		});
+	    ActionListener promocionActionListener = new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            Object source = e.getSource();
+	            
+	            if (source == promReina) {
+	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite()));
+	            } else if (source == promAlfil) {
+	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite()));
+	            } else if (source == promCaballo) {
+	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite()));
+	            } else if (source == promTorre) {
+	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite()));
+	            }
+
+	            promocionPanel.setVisible(false);
+	            
+	            // Eliminar el ActionListener para que no se ejecute nuevamente
+	            promReina.removeActionListener(this);
+	            promAlfil.removeActionListener(this);
+	            promCaballo.removeActionListener(this);
+	            promTorre.removeActionListener(this);
+	        }
+	    };
+
+	    promReina.addActionListener(promocionActionListener);
+	    promAlfil.addActionListener(promocionActionListener);
+	    promCaballo.addActionListener(promocionActionListener);
+	    promTorre.addActionListener(promocionActionListener);
+	}
+
+	public void setCurPlayer(Jugador jugador) {
+		this.nowPlaying = jugador;
 	}
     
 	

@@ -27,7 +27,7 @@ import ventanas.Juego;
 
 public class Partida {
 
-	protected ArrayList<Jugador> jugadores; // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
+	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
 	
 	protected int gameId;
 	protected Date fecha;
@@ -37,7 +37,11 @@ public class Partida {
 	protected HashMap<Boost, Boolean> boosts;
 	protected Tablero tablero;
 	protected Juego ventana;
+	
+	private Jugador nextPlayer;
 
+	
+	private Boolean DEBUG_MODE = true; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
 
 	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha,HashMap<Boost, Boolean> boosts) {
 		super();
@@ -70,11 +74,22 @@ public class Partida {
         }
         
         });
-		
-        
-
         
         
+        /*
+         * HashMap temporal de jugadores
+         */
+        
+        jugadores.add(new Jugador("hjasier"));       
+        jugadores.add(new Jugador("erGiova"));
+        
+        jugadores.get(0).setIsWhite(true);
+        nextPlayer = jugadores.get(0);
+        tablero.setCurPlayer(nextPlayer);
+        
+        tablero.DEBUG_MODE = DEBUG_MODE;
+        
+        printMovimiento("*/* "+nextPlayer.getNombre()+" empieza la partida con blancas */*");
 		
 	}
 	
@@ -84,10 +99,12 @@ public class Partida {
 
 	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla,ArrayList<Casilla> casillasDisp, MouseEvent e) {
 		
+		
 		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
 			
+			if (prevCasilla.getPieza().getIsWhite()!=nextPlayer.getIsWhite()&&!DEBUG_MODE) {return;} // Si no es tu turno y mueves..
 			
-			if (prevCasilla != curCasilla && casillasDisp.contains(curCasilla)){ // Si la casilla esta entre las disponibles y no es la casilla de la que sale
+			if (prevCasilla != curCasilla && (casillasDisp.contains(curCasilla)||DEBUG_MODE)){ // Si la casilla esta entre las disponibles y no es la casilla de la que sale
        		Pieza pieza= prevCasilla.getPieza();
        		Pieza newPieza = curCasilla.getPieza();
        		Pieza piezaComida = null;
@@ -118,6 +135,12 @@ public class Partida {
        		pieza.setPMoved();  
        		guardarMovimiento(prevCasilla,curCasilla,piezaComida);
        		
+       		// Cambiamos el jugador
+    		int newIndex = (jugadores.indexOf(nextPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(nextPlayer)+1;
+    		tablero.setCurPlayer(jugadores.get(newIndex));
+    		nextPlayer = jugadores.get(newIndex);
+    		
+    		
 			}
 			 
 			prevCasilla.setDragging(false);
@@ -128,6 +151,8 @@ public class Partida {
     			casillaDisp.setDisponible(false);
     		} 
     		
+    		
+
     		       
 		}
 		
@@ -138,7 +163,7 @@ public class Partida {
 	private void guardarMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida) {
 		//Aquí guardaríamos el movimiento en la base de datos, con su user etc para las analíticas
 		String extra = (piezaComida==null) ? " ":" Pieza comida";
-		printMovimiento(prevCasilla.getPos()+" --> "+curCasilla.getPos()+extra);
+		printMovimiento("<"+nextPlayer.getNombre()+"> "+prevCasilla.getPos()+" --> "+curCasilla.getPos()+extra);
 		
 		
 	}

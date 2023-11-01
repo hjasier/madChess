@@ -91,7 +91,7 @@ public class Juego extends JPanel {
 
 	    // PanelControles
 	    gbc.gridx = 1;
-	    gbc.weightx = 0.5; // El espacio que va a ocupar el panelControles
+	    gbc.weightx = 0.3; // El espacio que va a ocupar el panelControles
 	    this.add(panelControles, gbc);
 
 	    
@@ -184,7 +184,9 @@ public class Juego extends JPanel {
 	    
 	    labelMovimientos = new JLabel("MOVIMIENTOS");
 
-	    areaMovimientos = new JTextArea();
+	    areaMovimientos = new JTextArea(5,2);
+	    areaMovimientos.setLineWrap(true); // Habilitar la envoltura automática de texto
+	    areaMovimientos.setWrapStyleWord(true); 
 
 	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
 	    areaMovimientos.setEditable(false);

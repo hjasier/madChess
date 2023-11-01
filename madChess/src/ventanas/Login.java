@@ -45,7 +45,7 @@ public class Login extends JPanel{
 		
 		panelBotones = new JPanel( new GridLayout(1,2));
 		botonLogin = new JButton("Log In");
-		botonSignup = new JButton("Sign Up");
+		botonSignup = new JButton("Atras");
 		panelBotones.add(botonLogin);
 		panelBotones.add(botonSignup);
 		
