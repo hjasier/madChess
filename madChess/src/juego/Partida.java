@@ -89,6 +89,11 @@ public class Partida {
         
         tablero.DEBUG_MODE = DEBUG_MODE;
         
+        if (DEBUG_MODE) {
+        	printMovimiento("--------------------");
+        	printMovimiento("MODO DEBUG: ACTIVADO");
+        	printMovimiento("--------------------");
+        }
         printMovimiento("*/* "+nextPlayer.getNombre()+" empieza la partida con blancas */*");
 		
 	}
