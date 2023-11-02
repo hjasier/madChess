@@ -2,12 +2,15 @@ package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
@@ -17,10 +20,10 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,7 +31,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.border.Border;
 
+import componentes.MButton;
+import componentes.MScrollPane;
 import objetos.*;
 
 
@@ -47,15 +53,14 @@ public class Juego extends JPanel {
 	protected JTextField textfieldUsuario;
 	protected JLabel labelChat;
 	protected JLabel labelEscribe;
-	protected JButton botonEnviar;
+	protected MButton botonEnviar;
 	protected JPanel panelControlChat;
 	protected JPanel panelDatosChat;
-	protected JPanel panelUsuario;
+
 	protected JPanel panelMensaje;
-	protected JLabel labelUsuario;
+
 	protected JScrollPane scrollMovimientos;
 	
-	protected JComboBox<String> comboUsuarios;
 	
 	
 	protected JPanel panelMovimentos;
@@ -74,8 +79,8 @@ public class Juego extends JPanel {
 	    GridBagConstraints gbc = new GridBagConstraints();
 
 	    // Paneles
-	    JPanel panelJuego = new JPanel();
-	    JPanel panelControles = new JPanel(new GridLayout(2,1));
+	    panelJuego = new JPanel();
+	    panelControles = new JPanel(new GridLayout(2,1));
 
 	    /*
 	     * COLORES y FONDOS
@@ -126,14 +131,16 @@ public class Juego extends JPanel {
 	    
 	    labelChat = new JLabel("CHAT");
 	    areaChat = new JTextArea(5,2);
+	    areaChat.setLineWrap(true); 
+	    areaChat.setWrapStyleWord(true); 
+	    
 	    textfieldChat = new JTextField(0);
-	    JScrollPane scrollChat = new JScrollPane(areaChat);
-	    labelUsuario = new JLabel("Usuario:");
-	    labelEscribe = new JLabel("Mensaje:");
-	    panelDatosChat = new JPanel( new GridLayout(1,2));
+	    MScrollPane scrollChat = new MScrollPane(areaChat);
+
+	    panelDatosChat = new JPanel();
 	    textfieldUsuario = new JTextField(0);
 	    
-	    comboUsuarios = new JComboBox<String>();
+
 	    
 	    String contenidoUsuario1 = labelUsuario1.getText();
         String contenidoUsuario2 = labelUsuario2.getText();
@@ -141,9 +148,9 @@ public class Juego extends JPanel {
         // Crear un array y agregar los contenidos de los label
         String[] contenidoUsuarios = {contenidoUsuario1, contenidoUsuario2};
 	    
-	    comboUsuarios = new JComboBox<String>(contenidoUsuarios);
+
 	    
-	    botonEnviar = new JButton("Enviar");
+	    botonEnviar = new MButton("Enviar");
 
         // Para enviar el mensaje al presionar Enter
         textfieldChat.addKeyListener(new KeyAdapter() {
@@ -166,20 +173,18 @@ public class Juego extends JPanel {
 	    panelChat.add(labelChat, BorderLayout.NORTH);
 	    panelChat.add(scrollChat, BorderLayout.CENTER);
 	    
-	    panelUsuario = new JPanel(new BorderLayout());
+	   
 	    panelMensaje = new JPanel(new BorderLayout());
 	    
-	    panelUsuario.add(comboUsuarios);
 
-	    panelMensaje.add(labelEscribe, BorderLayout.WEST);
-	    panelMensaje.add(textfieldChat , BorderLayout.CENTER);
+	 
+	    panelMensaje.add(textfieldChat);
 	    
-	    panelDatosChat.add(panelUsuario);
-	    panelDatosChat.add(panelMensaje);
-	    
+	 
 	    
 	    
-	    panelControlChat.add(panelDatosChat);
+	    
+	    panelControlChat.add(panelMensaje);
 	    
 	    panelControlChat.add(botonEnviar);
 	    
@@ -188,14 +193,15 @@ public class Juego extends JPanel {
 
 	    areaChat.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
 	    areaChat.setEditable(false);
-	    
+
+
 	    
 	    // panel movimiento de las piezas
 	    
 	    labelMovimientos = new JLabel("MOVIMIENTOS");
 
 	    areaMovimientos = new JTextArea(5,2);
-	    areaMovimientos.setLineWrap(true); // Habilitar la envoltura automática de texto
+	    areaMovimientos.setLineWrap(true); 
 	    areaMovimientos.setWrapStyleWord(true); 
 
 	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
@@ -212,19 +218,35 @@ public class Juego extends JPanel {
 	     * COLORES 
 	     */
 	    
-	    areaChat.setBackground(Color.BLACK);
+	    areaChat.setBackground(colorFondo);
+	    areaMovimientos.setBackground(colorFondo); 
+	    
+	    areaMovimientos.setForeground(Color.WHITE); //Color del texto
 	    areaChat.setForeground(Color.WHITE);
-	    areaMovimientos.setBackground(Color.BLACK); 
-	    areaMovimientos.setForeground(Color.WHITE); 
 	    
 	    
 	    
 	    panelControles.add(panelMovimentos);
 	    panelControles.add(panelChat);
-        
+	    
+	    labelMovimientos.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+	    labelChat.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+	    panelControles.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	    
+	    panelChat.setBackground(colorFondo);
+	    panelMovimentos.setBackground(colorFondo);
+	    labelMovimientos.setForeground(Color.white);
+	    labelChat.setForeground(Color.white);
         
 	    
-
+	    Border bordeInput = BorderFactory.createLineBorder(new Color(36, 36, 36), 2, true);
+	    textfieldChat.setBorder(bordeInput);
+	    textfieldChat.setBackground(colorFondo);
+	    textfieldChat.setForeground(Color.white);
+	    
+	    
+	    scrollMovimientos.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+	    scrollChat.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
        
 
         tablero.recalcularTamanyo();
@@ -247,11 +269,11 @@ public class Juego extends JPanel {
 	
 	private void enviarMensaje() { //Si se manda un mensaje sin poner texto, se pone el texto en rojo y luego blanco de nuevo, a parte del mensaje de aviso
         String texto = textfieldChat.getText();
-        String usuario = (String) comboUsuarios.getSelectedItem();
+        String usuario = "user1";
 
         if (texto.equals("")) {
             areaChat.setForeground(Color.RED);
-            areaChat.append(usuario + ": Introduzca un texto válido\n");
+            areaChat.append("Introduce un texto válido\n");
 
             // Restaura el color original (blanco) después de 2 segundos
             int tiempoEspera = 2000; // 2 segundos
@@ -262,7 +284,7 @@ public class Juego extends JPanel {
                 }
             }).start();
         } else {
-            areaChat.append(usuario + ": " + texto + "\n");
+            areaChat.append("<"+usuario+"> "+ " "+ texto + "\n");
         }
         textfieldChat.setText("");
         textfieldUsuario.setText("");
@@ -282,6 +304,18 @@ public class Juego extends JPanel {
     public void setNewMovimiento(String movimiento) {
     	areaMovimientos.append(movimiento+ "\n");
     }
+
+	public void setInterfaz(int modoDeJuego) {
+		if (modoDeJuego==0) {
+			panelControles.remove(panelChat);
+			panelControles.setLayout(new GridLayout(1,1));
+			/*
+			 * FIXME: Cuando limpiemos el código estaria guay que directamente haya un mapa con ejemplo modo 0 --> chat:false,nsq:true... 
+			 * y esta función solo setea los valores a uno de ese mapa en vez de eliminarlo una vez ya cargado...
+			 */
+		}
+		
+	}
     
 
 }

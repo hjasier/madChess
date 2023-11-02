@@ -42,7 +42,13 @@ public class Partida {
 
 	
 	private Boolean DEBUG_MODE = true; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
-
+	
+	/*
+	 * MODOS DE JUEGO:
+	 * 
+	 * 0 --> LOCAL 
+	 */
+	
 	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha,HashMap<Boost, Boolean> boosts) {
 		super();
 		this.jugadores = jugadores;
@@ -55,7 +61,7 @@ public class Partida {
 	
 	
 	
-	public Partida(Juego ventana) {
+	public Partida(Juego ventana,int modoDeJuego) {
 		this.ventana = ventana;
 		this.tablero = ventana.getTablero();
 		
@@ -94,8 +100,13 @@ public class Partida {
         	printMovimiento("MODO DEBUG: ACTIVADO");
         	printMovimiento("--------------------");
         }
+        else {
+        	ventana.setInterfaz(modoDeJuego);
+        }
         printMovimiento("*/* "+nextPlayer.getNombre()+" empieza la partida con blancas */*");
 		
+        
+        
 	}
 	
 

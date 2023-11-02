@@ -63,7 +63,7 @@ public class VentanaPrincipal extends JFrame{
 
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELJUEGO");
-                new Partida(panelJuego);
+                new Partida(panelJuego,0);
             }
         });
         

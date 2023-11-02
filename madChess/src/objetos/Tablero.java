@@ -252,6 +252,8 @@ public class Tablero extends JPanel{
 	public void setCurPlayer(Jugador jugador) {
 		this.nowPlaying = jugador;
 	}
+
+
     
 	
 
