@@ -41,7 +41,7 @@ public class Partida {
 	private Jugador nextPlayer;
 
 	
-	private Boolean DEBUG_MODE = false; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
+	private Boolean DEBUG_MODE = true; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
 	
 	/*
 	 * MODOS DE JUEGO:
@@ -86,7 +86,7 @@ public class Partida {
          * HashMap temporal de jugadores
          */
         
-        jugadores.add(new Jugador("hjasier"));       
+        jugadores.add(new Jugador("Potzon"));       
         jugadores.add(new Jugador("erGiova"));
         
         jugadores.get(0).setIsWhite(true);
@@ -122,46 +122,47 @@ public class Partida {
 			
 			if (prevCasilla != curCasilla && (casillasDisp.contains(curCasilla)||DEBUG_MODE)){ // Si la casilla esta entre las disponibles y no es la casilla de la que sale
        		Pieza pieza= prevCasilla.getPieza();
-       		Pieza newPieza = curCasilla.getPieza();
        		Pieza piezaComida = null;
        		
+       		int casillaInx = casillas.indexOf(curCasilla);
+       		
+       		
        		if (checkEnroqueCorto(pieza,curCasilla)) {
-       			printMovimiento("ENROQUE CORTO ENROQUE CORTO ENROQUE CORTO!!!!!");
-       			Pieza torre = casillas.get(casillas.indexOf(curCasilla)+1).getPieza();
-       			casillas.get(casillas.indexOf(curCasilla)-1).setPieza(torre);
-       			casillas.get(casillas.indexOf(curCasilla)+1).setPieza(null);
-       			pieza.setPMoved();
+       			Pieza torre = casillas.get(casillaInx+1).getPieza();
+       			casillas.get(casillaInx-1).setPieza(torre);
+       			casillas.get(casillaInx+1).setPieza(null);//Borramos la torre de donde esta ahora
+       			printMovimiento("Enroque largo");
        			
        		}
        		else if (checkEnroqueLargo(pieza,curCasilla)) {
-       			printMovimiento("ENROQUE LARGO ENROQUE LARGO ENROQUE LARGO!!!!!");
-       			Pieza torre = casillas.get(casillas.indexOf(curCasilla)-2).getPieza();
-       			casillas.get(casillas.indexOf(curCasilla)+1).setPieza(torre);
-       			casillas.get(casillas.indexOf(curCasilla)-2).setPieza(null);
-       			pieza.setPMoved();
+       			Pieza torre = casillas.get(casillaInx-2).getPieza();
+       			casillas.get(casillaInx+1).setPieza(torre);
+       			casillas.get(casillaInx-2).setPieza(null);
+       			printMovimiento("Enroque largo");
        		}
-       		else{
-       			if (newPieza!=null) {
+       		else if (checkPromotion(pieza,curCasilla)) {
+       			tablero.initPromocion(curCasilla,e);
+       			printMovimiento("Pieza promocionada ");
+       			// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
+       		}
+       		
+       		else{ // Si no se cumple ninguno de los casos especiales entonces miramos si esta comiendo una pieza o simplemente moviendose
+       			
+       			if (curCasilla.getPieza()!=null) {
            			//entonces estamos comiento una pieza
            			piezaComida = curCasilla.getPieza();
            		}
-       			newPieza = null;
-       			
-       			if (checkPromotion(pieza,curCasilla)) {
-           			tablero.initPromocion(curCasilla,e);
-           			printMovimiento("Pieza promocionada ");
-           			// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
-           		}
+
        		}
        		
        		
        		
-       		
-       		prevCasilla.setPieza(newPieza);
+       		// Quitamos la pieza de la casilla anterior y la metemos en la nueva
+       		prevCasilla.setPieza(null); 
        		curCasilla.setPieza(pieza);
        		
-       		pieza.setPMoved();  
-       		guardarMovimiento(prevCasilla,curCasilla,piezaComida);
+       		pieza.setPMoved(); //Seteamos el piezaMoved en true
+       		guardarMovimiento(prevCasilla,curCasilla,piezaComida);//Guardamos el movimiento y imprimimos
        		
        		// Cambiamos el jugador
     		int newIndex = (jugadores.indexOf(nextPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(nextPlayer)+1;
@@ -172,7 +173,6 @@ public class Partida {
 			}
 			 
 			prevCasilla.setDragging(false);
-			
 			tablero.dragImg.setIcon(null); // Borramos la img del panel superior
 
     		for(Casilla casillaDisp: tablero.casillasDisp) {
@@ -211,19 +211,18 @@ public class Partida {
 				
 				(curPieza instanceof Rey)&&
 				!(curPieza.getPMoved())&&
-				(curCasilla == casillas.get(62))||(curCasilla == casillas.get(6))
+				((curCasilla == casillas.get(62))||(curCasilla == casillas.get(6)))
 				
 				
 				);
 	}
 	
 	protected boolean checkEnroqueLargo(Pieza curPieza,Casilla curCasilla) {
-		
 		return(
 				
 				(curPieza instanceof Rey)&&
 				!(curPieza.getPMoved())&&
-				(curCasilla == casillas.get(2))||(curCasilla == casillas.get(58))
+				((curCasilla == casillas.get(2))||(curCasilla == casillas.get(58)))
 				
 				
 				);

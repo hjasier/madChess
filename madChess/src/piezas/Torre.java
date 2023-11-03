@@ -37,10 +37,10 @@ public class Torre extends Pieza implements MetodosInterfaz {
                 
                 
                 if (
-                		casillaDisp.getPieza()!=null&& // Si no existe pieza
-                		casillaDisp.getPieza().getIsWhite()==this.getIsWhite()&& // Si la pieza es tuya
-                		!((casillaDisp.getPieza() instanceof Rey)&&!this.pMoved&&!casillaDisp.getPieza().getPMoved())) // Si existe pieza pero es rey y no se han movido de posición (Enroque)
+                		casillaDisp.getPieza()!=null&&
+                		casillaDisp.getPieza().getIsWhite()==this.getIsWhite())
                 {break;}
+                
                 
                 
                 
