@@ -125,8 +125,10 @@ public class Partida {
        		Pieza newPieza = curCasilla.getPieza();
        		Pieza piezaComida = null;
        		
-       		if (checkEnroque(pieza,newPieza)) {
-       			newPieza.setPMoved();
+       		if (checkEnroque(pieza,curCasilla)) {
+       			printMovimiento("ENROQUE ENROQUE ENROQUE ENROEQUEUQE");
+       			Pieza torre = casillas.get(casillas.indexOf(curCasilla)+1).getPieza();
+       			casillas.get(casillas.indexOf(curCasilla)-1).setPieza(torre);
        		}
        		else{
        			if (newPieza!=null) {
@@ -193,14 +195,14 @@ public class Partida {
 
 
 
-	protected boolean checkEnroque(Pieza curPieza,Pieza newPieza) {
+	protected boolean checkEnroque(Pieza curPieza,Casilla curCasilla) {
+	
 		return(
-				newPieza!=null&&
-				(((curPieza instanceof Torre) && (newPieza instanceof Rey)  ) ||
-				((curPieza instanceof Rey) && (newPieza instanceof Torre))		)&&
 				
-				!curPieza.getPMoved()&&
-				!newPieza.getPMoved()
+				(curPieza instanceof Rey)&&
+				!(curPieza.getPMoved())&&
+				(curCasilla == casillas.get(62))
+				
 				
 				);
 	}
