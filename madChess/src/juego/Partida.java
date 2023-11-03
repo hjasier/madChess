@@ -125,10 +125,20 @@ public class Partida {
        		Pieza newPieza = curCasilla.getPieza();
        		Pieza piezaComida = null;
        		
-       		if (checkEnroque(pieza,curCasilla)) {
-       			printMovimiento("ENROQUE ENROQUE ENROQUE ENROEQUEUQE");
+       		if (checkEnroqueCorto(pieza,curCasilla)) {
+       			printMovimiento("ENROQUE CORTO ENROQUE CORTO ENROQUE CORTO!!!!!");
        			Pieza torre = casillas.get(casillas.indexOf(curCasilla)+1).getPieza();
        			casillas.get(casillas.indexOf(curCasilla)-1).setPieza(torre);
+       			casillas.get(casillas.indexOf(curCasilla)+1).setPieza(null);
+       			pieza.setPMoved();
+       			
+       		}
+       		else if (checkEnroqueLargo(pieza,curCasilla)) {
+       			printMovimiento("ENROQUE LARGO ENROQUE LARGO ENROQUE LARGO!!!!!");
+       			Pieza torre = casillas.get(casillas.indexOf(curCasilla)-2).getPieza();
+       			casillas.get(casillas.indexOf(curCasilla)+1).setPieza(torre);
+       			casillas.get(casillas.indexOf(curCasilla)-2).setPieza(null);
+       			pieza.setPMoved();
        		}
        		else{
        			if (newPieza!=null) {
@@ -195,17 +205,30 @@ public class Partida {
 
 
 
-	protected boolean checkEnroque(Pieza curPieza,Casilla curCasilla) {
+	protected boolean checkEnroqueCorto(Pieza curPieza,Casilla curCasilla) {
 	
 		return(
 				
 				(curPieza instanceof Rey)&&
 				!(curPieza.getPMoved())&&
-				(curCasilla == casillas.get(62))
+				(curCasilla == casillas.get(62))||(curCasilla == casillas.get(6))
 				
 				
 				);
 	}
+	
+	protected boolean checkEnroqueLargo(Pieza curPieza,Casilla curCasilla) {
+		
+		return(
+				
+				(curPieza instanceof Rey)&&
+				!(curPieza.getPMoved())&&
+				(curCasilla == casillas.get(2))||(curCasilla == casillas.get(58))
+				
+				
+				);
+	}
+	
 	
 	protected boolean checkPromotion(Pieza curPieza, Casilla curCasilla) {
 		return (curPieza instanceof Peon)&&
