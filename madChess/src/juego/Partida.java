@@ -41,7 +41,7 @@ public class Partida {
 	private Jugador nextPlayer;
 
 	
-	private Boolean DEBUG_MODE = true; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
+	private Boolean DEBUG_MODE = false; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
 	
 	/*
 	 * MODOS DE JUEGO:
