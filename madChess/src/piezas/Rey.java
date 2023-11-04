@@ -1,5 +1,6 @@
 package piezas;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import objetos.Casilla;
@@ -103,23 +104,23 @@ public class Rey extends Pieza implements MetodosInterfaz{
         //Jaque Mate:
         //Si el rey está amenazado, no tiene ninguna casilla a la que moverse y no hay ninguna pieza que pueda 
         //denegar la casilla disponible en la que está el rey, acaba la partida
-        ArrayList<Casilla> casillasAmenaza = casillasReyAmenazado(curCasilla, casillas);
+        ArrayList<Casilla> casillasAmenaza = casillasReyAmenazado(casillas);
         casillasDisp.removeAll(casillasAmenaza);
         
         
-        ArrayList<Casilla> casillasFuturaAmenaza = casillasFuturaAmenaza(curCasilla, casillasDisp);
-        //casillasDisp.removeAll(casillasFuturaAmenaza);
+        ArrayList<Casilla> casillasFuturaAmenaza = casillasFuturaAmenaza(curCasilla, casillasDisp , casillas);
+        casillasDisp.removeAll(casillasFuturaAmenaza);
         
         return casillasDisp;
     }
 	
 	
-	public ArrayList<Casilla> casillasReyAmenazado(Casilla CasillaRey,ArrayList<Casilla> casillas) {
+	public ArrayList<Casilla> casillasReyAmenazado(ArrayList<Casilla> casillas) {
 		ArrayList<Casilla> casillasAmenaza = new ArrayList<>();
 		for(Casilla casilla : casillas) {
 			
 			Pieza piezaCasilla = casilla.getPieza();
-			if(piezaCasilla != null && piezaCasilla.getIsWhite() != this.getIsWhite() && !(piezaCasilla instanceof Rey)) {
+			if(piezaCasilla != null && piezaCasilla.getIsWhite() != this.getIsWhite() && !(piezaCasilla instanceof Rey)) {//FIXME: Al poner si no es rey entonces no se van an incluir los movimientos de amenaza posibles del rey contrario
 				ArrayList<Casilla> casillasDisp = piezaCasilla.getCasillasDisponibles(casilla, casillas);
 				casillasAmenaza.addAll(casillasDisp);
 			}
@@ -129,22 +130,61 @@ public class Rey extends Pieza implements MetodosInterfaz{
 	
 	
 	
-	public ArrayList<Casilla> casillasFuturaAmenaza(Casilla CasillaRey,ArrayList<Casilla> casillas){
+	public ArrayList<Casilla> getCasillasSimulacion(ArrayList<Casilla>  casillas) { //returnea un druplicado de casillas
+		ArrayList<Casilla> casillasSimulacion = new ArrayList<Casilla>();
+		for (Casilla casilla : casillas) {
+			Pieza newPieza = casilla.getPieza(); // NO LO DUPLICA ASI QUE LOS CAMBIOS EN PIEZA SI SE CAMBIAN EN EL ORIGINAL
+			Casilla newCasilla = new Casilla(null, casilla.getFila(), (casilla.getColumna()-'A'));
+			newCasilla.setPieza(newPieza);
+		    casillasSimulacion.add(newCasilla);
+		}
+		return casillasSimulacion;
+	}
+    
+    
+	public ArrayList<Casilla> casillasFuturaAmenaza(Casilla CasillaRey,ArrayList<Casilla> casillasDisp,ArrayList<Casilla> casillas){
 		ArrayList<Casilla> casillasFuturasAmenaza = new ArrayList<>();
+		
+		ArrayList<Casilla> casillasSimulacion = getCasillasSimulacion(casillas);
+		
+		
+
 		Pieza newPieza = CasillaRey.getPieza();
-		CasillaRey.setPiezaOculto(null);
-		for(Casilla casilla : casillas) {
-			Pieza prevPieza = casilla.getPieza();
-			casilla.setPiezaOculto(newPieza);
+		
+
+		
+		casillasSimulacion.get(casillas.indexOf(CasillaRey)).setPiezaOculto(null);
+		
+		
+		
+		for(Casilla casilla : casillasDisp) {
 			
-			ArrayList<Casilla> casillasAmenaza = casillasReyAmenazado(casilla, casillas);
-			casilla.setPiezaOculto(prevPieza);
+			casillasSimulacion.get(casillas.indexOf(casilla)).setPieza(newPieza);
+			Pieza prevPieza = casilla.getPieza();
+
+			
+			ArrayList<Casilla> casillasAmenaza = casillasReyAmenazado(casillasSimulacion);
+			
+			
+
+			
+			for (Casilla c:casillas) {
+				c.setDebugClr(Color.blue);
+			}
+			for (Casilla c:casillasAmenaza) {
+				casillas.get(casillasSimulacion.indexOf(c)).setDebugClr(Color.red);
+			}
+			
+			
+			
+			casillasSimulacion.get(casillas.indexOf(casilla)).setPieza(prevPieza);
 			if(casillasAmenaza.contains(casilla)) {
+				
 				casillasFuturasAmenaza.add(casilla);
 			}
 			
 		}
-		CasillaRey.setPiezaOculto(newPieza);
+		System.out.println(casillasFuturasAmenaza.size());
 		return casillasFuturasAmenaza;
 	}
 	

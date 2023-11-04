@@ -60,6 +60,12 @@ public class Casilla extends JPanel {
 		return (char) ('A' + columna);
 		
 	}
+	
+	public void setDebugClr(Color color) {
+		this.color = color;
+		repaint();
+		
+	}
 
 
 	// "iluminamos" sumando o restando valores al color RGB actual cuando se hoverea una casilla
@@ -67,8 +73,13 @@ public class Casilla extends JPanel {
 		if (status&&!iluminada || !status&&iluminada) {
 			iluminada = status;
 			int n = (status) ? 10 : -10;
-			this.color = new Color( color.getRed()+n,color.getGreen()+n,color.getBlue()+n);
-			this.paint(getGraphics());
+			try {
+				this.color = new Color( color.getRed()+n,color.getGreen()+n,color.getBlue()+n);
+				this.paint(getGraphics());
+			} catch (Exception e) {
+				//Color muy grande
+			}
+
 		}
 		
 	}
