@@ -104,18 +104,17 @@ public class Rey extends Pieza implements MetodosInterfaz{
         //Si el rey está amenazado, no tiene ninguna casilla a la que moverse y no hay ninguna pieza que pueda 
         //denegar la casilla disponible en la que está el rey, acaba la partida
         ArrayList<Casilla> casillasAmenaza = casillasReyAmenazado(curCasilla, casillas);
-        System.out.println(casillasAmenaza);
         casillasDisp.removeAll(casillasAmenaza);
         
         
+        ArrayList<Casilla> casillasFuturaAmenaza = casillasFuturaAmenaza(curCasilla, casillasDisp);
+        //casillasDisp.removeAll(casillasFuturaAmenaza);
         
         return casillasDisp;
     }
 	
 	
 	public ArrayList<Casilla> casillasReyAmenazado(Casilla CasillaRey,ArrayList<Casilla> casillas) {
-		
-		
 		ArrayList<Casilla> casillasAmenaza = new ArrayList<>();
 		for(Casilla casilla : casillas) {
 			
@@ -126,6 +125,28 @@ public class Rey extends Pieza implements MetodosInterfaz{
 			}
 		}
 		return casillasAmenaza;
-		
 	}
+	
+	
+	
+	public ArrayList<Casilla> casillasFuturaAmenaza(Casilla CasillaRey,ArrayList<Casilla> casillas){
+		ArrayList<Casilla> casillasFuturasAmenaza = new ArrayList<>();
+		Pieza newPieza = CasillaRey.getPieza();
+		CasillaRey.setPiezaOculto(null);
+		for(Casilla casilla : casillas) {
+			Pieza prevPieza = casilla.getPieza();
+			casilla.setPiezaOculto(newPieza);
+			
+			ArrayList<Casilla> casillasAmenaza = casillasReyAmenazado(casilla, casillas);
+			casilla.setPiezaOculto(prevPieza);
+			if(casillasAmenaza.contains(casilla)) {
+				casillasFuturasAmenaza.add(casilla);
+			}
+			
+		}
+		CasillaRey.setPiezaOculto(newPieza);
+		return casillasFuturasAmenaza;
+	}
+	
+	
 }
