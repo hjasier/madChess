@@ -104,7 +104,7 @@ public class Rey extends Pieza implements MetodosInterfaz{
         //Jaque Mate:
         //Si el rey está amenazado, no tiene ninguna casilla a la que moverse y no hay ninguna pieza que pueda 
         //denegar la casilla disponible en la que está el rey, acaba la partida
-        ArrayList<Casilla> casillasAmenaza = casillasReyAmenazado(casillas);
+        ArrayList<Casilla> casillasAmenaza = casillasJaque(casillas);
         casillasDisp.removeAll(casillasAmenaza);
         
         
@@ -115,14 +115,19 @@ public class Rey extends Pieza implements MetodosInterfaz{
     }
 	
 	
-	public ArrayList<Casilla> casillasReyAmenazado(ArrayList<Casilla> casillas) {
+	public ArrayList<Casilla> casillasJaque(ArrayList<Casilla> casillas) {
 		ArrayList<Casilla> casillasAmenaza = new ArrayList<>();
 		for(Casilla casilla : casillas) {
 			
 			Pieza piezaCasilla = casilla.getPieza();
 			if(piezaCasilla != null && piezaCasilla.getIsWhite() != this.getIsWhite() && !(piezaCasilla instanceof Rey)) {//FIXME: Al poner si no es rey entonces no se van an incluir los movimientos de amenaza posibles del rey contrario
+				if(piezaCasilla instanceof Peon){ //Si es un peon que solo coja las que este puede comer
+					ArrayList<Casilla> casillasDisp = ((Peon) piezaCasilla).getCasillasPeonCome(casilla, casillas);
+					casillasAmenaza.addAll(casillasDisp);
+				}else {
 				ArrayList<Casilla> casillasDisp = piezaCasilla.getCasillasDisponibles(casilla, casillas);
 				casillasAmenaza.addAll(casillasDisp);
+				}
 			}
 		}
 		return casillasAmenaza;
@@ -163,7 +168,7 @@ public class Rey extends Pieza implements MetodosInterfaz{
 			Pieza prevPieza = casilla.getPieza();
 
 			
-			ArrayList<Casilla> casillasAmenaza = casillasReyAmenazado(casillasSimulacion);
+			ArrayList<Casilla> casillasAmenaza = casillasJaque(casillasSimulacion);
 			
 			
 

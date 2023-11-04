@@ -24,12 +24,14 @@ public class Peon extends Pieza implements MetodosInterfaz{
 
         
         int[][] movimientos = {
-
+        			
+        		{-1, -1},
         		{-1, 0},
         		{-1, 0}, /**Peon**/
+        		{-1, 1}
         };
         if (!pMoved) {
-            movimientos[0][0] = -2; // Cambia el movimiento de una casilla a dos casillas
+            movimientos[1][0] = -2; // Cambia el movimiento de una casilla a dos casillas
         }
         
 
@@ -55,13 +57,11 @@ public class Peon extends Pieza implements MetodosInterfaz{
                 
             }
         }
-        ArrayList<Casilla> casillasComer = getCasillasComerDisponibles(curCasilla, casillas);
-        casillasDisp.addAll(casillasComer);
-        
+
         return casillasDisp;
     }
 	
-	public ArrayList<Casilla> getCasillasComerDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
+	public ArrayList<Casilla> getCasillasPeonCome(Casilla curCasilla, ArrayList<Casilla> casillas) { //Sirve para todo lo que rodea al tema jaque
         int casillaIndex = casillas.indexOf(curCasilla);
         ArrayList<Casilla> casillasDisp = new ArrayList<>();
         int fila = curCasilla.getFila();
@@ -81,12 +81,7 @@ public class Peon extends Pieza implements MetodosInterfaz{
             	
                 Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
                 
-                if ((casillaDisp.getPieza() != null && casillaDisp.getPieza().getIsWhite() == this.getIsWhite()) ||
-                	    (movimiento[0] == -1 && movimiento[1] == -1 && casillaDisp.getPieza() == null) ||
-                	    (movimiento[0] == -1 && movimiento[1] == 1 && casillaDisp.getPieza() == null) ||
-                	    (movimiento[0] == -1 && movimiento[1] == 0 && casillaDisp.getPieza() != null)) {
-                	    continue;
-                	}
+                
                 casillasDisp.add(casillaDisp);
 
             }
