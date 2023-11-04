@@ -159,6 +159,11 @@ public class Casilla extends JPanel {
 	}
 
 
+	public void setPiezaOculto(Pieza newPieza) {
+		this.pieza= newPieza;
+	}
+
+
 
 
 	
