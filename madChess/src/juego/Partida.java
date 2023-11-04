@@ -39,14 +39,16 @@ public class Partida {
 	protected Juego ventana;
 	
 	private Jugador nextPlayer;
-
+	
+	private int modoDeJuego;
 	
 	private Boolean DEBUG_MODE = true; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
 	
 	/*
 	 * MODOS DE JUEGO:
 	 * 
-	 * 0 --> LOCAL 
+	 * 0 --> NORMAL LOCAL 
+	 * 1 --> NORMAL ONLINE
 	 */
 	
 	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha,HashMap<Boost, Boolean> boosts) {
@@ -63,6 +65,8 @@ public class Partida {
 	
 	public Partida(Juego ventana,int modoDeJuego) {
 		this.ventana = ventana;
+		this.modoDeJuego = modoDeJuego;
+		
 		this.tablero = ventana.getTablero();
 		
 		casillas = tablero.getCasillas();
@@ -164,10 +168,9 @@ public class Partida {
        		pieza.setPMoved(); //Seteamos el piezaMoved en true
        		guardarMovimiento(prevCasilla,curCasilla,piezaComida);//Guardamos el movimiento y imprimimos
        		
-       		// Cambiamos el jugador
-    		int newIndex = (jugadores.indexOf(nextPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(nextPlayer)+1;
-    		tablero.setCurPlayer(jugadores.get(newIndex));
-    		nextPlayer = jugadores.get(newIndex);
+       		
+       		
+       		setNextPlayer();// Cambiamos el jugador
     		
     		
 			}
@@ -185,6 +188,24 @@ public class Partida {
 		}
 		
 	}
+
+
+
+	private void setNextPlayer() {
+		if (modoDeJuego==0) {
+			int newIndex = (jugadores.indexOf(nextPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(nextPlayer)+1;
+			tablero.setCurPlayer(jugadores.get(newIndex));
+			nextPlayer = jugadores.get(newIndex);
+		}
+		else if (modoDeJuego==1) {
+			
+		}
+		
+
+		
+	}
+
+
 
 
 

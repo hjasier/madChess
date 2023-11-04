@@ -67,6 +67,15 @@ public class VentanaPrincipal extends JFrame{
             }
         });
         
+        panelDemo.btn3.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelPrincipal, "PANELJUEGO");
+                new Partida(panelJuego,1);
+            }
+        });
+        
+        
         
         
         
