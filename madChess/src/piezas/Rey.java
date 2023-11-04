@@ -21,7 +21,7 @@ public class Rey extends Pieza implements MetodosInterfaz{
         int fila = curCasilla.getFila();
         char columna = curCasilla.getColumna();
 
-        // Posibles movimientos de la torre: arriba, abajo, izquierda y derecha
+        // Posibles movimientos del rey: arriba, abajo, izquierda y derecha
         int[][] movimientos = {
         			
         		{-1, -1},{0, -1},{1, -1},
@@ -94,7 +94,38 @@ public class Rey extends Pieza implements MetodosInterfaz{
             }
         }
         
+        //Jaque:
+        //1: Recorrer los movimientos disponibles de todas las piezas, y quitarlos de los movimientos posibles del rey si coinciden. (Hecho)
+        //2: si despues de que mueva el enemigo esta en una casilla disponible, tiene que o moverse, pieza que pueda denegar 
+        //la casilla disponible en la que está el rey, acaba la partida
+        
+        
+        //Jaque Mate:
+        //Si el rey está amenazado, no tiene ninguna casilla a la que moverse y no hay ninguna pieza que pueda 
+        //denegar la casilla disponible en la que está el rey, acaba la partida
+        ArrayList<Casilla> casillasAmenaza = casillasReyAmenazado(curCasilla, casillas);
+        System.out.println(casillasAmenaza);
+        casillasDisp.removeAll(casillasAmenaza);
+        
+        
         
         return casillasDisp;
     }
+	
+	
+	public ArrayList<Casilla> casillasReyAmenazado(Casilla CasillaRey,ArrayList<Casilla> casillas) {
+		
+		
+		ArrayList<Casilla> casillasAmenaza = new ArrayList<>();
+		for(Casilla casilla : casillas) {
+			
+			Pieza piezaCasilla = casilla.getPieza();
+			if(piezaCasilla != null && piezaCasilla.getIsWhite() != this.getIsWhite() && !(piezaCasilla instanceof Rey)) {
+				ArrayList<Casilla> casillasDisp = piezaCasilla.getCasillasDisponibles(casilla, casillas);
+				casillasAmenaza.addAll(casillasDisp);
+			}
+		}
+		return casillasAmenaza;
+		
+	}
 }
