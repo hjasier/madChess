@@ -95,22 +95,9 @@ public class Rey extends Pieza implements MetodosInterfaz{
             }
         }
         
-        //Jaque:
-        //1: Recorrer los movimientos disponibles de todas las piezas, y quitarlos de los movimientos posibles del rey si coinciden. (Hecho)
-        //2: si despues de que mueva el enemigo esta en una casilla disponible, tiene que o moverse, pieza que pueda denegar 
-        //la casilla disponible en la que está el rey, acaba la partida
-        
-        
-        //Jaque Mate:
-        //Si el rey está amenazado, no tiene ninguna casilla a la que moverse y no hay ninguna pieza que pueda 
-        //denegar la casilla disponible en la que está el rey, acaba la partida
         ArrayList<Casilla> casillasAmenaza = casillasJaque(casillas);
         casillasDisp.removeAll(casillasAmenaza);
-        
-        
-        ArrayList<Casilla> casillasFuturaAmenaza = casillasFuturaAmenaza(curCasilla, casillasDisp , casillas);
-        casillasDisp.removeAll(casillasFuturaAmenaza);
-        
+          
         return casillasDisp;
     }
 	
@@ -120,13 +107,25 @@ public class Rey extends Pieza implements MetodosInterfaz{
 		for(Casilla casilla : casillas) {
 			
 			Pieza piezaCasilla = casilla.getPieza();
-			if(piezaCasilla != null && piezaCasilla.getIsWhite() != this.getIsWhite() && !(piezaCasilla instanceof Rey)) {//FIXME: Al poner si no es rey entonces no se van an incluir los movimientos de amenaza posibles del rey contrario
-				if(piezaCasilla instanceof Peon){ //Si es un peon que solo coja las que este puede comer
-					ArrayList<Casilla> casillasDisp = ((Peon) piezaCasilla).getCasillasPeonCome(casilla, casillas);
+			if(piezaCasilla != null && piezaCasilla.getIsWhite() != this.getIsWhite() ) {
+				if(piezaCasilla instanceof Peon){ //Si es un peon que solo coja las que este puede "comer"
+					ArrayList<Casilla> casillasDisp = ((Peon) piezaCasilla).getCasillasCome(casilla, casillas);
 					casillasAmenaza.addAll(casillasDisp);
-				}else {
-				ArrayList<Casilla> casillasDisp = piezaCasilla.getCasillasDisponibles(casilla, casillas);
-				casillasAmenaza.addAll(casillasDisp);
+				}else if(piezaCasilla instanceof Torre){ //Si es una torre que coja las que este puede "comer"
+					ArrayList<Casilla> casillasDisp = ((Torre) piezaCasilla).getCasillasCome(casilla, casillas);
+					casillasAmenaza.addAll(casillasDisp);
+				}else if(piezaCasilla instanceof Alfil){ //Si es un alfil que coja las que este puede "comer"
+					ArrayList<Casilla> casillasDisp = ((Alfil) piezaCasilla).getCasillasCome(casilla, casillas);
+					casillasAmenaza.addAll(casillasDisp);
+				}else if(piezaCasilla instanceof Reina){ //Si es una reina que coja las que este puede "comer"
+					ArrayList<Casilla> casillasDisp = ((Reina) piezaCasilla).getCasillasCome(casilla, casillas);
+					casillasAmenaza.addAll(casillasDisp);
+				}else if(piezaCasilla instanceof Caballo){ //Si es un caballo que coja las que este puede "comer"
+					ArrayList<Casilla> casillasDisp = ((Caballo) piezaCasilla).getCasillasCome(casilla, casillas);
+					casillasAmenaza.addAll(casillasDisp);
+				}else if(piezaCasilla instanceof Rey){ //Si es un rey que coja las que este puede "comer"
+					ArrayList<Casilla> casillasDisp = ((Rey) piezaCasilla).getCasillasCome(casilla, casillas);
+					casillasAmenaza.addAll(casillasDisp);
 				}
 			}
 		}
@@ -135,7 +134,7 @@ public class Rey extends Pieza implements MetodosInterfaz{
 	
 	
 	
-	public ArrayList<Casilla> getCasillasSimulacion(ArrayList<Casilla>  casillas) { //returnea un druplicado de casillas
+	public ArrayList<Casilla> getCasillasSimulacion(ArrayList<Casilla>  casillas) { //NO HACE FALTA
 		ArrayList<Casilla> casillasSimulacion = new ArrayList<Casilla>();
 		for (Casilla casilla : casillas) {
 			Pieza newPieza = casilla.getPieza(); // NO LO DUPLICA ASI QUE LOS CAMBIOS EN PIEZA SI SE CAMBIAN EN EL ORIGINAL
@@ -147,7 +146,7 @@ public class Rey extends Pieza implements MetodosInterfaz{
 	}
     
     
-	public ArrayList<Casilla> casillasFuturaAmenaza(Casilla CasillaRey,ArrayList<Casilla> casillasDisp,ArrayList<Casilla> casillas){
+	public ArrayList<Casilla> casillasFuturaAmenaza(Casilla CasillaRey,ArrayList<Casilla> casillasDisp,ArrayList<Casilla> casillas){//NO HACE FALTA
 		ArrayList<Casilla> casillasFuturasAmenaza = new ArrayList<>();
 		
 		ArrayList<Casilla> casillasSimulacion = getCasillasSimulacion(casillas);
@@ -192,6 +191,40 @@ public class Rey extends Pieza implements MetodosInterfaz{
 		System.out.println(casillasFuturasAmenaza.size());
 		return casillasFuturasAmenaza;
 	}
+
+
+
+	@Override
+	public ArrayList<Casilla> getCasillasCome(Casilla curCasilla, ArrayList<Casilla> casillas) {
+	    int casillaIndex = casillas.indexOf(curCasilla);
+	    ArrayList<Casilla> casillasDisp = new ArrayList<>();
+	    int fila = curCasilla.getFila();
+	    char columna = curCasilla.getColumna();
+
+	    // Posibles movimientos del rey: arriba, abajo, izquierda, derecha y diagonales
+	    int[][] movimientos = {
+	        {-1, -1}, {0, -1}, {1, -1},
+	        {-1, 0}, /* Rey */ {1, 0},
+	        {-1, 1}, {0, 1}, {1, 1}
+	    };
+
+	    for (int[] movimiento : movimientos) { // Recorre cada movimiento posible desde la posición del rey
+	        int nuevaFila = fila + movimiento[0];
+	        char nuevaColumna = (char) (columna + movimiento[1]);
+
+	        // Verifica que la casilla resultante esté dentro del tablero (filas 0 a 7 y columnas A a H)
+	        if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+	            Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
+
+	            
+	                casillasDisp.add(casillaDisp);
+	            
+	        }
+	    }
+
+	    return casillasDisp;
+	}
+
 	
 	
 }

@@ -61,7 +61,7 @@ public class Peon extends Pieza implements MetodosInterfaz{
         return casillasDisp;
     }
 	
-	public ArrayList<Casilla> getCasillasPeonCome(Casilla curCasilla, ArrayList<Casilla> casillas) { //Sirve para todo lo que rodea al tema jaque
+	public ArrayList<Casilla> getCasillasCome(Casilla curCasilla, ArrayList<Casilla> casillas) { //Sirve para todo lo que rodea al tema jaque
         int casillaIndex = casillas.indexOf(curCasilla);
         ArrayList<Casilla> casillasDisp = new ArrayList<>();
         int fila = curCasilla.getFila();
