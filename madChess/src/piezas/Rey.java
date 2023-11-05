@@ -97,8 +97,15 @@ public class Rey extends Pieza implements MetodosInterfaz{
         
         ArrayList<Casilla> casillasAmenaza = casillasJaque(casillas);
         casillasDisp.removeAll(casillasAmenaza);
-          
+        
+        
+        if(casillasAmenaza.contains(curCasilla) && casillasDisp.size() == 0) {
+        	System.out.println("Jaque Mate");
+        }
+        
         return casillasDisp;
+        
+        
     }
 	
 	
@@ -108,27 +115,13 @@ public class Rey extends Pieza implements MetodosInterfaz{
 			
 			Pieza piezaCasilla = casilla.getPieza();
 			if(piezaCasilla != null && piezaCasilla.getIsWhite() != this.getIsWhite() ) {
-				if(piezaCasilla instanceof Peon){ //Si es un peon que solo coja las que este puede "comer"
-					ArrayList<Casilla> casillasDisp = ((Peon) piezaCasilla).getCasillasCome(casilla, casillas);
+				
+					ArrayList<Casilla> casillasDisp = piezaCasilla.getCasillasCome(casilla, casillas);
 					casillasAmenaza.addAll(casillasDisp);
-				}else if(piezaCasilla instanceof Torre){ //Si es una torre que coja las que este puede "comer"
-					ArrayList<Casilla> casillasDisp = ((Torre) piezaCasilla).getCasillasCome(casilla, casillas);
-					casillasAmenaza.addAll(casillasDisp);
-				}else if(piezaCasilla instanceof Alfil){ //Si es un alfil que coja las que este puede "comer"
-					ArrayList<Casilla> casillasDisp = ((Alfil) piezaCasilla).getCasillasCome(casilla, casillas);
-					casillasAmenaza.addAll(casillasDisp);
-				}else if(piezaCasilla instanceof Reina){ //Si es una reina que coja las que este puede "comer"
-					ArrayList<Casilla> casillasDisp = ((Reina) piezaCasilla).getCasillasCome(casilla, casillas);
-					casillasAmenaza.addAll(casillasDisp);
-				}else if(piezaCasilla instanceof Caballo){ //Si es un caballo que coja las que este puede "comer"
-					ArrayList<Casilla> casillasDisp = ((Caballo) piezaCasilla).getCasillasCome(casilla, casillas);
-					casillasAmenaza.addAll(casillasDisp);
-				}else if(piezaCasilla instanceof Rey){ //Si es un rey que coja las que este puede "comer"
-					ArrayList<Casilla> casillasDisp = ((Rey) piezaCasilla).getCasillasCome(casilla, casillas);
-					casillasAmenaza.addAll(casillasDisp);
+				
 				}
 			}
-		}
+		
 		return casillasAmenaza;
 	}
 	

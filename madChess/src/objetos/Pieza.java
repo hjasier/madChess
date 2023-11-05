@@ -16,8 +16,13 @@ public class Pieza {
 	private Jugador propietario;
 	private Boolean isWhite;
 	protected Boolean pMoved = false;
-
 	
+	
+	public ArrayList<Casilla> getCasillasCome(Casilla curCasilla, ArrayList<Casilla> casillas) {
+
+        return null;
+
+    }
 	
 
 	

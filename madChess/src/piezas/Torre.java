@@ -81,11 +81,12 @@ public class Torre extends Pieza implements MetodosInterfaz {
                 
                 
                 if (
-                		casillaDisp.getPieza()!=null&&
-                		casillaDisp.getPieza().getIsWhite()==this.getIsWhite())
+                		casillaDisp.getPieza()!=null&& //Hay pieza
+                		casillaDisp.getPieza().getIsWhite()==this.getIsWhite()) // Y es enemiga
                 {
                 	casillasDisp.add(casillaDisp);
                 	break;}
+                
 
                 
                 casillasDisp.add(casillaDisp);
