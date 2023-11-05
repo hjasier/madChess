@@ -44,6 +44,10 @@ public class Partida {
 	private int modoDeJuego;
 	
 	private Boolean DEBUG_MODE = true; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
+
+	private Rey reyWhite;
+
+	private Rey reyBlack;
 	
 	/*
 	 * MODOS DE JUEGO:
@@ -80,11 +84,30 @@ public class Partida {
         	public void mouseReleased(MouseEvent e) {
         		Casilla curCasilla = tablero.getCurCasilla(e);
         		moverPiezaTablero(tablero.prevCasilla,curCasilla,tablero.casillasDisp,e);
-        		tablero.dragging = false;
-        		
-        }
+        		tablero.dragging = false;	
+        	}
+        	
+        	
         
         });
+        
+        tablero.tableroDiv.addMouseMotionListener(new MouseAdapter() {
+        	
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Casilla prevCasilla = tablero.getPrevCasilla();
+                
+                if (!checkJaqueMove(prevCasilla.getPieza())) {
+                    tablero.arrastrarPieza(e);
+                } else {
+                    printMovimiento("REY EN JAQUE , movimientos restringidos");
+                    if (prevCasilla.getPieza() instanceof Rey) {
+                        tablero.arrastrarPieza(e);
+                    }
+                }
+            }
+		});
+        
         
         
         /*
@@ -94,9 +117,14 @@ public class Partida {
         jugadores.add(new Jugador("Potzon"));       
         jugadores.add(new Jugador("erGiova"));
         
+        
         jugadores.get(0).setIsWhite(true);
+        jugadores.get(0).setRey(reyWhite);
+        jugadores.get(1).setRey(reyBlack);
+        
         nextPlayer = jugadores.get(0);
         tablero.setCurPlayer(nextPlayer);
+        
         
         tablero.DEBUG_MODE = DEBUG_MODE;
         
@@ -124,6 +152,7 @@ public class Partida {
 		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
 			
 			if (prevCasilla.getPieza().getIsWhite()!=nextPlayer.getIsWhite()&&!DEBUG_MODE) {return;} // Si no es tu turno y mueves..
+			if (casillasDisp==null) {return;}
 			
 			if (prevCasilla != curCasilla && (casillasDisp.contains(curCasilla)||DEBUG_MODE)){ // Si la casilla esta entre las disponibles y no es la casilla de la que sale
        		Pieza pieza= prevCasilla.getPieza();
@@ -131,8 +160,11 @@ public class Partida {
        		
        		int casillaInx = casillas.indexOf(curCasilla);
        		
+       		if (checkJaqueMove(pieza)) {
+       			return;//Si hay jaque y la pieza moviendose no es rey
+       		}
        		
-       		if (checkEnroqueCorto(pieza,curCasilla)) {
+       		else if (checkEnroqueCorto(pieza,curCasilla)) {
        			Pieza torre = casillas.get(casillaInx+1).getPieza();
        			casillas.get(casillaInx-1).setPieza(torre);
        			casillas.get(casillaInx+1).setPieza(null);//Borramos la torre de donde esta ahora
@@ -150,7 +182,7 @@ public class Partida {
        			printMovimiento("Pieza promocionada ");
        			// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
        		}
-       		
+  
        		else{ // Si no se cumple ninguno de los casos especiales entonces miramos si esta comiendo una pieza o simplemente moviendose
        			
        			if (curCasilla.getPieza()!=null) {
@@ -173,6 +205,8 @@ public class Partida {
        		
        		setNextPlayer();// Cambiamos el jugador
     		
+       		
+       		checkReyInJaque();
     		
 			}
 			 
@@ -189,6 +223,39 @@ public class Partida {
 		}
 		
 	}
+
+
+
+
+
+
+
+
+
+	private void checkReyInJaque() {
+		Casilla curReyCasilla = null;
+		for (Casilla casilla:casillas) {
+			if (casilla.getPieza()==nextPlayer.getRey()) {
+				curReyCasilla = casilla;
+				break;
+			}
+		}
+		nextPlayer.getRey().reCheckJaqueStatus(curReyCasilla,casillas);
+		
+	}
+
+
+
+
+
+	private boolean checkJaqueMove(Pieza movePieza) {
+		return (
+				nextPlayer.getRey().getIsAmenezado()&&
+				!(movePieza instanceof Rey)
+				);
+	}
+
+
 
 
 
@@ -260,12 +327,14 @@ public class Partida {
 
 	
 	protected void cargarPiezasTablero() {
-
+		reyBlack = new Rey(false);
+		reyWhite = new Rey(true);
+		
 		casillas.get(0).setPieza(new Torre(false));
 		casillas.get(1).setPieza(new Caballo(false));
 		casillas.get(2).setPieza(new Alfil(false));
 		casillas.get(3).setPieza(new Reina(false));
-		casillas.get(4).setPieza(new Rey(false));
+		casillas.get(4).setPieza(reyBlack);
 		casillas.get(5).setPieza(new Alfil(false));
 		casillas.get(6).setPieza(new Caballo(false));
 		casillas.get(7).setPieza(new Torre(false));
@@ -282,7 +351,7 @@ public class Partida {
 		casillas.get(57).setPieza(new Caballo(true));
 		casillas.get(58).setPieza(new Alfil(true));
 		casillas.get(59).setPieza(new Reina(true));
-		casillas.get(60).setPieza(new Rey(true));
+		casillas.get(60).setPieza(reyWhite);
 		casillas.get(61).setPieza(new Alfil(true));
 		casillas.get(62).setPieza(new Caballo(true));
 		casillas.get(63).setPieza(new Torre(true));

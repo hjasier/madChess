@@ -1,5 +1,7 @@
 package objetos;
 
+import piezas.Rey;
+
 public class Jugador {
 	
 	private String nombre;
@@ -7,6 +9,7 @@ public class Jugador {
 	private String passw;
 	private String img_route;
 	private Boolean isWhite = false;
+	private Rey rey;
 	
 	public Jugador(String nombre) {
 		super();
@@ -34,6 +37,18 @@ public class Jugador {
 
 	public String getNombre() {
 		return nombre;
+	}
+
+
+
+	public Rey getRey() {
+		return rey;
+	}
+
+
+
+	public void setRey(Rey rey) {
+		this.rey = rey;
 	}
 	
 	

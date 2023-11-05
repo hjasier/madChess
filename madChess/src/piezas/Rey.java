@@ -8,13 +8,26 @@ import objetos.MetodosInterfaz;
 import objetos.Pieza;
 
 public class Rey extends Pieza implements MetodosInterfaz{
-
+	protected Boolean isAmenezado = false;
+	
 	public Rey(Boolean isWhite) {
 		super("k",isWhite);
 	}
 
 	
 	
+	public Boolean getIsAmenezado() {
+		return isAmenezado;
+	}
+
+
+
+	public void setIsAmenezado(Boolean isAmenezado) {
+		this.isAmenezado = isAmenezado;
+	}
+
+
+
 	@Override
     public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
         int casillaIndex = casillas.indexOf(curCasilla);
@@ -98,9 +111,8 @@ public class Rey extends Pieza implements MetodosInterfaz{
         ArrayList<Casilla> casillasAmenaza = casillasJaque(casillas);
         casillasDisp.removeAll(casillasAmenaza);
         
-        if(casillasAmenaza.contains(curCasilla)){
-        	System.out.println("Jaque");
-        }
+        isAmenezado = casillasAmenaza.contains(curCasilla);
+        
         if(casillasAmenaza.contains(curCasilla) && casillasDisp.size() == 0) {
         	System.out.println("Jaque Mate");
         	curCasilla.setDebugClr(Color.red);
@@ -218,6 +230,15 @@ public class Rey extends Pieza implements MetodosInterfaz{
 	    }
 
 	    return casillasDisp;
+	}
+
+
+
+	public void reCheckJaqueStatus(Casilla curReyCasilla, ArrayList<Casilla> casillas) {
+		ArrayList<Casilla> casillasAmenaza = casillasJaque(casillas);
+		isAmenezado = casillasAmenaza.contains(curReyCasilla);
+		String color = getIsWhite()? "blanco":"negro";
+       	System.out.println("Rey "+color+" amenzadado: "+isAmenezado);
 	}
 
 	
