@@ -82,7 +82,7 @@ public class Torre extends Pieza implements MetodosInterfaz {
                 
                 if (
                 		casillaDisp.getPieza()!=null&& //Hay pieza
-                		casillaDisp.getPieza().getIsWhite()==this.getIsWhite()) // Y es enemiga
+                		casillaDisp.getPieza().getIsWhite()==this.getIsWhite()) // Y es aliada
                 {
                 	casillasDisp.add(casillaDisp);
                 	break;}
@@ -94,7 +94,11 @@ public class Torre extends Pieza implements MetodosInterfaz {
                 // Avanzo a la dirección del movimiento
                 nuevaFila += movimiento[0];
                 nuevaColumna = (char) (nuevaColumna + movimiento[1]);
-                if (casillaDisp.getPieza()!=null) {break;}
+                if (casillaDisp.getPieza()!=null) {
+                	if(casillaDisp.getPieza() instanceof Rey) {
+                		continue;
+                	}
+                	break;}
             }
         }
 

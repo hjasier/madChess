@@ -98,9 +98,12 @@ public class Rey extends Pieza implements MetodosInterfaz{
         ArrayList<Casilla> casillasAmenaza = casillasJaque(casillas);
         casillasDisp.removeAll(casillasAmenaza);
         
-        
+        if(casillasAmenaza.contains(curCasilla)){
+        	System.out.println("Jaque");
+        }
         if(casillasAmenaza.contains(curCasilla) && casillasDisp.size() == 0) {
         	System.out.println("Jaque Mate");
+        	curCasilla.setDebugClr(Color.red);
         }
         
         return casillasDisp;
@@ -118,10 +121,9 @@ public class Rey extends Pieza implements MetodosInterfaz{
 				
 					ArrayList<Casilla> casillasDisp = piezaCasilla.getCasillasCome(casilla, casillas);
 					casillasAmenaza.addAll(casillasDisp);
-				
+					
 				}
 			}
-		
 		return casillasAmenaza;
 	}
 	

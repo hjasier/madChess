@@ -85,7 +85,11 @@ public class Reina extends Pieza implements MetodosInterfaz {
                 // Avanzo a la dirección del movimiento
                 nuevaFila += movimiento[0];
                 nuevaColumna = (char) (nuevaColumna + movimiento[1]);
-                if (casillaDisp.getPieza()!=null) {break;}
+                if (casillaDisp.getPieza()!=null) {
+                	if(casillaDisp.getPieza() instanceof Rey) {
+                		continue;
+                	}
+                	break;}
             }
         }
 

@@ -1,5 +1,6 @@
 package juego;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
@@ -255,6 +256,7 @@ public class Partida {
 				(curPieza.getIsWhite()&& curCasilla.getFila() == 0||
 				(!curPieza.getIsWhite())&& curCasilla.getFila() == 7);	
 	}
+	
 
 	
 	protected void cargarPiezasTablero() {
