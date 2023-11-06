@@ -96,15 +96,32 @@ public class Partida {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Casilla prevCasilla = tablero.getPrevCasilla();
+                Casilla curCasilla = tablero.getCurCasilla(e);
+                tablero.arrastrarPieza(e);
                 
-                if (!checkJaqueMove(prevCasilla.getPieza())) {
+                if (!checkJaque()) {
                     tablero.arrastrarPieza(e);
-                } else {
+                } 
+                else {
+                	tablero.arrastrarPieza(e);
+                	
+                	ArrayList<Pieza> piezasAmenaza = nextPlayer.getRey().piezasAmenaza(getCasillaPieza(nextPlayer.getRey()), casillas);
+                	System.out.println(piezasAmenaza);
+                	
+                	/*
+                	
+                	ArrayList<Pieza> piezasProtege = nextPlayer.getRey().getPiezasProtege(casillas);
                     printMovimiento("REY EN JAQUE , movimientos restringidos");
-                    if (prevCasilla.getPieza() instanceof Rey) {
+                    if (piezasProtege.contains(prevCasilla.getPieza())) {
                         tablero.arrastrarPieza(e);
                     }
-                }
+                    else{
+                    	System.out.println("solo puedes mover piezas que protegan al rey");
+                    }   
+                    */             }
+                
+                //si comprobamos que el rey esta en jaque 
+                // y si la pieza esta entre las piezasDisponibles para desamenazaar al rey entonces dejamos arrastrar
             }
 		});
         
@@ -146,6 +163,20 @@ public class Partida {
 
 
 
+	protected Casilla getCasillaPieza(Pieza pieza) {
+		for (Casilla casilla: casillas) {
+			if (casilla.getPieza()==pieza) {
+				return casilla;
+			}
+			
+		}
+		return null;
+	}
+
+
+
+
+
 	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla,ArrayList<Casilla> casillasDisp, MouseEvent e) {
 		
 		
@@ -160,8 +191,8 @@ public class Partida {
        		
        		int casillaInx = casillas.indexOf(curCasilla);
        		
-       		if (checkJaqueMove(pieza)) {
-       			return;//Si hay jaque y la pieza moviendose no es rey
+       		if (checkJaque()) {
+       			//return;//Si hay jaque y la pieza moviendose no es rey
        		}
        		
        		else if (checkEnroqueCorto(pieza,curCasilla)) {
@@ -248,10 +279,9 @@ public class Partida {
 
 
 
-	private boolean checkJaqueMove(Pieza movePieza) {
+	private boolean checkJaque() {
 		return (
-				nextPlayer.getRey().getIsAmenezado()&&
-				!(movePieza instanceof Rey)
+				nextPlayer.getRey().getIsAmenezado()
 				);
 	}
 
