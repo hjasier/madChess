@@ -39,7 +39,7 @@ public class Partida {
 	protected Tablero tablero;
 	protected Juego ventana;
 	
-	private Jugador nextPlayer;
+	private Jugador curPlayer; //Jugador actual
 	
 	private int modoDeJuego;
 	
@@ -48,6 +48,8 @@ public class Partida {
 	private Rey reyWhite;
 
 	private Rey reyBlack;
+	
+	private HashMap<Pieza, ArrayList<Casilla>> piezasDefensa;
 	
 	/*
 	 * MODOS DE JUEGO:
@@ -83,7 +85,7 @@ public class Partida {
         	@Override
         	public void mouseReleased(MouseEvent e) {
         		Casilla curCasilla = tablero.getCurCasilla(e);
-        		moverPiezaTablero(tablero.prevCasilla,curCasilla,tablero.casillasDisp,e);
+        		moverPiezaTablero(tablero.prevCasilla,curCasilla,e);
         		tablero.dragging = false;	
         	}
         	
@@ -97,31 +99,23 @@ public class Partida {
             public void mouseDragged(MouseEvent e) {
                 Casilla prevCasilla = tablero.getPrevCasilla();
                 Casilla curCasilla = tablero.getCurCasilla(e);
-                tablero.arrastrarPieza(e);
+        
                 
-                if (!checkJaque()) {
+                if (!checkJaque() || prevCasilla.getPieza() instanceof Rey) {
                     tablero.arrastrarPieza(e);
                 } 
                 else {
-                	tablero.arrastrarPieza(e);
+                	if (piezasDefensa.containsKey(prevCasilla.getPieza())) {
+                		System.out.println(piezasDefensa);
+                		ArrayList<Casilla> movimientosPosibles = piezasDefensa.get(prevCasilla.getPieza());
+                		tablero.arrastrarPieza(e,movimientosPosibles);
+                	}
                 	
-                	ArrayList<Pieza> piezasAmenaza = nextPlayer.getRey().piezasAmenaza(getCasillaPieza(nextPlayer.getRey()), casillas);
-                	System.out.println(piezasAmenaza);
                 	
-                	/*
+               
                 	
-                	ArrayList<Pieza> piezasProtege = nextPlayer.getRey().getPiezasProtege(casillas);
-                    printMovimiento("REY EN JAQUE , movimientos restringidos");
-                    if (piezasProtege.contains(prevCasilla.getPieza())) {
-                        tablero.arrastrarPieza(e);
-                    }
-                    else{
-                    	System.out.println("solo puedes mover piezas que protegan al rey");
-                    }   
-                    */             }
+               }
                 
-                //si comprobamos que el rey esta en jaque 
-                // y si la pieza esta entre las piezasDisponibles para desamenazaar al rey entonces dejamos arrastrar
             }
 		});
         
@@ -139,8 +133,8 @@ public class Partida {
         jugadores.get(0).setRey(reyWhite);
         jugadores.get(1).setRey(reyBlack);
         
-        nextPlayer = jugadores.get(0);
-        tablero.setCurPlayer(nextPlayer);
+        curPlayer = jugadores.get(0);
+        tablero.setCurPlayer(curPlayer);
         
         
         tablero.DEBUG_MODE = DEBUG_MODE;
@@ -153,7 +147,7 @@ public class Partida {
         else {
         	ventana.setInterfaz(modoDeJuego);
         }
-        printMovimiento("*/* "+nextPlayer.getNombre()+" empieza la partida con blancas */*");
+        printMovimiento("*/* "+curPlayer.getNombre()+" empieza la partida con blancas */*");
 		
         
         
@@ -163,26 +157,13 @@ public class Partida {
 
 
 
-	protected Casilla getCasillaPieza(Pieza pieza) {
-		for (Casilla casilla: casillas) {
-			if (casilla.getPieza()==pieza) {
-				return casilla;
-			}
-			
-		}
-		return null;
-	}
 
-
-
-
-
-	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla,ArrayList<Casilla> casillasDisp, MouseEvent e) {
-		
+	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla, MouseEvent e) {
+		ArrayList<Casilla> casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla, casillas);
 		
 		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
 			
-			if (prevCasilla.getPieza().getIsWhite()!=nextPlayer.getIsWhite()&&!DEBUG_MODE) {return;} // Si no es tu turno y mueves..
+			if (prevCasilla.getPieza().getIsWhite()!=curPlayer.getIsWhite()&&!DEBUG_MODE) {return;} // Si no es tu turno y mueves..
 			if (casillasDisp==null) {return;}
 			
 			if (prevCasilla != curCasilla && (casillasDisp.contains(curCasilla)||DEBUG_MODE)){ // Si la casilla esta entre las disponibles y no es la casilla de la que sale
@@ -191,11 +172,13 @@ public class Partida {
        		
        		int casillaInx = casillas.indexOf(curCasilla);
        		
-       		if (checkJaque()) {
-       			//return;//Si hay jaque y la pieza moviendose no es rey
+       	
+       		if (checkJaque() && !checkJaqueMoveValid(prevCasilla,curCasilla)){
+       			printMovimiento("¡Proteje al rey! 😡");
+       			return;
        		}
        		
-       		else if (checkEnroqueCorto(pieza,curCasilla)) {
+       		if (checkEnroqueCorto(pieza,curCasilla)) {
        			Pieza torre = casillas.get(casillaInx+1).getPieza();
        			casillas.get(casillaInx-1).setPieza(torre);
        			casillas.get(casillaInx+1).setPieza(null);//Borramos la torre de donde esta ahora
@@ -244,7 +227,7 @@ public class Partida {
 			prevCasilla.setDragging(false);
 			tablero.dragImg.setIcon(null); // Borramos la img del panel superior
 
-    		for(Casilla casillaDisp: tablero.casillasDisp) {
+    		for(Casilla casillaDisp: casillasDisp) {
     			casillaDisp.setDisponible(false);
     		} 
     		
@@ -258,6 +241,104 @@ public class Partida {
 
 
 
+	private boolean checkJaqueMoveValid(Casilla prevCasilla,Casilla newCasilla) {
+		
+		
+		return (
+				piezasDefensa!=null&&
+				(((piezasDefensa.containsKey(prevCasilla.getPieza())&&
+				  piezasDefensa.get(prevCasilla.getPieza()).contains(newCasilla))||
+				prevCasilla.getPieza() instanceof Rey))	
+				);
+	}
+
+
+
+
+
+	protected ArrayList<Casilla> getCasillasSimulacion(ArrayList<Casilla>  casillas) { //NO HACE FALTA
+		ArrayList<Casilla> casillasSimulacion = new ArrayList<Casilla>();
+		for (Casilla casilla : casillas) {
+			Pieza newPieza = casilla.getPieza(); // NO LO DUPLICA ASI QUE LOS CAMBIOS EN PIEZA SI SE CAMBIAN EN EL ORIGINAL
+			Casilla newCasilla = new Casilla(null, casilla.getFila(), (casilla.getColumna()-'A'));
+			newCasilla.setPieza(newPieza);
+		    casillasSimulacion.add(newCasilla);
+		}
+		return casillasSimulacion;
+	}
+
+
+	protected HashMap<Pieza, ArrayList<Casilla>> getPiezasDefensa() {
+		HashMap<Pieza, ArrayList<Casilla>> piezasDefensa = new HashMap<Pieza, ArrayList<Casilla>>();
+		ArrayList<Casilla> casillasSimulacion = getCasillasSimulacion(casillas);//Crea una copia del arraylist casillas
+		Casilla casillaRey = getCasillaPieza(curPlayer.getRey());
+		for (Casilla casilla:casillas) {
+			Pieza pieza = casilla.getPieza();//Geteamos la pieza
+			if (pieza!=null&&pieza.getIsWhite()==curPlayer.getIsWhite()&&!(pieza instanceof Rey)) {
+				
+				ArrayList<Casilla> casillasDispPieza = pieza.getCasillasDisponibles(casilla, casillas);//Todos las casillas a las que se podría mover antes de la restricción
+				ArrayList<Casilla> casillasSalva = new ArrayList<Casilla>();
+				for (Casilla movimientoPosible:casillasDispPieza) {
+					//Simulamos el movimiento y comprobamos si salvaría al rey
+					if (checkSimulacion(casillasSimulacion,casilla,movimientoPosible,casillaRey)) {
+						//La casilla salvaría al rey 
+						casillasSalva.add(movimientoPosible);
+						
+					}
+				}
+				if (casillasSalva.size()>0) {	
+					piezasDefensa.put(pieza, casillasSalva);
+				}
+			}
+		}
+		
+		curPlayer.getRey().reCheckJaqueStatus(casillaRey, casillas); //Volvemos a setear true la amenaza del rey por que la simulación no duplica las piezas solo las casillas
+		
+		return piezasDefensa;
+	}
+
+
+
+
+
+	private boolean checkSimulacion(ArrayList<Casilla> simulacion,Casilla prevCasilla, Casilla movimiento, Casilla casillaRey) {
+		Pieza piezaSeMueve = prevCasilla.getPieza();
+		int indexPrevCasilla = casillas.indexOf(prevCasilla);
+		int indexNewCasilla = casillas.indexOf(movimiento);
+		int indexCasillaRey = casillas.indexOf(casillaRey);
+		
+		Casilla prevCasillaSimulada = simulacion.get(indexPrevCasilla);
+		Casilla newCasilalSimulada = simulacion.get(indexNewCasilla);
+		Casilla casillaReySimulada = simulacion.get(indexCasillaRey);
+		Pieza prevPieza = newCasilalSimulada.getPieza();
+		
+		prevCasillaSimulada.setPieza(null);
+		newCasilalSimulada.setPieza(piezaSeMueve);
+		
+		Rey reyASalvar = (Rey) casillaReySimulada.getPieza();
+		Boolean isAmenazado = reyASalvar.reCheckJaqueStatus(casillaReySimulada, simulacion);
+		
+		//Restablecemos la simulación a como estaba
+		prevCasillaSimulada.setPieza(piezaSeMueve);
+		newCasilalSimulada.setPieza(prevPieza);
+		
+		return !isAmenazado;
+	}
+
+
+
+
+
+	protected Casilla getCasillaPieza(Pieza pieza) {
+		for (Casilla casilla: casillas) {
+			if (casilla.getPieza()==pieza) {
+				return casilla;
+			}
+			
+		}
+		return null;
+	}
+
 
 
 
@@ -266,12 +347,17 @@ public class Partida {
 	private void checkReyInJaque() {
 		Casilla curReyCasilla = null;
 		for (Casilla casilla:casillas) {
-			if (casilla.getPieza()==nextPlayer.getRey()) {
+			if (casilla.getPieza()==curPlayer.getRey()) {
 				curReyCasilla = casilla;
 				break;
 			}
 		}
-		nextPlayer.getRey().reCheckJaqueStatus(curReyCasilla,casillas);
+		if (curPlayer.getRey().reCheckJaqueStatus(curReyCasilla,casillas)) {
+			piezasDefensa = getPiezasDefensa();
+		}
+		else{
+			piezasDefensa = null;
+		}
 		
 	}
 
@@ -281,7 +367,7 @@ public class Partida {
 
 	private boolean checkJaque() {
 		return (
-				nextPlayer.getRey().getIsAmenezado()
+				curPlayer.getRey().reCheckJaqueStatus(getCasillaPieza(curPlayer.getRey()), casillas)
 				);
 	}
 
@@ -291,9 +377,9 @@ public class Partida {
 
 	private void setNextPlayer() {
 		if (modoDeJuego==0) {
-			int newIndex = (jugadores.indexOf(nextPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(nextPlayer)+1;
+			int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
 			tablero.setCurPlayer(jugadores.get(newIndex));
-			nextPlayer = jugadores.get(newIndex);
+			curPlayer = jugadores.get(newIndex);
 		}
 		else if (modoDeJuego==1) {
 			
@@ -310,7 +396,7 @@ public class Partida {
 	private void guardarMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida) {
 		//Aquí guardaríamos el movimiento en la base de datos, con su user etc para las analíticas
 		String extra = (piezaComida==null) ? " ":" Pieza comida";
-		printMovimiento("<"+nextPlayer.getNombre()+"> "+prevCasilla.getPos()+" --> "+curCasilla.getPos()+extra);
+		printMovimiento("<"+curPlayer.getNombre()+"> "+prevCasilla.getPos()+" --> "+curCasilla.getPos()+extra);
 		
 		
 	}

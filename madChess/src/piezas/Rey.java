@@ -84,7 +84,6 @@ public class Rey extends Pieza implements MetodosInterfaz{
         ArrayList<Casilla> casillasAmenaza = casillasJaque(casillas);
         casillasDisp.removeAll(casillasAmenaza);
         
-        isAmenezado = casillasAmenaza.contains(curCasilla);
         
         if(casillasAmenaza.contains(curCasilla) && casillasDisp.size() == 0) {
         	System.out.println("Jaque Mate");
@@ -184,65 +183,6 @@ public class Rey extends Pieza implements MetodosInterfaz{
 	}
 	
 	
-	
-	public ArrayList<Casilla> getCasillasSimulacion(ArrayList<Casilla>  casillas) { //NO HACE FALTA
-		ArrayList<Casilla> casillasSimulacion = new ArrayList<Casilla>();
-		for (Casilla casilla : casillas) {
-			Pieza newPieza = casilla.getPieza(); // NO LO DUPLICA ASI QUE LOS CAMBIOS EN PIEZA SI SE CAMBIAN EN EL ORIGINAL
-			Casilla newCasilla = new Casilla(null, casilla.getFila(), (casilla.getColumna()-'A'));
-			newCasilla.setPieza(newPieza);
-		    casillasSimulacion.add(newCasilla);
-		}
-		return casillasSimulacion;
-	}
-    
-    
-	public ArrayList<Casilla> casillasFuturaAmenaza(Casilla CasillaRey,ArrayList<Casilla> casillasDisp,ArrayList<Casilla> casillas){//NO HACE FALTA
-		ArrayList<Casilla> casillasFuturasAmenaza = new ArrayList<>();
-		
-		ArrayList<Casilla> casillasSimulacion = getCasillasSimulacion(casillas);
-		
-		
-
-		Pieza newPieza = CasillaRey.getPieza();
-		
-
-		
-		casillasSimulacion.get(casillas.indexOf(CasillaRey)).setPiezaOculto(null);
-		
-		
-		
-		for(Casilla casilla : casillasDisp) {
-			
-			casillasSimulacion.get(casillas.indexOf(casilla)).setPieza(newPieza);
-			Pieza prevPieza = casilla.getPieza();
-
-			
-			ArrayList<Casilla> casillasAmenaza = casillasJaque(casillasSimulacion);
-			
-			
-
-			
-			for (Casilla c:casillas) {
-				c.setDebugClr(Color.blue);
-			}
-			for (Casilla c:casillasAmenaza) {
-				casillas.get(casillasSimulacion.indexOf(c)).setDebugClr(Color.red);
-			}
-			
-			
-			
-			casillasSimulacion.get(casillas.indexOf(casilla)).setPieza(prevPieza);
-			if(casillasAmenaza.contains(casilla)) {
-				
-				casillasFuturasAmenaza.add(casilla);
-			}
-			
-		}
-		System.out.println(casillasFuturasAmenaza.size());
-		return casillasFuturasAmenaza;
-	}
-
 
 
 	@Override
@@ -278,20 +218,17 @@ public class Rey extends Pieza implements MetodosInterfaz{
 
 
 
-	public void reCheckJaqueStatus(Casilla curReyCasilla, ArrayList<Casilla> casillas) {
+	public boolean reCheckJaqueStatus(Casilla curReyCasilla, ArrayList<Casilla> casillas) {
 		ArrayList<Casilla> casillasAmenaza = casillasJaque(casillas);
 		isAmenezado = casillasAmenaza.contains(curReyCasilla);
-		String color = getIsWhite()? "blanco":"negro";
-       	System.out.println("Rey "+color+" amenzadado: "+isAmenezado);
+//		String color = getIsWhite()? "blanco":"negro";
+//       	System.out.println("Rey "+color+" amenzadado: "+isAmenezado);
+       	return this.isAmenezado;
 	}
 
 
 
-	public ArrayList<Pieza> getPiezasProtege(ArrayList<Casilla> casillas) {
-		
-		
-		return null;
-	}
+
 
 	
 	

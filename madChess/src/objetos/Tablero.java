@@ -29,14 +29,10 @@ public class Tablero extends JPanel{
 	//Eventos mouse variables
 	protected Casilla lastCasilla;
 	protected Casilla curCasilla;
-	public Casilla getPrevCasilla() {
-		return prevCasilla;
-	}
+
 
 	public Casilla prevCasilla;
 	public Boolean dragging = false;
-	
-	public ArrayList<Casilla> casillasDisp;
 	
 	private JPanel promocionPanel;
 	
@@ -134,7 +130,8 @@ public class Tablero extends JPanel{
         
     }
     
-    public void arrastrarPieza(MouseEvent e) {
+
+	public void arrastrarPieza(MouseEvent e, ArrayList<Casilla> movimientosPosibles) {
 		curCasilla = getCurCasilla(e);
 		if (lastCasilla==null) {lastCasilla = prevCasilla;}
 		
@@ -158,8 +155,8 @@ public class Tablero extends JPanel{
     		dragImg.setLocation(e.getX(),e.getY());
     		dragImg.setIcon(imgReEscalada);
     		
-    		casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla,casillas);
-    		for(Casilla casillaDisp: casillasDisp) {
+    		
+    		for(Casilla casillaDisp: movimientosPosibles) {
     			casillaDisp.setDisponible(true);
     		}
 		}
@@ -168,6 +165,15 @@ public class Tablero extends JPanel{
 		int imgOffset = dragImg.getWidth()/2;
 		dragImg.setLocation(e.getX()-imgOffset,e.getY()-imgOffset);
 		
+	}
+    
+    
+    public void arrastrarPieza(MouseEvent e) {
+    	if (prevCasilla.getPieza()!=null) {
+        	ArrayList<Casilla> casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla,casillas);
+        	arrastrarPieza(e,casillasDisp);
+    	}
+
 	}
     
 
@@ -258,8 +264,11 @@ public class Tablero extends JPanel{
 		this.nowPlaying = jugador;
 	}
 
+	public Casilla getPrevCasilla() {
+		return prevCasilla;
+	}
 
-    
+
 	
 
 	
