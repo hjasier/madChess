@@ -420,7 +420,7 @@ public class Partida {
 	private void pararTemporizador() {
 		Date now = new Date();
 		Date initFecha = curPlayer.getInitTime(); 	
-	    long segundos =  (initFecha.getTime()-now.getTime())/1000;
+	    long segundos =  (now.getTime()-initFecha.getTime())/1000;
 	    int restantes = (int) (curPlayer.getTiempoRestante()-segundos);
 	    curPlayer.setTiempoRestante(restantes);
 	    
