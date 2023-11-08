@@ -35,6 +35,7 @@ import javax.swing.border.Border;
 
 import componentes.MButton;
 import componentes.MScrollPane;
+import componentes.userInfo;
 import objetos.*;
 
 
@@ -42,9 +43,8 @@ public class Juego extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected JPanel panelJuego;
 	protected JPanel panelControles;
-	
-	protected JLabel labelUsuario1;
-	protected JLabel labelUsuario2;
+	protected userInfo panelUsuario;
+	protected userInfo panelUsuario2;
 	
 	
 	protected JPanel panelChat;
@@ -81,6 +81,7 @@ public class Juego extends JPanel {
 	    // Paneles
 	    panelJuego = new JPanel();
 	    panelControles = new JPanel(new GridLayout(2,1));
+	    
 
 	    /*
 	     * COLORES y FONDOS
@@ -112,12 +113,13 @@ public class Juego extends JPanel {
 	    // Agrega algunos elementos a panelJuego (por ejemplo, botones o etiquetas)
 
 
-	   labelUsuario1 = new JLabel("Usuario 1");
-	   labelUsuario2 = new JLabel("Usuario 2");
-	    panelJuego.add(labelUsuario1);
-	    panelJuego.add(tablero);
-	    panelJuego.add(labelUsuario2);
+	   panelUsuario = new userInfo();
+	   panelUsuario2 = new userInfo();
+	   panelJuego.add(panelUsuario);
+	   panelJuego.add(tablero);
+	   panelJuego.add(panelUsuario2);
 	
+	    
 	    
 
 	    
@@ -142,11 +144,7 @@ public class Juego extends JPanel {
 	    
 
 	    
-	    String contenidoUsuario1 = labelUsuario1.getText();
-        String contenidoUsuario2 = labelUsuario2.getText();
-
-        // Crear un array y agregar los contenidos de los label
-        String[] contenidoUsuarios = {contenidoUsuario1, contenidoUsuario2};
+        
 	    
 
 	    
