@@ -1,16 +1,11 @@
 package juego;
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
+import java.util.Date;
 
-import javax.swing.JPanel;
 
 import objetos.Boost;
 import objetos.Casilla;
@@ -23,7 +18,6 @@ import piezas.Peon;
 import piezas.Reina;
 import piezas.Rey;
 import piezas.Torre;
-import ventanas.OLDVentanaJuego;
 import ventanas.Juego;
 
 public class Partida {
@@ -106,7 +100,6 @@ public class Partida {
                 } 
                 else {
                 	if (piezasDefensa.containsKey(prevCasilla.getPieza())) {
-                		System.out.println(piezasDefensa);
                 		ArrayList<Casilla> movimientosPosibles = piezasDefensa.get(prevCasilla.getPieza());
                 		tablero.arrastrarPieza(e,movimientosPosibles);
                 	}
@@ -125,16 +118,9 @@ public class Partida {
          * HashMap temporal de jugadores
          */
         
-        jugadores.add(new Jugador("Potzon"));       
-        jugadores.add(new Jugador("erGiova"));
+        initPlayers();
         
         
-        jugadores.get(0).setIsWhite(true);
-        jugadores.get(0).setRey(reyWhite);
-        jugadores.get(1).setRey(reyBlack);
-        
-        curPlayer = jugadores.get(0);
-        tablero.setCurPlayer(curPlayer);
         
         
         tablero.DEBUG_MODE = DEBUG_MODE;
@@ -153,6 +139,32 @@ public class Partida {
         
 	}
 	
+
+
+
+
+
+	private void initPlayers() {
+		int initTime = 600;
+		
+        jugadores.add(new Jugador("Potzon"));       
+        jugadores.add(new Jugador("erGiova"));
+        
+        
+        jugadores.get(0).setIsWhite(true);
+        jugadores.get(0).setRey(reyWhite);
+        jugadores.get(1).setRey(reyBlack);
+        
+        curPlayer = jugadores.get(0);
+        tablero.setCurPlayer(curPlayer);
+        
+        
+		for (Jugador player:jugadores) {
+			player.setTiempoRestante(initTime);
+		}
+		
+		iniciarTemporizador();
+	}
 
 
 
@@ -217,7 +229,7 @@ public class Partida {
        		
        		
        		
-       		setNextPlayer();// Cambiamos el jugador
+       		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
     		
        		
        		checkReyInJaque();
@@ -376,6 +388,8 @@ public class Partida {
 
 
 	private void setNextPlayer() {
+		pararTemporizador();
+		
 		if (modoDeJuego==0) {
 			int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
 			tablero.setCurPlayer(jugadores.get(newIndex));
@@ -385,8 +399,32 @@ public class Partida {
 			
 		}
 		
-
+		iniciarTemporizador();
 		
+		
+	}
+
+
+
+
+
+	private void iniciarTemporizador() {
+		Date now = new Date();
+		curPlayer.setInitTime(now);
+	}
+
+
+
+
+
+	private void pararTemporizador() {
+		Date now = new Date();
+		Date initFecha = curPlayer.getInitTime(); 	
+	    long segundos =  (initFecha.getTime()-now.getTime())/1000;
+	    int restantes = (int) (curPlayer.getTiempoRestante()-segundos);
+	    curPlayer.setTiempoRestante(restantes);
+	    
+	    System.out.println("Tiempo restante "+curPlayer.getNombre()+" --> "+restantes+" segundos");
 	}
 
 

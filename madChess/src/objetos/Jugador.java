@@ -1,5 +1,7 @@
 package objetos;
 
+import java.util.Date;
+
 import piezas.Rey;
 
 public class Jugador {
@@ -9,7 +11,10 @@ public class Jugador {
 	private String passw;
 	private String img_route;
 	private Boolean isWhite = false;
+	private int tiempoRestante;
+	private Date initTime; 
 	private Rey rey;
+	
 	
 	public Jugador(String nombre) {
 		super();
@@ -49,6 +54,30 @@ public class Jugador {
 
 	public void setRey(Rey rey) {
 		this.rey = rey;
+	}
+
+
+
+	public Date getInitTime() {
+		return initTime;
+	}
+
+
+
+	public void setInitTime(Date now) {
+		this.initTime = now;
+	}
+
+
+
+	public void setTiempoRestante(int tiempoRestante) {
+		this.tiempoRestante = tiempoRestante;
+	}
+
+
+
+	public int getTiempoRestante() {
+		return tiempoRestante;
 	}
 	
 	
