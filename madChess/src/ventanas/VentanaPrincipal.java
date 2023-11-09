@@ -32,6 +32,8 @@ public class VentanaPrincipal extends JFrame{
     Login panelLogin = new Login();
     PanelDemo panelDemo = new PanelDemo();
     
+    MenuInicio  panelMenuInicio = new MenuInicio();
+    
 	public VentanaPrincipal() {
 		
 		this.setSize(1000,800);
@@ -40,12 +42,15 @@ public class VentanaPrincipal extends JFrame{
 		
 		panelPrincipal.setLayout(cardLayout);
 		
-
+		panelPrincipal.add(panelMenuInicio, "MENUINICIO");
+		
 		
 
 		panelPrincipal.add(panelDemo, "PANELDEMO");
 		
 		
+
+	
 
 		
         panelPrincipal.add(panelJuego, "PANELJUEGO");
