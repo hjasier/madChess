@@ -58,13 +58,13 @@ public class VentanaPrincipal extends JFrame{
         
         
         
-        panelDemo.btn1.addActionListener(new ActionListener() {
+        panelMenuInicio.loginBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELLOGIN");
             }
         });
 
-        panelDemo.btn2.addActionListener(new ActionListener() {
+        panelMenuInicio.partidaLocal.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELJUEGO");
@@ -72,7 +72,7 @@ public class VentanaPrincipal extends JFrame{
             }
         });
         
-        panelDemo.btn3.addActionListener(new ActionListener() {
+        panelMenuInicio.joinPOnline.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELJUEGO");

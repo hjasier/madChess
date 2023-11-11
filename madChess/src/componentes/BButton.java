@@ -22,7 +22,7 @@ public class BButton extends JButton {
         // Quitar bordes del botón y del texto
         setBorderPainted(false);
         setContentAreaFilled(false);
-
+        setFocusPainted(false);
         
         addMouseListener(new MouseAdapter() {
             @Override

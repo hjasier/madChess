@@ -31,7 +31,7 @@ public class Pieza {
 		this.nombre = nombre;
 		this.isWhite = isWhite;
 		char isWhiteChar = isWhite ? 'w':'b';
-		this.img = new ImageIcon(getClass().getResource("../src_piezas/" + isWhiteChar+nombre + ".png"));
+		this.img = new ImageIcon(getClass().getResource("../srcmedia/" + isWhiteChar+nombre + ".png"));
 	}
 
 	

@@ -1,15 +1,17 @@
 package ventanas;
 
 import java.awt.*;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Image;
-
-import javax.swing.BoxLayout;
+import java.io.IOException;
+import java.io.InputStream;
 
 import componentes.BButton;
 import componentes.RButton;
+
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class MenuInicio extends JPanel {
 
@@ -17,15 +19,24 @@ public class MenuInicio extends JPanel {
 	protected JPanel opciones;
 	protected JPanel panelLogo = new JPanel();
 	protected JPanel panelLogin = new JPanel();
-	protected RButton loginBtn = new RButton("Login");
-	protected JLabel nombre = new JLabel("MadChess");
 	
-	protected BButton partidaLocal = new BButton("Partida Local");
-	protected BButton crearPOnline = new BButton("Crear partida online");
-	protected BButton joinPOnline = new BButton("Join partida online");
-	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../src_piezas/imagenMenuInicio.png"));
+	protected JLabel nombre = new JLabel("madChess");
+	
+	public RButton loginBtn = new RButton("Login");
+	public BButton partidaLocal = new BButton("Partida Local");
+	public BButton crearPOnline = new BButton("Crear partida online");
+	public BButton joinPOnline = new BButton("Join partida online");
+	//ahora son public para no liarnos pk en el futuro no vamos a usarlos asi...
+	
+	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/imagenMenuInicio.png"));
 	protected JLabel foto = new JLabel(imgFoto);
 	protected Color colorTemp = new Color(16,16,16);
+	
+	private BufferedImage fondo;
+
+
+		
+	
 	
 	
 	public MenuInicio () {
@@ -39,13 +50,29 @@ public class MenuInicio extends JPanel {
 		panelLogo.setBackground(colorTemp);
 		panelLogin.setBackground(colorTemp);
 
+		nombre.setForeground(new Color(255, 248, 210));
+		nombre.setFont(getFont());
+		String nombreFont = "/srcmedia/unsh.ttf"; 
+	
+		
+
+		
+		try {
+			Font f = Font.createFont( Font.TRUETYPE_FONT, MenuInicio.class.getResourceAsStream(nombreFont) );
+			f = f.deriveFont( Font.PLAIN, 38 );
+			nombre.setFont(f);
+		} catch (FontFormatException | IOException e) {
+			System.out.println("Error al cargar fuente");
+		}
+		
+		
 		
 		
 		navBar.setLayout(new BorderLayout());
 		opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
 		
 		// Escalar la imagen
-        Image imagenEscalada = imgFoto.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        Image imagenEscalada = imgFoto.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH);
         imgFoto = new ImageIcon(imagenEscalada);
         foto.setIcon(imgFoto);
 
@@ -70,9 +97,9 @@ public class MenuInicio extends JPanel {
 		opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 200))); //en el medio 250
 		
 		opciones.add(partidaLocal);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Agregar espacio entre los botones
+        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Espacio entre los botones
         opciones.add(crearPOnline);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Agregar espacio entre los botones
+        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Espacio entre los botones
         opciones.add(joinPOnline);
 
 

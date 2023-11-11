@@ -21,7 +21,9 @@ public class RButton extends JButton {
         // Quitar bordes del botón y del texto
         setBorderPainted(false);
         setContentAreaFilled(false);
-
+        setFocusPainted(false);
+        
+        
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 setBackground(HOVER_COLOR);
@@ -31,6 +33,7 @@ public class RButton extends JButton {
                 setBackground(DEFAULT_COLOR);
             }
         });
+        
     }
 
     @Override
