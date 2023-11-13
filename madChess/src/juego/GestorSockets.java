@@ -16,7 +16,7 @@ public class GestorSockets {
         try {
             // Conectarse al servidor
             Socket socket = new Socket(serverIP, PUERTO);
-            ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
+            output = new ObjectOutputStream(socket.getOutputStream());
 
            
         } catch (Exception e) {

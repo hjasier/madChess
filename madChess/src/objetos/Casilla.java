@@ -11,12 +11,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
+import java.io.Serializable;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 
-public class Casilla extends JPanel {
+public class Casilla extends JPanel implements Serializable {
     private static final long serialVersionUID = 1L;
     protected Color color;
     protected int fila;

@@ -10,7 +10,6 @@ public class main {
 		// TODO Auto-generated method stub
 		VentanaPrincipal v1 = new VentanaPrincipal();
 		
-		//new VentanaLogin();
 	}
 
 }
