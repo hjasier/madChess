@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
@@ -53,9 +54,11 @@ public class Juego extends JPanel {
 	protected JTextField textfieldUsuario;
 	protected JLabel labelChat;
 	protected JLabel labelEscribe;
-	protected MButton botonEnviar;
 	protected JPanel panelControlChat;
 	protected JPanel panelDatosChat;
+	protected MButton botonEnviar;
+	protected MButton botonMenu;
+	protected MButton botonVolver;
 
 	protected JPanel panelMensaje;
 
@@ -144,10 +147,10 @@ public class Juego extends JPanel {
 	    
 
 	    
+        botonVolver = new MButton("Volver");
+	    
+        botonMenu = new MButton("Menu");
         
-	    
-
-	    
 	    botonEnviar = new MButton("Enviar");
 
         // Para enviar el mensaje al presionar Enter
@@ -159,7 +162,27 @@ public class Juego extends JPanel {
                 }
             }
         });
-
+        
+        botonVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				// Cerrar la ventana actual
+		        JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Juego.this);
+		        currentFrame.dispose();
+		        // Volver al menu de inicio
+		        VentanaPrincipal v1 = new VentanaPrincipal();
+			}
+		});
+        
+        botonMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Que abra un menu con opciones como color de las casillas y demas, si no lo acabamos usando se quita y ya
+            }
+        });
+        
         botonEnviar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -185,6 +208,10 @@ public class Juego extends JPanel {
 	    panelControlChat.add(panelMensaje);
 	    
 	    panelControlChat.add(botonEnviar);
+	    
+	    panelControlChat.add(botonMenu);
+	    
+	    panelControlChat.add(botonVolver);
 	    
 	    panelChat.add(panelControlChat, BorderLayout.SOUTH);
 	    
