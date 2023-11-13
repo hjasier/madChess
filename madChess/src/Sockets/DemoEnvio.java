@@ -8,8 +8,8 @@ import objetos.Movimiento;
 public class DemoEnvio {
 
     public static void main(String[] args) {
-        String serverIP = "localhost"; // Cambia esto a la dirección IP del servidor
-        int PUERTO = 4444; // Cambia esto al puerto del servidor
+        String serverIP = "localhost";
+        int PUERTO = 4444; 
 
         try {
             // Conectarse al servidor

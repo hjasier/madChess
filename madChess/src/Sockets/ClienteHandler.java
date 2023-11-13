@@ -31,23 +31,28 @@ public class ClienteHandler implements Runnable {
         try {
             while (true) {
                
-            	if (input.readObject() instanceof Movimiento) {
-            		System.out.println("Objeto recibido de tipo MOV");
-            		Movimiento movimiento = (Movimiento) input.readObject();
-            		System.out.println(movimiento.toString());
-            	}
+            	Object objetoLlegada = input.readObject();
             	
+            	if (objetoLlegada instanceof Movimiento) {
+            		System.out.println("Objeto recibido de tipo MOV");
+            	    Movimiento movimiento = (Movimiento) objetoLlegada;
+            	    System.out.println(movimiento.toString());
+            	} 
+            	
+          
 
            
             }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
+        	//Error durante la conexión , probablemente al cerrarla
         } finally {
             cerrarConexion();
         }
     }
 
     public void cerrarConexion() {
+    	System.out.println("Conexión con el cliente terminada");
         try {
             socket.close();
             clientes.remove(this);
