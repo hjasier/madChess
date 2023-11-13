@@ -47,7 +47,7 @@ public class ClienteHandler implements Runnable {
            // e.printStackTrace();
         	//Error durante la conexión , probablemente al cerrarla
         } finally {
-            cerrarConexion();
+          //  cerrarConexion();
         }
     }
 

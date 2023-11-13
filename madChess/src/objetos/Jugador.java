@@ -2,6 +2,7 @@ package objetos;
 
 import java.util.Date;
 
+import juego.GestorSockets;
 import piezas.Rey;
 
 public class Jugador {
@@ -14,8 +15,30 @@ public class Jugador {
 	private int tiempoRestante;
 	private Date initTime; 
 	private Rey rey;
+	private GestorSockets gestorSocket;
 	
 	
+	
+	public Jugador(GestorSockets gestorSocket) {
+		super();
+		this.gestorSocket = gestorSocket;
+	}
+
+	
+	public GestorSockets getGestorSocket() {
+		return gestorSocket;
+	}
+
+	public void setGestorSocket() {
+		if(gestorSocket == null) {
+		this.gestorSocket = new GestorSockets();
+		}else {
+			System.out.println("Ya existe un gestor");
+		}
+	}
+
+
+
 	public Jugador(String nombre) {
 		super();
 		this.nombre = nombre;

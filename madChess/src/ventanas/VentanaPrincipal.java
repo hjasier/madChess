@@ -72,7 +72,7 @@ public class VentanaPrincipal extends JFrame{
             }
         });
         
-        panelMenuInicio.joinPOnline.addActionListener(new ActionListener() {
+        panelMenuInicio.crearPOnline.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELJUEGO");

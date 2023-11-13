@@ -10,6 +10,7 @@ import java.util.Date;
 import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
+import objetos.Movimiento;
 import objetos.Pieza;
 import objetos.Tablero;
 import piezas.Alfil;
@@ -44,6 +45,7 @@ public class Partida {
 	private Rey reyBlack;
 	
 	private HashMap<Pieza, ArrayList<Casilla>> piezasDefensa;
+	
 	
 	/*
 	 * MODOS DE JUEGO:
@@ -81,6 +83,7 @@ public class Partida {
         		Casilla curCasilla = tablero.getCurCasilla(e);
         		moverPiezaTablero(tablero.prevCasilla,curCasilla,e);
         		tablero.dragging = false;	
+        		
         	}
         	
         	
@@ -93,7 +96,7 @@ public class Partida {
             public void mouseDragged(MouseEvent e) {
                 Casilla prevCasilla = tablero.getPrevCasilla();
                 Casilla curCasilla = tablero.getCurCasilla(e);
-        
+                
                 
                 if (!checkJaque() || prevCasilla.getPieza() instanceof Rey) {
                     tablero.arrastrarPieza(e);
@@ -163,6 +166,10 @@ public class Partida {
 			player.setTiempoRestante(initTime);
 		}
 		
+		if (modoDeJuego == 1) {
+			jugadores.get(0).setGestorSocket();
+		}
+		
 		iniciarTemporizador();
 	}
 
@@ -225,7 +232,7 @@ public class Partida {
        		curCasilla.setPieza(pieza);
        		
        		pieza.setPMoved(); //Seteamos el piezaMoved en true
-       		guardarMovimiento(prevCasilla,curCasilla,piezaComida);//Guardamos el movimiento y imprimimos
+       		guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
        		
        		
        		
@@ -244,7 +251,6 @@ public class Partida {
     		} 
     		
     		
-
     		       
 		}
 		
@@ -431,11 +437,20 @@ public class Partida {
 
 
 
-	private void guardarMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida) {
+	private void guardarMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida, Pieza pieza) {
+		
+		Movimiento movimiento = new Movimiento(prevCasilla,curCasilla,piezaComida,pieza);
+		
 		//Aquí guardaríamos el movimiento en la base de datos, con su user etc para las analíticas
 		String extra = (piezaComida==null) ? " ":" Pieza comida";
 		printMovimiento("<"+curPlayer.getNombre()+"> "+prevCasilla.getPos()+" --> "+curCasilla.getPos()+extra);
 		
+		if (modoDeJuego == 1) {
+			
+			curPlayer.getGestorSocket().postMoverPieza(movimiento);
+			
+		}
+
 		
 	}
 	
@@ -510,6 +525,17 @@ public class Partida {
 		casillas.get(62).setPieza(new Caballo(true));
 		casillas.get(63).setPieza(new Torre(true));
         }
+
+
+
+
+
+
+
+
+
+
+	
 	}
 
 
