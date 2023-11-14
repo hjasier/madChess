@@ -191,7 +191,6 @@ public class Juego extends JPanel {
             }
         });
         
-
         
         botonEnviar.addActionListener(new ActionListener() {
             @Override

@@ -50,7 +50,7 @@ public class VentanaPrincipal extends JFrame{
 		
 		
 
-	
+		
 
 		
         panelPrincipal.add(panelJuego, "PANELJUEGO");
@@ -77,9 +77,17 @@ public class VentanaPrincipal extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELJUEGO");
                 new Partida(panelJuego,1);
+                
             }
         });
         
+        panelJuego.botonVolver.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				cardLayout.show(panelPrincipal, "MENUINICIO");
+			}
+		});
         
         
         
