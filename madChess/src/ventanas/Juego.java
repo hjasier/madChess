@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
@@ -53,9 +54,10 @@ public class Juego extends JPanel {
 	protected JTextField textfieldUsuario;
 	protected JLabel labelChat;
 	protected JLabel labelEscribe;
-	protected MButton botonEnviar;
 	protected JPanel panelControlChat;
 	protected JPanel panelDatosChat;
+	protected MButton botonEnviar;
+	protected MButton botonVolver;
 
 	protected JPanel panelMensaje;
 
@@ -144,10 +146,9 @@ public class Juego extends JPanel {
 	    
 
 	    
+        botonVolver = new MButton("Volver");
+	    
         
-	    
-
-	    
 	    botonEnviar = new MButton("Enviar");
 
         // Para enviar el mensaje al presionar Enter
@@ -159,7 +160,20 @@ public class Juego extends JPanel {
                 }
             }
         });
-
+        
+        botonVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				// Cerrar la ventana actual
+		        JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Juego.this);
+		        currentFrame.dispose();
+		        // Volver al menu principal de inicio
+		        VentanaPrincipal v1 = new VentanaPrincipal();
+			}
+		});
+        
         botonEnviar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -179,13 +193,11 @@ public class Juego extends JPanel {
 	    panelMensaje.add(textfieldChat);
 	    
 	 
-	    
-	    
-	    
 	    panelControlChat.add(panelMensaje);
 	    
 	    panelControlChat.add(botonEnviar);
 	    
+	  
 	    panelChat.add(panelControlChat, BorderLayout.SOUTH);
 	    
 
@@ -208,7 +220,9 @@ public class Juego extends JPanel {
 	    scrollMovimientos = new JScrollPane(areaMovimientos);	
 	    
 	    
-	    panelMovimentos.add(labelMovimientos, BorderLayout.NORTH);
+	    
+	    //panelMovimentos.add(labelMovimientos, BorderLayout.NORTH);
+	    panelMovimentos.add(botonVolver, BorderLayout.NORTH);
 	    panelMovimentos.add(scrollMovimientos, BorderLayout.CENTER);
 	    
 	    

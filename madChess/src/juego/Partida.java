@@ -127,7 +127,7 @@ public class Partida {
         
         
         tablero.DEBUG_MODE = DEBUG_MODE;
-        
+        printMovimiento("MOVIMIENTOS");
         if (DEBUG_MODE) {
         	printMovimiento("--------------------");
         	printMovimiento("MODO DEBUG: ACTIVADO");
