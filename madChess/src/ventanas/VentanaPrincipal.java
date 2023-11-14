@@ -31,8 +31,7 @@ public class VentanaPrincipal extends JFrame{
 	Juego panelJuego = new Juego();
     CardLayout cardLayout = new CardLayout();
    
-    Login panelLogin = new Login();
-    PanelDemo panelDemo = new PanelDemo();
+    Login panelLogin = new Login(this);
     
     MenuInicio  panelMenuInicio = new MenuInicio();
     
@@ -47,13 +46,6 @@ public class VentanaPrincipal extends JFrame{
 		panelPrincipal.add(panelMenuInicio, "MENUINICIO");
 		
 		
-
-		panelPrincipal.add(panelDemo, "PANELDEMO");
-		
-		
-
-		
-
 		
         panelPrincipal.add(panelJuego, "PANELJUEGO");
         panelPrincipal.add(panelLogin, "PANELLOGIN");
@@ -83,7 +75,7 @@ public class VentanaPrincipal extends JFrame{
             }
         });
         
-        panelJuego.botonVolver.addMouseListener(new MouseAdapter() {
+        panelJuego.backBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent  e) {
 				
@@ -116,6 +108,11 @@ public class VentanaPrincipal extends JFrame{
         
         
         
+	}
+
+	public void mainMenu() {
+		cardLayout.show(panelPrincipal, "MENUINICIO");
+		
 	}
 		
 }

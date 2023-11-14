@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import componentes.BButton;
+import componentes.FontAwesome;
+import componentes.IconFontSwing;
 import componentes.RButton;
 
 import javax.swing.*;
@@ -28,11 +30,11 @@ public class MenuInicio extends JPanel {
 	public BButton joinPOnline = new BButton("Join partida online");
 	//ahora son public para no liarnos pk en el futuro no vamos a usarlos asi...
 	
-	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/imagenMenuInicio.png"));
+	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
 	protected JLabel foto = new JLabel(imgFoto);
 	protected Color colorTemp = new Color(16,16,16);
 	
-	private BufferedImage fondo;
+
 
 
 		
@@ -72,13 +74,15 @@ public class MenuInicio extends JPanel {
 		opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
 		
 		// Escalar la imagen
-        Image imagenEscalada = imgFoto.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH);
+        Image imagenEscalada = imgFoto.getImage().getScaledInstance(300, 110, Image.SCALE_SMOOTH);
         imgFoto = new ImageIcon(imagenEscalada);
         foto.setIcon(imgFoto);
 
+        panelLogo.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
 		panelLogo.add(foto, BorderLayout.WEST);
-		panelLogo.add(nombre, BorderLayout.CENTER);
+		//panelLogo.add(nombre, BorderLayout.CENTER);
 
+		panelLogin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
 		panelLogin.add(Box.createRigidArea(new java.awt.Dimension(0, 80)));
 		panelLogin.add(loginBtn);
         
@@ -86,8 +90,14 @@ public class MenuInicio extends JPanel {
 		navBar.add(panelLogin, BorderLayout.EAST);
 
 		
+		
         
-        
+		Icon icon = IconFontSwing.buildIcon(FontAwesome.USER_CIRCLE, 15);
+		loginBtn.setIcon(icon);
+		
+		
+		
+		
 		
 		partidaLocal.setAlignmentX(Component.CENTER_ALIGNMENT);
 		crearPOnline.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -101,7 +111,7 @@ public class MenuInicio extends JPanel {
         opciones.add(crearPOnline);
         opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Espacio entre los botones
         opciones.add(joinPOnline);
-
+        
 
 
 		this.add(navBar, BorderLayout.NORTH);	

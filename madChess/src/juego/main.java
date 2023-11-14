@@ -1,7 +1,6 @@
 package juego;
 
-import ventanas.Juego;
-import ventanas.Login;
+
 import ventanas.VentanaPrincipal;
 
 public class main {

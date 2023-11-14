@@ -1,14 +1,15 @@
 package objetos;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import juego.GestorSockets;
 import piezas.Rey;
 
-public class Jugador {
+public class Jugador implements Serializable{
 	
-	private String nombre;
 	private int rank;
+	private String username;
 	private String passw;
 	private String img_route;
 	private Boolean isWhite = false;
@@ -39,14 +40,27 @@ public class Jugador {
 
 
 
-	public Jugador(String nombre) {
+	public Jugador(String username, String passw) {
 		super();
-		this.nombre = nombre;
-		
+		this.username = username;
+		this.passw = passw;
 	}
 	
 	
 	
+	public Jugador(String string) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	@Override
+	public String toString() {
+		return "Jugador [rank=" + rank + ", username=" + username + ", passw=" + passw + ", img_route=" + img_route
+				+ ", isWhite=" + isWhite + ", tiempoRestante=" + tiempoRestante + ", initTime=" + initTime + ", rey="
+				+ rey + ", gestorSocket=" + gestorSocket + "]";
+	}
+
+
 	public Boolean getIsWhite() {
 		return isWhite;
 	}
@@ -57,14 +71,14 @@ public class Jugador {
 
 
 
-	private Boolean checkPassword(String passwd) {
-		return (this.passw == passwd);
+	public Boolean checkPassword(String passwd) {
+		return this.passw.equals(passwd);
 	}
 
 
 
 	public String getNombre() {
-		return nombre;
+		return username;
 	}
 
 

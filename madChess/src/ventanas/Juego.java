@@ -64,13 +64,14 @@ public class Juego extends JPanel {
 	protected JLabel labelEscribe;
 	protected JPanel panelControlChat;
 	protected JPanel panelDatosChat;
-	protected MButton botonEnviar;
-	protected JLabel botonVolver;
+	protected JLabel configBtn;
+	protected JLabel backBtn;
+	protected MButton postMsgBtn;
 	
 	
 	protected JPanel panelMensaje;
 
-	protected JScrollPane scrollMovimientos;
+	protected MScrollPane scrollMovimientos;
 	
 	
 	
@@ -160,19 +161,31 @@ public class Juego extends JPanel {
 		panelJuego.add(panelUsuario2);
 		
 	    
-	    Icon backIcon = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, 15, Color.white);
-	    Icon backIconHover = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, 15, Color.red);
+	    Icon backIcon = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, 20, Color.white);
+	    Icon backIconHover = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, 20, Color.red);
 	    
-		botonVolver = new JLabel(backIcon);
+	    Icon configIcon = IconFontSwing.buildIcon(FontAwesome.COG, 20, Color.white);
+	    Icon configIconHover = IconFontSwing.buildIcon(FontAwesome.COG, 20, Color.red);
+	    
+	    
+		backBtn = new JLabel(backIcon);
+		configBtn = new JLabel(configIcon);
 		
-		
+	
+		configBtn.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10)); // margenes
+
 	    
 	    panelBotones.setBackground(colorFondo);
-	    panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 2)); // Ajusta el espaciado vertical entre componentes
-	    panelBotones.add(botonVolver);
-	    panelBotones.setPreferredSize(new Dimension(100, 50)); // Ajusta el tamaño preferido del panel de botones
+	    panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 10));
+	    panelBotones.setPreferredSize(new Dimension(100, 50)); 
+	    
+	    
+	    panelBotones.add(backBtn);
+	    panelBotones.add(configBtn);
+	    
+	    
 
-	    botonVolver.setPreferredSize(new Dimension(80, 30)); // Ajusta el tamaño preferido del botón "Volver"
+	    
 	    
 
 	    
@@ -197,7 +210,7 @@ public class Juego extends JPanel {
 	    
 
 
-	    botonEnviar = new MButton("Enviar");
+	    postMsgBtn = new MButton("Enviar");
 
         // Para enviar el mensaje al presionar Enter
         textfieldChat.addKeyListener(new KeyAdapter() {
@@ -210,7 +223,7 @@ public class Juego extends JPanel {
         });
         
         
-        botonEnviar.addActionListener(new ActionListener() {
+        postMsgBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 enviarMensaje();
@@ -231,7 +244,7 @@ public class Juego extends JPanel {
 	 
 	    panelControlChat.add(panelMensaje);
 	    
-	    panelControlChat.add(botonEnviar);
+	    panelControlChat.add(postMsgBtn);
 	    
 	  
 	    panelChat.add(panelControlChat, BorderLayout.SOUTH);
@@ -253,7 +266,7 @@ public class Juego extends JPanel {
 	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
 	    areaMovimientos.setEditable(false);
 	    
-	    scrollMovimientos = new JScrollPane(areaMovimientos);	
+	    scrollMovimientos = new MScrollPane(areaMovimientos);	
 	    
 	    
 	    
@@ -312,21 +325,39 @@ public class Juego extends JPanel {
         
         
         
-        botonVolver.addMouseListener(new MouseAdapter() {
+        backBtn.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseEntered(MouseEvent e) {
         		// TODO Auto-generated method stub
         		
         		super.mouseEntered(e);
-        		botonVolver.setIcon(backIconHover);
-        		botonVolver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        		backBtn.setIcon(backIconHover);
+        		backBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         	}
         	
         	@Override
         	public void mouseExited(MouseEvent e) {
         		// TODO Auto-generated method stub
         		super.mouseExited(e);
-        		botonVolver.setIcon(backIcon);
+        		backBtn.setIcon(backIcon);
+        	}
+		});
+        
+        configBtn.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		
+        		super.mouseEntered(e);
+        		configBtn.setIcon(configIconHover);
+        		configBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        	}
+        	
+        	@Override
+        	public void mouseExited(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		super.mouseExited(e);
+        		configBtn.setIcon(configIcon);
         	}
 		});
 
@@ -387,7 +418,7 @@ public class Juego extends JPanel {
 	}
 
 	public JLabel getBotonVolver() {
-		return botonVolver;
+		return backBtn;
 	}
     
 
