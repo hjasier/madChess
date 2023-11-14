@@ -116,6 +116,51 @@ public class Jugador implements Serializable{
 	public int getTiempoRestante() {
 		return tiempoRestante;
 	}
+
+
+	public int getRank() {
+		return rank;
+	}
+
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public String getPassw() {
+		return passw;
+	}
+
+
+	public void setPassw(String passw) {
+		this.passw = passw;
+	}
+
+
+	public String getImg_route() {
+		return img_route;
+	}
+
+
+	public void setImg_route(String img_route) {
+		this.img_route = img_route;
+	}
+
+
+	public void setGestorSocket(GestorSockets gestorSocket) {
+		this.gestorSocket = gestorSocket;
+	}
 	
 	
 	

@@ -33,6 +33,7 @@ public class Login extends JPanel{
 	protected JPanel panelBotones;
 	protected JButton botonLogin;
 	protected JButton botonSignup;
+	protected JButton botonVolver;
 	private HashMap<String, Jugador> users = new HashMap<String, Jugador>();
 	
 	public Login(VentanaPrincipal ventanaPrincipal) {
@@ -61,6 +62,7 @@ public class Login extends JPanel{
 		botonSignup = new JButton("Registro");
 		panelBotones.add(botonLogin);
 		panelBotones.add(botonSignup);
+//		panelBotones.add(botonVolver);
 		
 		botonLogin.addActionListener(new ActionListener() {
 			
@@ -109,6 +111,7 @@ public class Login extends JPanel{
 		panelLogin.add(panelUsuario);
 		panelLogin.add(panelContrasenya);
 		panelLogin.add(panelBotones);
+
 		
 		this.add(panelLogin);
 	}

@@ -83,6 +83,11 @@ public class VentanaPrincipal extends JFrame{
         });
         
         
+        
+        
+        
+        
+        
         panelConfLocal.botonIniciarPartida.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -90,6 +95,41 @@ public class VentanaPrincipal extends JFrame{
                 new Partida(panelJuego,0);
             }
         });
+        panelConfLocal.botonVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelPrincipal, "MENUINICIO");
+				
+			}
+		});
+        
+        
+        
+        
+        
+        
+        panelConfLocal.botonUser1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelPrincipal, "PANELLOGIN");
+				
+			}
+		});
+        panelConfLocal.botonUser2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelPrincipal, "PANELLOGIN");
+				
+			}
+		});
+        
+        
+        
+        
+        
         
         
         

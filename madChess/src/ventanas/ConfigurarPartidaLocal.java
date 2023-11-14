@@ -14,8 +14,10 @@ import java.awt.*;
 public class ConfigurarPartidaLocal extends JPanel {
     protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
     protected BButton botonIniciarPartida = new BButton("Inicar Partida");
+    protected BButton botonVolver = new BButton("Volver");
+    protected RButton botonUser1 = new RButton("Login");
+    protected RButton botonUser2 = new RButton("Login");
     
-
 	public ConfigurarPartidaLocal() {
         JPanel navBar = new JPanel();
         JLabel foto = new JLabel(imgFoto);
@@ -45,24 +47,26 @@ public class ConfigurarPartidaLocal extends JPanel {
 
         JLabel labelJugador1 = new JLabel("Jugador 1:");
         JPanel panelJugador1 = new JPanel();
-        RButton botonLogin1 = new RButton("Login");
+        botonUser1 = new RButton("Login");
         JLabel labelNombre1 = new JLabel("Nombre");
         labelNombre1.setVisible(false);
-        panelJugador1.add(botonLogin1);
+        panelJugador1.add(botonUser1);
         panelJugador1.add(labelNombre1);
         panelJugador1.setBackground(this.getBackground());
 
         JLabel labelJugador2 = new JLabel("Jugador 2:");
         JPanel panelJugador2 = new JPanel();
-        RButton botonLogin2 = new RButton("Login");
+        botonUser2 = new RButton("Login");
         JLabel labelNombre2 = new JLabel("Nombre");
         labelNombre2.setVisible(false);
-        panelJugador2.add(botonLogin2);
+        panelJugador2.add(botonUser2);
         panelJugador2.add(labelNombre2);
         panelJugador2.setBackground(this.getBackground());
-
-        new BButton("Iniciar Partida");
-
+        
+        botonIniciarPartida = new BButton("Iniciar Partida");
+        botonVolver = new BButton("Volver");
+//        new BButton("Iniciar Partida");
+//        new BButton("Volver");
         // Configuración del layout con BorderLayout
         setLayout(new BorderLayout());
 
@@ -110,7 +114,13 @@ public class ConfigurarPartidaLocal extends JPanel {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         contentPanel.add(botonIniciarPartida, gbc);
-
+        
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        contentPanel.add(botonVolver, gbc);
+        
         // Agregar contentPanel en el centro
         add(contentPanel, BorderLayout.CENTER);
 
