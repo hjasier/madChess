@@ -24,11 +24,11 @@ public class MenuInicio extends JPanel {
 	
 	protected JLabel nombre = new JLabel("madChess");
 	
-	public RButton loginBtn = new RButton("Login");
-	public BButton partidaLocal = new BButton("Partida Local");
-	public BButton crearPOnline = new BButton("Crear partida online");
-	public BButton joinPOnline = new BButton("Join partida online");
-	//ahora son public para no liarnos pk en el futuro no vamos a usarlos asi...
+	protected RButton loginBtn = new RButton("Login");
+	protected BButton partidaLocal = new BButton("Partida Local");
+	protected BButton crearPOnline = new BButton("Crear partida online");
+	protected BButton joinPOnline = new BButton("Join partida online");
+	
 	
 	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
 	protected JLabel foto = new JLabel(imgFoto);
@@ -88,9 +88,6 @@ public class MenuInicio extends JPanel {
         
 		navBar.add(panelLogo, BorderLayout.WEST);
 		navBar.add(panelLogin, BorderLayout.EAST);
-
-		
-		
         
 		Icon icon = IconFontSwing.buildIcon(FontAwesome.USER_CIRCLE, 15);
 		loginBtn.setIcon(icon);

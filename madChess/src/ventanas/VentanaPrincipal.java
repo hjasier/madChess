@@ -35,6 +35,8 @@ public class VentanaPrincipal extends JFrame{
     
     MenuInicio  panelMenuInicio = new MenuInicio();
     
+    ConfigurarPartidaLocal panelConfLocal = new ConfigurarPartidaLocal();
+    
 	public VentanaPrincipal() {
 		
 		this.setSize(1000,800);
@@ -50,6 +52,8 @@ public class VentanaPrincipal extends JFrame{
         panelPrincipal.add(panelJuego, "PANELJUEGO");
         panelPrincipal.add(panelLogin, "PANELLOGIN");
         
+        panelPrincipal.add(panelConfLocal, "PANELCONFLOCAL");
+        
         
         
         panelMenuInicio.loginBtn.addActionListener(new ActionListener() {
@@ -61,10 +65,13 @@ public class VentanaPrincipal extends JFrame{
         panelMenuInicio.partidaLocal.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panelPrincipal, "PANELJUEGO");
-                new Partida(panelJuego,0);
+                cardLayout.show(panelPrincipal, "PANELCONFLOCAL");
+                
             }
         });
+        
+        
+        
         
         panelMenuInicio.crearPOnline.addActionListener(new ActionListener() {
 
@@ -75,6 +82,19 @@ public class VentanaPrincipal extends JFrame{
             }
         });
         
+        
+        panelConfLocal.botonIniciarPartida.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelPrincipal, "PANELJUEGO");
+                new Partida(panelJuego,0);
+            }
+        });
+        
+        
+        
+        
+        
         panelJuego.backBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent  e) {
@@ -82,6 +102,10 @@ public class VentanaPrincipal extends JFrame{
 				cardLayout.show(panelPrincipal, "MENUINICIO");
 			}
 		});
+      
+        
+        
+        
         
         
         
