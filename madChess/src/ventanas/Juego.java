@@ -33,6 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import componentes.MButton;
 import componentes.MScrollPane;
@@ -57,7 +58,7 @@ public class Juego extends JPanel {
 	protected JPanel panelControlChat;
 	protected JPanel panelDatosChat;
 	protected MButton botonEnviar;
-	protected MButton botonVolver;
+	protected MButton botonVolver= new MButton("Volver");
 
 	protected JPanel panelMensaje;
 
@@ -73,6 +74,11 @@ public class Juego extends JPanel {
 	protected Color colorFondo = new Color(16,16,16);
 	
 	protected boolean vacio = false;
+	protected JPanel panelBotones = new JPanel();
+	protected JPanel panelContenedor = new JPanel();
+	
+	
+	
 	
 	public Juego() {
 
@@ -92,8 +98,29 @@ public class Juego extends JPanel {
 	    panelJuego.setBackground(colorFondo);
 	    panelControles.setBackground(colorFondo);
 
+	    panelContenedor.setLayout(new GridBagLayout());
+	    panelContenedor.setBackground(colorFondo);
+
+		 //PANEL DERECHA	
+	    gbc.gridx = 0;
+	    gbc.gridy = 0;
+	    gbc.weightx = 1.0;
+	    gbc.weighty = 0; //Si se aumenta el panel de los botones se hace más alto
+	    gbc.fill = GridBagConstraints.HORIZONTAL; // Para que se expanda horizontalmente
+
+	    panelContenedor.add(panelBotones, gbc);
+
+	    // Agregar panelControles debajo del panel de botones pequeños
+	    gbc.gridx = 0;
+	    gbc.gridy = 1;
+	    gbc.weighty = 0.9; // El espacio restante para panelControles
+	    gbc.fill = GridBagConstraints.BOTH;
+
+	    panelContenedor.add(panelControles, gbc);
 	    
-	    
+		 
+		 
+		 
 	    // PanelJuego
 	    gbc.gridx = 0;
 	    gbc.gridy = 0;
@@ -105,7 +132,7 @@ public class Juego extends JPanel {
 	    // PanelControles
 	    gbc.gridx = 1;
 	    gbc.weightx = 0.3; // El espacio que va a ocupar el panelControles
-	    this.add(panelControles, gbc);
+	    this.add(panelContenedor, gbc);
 
 	    
 	    
@@ -115,14 +142,20 @@ public class Juego extends JPanel {
 	    // Agrega algunos elementos a panelJuego (por ejemplo, botones o etiquetas)
 
 
-	   panelUsuario = new userInfo();
-	   panelUsuario2 = new userInfo();
-	   panelJuego.add(panelUsuario);
-	   panelJuego.add(tablero);
-	   panelJuego.add(panelUsuario2);
-	
+		panelUsuario = new userInfo();
+		panelUsuario2 = new userInfo();
+		panelJuego.add(panelUsuario);
+		panelJuego.add(tablero);
+		panelJuego.add(panelUsuario2);
+		
 	    
 	    
+	    panelBotones.setBackground(colorFondo);
+	    panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 2)); // Ajusta el espaciado vertical entre componentes
+	    panelBotones.add(botonVolver);
+	    panelBotones.setPreferredSize(new Dimension(100, 50)); // Ajusta el tamaño preferido del panel de botones
+
+	    botonVolver.setPreferredSize(new Dimension(80, 30)); // Ajusta el tamaño preferido del botón "Volver"
 
 	    
 	    // panel controles, movimiento y chat
@@ -145,10 +178,7 @@ public class Juego extends JPanel {
 	    textfieldUsuario = new JTextField(0);
 	    
 
-	    
-        botonVolver = new MButton("Volver");
-	    
-        
+
 	    botonEnviar = new MButton("Enviar");
 
         // Para enviar el mensaje al presionar Enter
@@ -221,8 +251,8 @@ public class Juego extends JPanel {
 	    
 	    
 	    
-	    //panelMovimentos.add(labelMovimientos, BorderLayout.NORTH);
-	    panelMovimentos.add(botonVolver, BorderLayout.NORTH);
+	    panelMovimentos.add(labelMovimientos, BorderLayout.NORTH);
+	    
 	    panelMovimentos.add(scrollMovimientos, BorderLayout.CENTER);
 	    
 	    
@@ -241,7 +271,11 @@ public class Juego extends JPanel {
 	    panelControles.add(panelMovimentos);
 	    panelControles.add(panelChat);
 	    
-	    labelMovimientos.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
+	    panelBotones.setPreferredSize(new Dimension(10,33 ));
+	    panelBotones.setMaximumSize(new Dimension(Integer.MAX_VALUE,10));
+	    panelBotones.setBorder(BorderFactory.createEmptyBorder(0,0,0,15));
+
+	    labelMovimientos.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 	    labelChat.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
 	    panelControles.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	    
@@ -259,7 +293,7 @@ public class Juego extends JPanel {
 	    
 	    scrollMovimientos.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 	    scrollChat.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-       
+	    
 
         tablero.recalcularTamanyo();
         this.addComponentListener(new ComponentAdapter() {
