@@ -97,8 +97,9 @@ public class Login extends JPanel{
 				String username = textfieldUsuario.getText();
 				String passw = textfieldContrasenya.getText();
 				
+				if (!username.equals("")&&!passw.equals(""));
 				
-				users.put(username, new Jugador(username,passw));
+				users.put(username, new Jugador(username,passw)); // si ya hay un user lo sobreescribe pero nos da igual pk todo esto es temp
 				guardarUsuarios("users.dat");
 				
 			}
