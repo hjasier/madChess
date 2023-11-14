@@ -3,6 +3,7 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -19,10 +20,14 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,6 +40,8 @@ import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import componentes.FontAwesome;
+import componentes.IconFontSwing;
 import componentes.MButton;
 import componentes.MScrollPane;
 import componentes.userInfo;
@@ -58,8 +65,9 @@ public class Juego extends JPanel {
 	protected JPanel panelControlChat;
 	protected JPanel panelDatosChat;
 	protected MButton botonEnviar;
-	protected MButton botonVolver= new MButton("Volver");
-
+	protected JLabel botonVolver;
+	
+	
 	protected JPanel panelMensaje;
 
 	protected JScrollPane scrollMovimientos;
@@ -101,6 +109,9 @@ public class Juego extends JPanel {
 	    panelContenedor.setLayout(new GridBagLayout());
 	    panelContenedor.setBackground(colorFondo);
 
+	    //Init icons
+	    IconFontSwing.register(FontAwesome.getIconFont());
+	    
 		 //PANEL DERECHA	
 	    gbc.gridx = 0;
 	    gbc.gridy = 0;
@@ -149,6 +160,12 @@ public class Juego extends JPanel {
 		panelJuego.add(panelUsuario2);
 		
 	    
+	    Icon backIcon = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, 15, Color.white);
+	    Icon backIconHover = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, 15, Color.red);
+	    
+		botonVolver = new JLabel(backIcon);
+		
+		
 	    
 	    panelBotones.setBackground(colorFondo);
 	    panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 2)); // Ajusta el espaciado vertical entre componentes
@@ -156,6 +173,7 @@ public class Juego extends JPanel {
 	    panelBotones.setPreferredSize(new Dimension(100, 50)); // Ajusta el tamaño preferido del panel de botones
 
 	    botonVolver.setPreferredSize(new Dimension(80, 30)); // Ajusta el tamaño preferido del botón "Volver"
+	    
 
 	    
 	    // panel controles, movimiento y chat
@@ -293,7 +311,24 @@ public class Juego extends JPanel {
 		});
         
         
-
+        
+        botonVolver.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		
+        		super.mouseEntered(e);
+        		botonVolver.setIcon(backIconHover);
+        		botonVolver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        	}
+        	
+        	@Override
+        	public void mouseExited(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		super.mouseExited(e);
+        		botonVolver.setIcon(backIcon);
+        	}
+		});
 
     
         
@@ -351,7 +386,7 @@ public class Juego extends JPanel {
 		
 	}
 
-	public MButton getBotonVolver() {
+	public JLabel getBotonVolver() {
 		return botonVolver;
 	}
     

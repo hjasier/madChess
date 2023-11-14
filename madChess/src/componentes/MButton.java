@@ -1,5 +1,6 @@
 package componentes;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -13,7 +14,12 @@ public class MButton extends JButton {
         initButtonStyle();
     }
 
-    private void initButtonStyle() {
+    public MButton(Icon icon) {
+    	super(icon);
+        initButtonStyle();
+	}
+
+	private void initButtonStyle() {
         // Configurar el fondo y el color de fuente
         setBackground(new Color(36, 36, 36)); // Fondo oscuro
         setForeground(Color.WHITE); // Texto en color blanco
