@@ -191,18 +191,7 @@ public class Juego extends JPanel {
             }
         });
         
-        botonVolver.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				// Cerrar la ventana actual
-		        JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(Juego.this);
-		        currentFrame.dispose();
-		        // Volver al menu principal de inicio
-		        VentanaPrincipal v1 = new VentanaPrincipal();
-			}
-		});
+
         
         botonEnviar.addActionListener(new ActionListener() {
             @Override
@@ -361,6 +350,10 @@ public class Juego extends JPanel {
 			 */
 		}
 		
+	}
+
+	public MButton getBotonVolver() {
+		return botonVolver;
 	}
     
 
