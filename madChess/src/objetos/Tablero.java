@@ -53,7 +53,8 @@ public class Tablero extends JPanel{
     	
     	this.setBackground(new Color(16,16,16)); //FIXME Solo devería estar declarado en un sitio
     	this.setLayout(null);
-    	
+    	tableroDiv.setLayout( null );
+        dragImg.setSize(100,100); 
     	
     	casillasDiv.setSize(this.getSize());
     	tableroDiv.setSize(this.getSize());
