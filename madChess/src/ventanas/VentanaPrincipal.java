@@ -31,7 +31,8 @@ public class VentanaPrincipal extends JFrame{
 	Juego panelJuego = new Juego();
     CardLayout cardLayout = new CardLayout();
    
-    Login panelLogin = new Login(this);
+//    Login panelLogin = new Login(this);
+    VentanaLogin panelLogin = new VentanaLogin(this);
     
     MenuInicio  panelMenuInicio = new MenuInicio();
     
