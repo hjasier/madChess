@@ -5,9 +5,18 @@ import componentes.BButton;
 import componentes.FontAwesome;
 import componentes.IconFontSwing;
 import componentes.RButton;
+import objetos.Jugador;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +27,8 @@ public class VentanaLogin extends JPanel {
     protected BButton botonVolver;
     protected BButton botonLogin;
     protected BButton botonSignup;
+    
+	private HashMap<String, Jugador> users = new HashMap<String, Jugador>();
     
 	public VentanaLogin(VentanaPrincipal ventanaPrincipal) {
         JPanel navBar = new JPanel();
@@ -45,16 +56,18 @@ public class VentanaLogin extends JPanel {
         
         JPanel panelContra = new JPanel();
        
-        JLabel labelContra = new JLabel("Contraseña: ");
-        JTextField textfieldContra = new JTextField(20);
+        JLabel labelContra = new JLabel("Contraseña:             ");
+        JTextField textfieldContra = new JTextField(18);
+        textfieldContra.setBackground(this.getBackground());
         panelContra.add(labelContra);
         panelContra.add(textfieldContra);
        
         panelContra.setBackground(this.getBackground());
         
         JPanel panelUser = new JPanel();
-        JLabel labelUsuario = new JLabel("Nombre de Usuario:");
-        JTextField textfieldUser = new JTextField(20);
+        JLabel labelUsuario = new JLabel("Nombre de Usuario:          ");
+        JTextField textfieldUser = new JTextField(15);
+        textfieldUser.setBackground(this.getBackground());
         panelUser.add(labelUsuario);
         panelUser.add(textfieldUser);
        
@@ -63,15 +76,13 @@ public class VentanaLogin extends JPanel {
         botonLogin = new BButton("Log In");
         botonVolver = new BButton("Volver");
         botonSignup = new BButton("Sign Up");
-//        new BButton("Iniciar Partida");
-//        new BButton("Volver");
-        // Configuración del layout con BorderLayout
+
         setLayout(new BorderLayout());
 
-        // Agregar el navBar en la posición NORTH
+
         add(navBar, BorderLayout.NORTH);
 
-        // Agregar elementos al panel con GridBagLayout en el centro
+
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new GridBagLayout());
         contentPanel.setBackground(getBackground());
@@ -87,29 +98,7 @@ public class VentanaLogin extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
         contentPanel.add(panelContra, gbc);
-//        gbc.gridx = 1;
-//        contentPanel.add(labelCodigoValor, gbc);
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        contentPanel.add(labelModoJuego, gbc);
-//
-//        gbc.gridx = 1;
-//        contentPanel.add(comboModoJuego, gbc);
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 2;
-//        contentPanel.add(labelJugador1, gbc);
-//
-//        gbc.gridx = 1;
-//        contentPanel.add(panelJugador1, gbc);
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 3;
-//        contentPanel.add(labelJugador2, gbc);
-//
-//        gbc.gridx = 1;
-//        contentPanel.add(panelJugador2, gbc);
+
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -129,15 +118,93 @@ public class VentanaLogin extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         contentPanel.add(botonVolver, gbc);
         
-        // Agregar contentPanel en el centro
+        
         add(contentPanel, BorderLayout.CENTER);
+        
+        
+        
+        
+        
+        
+        
+        
+        botonLogin.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String username = textfieldUser.getText();
+				String passw = textfieldContra.getText();
+				
+				
+				//método temporal para "logear" usuarios antes de configrara la base de datos final
+				
+				Jugador expectedUser = users.get(username);
+				
+				if (expectedUser!=null&&expectedUser.checkPassword(passw)) {
+					System.out.println("Logeado como "+ expectedUser);
+					ventanaPrincipal.mainMenu();
+					textfieldUser.setText("");
+					textfieldContra.setText("");
+				}
+				else {
+					
+					JOptionPane.showMessageDialog(null, "Contraseña o usuario incorrectos", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
 
-        // Configurar acción del botón Iniciar Partida
-        botonLogin.addActionListener(e -> {
-            // Aquí puedes agregar la lógica para iniciar la partida
-            // Por ejemplo, obtener los valores seleccionados en los combo boxes y realizar acciones relacionadas.
-        });
+				}
+				
+			
+			}
+		});
+		
+		botonSignup.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String username = textfieldUser.getText();
+				String passw = textfieldContra.getText();
+				
+				if (!username.equals("")&&!passw.equals(""));
+				
+				users.put(username, new Jugador(username,passw)); // si ya hay un user lo sobreescribe pero nos da igual pk todo esto es temp
+				guardarUsuarios("users.dat");
+				
+			}
+		});
+
+	}
+
+    public void guardarUsuarios(String filePath) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            outputStream.writeObject(users);
+            System.out.println("Fichero de usuarios actualizado " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    public void cargarUsuarios(String filePath) {
+        HashMap<String, Jugador> hashMap = new HashMap<>();
+
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
+            Object obj = inputStream.readObject();
+            if (obj instanceof HashMap) {
+                // Verificar que el objeto leído sea realmente un HashMap
+                hashMap = (HashMap<String, Jugador>) obj;
+                System.out.println("Fichero de usuarios cargado --> " + filePath);
+            } else {
+                System.out.println("Error al cargar el fichero de usuarios temporales");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+        	System.out.println("No se han cargado los usuarios");
+        }
+
+        users = hashMap;
+    }
+
+
+
+
+	
 }
+
 
