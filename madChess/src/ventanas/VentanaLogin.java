@@ -125,6 +125,7 @@ public class VentanaLogin extends JPanel {
         
    
   
+        //
         
         gbc.gridx = 0;
         gbc.gridy = 5;
