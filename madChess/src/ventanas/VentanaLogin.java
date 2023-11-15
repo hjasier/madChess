@@ -66,7 +66,10 @@ public class VentanaLogin extends JPanel {
         labelContra.setFont(new Font(fuente.getName(), Font.PLAIN, 16));
         labelContra.setForeground(Color.white);
         
-        JTextField textfieldContra = new JTextField(15);
+        JPasswordField textfieldContra = new JPasswordField(15);
+        textfieldContra.setFont(new Font(fuente.getName(), Font.PLAIN, 16));
+        textfieldContra.setForeground(Color.white);
+        
         textfieldContra.setBackground(this.getBackground());
         panelContra.add(labelContra);
         panelContra.add(textfieldContra);
@@ -79,6 +82,9 @@ public class VentanaLogin extends JPanel {
         labelUsuario.setForeground(Color.white);
         
         JTextField textfieldUser = new JTextField(15);
+        textfieldUser.setFont(new Font(fuente.getName(), Font.PLAIN, 16));
+        textfieldUser.setForeground(Color.white);
+        
         textfieldUser.setBackground(this.getBackground());
         panelUser.add(labelUsuario);
         panelUser.add(textfieldUser);
