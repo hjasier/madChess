@@ -24,9 +24,9 @@ import java.awt.*;
 public class VentanaLogin extends JPanel {
     protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
 
-    protected BButton botonVolver;
+    protected RButton botonVolver;
     protected BButton botonLogin;
-    protected BButton botonSignup;
+    protected RButton botonSignup;
     
 	private HashMap<String, Jugador> users = new HashMap<String, Jugador>();
     
@@ -52,12 +52,21 @@ public class VentanaLogin extends JPanel {
         
         // Elementos de la interfaz
        
-
+        JLabel labelInicio = new JLabel("Inicia sesión con tu cuenta para continuar: ");
         
+        Font fuente = labelInicio.getFont();
+        labelInicio.setFont(new Font(fuente.getName(), Font.PLAIN, 18));
+        labelInicio.setForeground(Color.white);
+        
+        
+        JLabel labelFinal = new JLabel("¿No tienes cuenta? Registrate aquí: ");
         JPanel panelContra = new JPanel();
        
-        JLabel labelContra = new JLabel("Contraseña:             ");
-        JTextField textfieldContra = new JTextField(18);
+        JLabel labelContra = new JLabel("Contraseña:                        ");
+        labelContra.setFont(new Font(fuente.getName(), Font.PLAIN, 16));
+        labelContra.setForeground(Color.white);
+        
+        JTextField textfieldContra = new JTextField(15);
         textfieldContra.setBackground(this.getBackground());
         panelContra.add(labelContra);
         panelContra.add(textfieldContra);
@@ -66,6 +75,9 @@ public class VentanaLogin extends JPanel {
         
         JPanel panelUser = new JPanel();
         JLabel labelUsuario = new JLabel("Nombre de Usuario:          ");
+        labelUsuario.setFont(new Font(fuente.getName(), Font.PLAIN, 16));
+        labelUsuario.setForeground(Color.white);
+        
         JTextField textfieldUser = new JTextField(15);
         textfieldUser.setBackground(this.getBackground());
         panelUser.add(labelUsuario);
@@ -74,9 +86,11 @@ public class VentanaLogin extends JPanel {
         panelUser.setBackground(this.getBackground());
         
         botonLogin = new BButton("Log In");
-        botonVolver = new BButton("Volver");
-        botonSignup = new BButton("Sign Up");
+        botonVolver = new RButton("Volver");
+        botonSignup = new RButton("aquí");
 
+  
+        
         setLayout(new BorderLayout());
 
 
@@ -90,34 +104,43 @@ public class VentanaLogin extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        
         gbc.gridx = 0;
         gbc.gridy = 0;
+        contentPanel.add(labelInicio, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         contentPanel.add(panelUser, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         contentPanel.add(panelContra, gbc);
 
 
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         contentPanel.add(botonLogin, gbc);
         
+   
+  
+        
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        contentPanel.add(labelFinal, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 6;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         contentPanel.add(botonSignup, gbc);
         
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        contentPanel.add(botonVolver, gbc);
         
+     
+        this.add(botonVolver, BorderLayout.SOUTH);
         
         add(contentPanel, BorderLayout.CENTER);
         

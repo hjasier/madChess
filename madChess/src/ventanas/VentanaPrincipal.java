@@ -57,6 +57,8 @@ public class VentanaPrincipal extends JFrame{
         
         
         
+        
+        
         panelMenuInicio.loginBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELLOGIN");
@@ -130,7 +132,14 @@ public class VentanaPrincipal extends JFrame{
         
         
         
-        
+        panelLogin.botonVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelPrincipal, "MENUINICIO");
+				
+			}
+		});
         
         
         
