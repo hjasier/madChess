@@ -21,7 +21,7 @@ import java.util.HashMap;
 import javax.swing.*;
 import java.awt.*;
 
-public class VentanaLogin extends JPanel {
+public class LoginAntiguo extends JPanel {
     protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
 
     protected RButton botonVolver;
@@ -30,7 +30,7 @@ public class VentanaLogin extends JPanel {
     
 	private HashMap<String, Jugador> users = new HashMap<String, Jugador>();
     
-	public VentanaLogin(VentanaPrincipal ventanaPrincipal) {
+	public LoginAntiguo(VentanaPrincipal ventanaPrincipal) {
         JPanel navBar = new JPanel();
         JLabel foto = new JLabel(imgFoto);
         Color colorTemp = new Color(16, 16, 16);
@@ -52,10 +52,10 @@ public class VentanaLogin extends JPanel {
         
         // Elementos de la interfaz
        
-        JLabel labelInicio = new JLabel("Inicia sesión con tu cuenta para continuar: ");
+        JLabel labelInicio = new JLabel("Inicia sesión para continuar: ");
         
         Font fuente = labelInicio.getFont();
-        labelInicio.setFont(new Font(fuente.getName(), Font.PLAIN, 18));
+        labelInicio.setFont(new Font(fuente.getName(), Font.PLAIN, 15));
         labelInicio.setForeground(Color.white);
         
         

@@ -32,7 +32,7 @@ public class VentanaPrincipal extends JFrame{
     CardLayout cardLayout = new CardLayout();
    
 //    Login panelLogin = new Login(this);
-    VentanaLogin panelLogin = new VentanaLogin(this);
+    Login panelLogin = new Login(this);
     
     MenuInicio  panelMenuInicio = new MenuInicio();
     
@@ -132,7 +132,7 @@ public class VentanaPrincipal extends JFrame{
         
         
         
-        panelLogin.botonVolver.addActionListener(new ActionListener() {
+        panelLogin.volverBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {

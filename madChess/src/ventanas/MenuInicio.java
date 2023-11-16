@@ -101,7 +101,7 @@ public class MenuInicio extends JPanel {
 		joinPOnline.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		
-		opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 200))); //en el medio 250
+		opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 150))); //en el medio 250
 		
 		opciones.add(partidaLocal);
         opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Espacio entre los botones
