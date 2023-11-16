@@ -43,7 +43,7 @@ public class ConfigurarPartidaLocal extends JPanel {
         JLabel labelCodigoValor = new JLabel("32423");
 
         JLabel labelModoJuego = new JLabel("Modo de juego:");
-        JComboBox<String> comboModoJuego = new JComboBox<>(new String[]{"Clásico", "macChess"});
+        JComboBox<String> comboModoJuego = new JComboBox<>(new String[]{"Clásico", "madChess"});
 
         JLabel labelJugador1 = new JLabel("Jugador 1:");
         JPanel panelJugador1 = new JPanel();

@@ -38,6 +38,8 @@ public class VentanaPrincipal extends JFrame{
     
     ConfigurarPartidaLocal panelConfLocal = new ConfigurarPartidaLocal();
     
+    ConfigurarPartidaO panelConfOnline =  new ConfigurarPartidaO();
+    
 	public VentanaPrincipal() {
 		
 		this.setSize(1000,800);
@@ -55,7 +57,7 @@ public class VentanaPrincipal extends JFrame{
         
         panelPrincipal.add(panelConfLocal, "PANELCONFLOCAL");
         
-        
+        panelPrincipal.add(panelConfOnline, "PANELCONFONLINE");
         
         
         
@@ -73,10 +75,31 @@ public class VentanaPrincipal extends JFrame{
             }
         });
         
-        
-        
-        
         panelMenuInicio.crearPOnline.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(panelPrincipal, "PANELCONFONLINE");
+                
+            }
+        });
+        
+        
+        
+        
+//        panelMenuInicio.crearPOnline.addActionListener(new ActionListener() {
+//
+//            public void actionPerformed(ActionEvent e) {
+//                cardLayout.show(panelPrincipal, "PANELJUEGO");
+//                new Partida(panelJuego,1);
+//                
+//            }
+//        });
+        
+        
+        //CONF ONLINE
+        
+        
+        panelConfOnline.botonIniciarPartida.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELJUEGO");
@@ -85,11 +108,36 @@ public class VentanaPrincipal extends JFrame{
             }
         });
         
+        panelConfOnline.botonVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelPrincipal, "MENUINICIO");
+				
+			}
+		});
         
         
+
+        panelConfOnline.botonUser1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelPrincipal, "PANELLOGIN");
+				
+			}
+		});
+        panelConfOnline.botonUser2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelPrincipal, "PANELLOGIN");
+				
+			}
+		});
         
         
-        
+        // CONF LOCAL
         
         panelConfLocal.botonIniciarPartida.addActionListener(new ActionListener() {
 
