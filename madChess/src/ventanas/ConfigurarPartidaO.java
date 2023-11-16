@@ -2,8 +2,6 @@ package ventanas;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.plaf.synth.SynthLabelUI;
-
 import componentes.BButton;
 import componentes.BTextField;
 import componentes.RButton;
@@ -78,7 +76,7 @@ public class ConfigurarPartidaO extends JPanel {
 		JPanel privacidadRowPanel = new JPanel();
 		privacidadRowPanel.setLayout(new BoxLayout(privacidadRowPanel, BoxLayout.X_AXIS));
 		privacidadRowPanel.add(labelPrivacidad);
-		privacidadRowPanel.add(Box.createRigidArea(new Dimension(100, 0)));
+		privacidadRowPanel.add(Box.createRigidArea(new Dimension(104, 0)));
 		privacidadRowPanel.add(publicoButton);
 		privacidadRowPanel.add(privadoButton);
 		privacidadRowPanel.add(Box.createRigidArea(new Dimension(170, 0)));
