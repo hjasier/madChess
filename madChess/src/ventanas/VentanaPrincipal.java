@@ -11,20 +11,11 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Sockets.Servidor;
 import juego.Partida;
 import objetos.Jugador;
 
 public class VentanaPrincipal extends JFrame{
-
-	/* LA IDEA ES QUE SOLO EXISTA UN JFRAME Y EL RESTO:
-	 *  (lOGIN, JUEGO, PARTIDA ..ETC)
-	 *  
-	 *  SEAN PANELES QUE INSERTAMOS EN ESA VENTANA PRINCIPAL, ASÍ , NO HAY QUE ABRIR Y CERRAR CENTANAS AL LOGEARSE POR EJEMPLO O AL CLICKAR 
-	 *  EN EMPEZAR UNA PARTIDA, SI NO QUE CAMBIA EL CONTENIDO DE LA VENTANNA, Y SI HACE FALTA EL TAMAÑO
-	 *  
-	 *  
-	 * 
-	 */
 	JPanel panelPrincipal = new JPanel();
 	
 	
@@ -36,9 +27,9 @@ public class VentanaPrincipal extends JFrame{
     
     MenuInicio  panelMenuInicio = new MenuInicio();
     
-    ConfigurarPartidaLocal panelConfLocal = new ConfigurarPartidaLocal();
+    ConfPLocal panelConfLocal = new ConfPLocal();
     
-    ConfigurarPartidaO panelConfOnline =  new ConfigurarPartidaO();
+    ConfPOnline panelConfOnline =  new ConfPOnline(null);
     
 	public VentanaPrincipal() {
 		
@@ -48,15 +39,11 @@ public class VentanaPrincipal extends JFrame{
 		
 		panelPrincipal.setLayout(cardLayout);
 		
+		
 		panelPrincipal.add(panelMenuInicio, "MENUINICIO");
-		
-		
-		
         panelPrincipal.add(panelJuego, "PANELJUEGO");
         panelPrincipal.add(panelLogin, "PANELLOGIN");
-        
-        panelPrincipal.add(panelConfLocal, "PANELCONFLOCAL");
-        
+        panelPrincipal.add(panelConfLocal, "PANELCONFLOCAL");  
         panelPrincipal.add(panelConfOnline, "PANELCONFONLINE");
         
         
@@ -79,21 +66,20 @@ public class VentanaPrincipal extends JFrame{
 
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELCONFONLINE");
+            
+                
+                if (panelConfOnline.getServer()==null) {
+                	panelConfOnline.setServer(new Servidor(panelConfOnline));
+                }
+               
                 
             }
         });
         
         
+
         
         
-//        panelMenuInicio.crearPOnline.addActionListener(new ActionListener() {
-//
-//            public void actionPerformed(ActionEvent e) {
-//                cardLayout.show(panelPrincipal, "PANELJUEGO");
-//                new Partida(panelJuego,1);
-//                
-//            }
-//        });
         
         
         //CONF ONLINE
@@ -108,7 +94,7 @@ public class VentanaPrincipal extends JFrame{
             }
         });
         
-        panelConfOnline.botonVolver.addActionListener(new ActionListener() {
+        panelConfOnline.volverBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -124,17 +110,17 @@ public class VentanaPrincipal extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(panelPrincipal, "PANELLOGIN");
+				panelLogin.setRedirect("PANELCONFONLINE");
 				
 			}
 		});
-        panelConfOnline.botonUser2.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelPrincipal, "PANELLOGIN");
-				
-			}
-		});
+        
+        
+        
+        
+        
+        
+
         
         
         // CONF LOCAL
@@ -155,11 +141,7 @@ public class VentanaPrincipal extends JFrame{
 			}
 		});
         
-        
-        
-        
-        
-        
+
         panelConfLocal.botonUser1.addActionListener(new ActionListener() {
 			
 			@Override
@@ -180,6 +162,9 @@ public class VentanaPrincipal extends JFrame{
         
         
         
+        
+        //PANEL LOGIN
+        
         panelLogin.volverBtn.addActionListener(new ActionListener() {
 			
 			@Override
@@ -189,9 +174,11 @@ public class VentanaPrincipal extends JFrame{
 			}
 		});
         
+
         
         
         
+        //PANEL JUEGO
         
         panelJuego.backBtn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -232,8 +219,12 @@ public class VentanaPrincipal extends JFrame{
         
 	}
 
-	public void mainMenu() {
-		cardLayout.show(panelPrincipal, "MENUINICIO");
+	public void loginReturn(String redirect,Jugador logedUser) {
+		cardLayout.show(panelPrincipal, redirect);
+		
+		if (redirect=="PANELCONFONLINE") {
+			panelConfOnline.setUser1(logedUser);
+		}
 		
 	}
 		

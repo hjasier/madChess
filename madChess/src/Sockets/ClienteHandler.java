@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
+import objetos.Jugador;
 import objetos.Movimiento;
 
 public class ClienteHandler implements Runnable {
@@ -13,6 +14,8 @@ public class ClienteHandler implements Runnable {
     private ObjectInputStream input;
     private ObjectOutputStream output;
     private List<ClienteHandler> clientes;
+    
+    private Jugador user;
 
     public ClienteHandler(Socket socket, List<ClienteHandler> clientes) {
         this.socket = socket;
@@ -26,7 +29,11 @@ public class ClienteHandler implements Runnable {
         }
     }
 
-    @Override
+    public Jugador getUser() {
+		return user;
+	}
+
+	@Override
     public void run() {
         try {
             while (true) {
@@ -38,6 +45,12 @@ public class ClienteHandler implements Runnable {
             	    Movimiento movimiento = (Movimiento) objetoLlegada;
             	    System.out.println(movimiento.toString());
             	} 
+            	else if (objetoLlegada instanceof Jugador) {
+            		//Obviamente esto no sera así en el futuro pero de momento da completamente igual
+            		Jugador player = (Jugador) objetoLlegada;
+            		System.out.println("Usuario conectado -->"+player.toString());
+            		this.user = player; 
+            	}
             	
           
 

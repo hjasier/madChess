@@ -172,7 +172,7 @@ public class LoginAntiguo extends JPanel {
 				
 				if (expectedUser!=null&&expectedUser.checkPassword(passw)) {
 					System.out.println("Logeado como "+ expectedUser);
-					ventanaPrincipal.mainMenu();
+					
 					textfieldUser.setText("");
 					textfieldContra.setText("");
 				}

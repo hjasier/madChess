@@ -11,14 +11,14 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class ConfigurarPartidaLocal extends JPanel {
+public class ConfPLocal extends JPanel {
     protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
     protected BButton botonIniciarPartida = new BButton("Inicar Partida");
     protected BButton botonVolver = new BButton("Volver");
     protected RButton botonUser1 = new RButton("Login");
     protected RButton botonUser2 = new RButton("Login");
     
-	public ConfigurarPartidaLocal() {
+	public ConfPLocal() {
         JPanel navBar = new JPanel();
         JLabel foto = new JLabel(imgFoto);
         Color colorTemp = new Color(16, 16, 16);

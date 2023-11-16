@@ -32,7 +32,6 @@ public class Login extends JPanel {
 	protected JPanel panelLogo = new JPanel();
 	protected JPanel panelLogin = new JPanel();
 	
-	protected JLabel nombre = new JLabel("madChess");
 	
 	protected RButton volverBtn = new RButton("Volver");
 
@@ -51,37 +50,23 @@ public class Login extends JPanel {
 	protected JLabel labelTitulo = new JLabel("Inicia sesión para continuar");
 	
 	private HashMap<String, Jugador> users = new HashMap<String, Jugador>();
+	protected String redirect = "MENUINICIO";
 	
 	public Login (VentanaPrincipal ventanaPrincipal) {
 		this.setLayout(new BorderLayout());
+		
+		cargarUsuarios("users.dat");
+		//--------------------- NAVBAR-------------------------------------------
+		
 		navBar = new JPanel();
 		opciones = new JPanel();
-		
-		//--------------------- NAVBAR-------------------------------------------
 
 		navBar.setBackground(colorTemp);
 		opciones.setBackground(colorTemp);
 		panelLogo.setBackground(colorTemp);
 		panelLogin.setBackground(colorTemp);
 
-		nombre.setForeground(new Color(255, 248, 210));
-		nombre.setFont(getFont());
-		String nombreFont = "/srcmedia/unsh.ttf"; 
-	
-		
 
-		
-		try {
-			Font f = Font.createFont( Font.TRUETYPE_FONT, MenuInicio.class.getResourceAsStream(nombreFont) );
-			f = f.deriveFont( Font.PLAIN, 38 );
-			nombre.setFont(f);
-		} catch (FontFormatException | IOException e) {
-			System.out.println("Error al cargar fuente");
-		}
-		
-		
-		
-		
 		navBar.setLayout(new BorderLayout());
 		opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
 		
@@ -169,7 +154,7 @@ public class Login extends JPanel {
 				
 				if (expectedUser!=null&&expectedUser.checkPassword(passw)) {
 					System.out.println("Logeado como "+ expectedUser);
-					ventanaPrincipal.mainMenu();
+					ventanaPrincipal.loginReturn(redirect,expectedUser);
 					inputNombre.setText("");
 					inputContra.setText("");
 				}
@@ -234,6 +219,17 @@ public class Login extends JPanel {
 
         users = hashMap;
     }
+
+
+
+
+
+
+
+
+	public void setRedirect(String string) {
+		this.redirect = string;
+	}
 
 
 }

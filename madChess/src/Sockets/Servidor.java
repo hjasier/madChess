@@ -5,12 +5,15 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import ventanas.ConfPOnline;
+
 public class Servidor {
     private ServerSocket serverSocket;
     private List<ClienteHandler> clientes = new ArrayList<ClienteHandler>();
     
     
     private int PUERTO = 4444;
+    private ConfPOnline panelConfOnline;
     
     public Servidor() {
         try {
@@ -21,14 +24,27 @@ public class Servidor {
         }
     }
 
-    public void iniciar() {
+    public Servidor(ConfPOnline panelConfOnline) {
+    	this();
+		this.panelConfOnline = panelConfOnline;
+		
+	}
+
+	public void iniciar() {
     	System.out.println("Esperando jugadores");
         while (true) {
             try {
                 Socket clienteSocket = serverSocket.accept();
                 System.out.println("Cliente conectado --> " + clienteSocket.getInetAddress().getHostAddress());
 
+                
+                
+                
+                
                 ClienteHandler clienteHandler = new ClienteHandler(clienteSocket, clientes);
+                
+                actualizarConfigMenu(clienteHandler);
+                
                 clientes.add(clienteHandler);
                 Thread clienteThread = new Thread(clienteHandler);
                 clienteThread.start();
@@ -37,8 +53,17 @@ public class Servidor {
             }
         }
     }
+    
+    
 
-    public static void main(String[] args) {
+    private void actualizarConfigMenu(ClienteHandler cliente) {
+		if (panelConfOnline!=null) {
+			panelConfOnline.setUser2(cliente);
+		}
+		
+	}
+
+	public static void main(String[] args) {
         Servidor servidor = new Servidor();
         servidor.iniciar();
     }

@@ -3,6 +3,7 @@ package Sockets;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import objetos.Jugador;
 import objetos.Movimiento;
 
 public class DemoEnvio {
@@ -19,11 +20,15 @@ public class DemoEnvio {
            //mov nuevo con todo en null para probar si llega
             Movimiento movimiento = new Movimiento();
             
-           
+            //Enviar usuario
+            output.writeObject(new Jugador("test2","test"));
+            output.flush();
 
             // Enviar el movimiento al servidor
             output.writeObject(movimiento);
             output.flush();
+
+
 
             // Cerrar la conexión
             socket.close();
