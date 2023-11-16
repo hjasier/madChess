@@ -7,6 +7,8 @@ import javax.swing.plaf.synth.SynthLabelUI;
 import componentes.BButton;
 import componentes.BTextField;
 import componentes.RButton;
+import componentes.BJcomboBox;
+import componentes.BJRadioButton;
 
 public class ConfigurarPartidaO extends JPanel {
     protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
@@ -28,8 +30,8 @@ public class ConfigurarPartidaO extends JPanel {
         setBackground(colorTemp);
 
         navBar.setLayout(new BorderLayout());
-        navBar.setBackground(Color.red);
-//colorTemp
+        navBar.setBackground(colorTemp);
+
         opcionesenY.setLayout(new BoxLayout(opcionesenY, BoxLayout.Y_AXIS));
         opcionesenY.setAlignmentX(Component.CENTER_ALIGNMENT);
         
@@ -56,20 +58,48 @@ public class ConfigurarPartidaO extends JPanel {
         labelCodigoValor.setMaximumSize(new Dimension(200, 40));
         JPanel opcionesenX = new JPanel();
 		opcionesenX.setLayout(new BoxLayout(opcionesenX, BoxLayout.X_AXIS));
+		
 		opcionesenX.add(labelCodigoPartida);
+		opcionesenX.add(Box.createRigidArea(new Dimension(5, 0)));
 		opcionesenX.add(labelCodigoValor);
+		opcionesenX.add(Box.createRigidArea(new Dimension(115, 0)));
+		opcionesenX.setBackground(colorTemp);
+		
+		//BJRadioButton
+		
+		JLabel labelPrivacidad = new JLabel("Privacidad:");
+		BJRadioButton publicoButton = new BJRadioButton("Pública");
+		BJRadioButton privadoButton = new BJRadioButton("Privada");
+
+		ButtonGroup privacidadButtons = new ButtonGroup(); // Agrupa los botones para que funcionen exclusivamente entre sí
+		privacidadButtons.add(publicoButton);
+		privacidadButtons.add(privadoButton);
+		//privacidadButtons.setMaximumSize(new Dimension(200, 40));
+		JPanel privacidadRowPanel = new JPanel();
+		privacidadRowPanel.setLayout(new BoxLayout(privacidadRowPanel, BoxLayout.X_AXIS));
+		privacidadRowPanel.add(labelPrivacidad);
+		privacidadRowPanel.add(Box.createRigidArea(new Dimension(100, 0)));
+		privacidadRowPanel.add(publicoButton);
+		privacidadRowPanel.add(privadoButton);
+		privacidadRowPanel.add(Box.createRigidArea(new Dimension(170, 0)));
+		privacidadRowPanel.setBackground(colorTemp);
+		
+		
 		
 		
 		
 		// Panel para la segunda fila de componentes
 		JLabel labelModoJuego = new JLabel("Modo de juego:");
-		JComboBox<String> comboModoJuego = new JComboBox<>(new String[]{"Clásico", "madChess"});
+		BJcomboBox<String> comboModoJuego = new BJcomboBox<>(new String[]{"Clásico", "madChess"});
 		comboModoJuego.setMaximumSize(new Dimension(200, 40));
 		JPanel secondRowPanel = new JPanel();
         secondRowPanel.setLayout(new BoxLayout(secondRowPanel, BoxLayout.X_AXIS));
-        secondRowPanel.add(labelModoJuego);
-        secondRowPanel.add(comboModoJuego);
         
+        secondRowPanel.add(labelModoJuego);
+        secondRowPanel.add(Box.createRigidArea(new Dimension(35, 0)));
+        secondRowPanel.add(comboModoJuego);
+        secondRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
+        secondRowPanel.setBackground(colorTemp);
         
         
         
@@ -82,11 +112,14 @@ public class ConfigurarPartidaO extends JPanel {
         
         JPanel thirdRowPanel = new JPanel();
         thirdRowPanel.setLayout(new BoxLayout(thirdRowPanel, BoxLayout.X_AXIS));
+        
         thirdRowPanel.add(labelJugador1);
+        thirdRowPanel.add(Box.createRigidArea(new Dimension(55, 0)));
         thirdRowPanel.add(botonUser1);
         thirdRowPanel.add(labelNombre1);
+        thirdRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
         //labelNombre1.setVisible(false);
-        
+        thirdRowPanel.setBackground(colorTemp);
         
         
         JLabel labelJugador2 = new JLabel("Jugador 2:");
@@ -97,31 +130,45 @@ public class ConfigurarPartidaO extends JPanel {
         JPanel fourthRowPanel = new JPanel();
         fourthRowPanel.setLayout(new BoxLayout(fourthRowPanel, BoxLayout.X_AXIS));
         fourthRowPanel.add(labelJugador2);
+        fourthRowPanel.add(Box.createRigidArea(new Dimension(55, 0)));
         fourthRowPanel.add(botonUser2);
         fourthRowPanel.add(labelNombre2);
+        fourthRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
+        fourthRowPanel.setBackground(colorTemp);
         
         botonIniciarPartida = new BButton("Iniciar Partida");
+        JPanel fifthRowPanel = new JPanel();
+        fifthRowPanel.setLayout(new BoxLayout(fifthRowPanel, BoxLayout.X_AXIS));
+        fifthRowPanel.add(botonIniciarPartida);
+        fifthRowPanel.setBackground(colorTemp);
+        
         botonVolver = new BButton("Volver");
+        JPanel sixthRowPanel = new JPanel();
+        sixthRowPanel.setLayout(new BoxLayout(sixthRowPanel, BoxLayout.X_AXIS));
+        sixthRowPanel.add(botonVolver);
+        sixthRowPanel.setBackground(colorTemp);
         
         
      // Agregar los paneles al contenedor opcionesenY
         opcionesenY.add(Box.createVerticalGlue()); // Espacio en blanco arriba
         opcionesenY.add(opcionesenX);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre filas
+        opcionesenY.add(privacidadRowPanel);
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, 10)));
         opcionesenY.add(secondRowPanel);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre filas
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio entre filas
         opcionesenY.add(thirdRowPanel);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre filas
         opcionesenY.add(fourthRowPanel);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre filas
-        opcionesenY.add(botonIniciarPartida);
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, 30))); // Espacio entre filas
+        opcionesenY.add(fifthRowPanel);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, 5))); // Espacio entre botones
-        opcionesenY.add(botonVolver);
+        opcionesenY.add(sixthRowPanel);
         opcionesenY.add(Box.createVerticalGlue()); // Espacio en blanco abajo
         
         
         
-        
+        opcionesenY.setBackground(colorTemp);
 
         // Agregar el navBar en la posición NORTH
         add(navBar, BorderLayout.NORTH);
@@ -129,7 +176,7 @@ public class ConfigurarPartidaO extends JPanel {
         
   
         
-        opcionesenY.setBackground(colorTemp);
+        
 
         // Agregar opcionesenY en el centro
 
