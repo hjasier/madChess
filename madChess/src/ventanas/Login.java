@@ -11,11 +11,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
-import componentes.BButton;
-import componentes.FontAwesome;
-import componentes.IconFontSwing;
 import objetos.Jugador;
 import componentes.*;
+import juego.Configuracion;
+import librerias.FontAwesome;
+import librerias.IconFontSwing;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -29,20 +29,8 @@ public class Login extends JPanel {
 
 	protected JPanel navBar;
 	protected JPanel opciones;
-	protected JPanel panelLogo = new JPanel();
-	protected JPanel panelLogin = new JPanel();
-	
-	
 	protected RButton volverBtn = new RButton("Volver");
-
 	
-	
-	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
-	protected JLabel foto = new JLabel(imgFoto);
-	protected Color colorTemp = new Color(16,16,16);
-	
-
-
 	protected BTextField inputNombre = new BTextField("Nombre de usuario",false);
 	protected BTextField inputContra = new BTextField("Contraseña",true);
 	protected BButton loginBtn = new BButton("Iniciar Sesión");
@@ -61,43 +49,25 @@ public class Login extends JPanel {
 		navBar = new JPanel();
 		opciones = new JPanel();
 
-		navBar.setBackground(colorTemp);
-		opciones.setBackground(colorTemp);
-		panelLogo.setBackground(colorTemp);
-		panelLogin.setBackground(colorTemp);
+		
+		opciones.setBackground(Configuracion.BACKGROUND);
+		
 
 
 		navBar.setLayout(new BorderLayout());
 		opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
 		
-		// Escalar la imagen
-        Image imagenEscalada = imgFoto.getImage().getScaledInstance(300, 110, Image.SCALE_SMOOTH);
-        imgFoto = new ImageIcon(imagenEscalada);
-        foto.setIcon(imgFoto);
-
-        panelLogo.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
-		panelLogo.add(foto, BorderLayout.WEST);
-		//panelLogo.add(nombre, BorderLayout.CENTER);
-
-		panelLogin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
-		panelLogin.add(Box.createRigidArea(new java.awt.Dimension(0, 80)));
-		panelLogin.add(volverBtn);
+		
         
-		navBar.add(panelLogo, BorderLayout.WEST);
-		navBar.add(panelLogin, BorderLayout.EAST);
-        
+		
+		
+  		//--------------------- NAVBAR-------------------------------------------
 		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, 15);
 		volverBtn.setIcon(icon);
-		
-		//---------------------FIN NAVBAR-------------------------------------------
-		
+  		
+  		navBar = new navBar(volverBtn);
+  		//--------------------- NAVBAR-------------------------------------------	   
 
-		
-		
-		
-		//---------------------body-------------------------------------------
-		
-		
 
 		
 		

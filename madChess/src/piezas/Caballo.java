@@ -3,10 +3,9 @@ package piezas;
 import java.util.ArrayList;
 
 import objetos.Casilla;
-import objetos.MetodosInterfaz;
 import objetos.Pieza;
 
-public class Caballo extends Pieza implements MetodosInterfaz {
+public class Caballo extends Pieza implements PiezaMustHave {
 
 	public Caballo(Boolean isWhite) {
 		super("n",isWhite);

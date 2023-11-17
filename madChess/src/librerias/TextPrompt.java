@@ -1,4 +1,4 @@
-package componentes;
+package librerias;
 
 
 //http://tips4java.wordpress.com/2009/11/29/text-prompt/

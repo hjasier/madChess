@@ -2,9 +2,9 @@
 package ventanas;
 
 import componentes.BButton;
-import componentes.FontAwesome;
-import componentes.IconFontSwing;
 import componentes.RButton;
+import librerias.FontAwesome;
+import librerias.IconFontSwing;
 import objetos.Jugador;
 
 import javax.swing.*;

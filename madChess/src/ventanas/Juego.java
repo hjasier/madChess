@@ -40,11 +40,12 @@ import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import componentes.FontAwesome;
-import componentes.IconFontSwing;
 import componentes.MButton;
 import componentes.MScrollPane;
 import componentes.userInfo;
+import juego.Configuracion;
+import librerias.FontAwesome;
+import librerias.IconFontSwing;
 import objetos.*;
 
 
@@ -80,7 +81,7 @@ public class Juego extends JPanel {
 	protected JLabel labelMovimientos;
 	
 	protected Tablero tablero = new Tablero();
-	protected Color colorFondo = new Color(16,16,16);
+	protected Color colorFondo = Configuracion.BACKGROUND;
 	
 	protected boolean vacio = false;
 	protected JPanel panelBotones = new JPanel();

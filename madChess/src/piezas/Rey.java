@@ -5,10 +5,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import objetos.Casilla;
-import objetos.MetodosInterfaz;
 import objetos.Pieza;
 
-public class Rey extends Pieza implements MetodosInterfaz{
+public class Rey extends Pieza implements PiezaMustHave{
 	protected Boolean isAmenezado = false;
 	
 	public Rey(Boolean isWhite) {

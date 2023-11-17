@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Date;
 
 
-import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Movimiento;
@@ -29,8 +28,6 @@ public class Partida {
 	protected Date fecha;
 	protected ArrayList<Casilla> casillas;
 	protected HashMap<String,Pieza> piezas = new HashMap<String,Pieza>();
-	
-	protected HashMap<Boost, Boolean> boosts;
 	protected Tablero tablero;
 	protected Juego ventana;
 	
@@ -54,12 +51,11 @@ public class Partida {
 	 * 1 --> NORMAL ONLINE
 	 */
 	
-	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha,HashMap<Boost, Boolean> boosts) {
+	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha) {
 		super();
 		this.jugadores = jugadores;
 		this.gameId = gameId;
 		this.fecha = fecha;
-		this.boosts = boosts;	
 	}
 	
 	
@@ -107,9 +103,6 @@ public class Partida {
                 		tablero.arrastrarPieza(e,movimientosPosibles);
                 	}
                 	
-                	
-               
-                	
                }
                 
             }
@@ -118,7 +111,7 @@ public class Partida {
         
         
         /*
-         * HashMap temporal de jugadores
+         * Carga temporal de jugadores
          */
         
         initPlayers();

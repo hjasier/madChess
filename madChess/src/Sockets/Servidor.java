@@ -27,7 +27,7 @@ public class Servidor {
     public Servidor(ConfPOnline panelConfOnline) {
     	this();
 		this.panelConfOnline = panelConfOnline;
-		
+		this.iniciar();
 	}
 
 	public void iniciar() {
@@ -35,7 +35,7 @@ public class Servidor {
         while (true) {
             try {
                 Socket clienteSocket = serverSocket.accept();
-                System.out.println("Cliente conectado --> " + clienteSocket.getInetAddress().getHostAddress());
+                System.out.println("Cliente conectado --> " + clienteSocket);
 
                 
                 
@@ -43,11 +43,12 @@ public class Servidor {
                 
                 ClienteHandler clienteHandler = new ClienteHandler(clienteSocket, clientes);
                 
-                actualizarConfigMenu(clienteHandler);
+
                 
                 clientes.add(clienteHandler);
                 Thread clienteThread = new Thread(clienteHandler);
                 clienteThread.start();
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -67,4 +68,5 @@ public class Servidor {
         Servidor servidor = new Servidor();
         servidor.iniciar();
     }
+
 }

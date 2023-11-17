@@ -5,27 +5,24 @@ import javax.swing.*;
 
 import Sockets.ClienteHandler;
 import Sockets.Servidor;
-import componentes.BButton;
-import componentes.BTextField;
-import componentes.FontAwesome;
-import componentes.IconFontSwing;
-import componentes.RButton;
+import juego.Configuracion;
+import librerias.FontAwesome;
+import librerias.IconFontSwing;
 import objetos.Jugador;
-import componentes.BJcomboBox;
-import componentes.BJRadioButton;
+import componentes.*;
 
 public class ConfPOnline extends JPanel {
-    protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
+    
     protected BButton botonIniciarPartida = new BButton("Iniciar Partida");
     protected RButton botonUser1 = new RButton("Login");
-    protected JLabel labelUser2 = new JLabel("Esperando...");
+    protected MLabel labelUser2 = new MLabel("Esperando...");
     protected BTextField labelCodigoValor= new BTextField("ZNSAD",false);
-    protected JPanel navBar = new JPanel();
+    protected JPanel navBar;
     protected JPanel opciones = new JPanel();
-    protected JPanel panelLogin = new JPanel();
-    protected JLabel foto = new JLabel(imgFoto);
-    protected Color colorTemp = new Color(16, 16, 16);
-    protected JPanel panelLogo = new JPanel();
+    
+    
+    protected Color colorFondo = Configuracion.BACKGROUND;
+    
     protected JPanel opcionesenY = new JPanel();
     protected RButton volverBtn = new RButton("Volver");
     
@@ -44,55 +41,36 @@ public class ConfPOnline extends JPanel {
     	if (user1!=null) {
     		this.user1 = user1;
     		JLabel botonUser1 = new JLabel("hjasier");
+    		
+    	}else {
+    		botonUser1.setMaximumSize(new Dimension(100, 25));
     	}
     	
     	
     	
         setLayout(new BorderLayout());
-        setBackground(colorTemp);
+        setBackground(colorFondo);
 
-      //--------------------- NAVBAR-------------------------------------------
-    
-
-      		navBar.setBackground(colorTemp);
-      		opciones.setBackground(colorTemp);
-      		panelLogo.setBackground(colorTemp);
-      		panelLogin.setBackground(colorTemp);
-
-
-      		navBar.setLayout(new BorderLayout());
-      		opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
-      		
-      		// Escalar la imagen
-            Image imagenEscalada = imgFoto.getImage().getScaledInstance(300, 110, Image.SCALE_SMOOTH);
-            imgFoto = new ImageIcon(imagenEscalada);
-            foto.setIcon(imgFoto);
-
-            panelLogo.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
-      		panelLogo.add(foto, BorderLayout.WEST);
-      		//panelLogo.add(nombre, BorderLayout.CENTER);
-
-      		panelLogin.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
-      		panelLogin.add(Box.createRigidArea(new java.awt.Dimension(0, 80)));
-      		panelLogin.add(volverBtn);
-              
-      		navBar.add(panelLogo, BorderLayout.WEST);
-      		navBar.add(panelLogin, BorderLayout.EAST);
-              
-      		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, 15);
-      		volverBtn.setIcon(icon);
+  		opciones.setBackground(colorFondo);
+  		
+  		
+  		opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
+  		
+  		//--------------------- NAVBAR-------------------------------------------
+  		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, 15);
+  		volverBtn.setIcon(icon);
+  		
+  		navBar = new navBar(volverBtn);
+  		//--------------------- NAVBAR-------------------------------------------	   
       		
       		
-            
 
-            opcionesenY.setLayout(new BoxLayout(opcionesenY, BoxLayout.Y_AXIS));
-            opcionesenY.setAlignmentX(Component.CENTER_ALIGNMENT);
-            
 
     		
-      		//---------------------FIN NAVBAR-------------------------------------------
-		
       		
+		
+  	    opcionesenY.setLayout(new BoxLayout(opcionesenY, BoxLayout.Y_AXIS));
+        opcionesenY.setAlignmentX(Component.CENTER_ALIGNMENT);	
       		
       		
         // Elementos de la interfaz
@@ -111,7 +89,7 @@ public class ConfPOnline extends JPanel {
 		opcionesenX.add(Box.createRigidArea(new Dimension(5, 0)));
 		opcionesenX.add(labelCodigoValor);
 		opcionesenX.add(Box.createRigidArea(new Dimension(115, 0)));
-		opcionesenX.setBackground(colorTemp);
+		opcionesenX.setBackground(colorFondo);
 		
 		//BJRadioButton
 		
@@ -130,7 +108,7 @@ public class ConfPOnline extends JPanel {
 		privacidadRowPanel.add(publicoButton);
 		privacidadRowPanel.add(privadoButton);
 		privacidadRowPanel.add(Box.createRigidArea(new Dimension(170, 0)));
-		privacidadRowPanel.setBackground(colorTemp);
+		privacidadRowPanel.setBackground(colorFondo);
 		
 		
 		
@@ -138,7 +116,7 @@ public class ConfPOnline extends JPanel {
 		
 		// Panel para la segunda fila de componentes
 		JLabel labelModoJuego = new JLabel("Modo de juego:");
-		BJcomboBox<String> comboModoJuego = new BJcomboBox<>(new String[]{"Clásico", "madChess"});
+		MComboBox<String> comboModoJuego = new MComboBox<>(new String[]{"Clásico", "madChess"});
 		comboModoJuego.setMaximumSize(new Dimension(200, 40));
 		JPanel secondRowPanel = new JPanel();
         secondRowPanel.setLayout(new BoxLayout(secondRowPanel, BoxLayout.X_AXIS));
@@ -147,7 +125,7 @@ public class ConfPOnline extends JPanel {
         secondRowPanel.add(Box.createRigidArea(new Dimension(35, 0)));
         secondRowPanel.add(comboModoJuego);
         secondRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
-        secondRowPanel.setBackground(colorTemp);
+        secondRowPanel.setBackground(colorFondo);
         
         
         
@@ -167,7 +145,7 @@ public class ConfPOnline extends JPanel {
         thirdRowPanel.add(labelNombre1);
         thirdRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
         //labelNombre1.setVisible(false);
-        thirdRowPanel.setBackground(colorTemp);
+        thirdRowPanel.setBackground(colorFondo);
         
         
         JLabel labelJugador2 = new JLabel("Jugador 2:");
@@ -182,19 +160,19 @@ public class ConfPOnline extends JPanel {
         fourthRowPanel.add(labelUser2);
         fourthRowPanel.add(labelNombre2);
         fourthRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
-        fourthRowPanel.setBackground(colorTemp);
+        fourthRowPanel.setBackground(colorFondo);
         
         botonIniciarPartida = new BButton("Iniciar Partida");
         JPanel fifthRowPanel = new JPanel();
         fifthRowPanel.setLayout(new BoxLayout(fifthRowPanel, BoxLayout.X_AXIS));
         fifthRowPanel.add(botonIniciarPartida);
-        fifthRowPanel.setBackground(colorTemp);
+        fifthRowPanel.setBackground(colorFondo);
         
 
         
         
      // Agregar los paneles al contenedor opcionesenY
-        opcionesenY.add(Box.createVerticalGlue()); // Espacio en blanco arriba
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, 100)));
         opcionesenY.add(opcionesenX);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre filas
         opcionesenY.add(privacidadRowPanel);
@@ -211,7 +189,7 @@ public class ConfPOnline extends JPanel {
         
         
         
-        opcionesenY.setBackground(colorTemp);
+        opcionesenY.setBackground(colorFondo);
 
         // Agregar el navBar en la posición NORTH
         add(navBar, BorderLayout.NORTH);

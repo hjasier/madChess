@@ -2,11 +2,10 @@ package piezas;
 
 import java.util.ArrayList;
 import objetos.Casilla;
-import objetos.MetodosInterfaz;
 import objetos.Pieza;
 import piezas.Rey;
 
-public class Torre extends Pieza implements MetodosInterfaz {
+public class Torre extends Pieza implements PiezaMustHave {
 
     public Torre(Boolean isWhite) {
         super("r", isWhite);

@@ -1,15 +1,19 @@
 package ventanas;
 
 import java.awt.CardLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 import Sockets.Servidor;
 import juego.Partida;
@@ -22,7 +26,6 @@ public class VentanaPrincipal extends JFrame{
 	Juego panelJuego = new Juego();
     CardLayout cardLayout = new CardLayout();
    
-//    Login panelLogin = new Login(this);
     Login panelLogin = new Login(this);
     
     MenuInicio  panelMenuInicio = new MenuInicio();
@@ -66,12 +69,30 @@ public class VentanaPrincipal extends JFrame{
 
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "PANELCONFONLINE");
-            
+                
+                
                 
                 if (panelConfOnline.getServer()==null) {
-                	panelConfOnline.setServer(new Servidor(panelConfOnline));
+                	Thread server = new Thread(new Runnable() {@Override
+                	public void run() {
+                		panelConfOnline.setServer(new Servidor(null));
+                		
+                	}
+					});
+                	server.start();
+                	
                 }
                
+                
+            }
+        });
+        
+        panelMenuInicio.joinPOnline.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                
+                cardLayout.show(panelPrincipal, "PANELCONFONLINE");
+                
                 
             }
         });
@@ -119,7 +140,7 @@ public class VentanaPrincipal extends JFrame{
         
         
         
-        
+       
 
         
         
@@ -132,7 +153,7 @@ public class VentanaPrincipal extends JFrame{
                 new Partida(panelJuego,0);
             }
         });
-        panelConfLocal.botonVolver.addActionListener(new ActionListener() {
+        panelConfLocal.volverBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -227,5 +248,6 @@ public class VentanaPrincipal extends JFrame{
 		}
 		
 	}
-		
+	
+
 }

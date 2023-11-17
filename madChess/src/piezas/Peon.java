@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import objetos.Casilla;
-import objetos.MetodosInterfaz;
 import objetos.Pieza;
 
-public class Peon extends Pieza implements MetodosInterfaz{
+public class Peon extends Pieza implements PiezaMustHave{
 	
 	public Peon(Boolean isWhite) {
 		super("p",isWhite);

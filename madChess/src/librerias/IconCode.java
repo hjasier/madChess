@@ -1,6 +1,4 @@
-package componentes;
-
-import java.io.InputStream;
+package librerias;
 
 /**
  * Copyright (c) 2016 jIconFont <BR>
@@ -23,7 +21,21 @@ import java.io.InputStream;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public interface IconFont {
+public interface IconCode {
+
+    /**
+     * Gets the icon name.
+     *
+     * @return String
+     */
+    String name();
+
+    /**
+     * Gets the icon unicode.
+     *
+     * @return char
+     */
+    char getUnicode();
 
     /**
      * Gets the font family name.
@@ -32,10 +44,4 @@ public interface IconFont {
      */
     String getFontFamily();
 
-    /**
-     * Gets a stream to the font.
-     *
-     * @return InputStream
-     */
-    InputStream getFontInputStream();
 }

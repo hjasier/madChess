@@ -3,8 +3,8 @@ import javax.swing.*;
 import javax.swing.plaf.basic.*;
 import java.awt.*;
 
-public class BJcomboBox<T> extends JComboBox<T> {
-    public BJcomboBox(T[] items) {
+public class MComboBox<T> extends JComboBox<T> {
+    public MComboBox(T[] items) {
         super(items);
         setUI(new ModernComboBoxUI());
         setRenderer(new ModernComboBoxRenderer<>());

@@ -3,10 +3,9 @@ package piezas;
 import java.util.ArrayList;
 
 import objetos.Casilla;
-import objetos.MetodosInterfaz;
 import objetos.Pieza;
 
-public class Reina extends Pieza implements MetodosInterfaz {
+public class Reina extends Pieza implements PiezaMustHave {
 
 	public Reina(Boolean isWhite) {
 		super("q",isWhite);

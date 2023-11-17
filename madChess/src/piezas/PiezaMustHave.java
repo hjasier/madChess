@@ -1,8 +1,10 @@
-package objetos;
+package piezas;
 
 import java.util.ArrayList;
 
-public interface MetodosInterfaz {
+import objetos.Casilla;
+
+public interface PiezaMustHave {
 	public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas);
 	
 	public ArrayList<Casilla> getCasillasCome(Casilla curCasilla, ArrayList<Casilla> casillas);

@@ -1,4 +1,4 @@
-package componentes;
+package librerias;
 
 
 import java.io.InputStream;
