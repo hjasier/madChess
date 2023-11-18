@@ -49,7 +49,7 @@ public class Jugador implements Serializable{
 	
 	
 	public Jugador(String string) {
-		// TODO Auto-generated constructor stub
+		this.username = string;
 	}
 
 
