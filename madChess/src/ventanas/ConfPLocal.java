@@ -2,8 +2,10 @@ package ventanas;
 
 import componentes.*;
 import juego.Configuracion;
+import juego.DatosPartida;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
+import objetos.Jugador;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,9 @@ public class ConfPLocal extends JPanel {
     protected RButton botonUser2 = new RButton("Login");
     protected Color colorFondo = Configuracion.BACKGROUND;
     protected JPanel navBar;
+    
+    protected DatosPartida datos;
+	private BLabel gameId;
 
     public ConfPLocal() {
         setBackground(colorFondo);
@@ -27,7 +32,9 @@ public class ConfPLocal extends JPanel {
 
         // Elementos de la interfaz
         JLabel labelCodigoPartida = new JLabel("Código de la partida:");
-        JLabel labelCodigoValor = new JLabel("32423");
+        gameId = new BLabel("");
+        
+        
 
         JLabel labelModoJuego = new JLabel("Modo de juego:");
         MComboBox<String> comboModoJuego = new MComboBox<>(new String[]{"Clásico", "madChess"});
@@ -59,7 +66,7 @@ public class ConfPLocal extends JPanel {
 
         // Configurar elementos en el panel principal
         centerPanel.add(Box.createRigidArea(new Dimension(0, 120)));
-        centerPanel.add(createRowPanel(labelCodigoPartida, labelCodigoValor));
+        centerPanel.add(createRowPanel(labelCodigoPartida, gameId));
         centerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
         centerPanel.add(createRowPanel(labelModoJuego, comboModoJuego));
         centerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
@@ -75,7 +82,8 @@ public class ConfPLocal extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
     }
 
-    private JPanel createRowPanel(Component... components) {
+
+	private JPanel createRowPanel(Component... components) {
         JPanel rowPanel = new JPanel();
         rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
         rowPanel.setBackground(colorFondo);
@@ -86,4 +94,31 @@ public class ConfPLocal extends JPanel {
         rowPanel.add(Box.createRigidArea(new Dimension(15, 0)));
         return rowPanel;
     }
+	
+	
+    public void setDatosPartida(DatosPartida datos) {
+		this.datos = datos;
+		gameId.setText(datos.getGameId());
+		
+		
+	}
+
+
+	public void setUser(Jugador logedUser) {
+		if (datos.getJugadores().isEmpty()) {
+			botonUser1.setText(logedUser.getNombre());
+			botonUser1.setEnabled(false);
+		}
+		else {
+			botonUser2.setText(logedUser.getNombre());
+			botonUser2.setEnabled(false);
+		}
+		datos.setJugador(logedUser);
+	}
+
+    
+    
+    
+    
+    
 }

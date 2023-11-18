@@ -6,6 +6,7 @@ import javax.swing.*;
 import Sockets.ClienteHandler;
 import Sockets.Servidor;
 import juego.Configuracion;
+import juego.DatosPartida;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
@@ -16,7 +17,7 @@ public class ConfPOnline extends JPanel {
     protected BButton botonIniciarPartida = new BButton("Iniciar Partida");
     protected RButton botonUser1 = new RButton("Login");
     protected MLabel labelUser2 = new MLabel("Esperando...");
-    protected BTextField labelCodigoValor= new BTextField("ZNSAD",false);
+    protected BLabel labelCodigoValor= new BLabel("ZNSAD");
     protected JPanel navBar;
     protected JPanel opciones = new JPanel();
     
@@ -31,7 +32,8 @@ public class ConfPOnline extends JPanel {
     private Jugador user2;
     private String idPartida;
     
-    private Servidor server;
+	private DatosPartida datosPartida;
+	private Servidor server;
     
     
 
@@ -73,15 +75,11 @@ public class ConfPOnline extends JPanel {
         opcionesenY.setAlignmentX(Component.CENTER_ALIGNMENT);	
       		
       		
-        // Elementos de la interfaz
-		
-		labelCodigoValor.setEditable(false);
-		labelCodigoValor.setFocusable(false);
+
 		
         
 		
         JLabel labelCodigoPartida = new JLabel("Código de la partida:");
-        labelCodigoValor.setMaximumSize(new Dimension(200, 40));
         JPanel opcionesenX = new JPanel();
 		opcionesenX.setLayout(new BoxLayout(opcionesenX, BoxLayout.X_AXIS));
 		
@@ -172,9 +170,9 @@ public class ConfPOnline extends JPanel {
         
         
      // Agregar los paneles al contenedor opcionesenY
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 100)));
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, 120)));
         opcionesenY.add(opcionesenX);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre filas
+        opcionesenY.add(Box.createRigidArea(new Dimension(0,40))); // Espacio entre filas
         opcionesenY.add(privacidadRowPanel);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, 10)));
         opcionesenY.add(secondRowPanel);
@@ -208,7 +206,8 @@ public class ConfPOnline extends JPanel {
 	public void setUser1(Jugador user) {
 		this.user1 = user;
 		botonUser1.setText(user.getNombre());
-		botonUser1.setFocusable(false);
+		botonUser1.setEnabled(false);
+		datosPartida.setJugador(user);
 	}
 	
     public Servidor getServer() {
@@ -224,6 +223,12 @@ public class ConfPOnline extends JPanel {
 	public void setUser2(ClienteHandler cliente) {
 		this.user2 = cliente.getUser();
 		labelUser2.setText(user2.getNombre());
+		
+	}
+
+
+	public void setDatosPartida(DatosPartida curDatosPartida) {
+		this.datosPartida = curDatosPartida;
 		
 	}
 

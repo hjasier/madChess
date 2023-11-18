@@ -44,17 +44,11 @@ public class Login extends JPanel {
 		this.setLayout(new BorderLayout());
 		
 		cargarUsuarios("users.dat");
-		//--------------------- NAVBAR-------------------------------------------
 		
-		navBar = new JPanel();
 		opciones = new JPanel();
 
 		
 		opciones.setBackground(Configuracion.BACKGROUND);
-		
-
-
-		navBar.setLayout(new BorderLayout());
 		opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
 		
 		
@@ -101,7 +95,7 @@ public class Login extends JPanel {
         opciones.add(inputContra);
         opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 20))); // Espacio entre los botones
         opciones.add(loginBtn);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 20))); // Espacio entre los botones
         opciones.add(registerLabel);
 
 

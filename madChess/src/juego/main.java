@@ -1,6 +1,7 @@
 package juego;
 
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class main {
 
             // Configurar la fuente por defecto para JLabel
             UIManager.put("Label.font", customFont);
+            
+            UIManager.put("Label.foreground", new Color(210,210,210));
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }

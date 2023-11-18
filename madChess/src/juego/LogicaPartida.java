@@ -20,56 +20,34 @@ import piezas.Rey;
 import piezas.Torre;
 import ventanas.Juego;
 
-public class Partida {
+public class LogicaPartida {
+	private Boolean DEBUG_MODE = Configuracion.DEBUG_MODE; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
 
-	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
-	
-	protected int gameId;
-	protected Date fecha;
 	protected ArrayList<Casilla> casillas;
 	protected HashMap<String,Pieza> piezas = new HashMap<String,Pieza>();
+	private HashMap<Pieza, ArrayList<Casilla>> piezasDefensa;
 	protected Tablero tablero;
 	protected Juego ventana;
-	
 	private Jugador curPlayer; //Jugador actual
-	
-	private int modoDeJuego;
-	
-	private Boolean DEBUG_MODE = true; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
-
 	private Rey reyWhite;
-
 	private Rey reyBlack;
-	
-	private HashMap<Pieza, ArrayList<Casilla>> piezasDefensa;
-	
-	
-	/*
-	 * MODOS DE JUEGO:
-	 * 
-	 * 0 --> NORMAL LOCAL 
-	 * 1 --> NORMAL ONLINE
-	 */
-	
-	public Partida(ArrayList<Jugador> jugadores, int gameId, Date fecha) {
-		super();
-		this.jugadores = jugadores;
-		this.gameId = gameId;
-		this.fecha = fecha;
-	}
+	protected ArrayList<Jugador> jugadores;
+
+	protected DatosPartida datosPartida;
 	
 	
-	
-	
-	
-	public Partida(Juego ventana,int modoDeJuego) {
+	public LogicaPartida(Juego ventana,DatosPartida datos) {
 		this.ventana = ventana;
-		this.modoDeJuego = modoDeJuego;
+		this.datosPartida = datos;
+		if (datos.jugadores!=null) {	
+			this.jugadores = datos.jugadores;
+		}
+		
 		
 		this.tablero = ventana.getTablero();
 		
 		casillas = tablero.getCasillas();
-		cargarPiezasTablero();
+		resetearVentana();
 		
 		
 		
@@ -127,7 +105,7 @@ public class Partida {
         	printMovimiento("--------------------");
         }
         else {
-        	ventana.setInterfaz(modoDeJuego);
+        	ventana.setInterfaz(datosPartida.modoDeJuego);
         }
         printMovimiento("*/* "+curPlayer.getNombre()+" empieza la partida con blancas */*");
 		
@@ -143,15 +121,20 @@ public class Partida {
 	private void initPlayers() {
 		int initTime = 600;
 		
-        jugadores.add(new Jugador("Potzon"));       
-        jugadores.add(new Jugador("erGiova"));
+		if (jugadores.isEmpty()) {
+			jugadores.add(new Jugador("Potzon"));       
+			jugadores.add(new Jugador("erGiova"));		
+		}
+		
+		Jugador user1 = jugadores.get(0);
+		Jugador user2 = jugadores.get(1);
+		
+		
+		user1.setIsWhite(true);
+		user1.setRey(reyWhite);
+		user2.setRey(reyBlack);
         
-        
-        jugadores.get(0).setIsWhite(true);
-        jugadores.get(0).setRey(reyWhite);
-        jugadores.get(1).setRey(reyBlack);
-        
-        curPlayer = jugadores.get(0);
+        curPlayer = user1;
         tablero.setCurPlayer(curPlayer);
         
         
@@ -159,11 +142,13 @@ public class Partida {
 			player.setTiempoRestante(initTime);
 		}
 		
-		if (modoDeJuego == 1) {
-			jugadores.get(0).setGestorSocket();
-		}
-		
 		iniciarTemporizador();
+		
+		ventana.getPanelUsuario().setUsuario(user1.getNombre());
+		ventana.getPanelUsuario2().setUsuario(user2.getNombre());
+		
+		ventana.getPanelUsuario().setTemp(initTime+"");
+		ventana.getPanelUsuario2().setTemp(initTime+"");
 	}
 
 
@@ -389,14 +374,12 @@ public class Partida {
 	private void setNextPlayer() {
 		pararTemporizador();
 		
-		if (modoDeJuego==0) {
+		if (datosPartida.modoDeJuego=="local") {
 			int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
 			tablero.setCurPlayer(jugadores.get(newIndex));
 			curPlayer = jugadores.get(newIndex);
 		}
-		else if (modoDeJuego==1) {
-			
-		}
+		
 		
 		iniciarTemporizador();
 		
@@ -410,6 +393,14 @@ public class Partida {
 	private void iniciarTemporizador() {
 		Date now = new Date();
 		curPlayer.setInitTime(now);
+		
+		
+	    if (jugadores.get(0)==curPlayer) {
+	    	//ventana.getPanelUsuario().startTemp();
+	    }
+	    else {
+	    	//ventana.getPanelUsuario2().startTemp();
+	    }
 	}
 
 
@@ -424,6 +415,16 @@ public class Partida {
 	    curPlayer.setTiempoRestante(restantes);
 	    
 	    System.out.println("Tiempo restante "+curPlayer.getNombre()+" --> "+restantes+" segundos");
+	    
+	    //ya se hara mejor
+	    if (jugadores.get(0)==curPlayer) {
+	    	ventana.getPanelUsuario().setTemp(restantes+"");
+	    }
+	    else {
+	    	ventana.getPanelUsuario2().setTemp(restantes+"");
+	    }
+	    
+	
 	}
 
 
@@ -435,10 +436,10 @@ public class Partida {
 		Movimiento movimiento = new Movimiento(prevCasilla,curCasilla,piezaComida,pieza);
 		
 		//Aquí guardaríamos el movimiento en la base de datos, con su user etc para las analíticas
-		String extra = (piezaComida==null) ? " ":" Pieza comida";
-		printMovimiento("<"+curPlayer.getNombre()+"> "+prevCasilla.getPos()+" --> "+curCasilla.getPos()+extra);
+		String extra = (piezaComida==null) ? " ":" 💀";
+		printMovimiento("<"+curPlayer.getNombre()+"> "+prevCasilla.getPos()+" ⏩ "+curCasilla.getPos()+extra);
 		
-		if (modoDeJuego == 1) {
+		if (datosPartida.modoDeJuego == "online") {
 			
 			curPlayer.getGestorSocket().postMoverPieza(movimiento);
 			
@@ -447,39 +448,30 @@ public class Partida {
 		
 	}
 	
+	
 	private void printMovimiento(String movimiento) {
 		ventana.setNewMovimiento(movimiento);
 	}
 	
 
-
-
-
-
-	protected boolean checkEnroqueCorto(Pieza curPieza,Casilla curCasilla) {
 	
+	//CHECKS BOOLEANOS
+	
+	protected boolean checkEnroqueCorto(Pieza curPieza,Casilla curCasilla) {
 		return(
-				
 				(curPieza instanceof Rey)&&
 				!(curPieza.getPMoved())&&
 				((curCasilla == casillas.get(62))||(curCasilla == casillas.get(6)))
-				
-				
 				);
 	}
 	
 	protected boolean checkEnroqueLargo(Pieza curPieza,Casilla curCasilla) {
 		return(
-				
 				(curPieza instanceof Rey)&&
 				!(curPieza.getPMoved())&&
 				((curCasilla == casillas.get(2))||(curCasilla == casillas.get(58)))
-				
-				
 				);
 	}
-	
-	
 	protected boolean checkPromotion(Pieza curPieza, Casilla curCasilla) {
 		return (curPieza instanceof Peon)&&
 				(curPieza.getIsWhite()&& curCasilla.getFila() == 0||
@@ -487,6 +479,19 @@ public class Partida {
 	}
 	
 
+	
+	
+	
+	
+	
+	
+	//init del tablero
+	protected void resetearVentana() {
+		limpiarTablero();
+		//limpiarChat();
+		//limpiarMovimientos();
+		cargarPiezasTablero();
+	}
 	
 	protected void cargarPiezasTablero() {
 		reyBlack = new Rey(false);
@@ -524,10 +529,11 @@ public class Partida {
 
 
 
-
-
-
-
+	private void limpiarTablero() {
+		for (Casilla casilla:casillas) {
+			casilla.setPieza(null);
+		}
+	}
 	
 	}
 

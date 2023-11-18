@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 
 public class BTextField extends JPasswordField  {
 
-    private static final Color DEFAULT_COLOR = new Color(180, 180, 180);
+    private static final Color DEFAULT_COLOR = new Color(169, 169, 169);
     private static final Color HOVER_COLOR = new Color(220, 220, 220);
     private static final Color TEXT_COLOR = new Color(240, 240, 240);
     private String placeholder;

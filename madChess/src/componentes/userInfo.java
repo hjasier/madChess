@@ -38,5 +38,19 @@ public class userInfo extends JPanel{
 		this.add(labelUsuario,BorderLayout.WEST);
 		this.add(labelTemp,BorderLayout.EAST);
 	}
+
+
+
+
+	public void setUsuario(String labelUsuario) {
+		this.labelUsuario.setText(labelUsuario);
+	}
+
+
+
+
+	public void setTemp(String labelTemp) {
+		this.labelTemp.setText(labelTemp);
+	}
 	
 }

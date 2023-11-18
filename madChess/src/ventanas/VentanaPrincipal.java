@@ -16,7 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import Sockets.Servidor;
-import juego.Partida;
+import juego.DatosPartida;
+import juego.LogicaPartida;
+import juego.Session;
 import objetos.Jugador;
 
 public class VentanaPrincipal extends JFrame{
@@ -34,6 +36,10 @@ public class VentanaPrincipal extends JFrame{
     
     ConfPOnline panelConfOnline =  new ConfPOnline(null);
     
+    //no paneles
+    
+    DatosPartida curDatosPartida;
+    
 	public VentanaPrincipal() {
 		
 		this.setSize(1000,800);
@@ -44,31 +50,53 @@ public class VentanaPrincipal extends JFrame{
 		
 		
 		panelPrincipal.add(panelMenuInicio, "MENUINICIO");
-        panelPrincipal.add(panelJuego, "PANELJUEGO");
-        panelPrincipal.add(panelLogin, "PANELLOGIN");
-        panelPrincipal.add(panelConfLocal, "PANELCONFLOCAL");  
-        panelPrincipal.add(panelConfOnline, "PANELCONFONLINE");
+        panelPrincipal.add(panelJuego, "JUEGO");
+        panelPrincipal.add(panelLogin, "LOGIN");
+        panelPrincipal.add(panelConfLocal, "CONFLOCAL");  
+        panelPrincipal.add(panelConfOnline, "CONFONLINE");
         
         
         
         panelMenuInicio.loginBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panelPrincipal, "PANELLOGIN");
+            	if (Session.getCurrentUser()==null) {
+                	panelLogin.setRedirect("MENUINICIO");
+                    cardLayout.show(panelPrincipal, "LOGIN");
+            	}
+            	else {
+            		panelPrincipal.add(new Perfil(), "PERFILUSUARIO");
+            		cardLayout.show(panelPrincipal, "PERFILUSUARIO");
+            	}
+
             }
         });
+        
+        
 
         panelMenuInicio.partidaLocal.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panelPrincipal, "PANELCONFLOCAL");
-                
+            	curDatosPartida = new DatosPartida("local");
+            	panelConfLocal.setDatosPartida(curDatosPartida);
+                cardLayout.show(panelPrincipal, "CONFLOCAL");
             }
         });
         
         panelMenuInicio.crearPOnline.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panelPrincipal, "PANELCONFONLINE");
+            	
+            	if (Session.getCurrentUser()!=null) {
+                	curDatosPartida = new DatosPartida("online");
+                	panelConfOnline.setDatosPartida(curDatosPartida);
+                	panelConfOnline.setUser1(Session.getCurrentUser());
+                    cardLayout.show(panelPrincipal, "CONFONLINE");
+            	}
+            	else {
+            		cardLayout.show(panelPrincipal, "LOGIN");
+            	}
+
+                
                 
                 
                 
@@ -91,7 +119,7 @@ public class VentanaPrincipal extends JFrame{
 
             public void actionPerformed(ActionEvent e) {
                 
-                cardLayout.show(panelPrincipal, "PANELCONFONLINE");
+                cardLayout.show(panelPrincipal, "CONFONLINE");
                 
                 
             }
@@ -109,8 +137,8 @@ public class VentanaPrincipal extends JFrame{
         panelConfOnline.botonIniciarPartida.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panelPrincipal, "PANELJUEGO");
-                new Partida(panelJuego,1);
+                cardLayout.show(panelPrincipal, "JUEGO");
+                new LogicaPartida(panelJuego,curDatosPartida);
                 
             }
         });
@@ -130,9 +158,8 @@ public class VentanaPrincipal extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelPrincipal, "PANELLOGIN");
-				panelLogin.setRedirect("PANELCONFONLINE");
-				
+				panelLogin.setRedirect("CONFONLINE");
+				cardLayout.show(panelPrincipal, "LOGIN");
 			}
 		});
         
@@ -149,8 +176,8 @@ public class VentanaPrincipal extends JFrame{
         panelConfLocal.botonIniciarPartida.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panelPrincipal, "PANELJUEGO");
-                new Partida(panelJuego,0);
+                cardLayout.show(panelPrincipal, "JUEGO");
+                new LogicaPartida(panelJuego,curDatosPartida);
             }
         });
         panelConfLocal.volverBtn.addActionListener(new ActionListener() {
@@ -167,7 +194,8 @@ public class VentanaPrincipal extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelPrincipal, "PANELLOGIN");
+				panelLogin.setRedirect("CONFLOCAL");
+				cardLayout.show(panelPrincipal, "LOGIN");
 				
 			}
 		});
@@ -175,7 +203,8 @@ public class VentanaPrincipal extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelPrincipal, "PANELLOGIN");
+				panelLogin.setRedirect("CONFLOCAL");
+				cardLayout.show(panelPrincipal, "LOGIN");
 				
 			}
 		});
@@ -184,7 +213,7 @@ public class VentanaPrincipal extends JFrame{
         
         
         
-        //PANEL LOGIN
+        // LOGIN
         
         panelLogin.volverBtn.addActionListener(new ActionListener() {
 			
@@ -199,7 +228,7 @@ public class VentanaPrincipal extends JFrame{
         
         
         
-        //PANEL JUEGO
+        // JUEGO
         
         panelJuego.backBtn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -241,12 +270,20 @@ public class VentanaPrincipal extends JFrame{
 	}
 
 	public void loginReturn(String redirect,Jugador logedUser) {
-		cardLayout.show(panelPrincipal, redirect);
 		
-		if (redirect=="PANELCONFONLINE") {
+		
+		if (redirect=="CONFONLINE") {
 			panelConfOnline.setUser1(logedUser);
 		}
+		else if (redirect=="CONFLOCAL") {
+			panelConfLocal.setUser(logedUser);
+		}
+		else if (redirect=="MENUINICIO") {
+			Session.setCurrentUser(logedUser);
+			panelMenuInicio.setLoged(true);
+		}
 		
+		cardLayout.show(panelPrincipal, redirect);
 	}
 	
 

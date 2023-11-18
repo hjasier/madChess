@@ -1,11 +1,17 @@
 package juego;
 
 import java.awt.Color;
+import java.awt.Font;
 
 public class Configuracion {
 	
-	public static String HOST = "localhost"; 
-	public static int PUERTO = 4444; 
 	
-	public static Color BACKGROUND = Color.red;
+	public static final String HOST = "localhost"; 
+	public static final int PUERTO = 4444; 
+	
+	public static final Color BACKGROUND = new Color(16,16,16);
+	
+	public static final Boolean DEBUG_MODE = true;
+	
+	public static final Font DEFAULTFONT = new Font("Dialog", Font.PLAIN, 12);
 }

@@ -65,7 +65,7 @@ public class Jugador implements Serializable{
 		return isWhite;
 	}
 
-	public void setIsWhite(Boolean isWhite) {
+	public void user1(Boolean isWhite) {
 		this.isWhite = isWhite;
 	}
 
@@ -162,7 +162,9 @@ public class Jugador implements Serializable{
 		this.gestorSocket = gestorSocket;
 	}
 	
-	
+	public void setIsWhite(Boolean isWhite) {
+		this.isWhite = isWhite;
+	}
 	
 	
 	

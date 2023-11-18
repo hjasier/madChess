@@ -55,8 +55,6 @@ public class Juego extends JPanel {
 	protected JPanel panelControles;
 	protected userInfo panelUsuario;
 	protected userInfo panelUsuario2;
-	
-	
 	protected JPanel panelChat;
 	protected JTextArea areaChat;
 	protected JTextField textfieldChat;
@@ -199,6 +197,8 @@ public class Juego extends JPanel {
 	    panelControlChat = new JPanel(new GridLayout(2,1));
 	    
 	    labelChat = new JLabel("CHAT");
+	    labelChat.setFont(labelChat.getFont().deriveFont(Font.BOLD, 12));
+	    
 	    areaChat = new JTextArea(5,2);
 	    areaChat.setLineWrap(true); 
 	    areaChat.setWrapStyleWord(true); 
@@ -259,6 +259,7 @@ public class Juego extends JPanel {
 	    // panel movimiento de las piezas
 	    
 	    labelMovimientos = new JLabel("MOVIMIENTOS");
+	    labelMovimientos.setFont(labelMovimientos.getFont().deriveFont(Font.BOLD, 12));
 
 	    areaMovimientos = new JTextArea(5,2);
 	    areaMovimientos.setLineWrap(true); 
@@ -406,8 +407,8 @@ public class Juego extends JPanel {
     	areaMovimientos.append(movimiento+ "\n");
     }
 
-	public void setInterfaz(int modoDeJuego) {
-		if (modoDeJuego==0) {
+	public void setInterfaz(String modoDeJuego) {
+		if (modoDeJuego=="local") {
 			panelControles.remove(panelChat);
 			panelControles.setLayout(new GridLayout(1,1));
 			/*
@@ -422,6 +423,15 @@ public class Juego extends JPanel {
 		return backBtn;
 	}
     
+	
+	public userInfo getPanelUsuario() {
+		return panelUsuario;
+	}
+
+	public userInfo getPanelUsuario2() {
+		return panelUsuario2;
+	}
+
 
 }
 

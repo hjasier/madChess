@@ -33,7 +33,7 @@ public class MenuInicio extends JPanel {
 	public MenuInicio () {
 		this.setLayout(new BorderLayout());
 		
-
+		
 		
   		//--------------------- NAVBAR-------------------------------------------
   		Icon icon = IconFontSwing.buildIcon(FontAwesome.USER_CIRCLE, 15);
@@ -73,6 +73,22 @@ public class MenuInicio extends JPanel {
 
 
 
+	}
+
+
+
+
+	public void setLoged(boolean b) {
+		if (b) {
+			loginBtn.setText("Perfil");
+		}
+		else {
+			loginBtn.setText("Login");
+		}
+		
+		
+		
+		
 	}
 
 
