@@ -144,11 +144,13 @@ public class LogicaPartida {
 		
 		iniciarTemporizador();
 		
-		ventana.getPanelUsuario().setUsuario(user1.getNombre());
-		ventana.getPanelUsuario2().setUsuario(user2.getNombre());
+		ventana.getPanelUsuario().setUsuario(user2.getNombre());
+		ventana.getPanelUsuario2().setUsuario(user1.getNombre());
 		
-		ventana.getPanelUsuario().setTemp(initTime+"");
-		ventana.getPanelUsuario2().setTemp(initTime+"");
+		ventana.getPanelUsuario().setTemp(initTime);
+		ventana.getPanelUsuario2().setTemp(initTime);
+		
+		ventana.getPanelUsuario2().startTemp();
 	}
 
 
@@ -396,10 +398,10 @@ public class LogicaPartida {
 		
 		
 	    if (jugadores.get(0)==curPlayer) {
-	    	//ventana.getPanelUsuario().startTemp();
+	    	ventana.getPanelUsuario2().startTemp();
 	    }
 	    else {
-	    	//ventana.getPanelUsuario2().startTemp();
+	    	ventana.getPanelUsuario().startTemp();
 	    }
 	}
 
@@ -418,10 +420,10 @@ public class LogicaPartida {
 	    
 	    //ya se hara mejor
 	    if (jugadores.get(0)==curPlayer) {
-	    	ventana.getPanelUsuario().setTemp(restantes+"");
+	    	ventana.getPanelUsuario2().setTemp(restantes);
 	    }
 	    else {
-	    	ventana.getPanelUsuario2().setTemp(restantes+"");
+	    	ventana.getPanelUsuario().setTemp(restantes);
 	    }
 	    
 	
