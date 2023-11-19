@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Random;
 
 import objetos.Jugador;
 import componentes.*;
@@ -141,7 +142,9 @@ public class Login extends JPanel {
 				
 				if (!username.equals("")&&!passw.equals(""));
 				
-				users.put(username, new Jugador(username,passw)); // si ya hay un user lo sobreescribe pero nos da igual pk todo esto es temp
+				int  newUserId = 10000 + new Random().nextInt(90000); // de momento no comprobamos si el id existe pk no hay base de datos y es absurdo, ademas de que probablemente no se acabe creando aquí al user
+				
+				users.put(username, new Jugador(newUserId,username,passw)); // si ya hay un user lo sobreescribe pero nos da igual pk todo esto es temp
 				guardarUsuarios("users.dat");
 			}
 		});
@@ -171,7 +174,6 @@ public class Login extends JPanel {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
             Object obj = inputStream.readObject();
             if (obj instanceof HashMap) {
-                // Verificar que el objeto leído sea realmente un HashMap
                 hashMap = (HashMap<String, Jugador>) obj;
                 System.out.println("Fichero de usuarios cargado --> " + filePath);
             } else {

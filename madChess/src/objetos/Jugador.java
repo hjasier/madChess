@@ -3,11 +3,12 @@ package objetos;
 import java.io.Serializable;
 import java.util.Date;
 
-import juego.GestorSockets;
+import Sockets.ClientPOST;
 import piezas.Rey;
 
 public class Jugador implements Serializable{
 	
+	private int userId;
 	private int rank;
 	private String username;
 	private String passw;
@@ -16,69 +17,50 @@ public class Jugador implements Serializable{
 	private int tiempoRestante;
 	private Date initTime; 
 	private Rey rey;
-	private GestorSockets gestorSocket;
+	private int preferedTheme;
 	
-	
-	
-	public Jugador(GestorSockets gestorSocket) {
+
+
+	public Jugador(int _id, String username, String passw) {
 		super();
-		this.gestorSocket = gestorSocket;
-	}
-
-	
-	public GestorSockets getGestorSocket() {
-		return gestorSocket;
-	}
-
-	public void setGestorSocket() {
-		if(gestorSocket == null) {
-		this.gestorSocket = new GestorSockets();
-		}else {
-			System.out.println("Ya existe un gestor");
-		}
-	}
-
-
-
-	public Jugador(String username, String passw) {
-		super();
+		this.userId = _id;
 		this.username = username;
 		this.passw = passw;
 	}
 	
-	
-	
+
+
+
 	public Jugador(String string) {
 		this.username = string;
 	}
 
 
-	@Override
-	public String toString() {
-		return "Jugador [rank=" + rank + ", username=" + username + ", passw=" + passw + ", img_route=" + img_route
-				+ ", isWhite=" + isWhite + ", tiempoRestante=" + tiempoRestante + ", initTime=" + initTime + ", rey="
-				+ rey + ", gestorSocket=" + gestorSocket + "]";
+	public int getUserId() {
+		return userId;
 	}
 
 
-	public Boolean getIsWhite() {
-		return isWhite;
-	}
-
-	public void user1(Boolean isWhite) {
-		this.isWhite = isWhite;
+	public int getTiempoRestante() {
+		return tiempoRestante;
 	}
 
 
 
-	public Boolean checkPassword(String passwd) {
-		return this.passw.equals(passwd);
+	public void setTiempoRestante(int tiempoRestante) {
+		this.tiempoRestante = tiempoRestante;
 	}
 
 
 
-	public String getNombre() {
-		return username;
+	public Date getInitTime() {
+		return initTime;
+	}
+
+
+
+	public void setInitTime(Date initTime) {
+		this.initTime = initTime;
 	}
 
 
@@ -95,77 +77,29 @@ public class Jugador implements Serializable{
 
 
 
-	public Date getInitTime() {
-		return initTime;
-	}
-
-
-
-	public void setInitTime(Date now) {
-		this.initTime = now;
-	}
-
-
-
-	public void setTiempoRestante(int tiempoRestante) {
-		this.tiempoRestante = tiempoRestante;
-	}
-
-
-
-	public int getTiempoRestante() {
-		return tiempoRestante;
-	}
-
-
-	public int getRank() {
-		return rank;
-	}
-
-
-	public void setRank(int rank) {
-		this.rank = rank;
-	}
-
-
-	public String getUsername() {
-		return username;
-	}
-
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
-	public String getPassw() {
-		return passw;
-	}
-
-
-	public void setPassw(String passw) {
-		this.passw = passw;
-	}
-
-
-	public String getImg_route() {
-		return img_route;
-	}
-
-
-	public void setImg_route(String img_route) {
-		this.img_route = img_route;
-	}
-
-
-	public void setGestorSocket(GestorSockets gestorSocket) {
-		this.gestorSocket = gestorSocket;
-	}
-	
 	public void setIsWhite(Boolean isWhite) {
 		this.isWhite = isWhite;
 	}
-	
+
+
+
+	public Boolean getIsWhite() {
+		return isWhite;
+	}
+
+
+	public Boolean checkPassword(String passwd) {
+		return this.passw.equals(passwd);
+	}
+
+
+
+	public String getNombre() {
+		return this.username;
+	}
+
+
+
 	
 	
 

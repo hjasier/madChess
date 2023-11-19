@@ -23,6 +23,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -44,6 +45,7 @@ import componentes.MButton;
 import componentes.MScrollPane;
 import componentes.userInfo;
 import juego.Configuracion;
+import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.*;
@@ -212,25 +214,6 @@ public class Juego extends JPanel {
 
 
 	    postMsgBtn = new MButton("Enviar");
-
-        // Para enviar el mensaje al presionar Enter
-        textfieldChat.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    enviarMensaje(); //El metodo esta al final
-                }
-            }
-        });
-        
-        
-        postMsgBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enviarMensaje();
-            }
-        });
-
 	    
 	    panelChat.add(labelChat, BorderLayout.NORTH);
 	    panelChat.add(scrollChat, BorderLayout.CENTER);
@@ -364,20 +347,33 @@ public class Juego extends JPanel {
 		});
 
     
+     // Envia el mensaje al presionar Enter
+        textfieldChat.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    enviarMensaje();
+                }
+            }
+        });
         
+        
+        postMsgBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enviarMensaje();
+            }
+        });
         
         
     }
 	
-	private void enviarMensaje() { //Si se manda un mensaje sin poner texto, se pone el texto en rojo y luego blanco de nuevo, a parte del mensaje de aviso
-        String texto = textfieldChat.getText();
-        String usuario = "user1";
-
+	private void enviarMensaje() { 
+        String texto = textfieldChat.getText();        
         if (texto.equals("")) {
             areaChat.setForeground(Color.RED);
             areaChat.append("Introduce un texto válido\n");
 
-            // Restaura el color original (blanco) después de 2 segundos
             int tiempoEspera = 2000; // 2 segundos
             new Timer(tiempoEspera, new ActionListener() {
                 @Override
@@ -385,13 +381,31 @@ public class Juego extends JPanel {
                     areaChat.setForeground(Color.WHITE);
                 }
             }).start();
-        } else {
-            areaChat.append("<"+usuario+"> "+ " "+ texto + "\n");
+            return;
+        } 
+        
+        else {
+            areaChat.append("<"+Session.getCurrentUser().getNombre()+"> "+ " "+ texto + "\n");
+            postMsg(texto);
         }
+        
         textfieldChat.setText("");
         textfieldUsuario.setText("");
     }
 	
+	
+	
+	
+	
+	private void postMsg(String texto) {
+		try {
+			Session.getCtsConnection().postChatMsg(texto);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 	public Tablero getTablero() {
 		return tablero;
 	}
@@ -408,13 +422,14 @@ public class Juego extends JPanel {
     }
 
 	public void setInterfaz(String modoDeJuego) {
+		/*
+		 * FIXME: Cuando limpiemos el código estaria guay que directamente haya un mapa con ejemplo modo local --> chat:false,nsq:true... 
+		 * y esta función solo setea los valores a uno de ese mapa en vez de eliminarlo una vez ya cargado...
+		 */
 		if (modoDeJuego=="local") {
 			panelControles.remove(panelChat);
 			panelControles.setLayout(new GridLayout(1,1));
-			/*
-			 * FIXME: Cuando limpiemos el código estaria guay que directamente haya un mapa con ejemplo modo 0 --> chat:false,nsq:true... 
-			 * y esta función solo setea los valores a uno de ese mapa en vez de eliminarlo una vez ya cargado...
-			 */
+			
 		}
 		
 	}

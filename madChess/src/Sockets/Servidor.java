@@ -3,14 +3,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import juego.DatosPartida;
 import ventanas.ConfPOnline;
 
 public class Servidor {
     private ServerSocket serverSocket;
     private List<ClienteHandler> clientes = new ArrayList<ClienteHandler>();
-    
+    private HashMap<String, DatosPartida> partidas = new HashMap<String, DatosPartida>();
     
     private int PUERTO = 4444;
     private ConfPOnline panelConfOnline;
@@ -41,7 +43,7 @@ public class Servidor {
                 
                 
                 
-                ClienteHandler clienteHandler = new ClienteHandler(clienteSocket, clientes);
+                ClienteHandler clienteHandler = new ClienteHandler(clienteSocket,partidas, clientes);
                 
 
                 

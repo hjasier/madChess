@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
@@ -87,10 +88,18 @@ public class VentanaPrincipal extends JFrame{
             public void actionPerformed(ActionEvent e) {
             	
             	if (Session.getCurrentUser()!=null) {
+            		
+            		startServerCnx();
                 	curDatosPartida = new DatosPartida("online");
                 	panelConfOnline.setDatosPartida(curDatosPartida);
                 	panelConfOnline.setUser1(Session.getCurrentUser());
                     cardLayout.show(panelPrincipal, "CONFONLINE");
+                    try {
+						Session.getCtsConnection().setGameSettings(curDatosPartida);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
             	}
             	else {
             		cardLayout.show(panelPrincipal, "LOGIN");
@@ -100,16 +109,16 @@ public class VentanaPrincipal extends JFrame{
                 
                 
                 
-                if (panelConfOnline.getServer()==null) {
-                	Thread server = new Thread(new Runnable() {@Override
-                	public void run() {
-                		panelConfOnline.setServer(new Servidor(null));
-                		
-                	}
-					});
-                	server.start();
-                	
-                }
+//                if (panelConfOnline.getServer()==null) {
+//                	Thread server = new Thread(new Runnable() {@Override
+//                	public void run() {
+//                		panelConfOnline.setServer(new Servidor(null));
+//                		
+//                	}
+//					});
+//                	server.start();
+//                	
+//                }
                
                 
             }
@@ -119,6 +128,14 @@ public class VentanaPrincipal extends JFrame{
 
             public void actionPerformed(ActionEvent e) {
                 
+            	startServerCnx();
+            	try {
+					Session.getCtsConnection().joinGame("CODIGODELAPARTIDA");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            	
                 cardLayout.show(panelPrincipal, "CONFONLINE");
                 
                 
@@ -269,6 +286,14 @@ public class VentanaPrincipal extends JFrame{
         
 	}
 
+	protected void startServerCnx() {
+		try {
+			Session.startServerCnx();
+		} catch (ClassNotFoundException | IOException e1) {
+			System.out.println("Error al conectarse con el server");
+		}
+	}
+
 	public void loginReturn(String redirect,Jugador logedUser) {
 		
 		
@@ -276,7 +301,14 @@ public class VentanaPrincipal extends JFrame{
 			panelConfOnline.setUser1(logedUser);
 		}
 		else if (redirect=="CONFLOCAL") {
-			panelConfLocal.setUser(logedUser);
+			if (!curDatosPartida.getJugadores().contains(logedUser)) {	
+				panelConfLocal.setUser(logedUser);
+			}
+			else {
+				alert("Ese usuario ya esta en la partida");
+				return;
+				
+			}
 		}
 		else if (redirect=="MENUINICIO") {
 			Session.setCurrentUser(logedUser);
@@ -284,6 +316,10 @@ public class VentanaPrincipal extends JFrame{
 		}
 		
 		cardLayout.show(panelPrincipal, redirect);
+	}
+
+	private void alert(String string) {
+		JOptionPane.showMessageDialog(null, string, "Info", JOptionPane.ERROR_MESSAGE);
 	}
 	
 

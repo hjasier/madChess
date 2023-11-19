@@ -441,11 +441,7 @@ public class LogicaPartida {
 		String extra = (piezaComida==null) ? " ":" 💀";
 		printMovimiento("<"+curPlayer.getNombre()+"> "+prevCasilla.getPos()+" ⏩ "+curCasilla.getPos()+extra);
 		
-		if (datosPartida.modoDeJuego == "online") {
-			
-			curPlayer.getGestorSocket().postMoverPieza(movimiento);
-			
-		}
+
 
 		
 	}

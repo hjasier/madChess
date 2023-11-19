@@ -4,10 +4,12 @@ import java.io.Serializable;
 
 public class Movimiento implements Serializable{
 	
+	protected Jugador movJugador;
 	protected Casilla casillaSalida;
 	protected Casilla casillaLlegada;
 	protected Pieza pieza;
 	protected Pieza piezaComida;
+	protected String infoExtraMovimiento;
 	
 	public Movimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida, Pieza piezaMovida) {
 		this.casillaSalida = prevCasilla;

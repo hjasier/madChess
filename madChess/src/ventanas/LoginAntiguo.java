@@ -195,7 +195,7 @@ public class LoginAntiguo extends JPanel {
 				
 				if (!username.equals("")&&!passw.equals(""));
 				
-				users.put(username, new Jugador(username,passw)); // si ya hay un user lo sobreescribe pero nos da igual pk todo esto es temp
+				users.put(username, new Jugador(23,username,passw)); // si ya hay un user lo sobreescribe pero nos da igual pk todo esto es temp
 				guardarUsuarios("users.dat");
 				
 			}

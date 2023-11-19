@@ -1,20 +1,23 @@
 package juego;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+import Sockets.ClienteHandler;
 import objetos.Jugador;
+import objetos.Movimiento;
 
-public class DatosPartida {
+public class DatosPartida implements Serializable{
 
 	protected String modoDeJuego;
 	protected Date fecha;
 	protected String gameId;
 	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
-	
-	
-	
+	protected ArrayList<Movimiento> movimientos;
+	protected String tipoPartida;
+	protected ArrayList<ClienteHandler> clientes; 
 	
 	
 	
@@ -27,6 +30,21 @@ public class DatosPartida {
 	}
 	
 	
+	
+	public ArrayList<ClienteHandler> getClientes() {
+		return clientes;
+	}
+
+
+	public void setClientes(ArrayList<ClienteHandler> clientes) {
+		this.clientes = clientes;
+	}
+
+
+	public void setModoDeJuego(String modoDeJuego) {
+		this.modoDeJuego = modoDeJuego;
+	}
+	
 	public String getModoDeJuego() {
 		return modoDeJuego;
 	}
@@ -38,8 +56,23 @@ public class DatosPartida {
 
 
 	private void setFecha() {
-		this.fecha = new Date(); 
+		if (this.fecha==null) {
+			this.fecha = new Date(); 
+		}
+		
 	}
+
+	
+	public String getTipoPartida() {
+		return tipoPartida;
+	}
+
+
+
+	public void setTipoPartida(String tipoPartida) {
+		this.tipoPartida = tipoPartida;
+	}
+
 
 
 	public ArrayList<Jugador> getJugadores() {
@@ -52,6 +85,7 @@ public class DatosPartida {
 	
 	
     private void setGameId() {
+    	if (this.gameId!=null) {return;}
         StringBuilder gameID = new StringBuilder();
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
