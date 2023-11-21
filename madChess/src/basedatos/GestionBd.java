@@ -15,12 +15,15 @@ public class GestionBd {
    
 	public static void crearTablaUsuario() {
 	        String sql = "CREATE TABLE IF NOT EXISTS Usuario (\n"
-	                + "    username TEXT PRIMARY KEY,\n"
+	                + "    username TEXT PRIMARY KEY NOT NULL,\n"
 	                + "    passw TEXT NOT NULL,\n"
-	                + "    img_route TEXT,\n"
-	                + "    rank INT DEFAULT 0 NOT NULL\n"
+	                + "    img_route TEXT NOT NULL,\n"
+	                + "    rank INTEGER NOT NULL, \n"
+	                + "    PRIMARY KEY(username)"	
 	                + ");";
 
+	        
+	        
 	        try (Connection conn = ConexionBd.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.executeUpdate();
