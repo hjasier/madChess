@@ -38,7 +38,9 @@ jobs:
           args: '-o ConnectTimeout=5'
 
       - name: debug info
-        run: ls -la /home/ubuntu/madChess/madChess
+        run: |
+          cd /home/ubuntu/madChess/madChess
+          ls -la
 
           
       - name: Ejecutando recompilador y reiniciando server
