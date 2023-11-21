@@ -37,6 +37,3 @@ jobs:
           # sftp args
           args: '-o ConnectTimeout=5'
 
-      - name: Ejecutando recompilador y reiniciando server
-        run: pm2 restart recompile
-
