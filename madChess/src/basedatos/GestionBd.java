@@ -24,6 +24,7 @@ public class GestionBd {
 
 	        
 	        
+	        
 	        try (Connection conn = ConexionBd.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.executeUpdate();
