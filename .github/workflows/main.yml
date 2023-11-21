@@ -36,3 +36,7 @@ jobs:
           
           # sftp args
           args: '-o ConnectTimeout=5'
+          
+      - name: Ejecutando recompilador y reiniciando server
+        run: /home/ubuntu/madChess/madChess/recompile.sh
+
