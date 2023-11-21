@@ -32,7 +32,7 @@ public class GestionBd {
 	 public static void insertarUsuario(String username, String passw, String img_route, int rank) {
 		    // Verificar si el usuario ya existe antes de insertar
 		    if (!existeUsuario(username)) {
-		        String sql = "INSERT INTO Usuario(username, passw, ) VALUES(?,?)";
+		        String sql = "INSERT INTO Usuario(username, passw, img_route , rank ) VALUES(?,?,?,?)";
 
 		        try (Connection conn = ConexionBd.obtenerConexion();
 		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -73,7 +73,7 @@ public class GestionBd {
 	 
 	 public static void modificarUsuarios(String username, String passw, String img_route, int rank) {
 		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , passw = ? when username = ?";
+			 String sql = "UPDATE Usuario SET username = ? , passw = ? WHERE username = ?";
 			 
 			 try (Connection conn = ConexionBd.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
