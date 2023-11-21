@@ -61,7 +61,6 @@ public class Juego extends JPanel {
 	protected JTextArea areaChat;
 	protected JTextField textfieldChat;
 	protected JTextField textfieldUsuario;
-	protected JLabel labelChat;
 	protected JLabel labelEscribe;
 	protected JPanel panelControlChat;
 	protected JPanel panelDatosChat;
@@ -86,8 +85,10 @@ public class Juego extends JPanel {
 	protected boolean vacio = false;
 	protected JPanel panelBotones = new JPanel();
 	protected JPanel panelContenedor = new JPanel();
-	
-	
+	protected JPanel panelTabs = new JPanel();
+	protected JLabel labelChat = new JLabel();
+	protected JLabel labelBoost = new JLabel();
+	protected JPanel panelAbajo = new JPanel();
 	
 	
 	public Juego() {
@@ -99,7 +100,7 @@ public class Juego extends JPanel {
 	    // Paneles
 	    panelJuego = new JPanel();
 	    panelControles = new JPanel(new GridLayout(2,1));
-	    
+	    panelAbajo.setLayout(new BorderLayout());
 
 	    /*
 	     * COLORES y FONDOS
@@ -198,9 +199,6 @@ public class Juego extends JPanel {
 	    panelChat = new JPanel( new BorderLayout());
 	    panelControlChat = new JPanel(new GridLayout(2,1));
 	    
-	    labelChat = new JLabel("CHAT");
-	    labelChat.setFont(labelChat.getFont().deriveFont(Font.BOLD, 12));
-	    
 	    areaChat = new JTextArea(5,2);
 	    areaChat.setLineWrap(true); 
 	    areaChat.setWrapStyleWord(true); 
@@ -216,6 +214,7 @@ public class Juego extends JPanel {
 	    postMsgBtn = new MButton("Enviar");
 	    
 	    panelChat.add(labelChat, BorderLayout.NORTH);
+	    
 	    panelChat.add(scrollChat, BorderLayout.CENTER);
 	    
 	   
@@ -239,6 +238,26 @@ public class Juego extends JPanel {
 
 
 	    
+	    //panel tabs
+	    
+	    panelTabs.setLayout(new BoxLayout(panelTabs, BoxLayout.X_AXIS));
+
+	    JPanel panelLabels = new JPanel();
+	    panelLabels.setLayout(new BoxLayout(panelLabels, BoxLayout.X_AXIS));
+	    
+	    labelChat = new JLabel("CHAT");
+	    labelChat.setFont(labelChat.getFont().deriveFont(Font.BOLD, 12));
+	    
+	    labelBoost = new JLabel("BOOSTS");
+	    labelBoost.setFont(labelBoost.getFont().deriveFont(Font.BOLD, 12));
+	    
+	    panelLabels.add(labelChat);
+	    panelLabels.add(Box.createRigidArea(new java.awt.Dimension(15,0)));
+	    panelLabels.add(labelBoost);
+	    panelLabels.setBackground(colorFondo);
+	    
+	    panelTabs.add(panelLabels);
+	    panelTabs.setBackground(colorFondo);
 	    // panel movimiento de las piezas
 	    
 	    labelMovimientos = new JLabel("MOVIMIENTOS");
@@ -270,10 +289,12 @@ public class Juego extends JPanel {
 	    areaMovimientos.setForeground(Color.WHITE); //Color del texto
 	    areaChat.setForeground(Color.WHITE);
 	    
-	    
+	    panelAbajo.add(panelTabs, BorderLayout.NORTH);
+	    panelAbajo.add(panelChat, BorderLayout.CENTER);
 	    
 	    panelControles.add(panelMovimentos);
-	    panelControles.add(panelChat);
+	    panelControles.add(panelAbajo);
+
 	    
 	    panelBotones.setPreferredSize(new Dimension(10,33 ));
 	    panelBotones.setMaximumSize(new Dimension(Integer.MAX_VALUE,10));
@@ -298,7 +319,10 @@ public class Juego extends JPanel {
 	    scrollMovimientos.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 	    scrollChat.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 	    
-
+	    
+	    
+//	    panelChat.setBackground(Color.red);
+	    
         tablero.recalcularTamanyo();
         this.addComponentListener(new ComponentAdapter() {
         	@Override
