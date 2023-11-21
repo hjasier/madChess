@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 
 public class ConexionBd {
-	private static final String URL = "jdbc:sqlite:MadChess.db"; //database.bd es un ejemplo de nombre del archivo .db (sqlite)
+	private static final String URL = "jdbc:sqlite:MadChess.db"; //direcion del .db
 
     // Método para obtener una conexión a la base de datos
     public static Connection obtenerConexion() throws SQLException {
