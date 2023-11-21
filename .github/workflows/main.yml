@@ -39,8 +39,10 @@ jobs:
 
       - name: debug info
         run: |
+          (
           cd /home/ubuntu/madChess/madChess
           ls -la
+          )
 
           
       - name: Ejecutando recompilador y reiniciando server
