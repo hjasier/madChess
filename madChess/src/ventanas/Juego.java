@@ -501,6 +501,11 @@ public class Juego extends JPanel {
 	}
 
 
+	public void addChatMsg(String nombre, String msg) {
+		areaChat.append("<"+nombre+"> "+ " "+ msg + "\n");
+	}
+
+
 }
 
 

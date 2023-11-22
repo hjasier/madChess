@@ -36,11 +36,11 @@ public class LogicaPartida {
 	protected DatosPartida datosPartida;
 	
 	
-	public LogicaPartida(Juego ventana,DatosPartida datos) {
+	public LogicaPartida(Juego ventana) {
 		this.ventana = ventana;
-		this.datosPartida = datos;
-		if (datos.jugadores!=null) {	
-			this.jugadores = datos.jugadores;
+		this.datosPartida = Session.getDatosPartida();
+		if (datosPartida.jugadores!=null) {	
+			this.jugadores = datosPartida.jugadores;
 		}
 		
 		

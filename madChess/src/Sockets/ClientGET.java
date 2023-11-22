@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import juego.DatosPartida;
 import juego.LogicaPartida;
 import juego.Session;
+import objetos.Jugador;
 
 public class ClientGET implements Runnable {
     private LogicaPartida partida;
@@ -22,14 +23,25 @@ public class ClientGET implements Runnable {
                 Object feedback = serverIn.readObject();
                 System.out.println("Recibido desde servidor --> " + feedback);
                 
+                if (!(feedback instanceof String)) {
+                	
+                }
+                else {
+                switch ((String) feedback) {
+                	
+                	case "updateConfData":
+                		Object datosPartida = serverIn.readObject();
+                        updatePartidaDatos(datosPartida);
+                        Session.setDatosPartida((DatosPartida) datosPartida);
+                	case "chatMsg":
+                		Jugador author = (Jugador) serverIn.readObject();
+                		String msg = (String) serverIn.readObject();
+                		
+                		Session.getVentana().getPanelJuego().addChatMsg(author.getNombre(),msg);
+                }
+                }
                 
-
                 
-                if (feedback.equals("updateConfData")) {
-                    Object datosPartida = serverIn.readObject();
-                    updatePartidaDatos(datosPartida);
-
-                } 
                 
                 
                 

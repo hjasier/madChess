@@ -39,8 +39,7 @@ public class VentanaPrincipal extends JFrame{
     ConfPOnline panelConfOnline =  new ConfPOnline(null);
     
     //no paneles
-    
-    DatosPartida curDatosPartida;
+
     
 	public VentanaPrincipal() {
 		
@@ -79,8 +78,7 @@ public class VentanaPrincipal extends JFrame{
         panelMenuInicio.partidaLocal.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-            	curDatosPartida = new DatosPartida("local");
-            	panelConfLocal.setDatosPartida(curDatosPartida);
+            	Session.setDatosPartida(new DatosPartida("local"));
                 cardLayout.show(panelPrincipal, "CONFLOCAL");
             }
         });
@@ -92,9 +90,9 @@ public class VentanaPrincipal extends JFrame{
             	if (Session.getCurrentUser()!=null) {
             		
             		startServerCnx();
-                	curDatosPartida = new DatosPartida("online");
+                	DatosPartida curDatosPartida = new DatosPartida("local");
                 	curDatosPartida.setJugador(Session.getCurrentUser());
-                	panelConfOnline.setDatosPartida(curDatosPartida);
+                	Session.setDatosPartida(curDatosPartida);
                     cardLayout.show(panelPrincipal, "CONFONLINE");
                     try {
 						Session.getCtsConnection().setGameSettings(curDatosPartida);
@@ -157,7 +155,7 @@ public class VentanaPrincipal extends JFrame{
 
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "JUEGO");
-                new LogicaPartida(panelJuego,curDatosPartida);
+                new LogicaPartida(panelJuego);
                 
             }
         });
@@ -196,7 +194,7 @@ public class VentanaPrincipal extends JFrame{
 
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(panelPrincipal, "JUEGO");
-                new LogicaPartida(panelJuego,curDatosPartida);
+                new LogicaPartida(panelJuego);
             }
         });
         panelConfLocal.volverBtn.addActionListener(new ActionListener() {
@@ -303,7 +301,7 @@ public class VentanaPrincipal extends JFrame{
 			panelConfOnline.setUser1(logedUser);
 		}
 		else if (redirect=="CONFLOCAL") {
-			if (!curDatosPartida.getJugadores().contains(logedUser)) {	
+			if (!Session.getDatosPartida().getJugadores().contains(logedUser)) {	
 				panelConfLocal.setUser(logedUser);
 			}
 			else {

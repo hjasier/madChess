@@ -35,7 +35,6 @@ public class ClientPOST {
 	public void postChatMsg(String msgText) throws IOException {
 		//Mensaje msg =  new Mensaje(Session.getCurrentUser().geti,);
 		serverOut.writeObject("chatMsg");
-		serverOut.writeObject(Session.getCurrentUser());
 		serverOut.writeObject(msgText);
 	}
 

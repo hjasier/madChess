@@ -14,6 +14,7 @@ public class Session {
     private static ClientPOST ctsConnection;
     private static ClientGET stcConnection;
     private static VentanaPrincipal ventana;
+    private static DatosPartida datosPartida;
     
     
     public static ClientPOST getCtsConnection() {
@@ -39,11 +40,17 @@ public class Session {
 	public static ClientGET getStcConnection() {
 		return stcConnection;
 	}
-
-
 	
     
-    public static void startServerCnx() throws ClassNotFoundException, IOException {
+    public static DatosPartida getDatosPartida() {
+		return datosPartida;
+	}
+
+	public static void setDatosPartida(DatosPartida datosPartida) {
+		Session.datosPartida = datosPartida;
+	}
+
+	public static void startServerCnx() throws ClassNotFoundException, IOException {
     	if (clientCnx==null) {
     		clientCnx = new ClientCnx();
     		ctsConnection = new ClientPOST(clientCnx.getServerOut());

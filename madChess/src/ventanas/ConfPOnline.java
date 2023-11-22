@@ -7,6 +7,7 @@ import Sockets.ClienteHandler;
 import Sockets.Servidor;
 import juego.Configuracion;
 import juego.DatosPartida;
+import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
@@ -28,7 +29,7 @@ public class ConfPOnline extends JPanel {
     protected RButton volverBtn = new RButton("Volver");
 
     
-	private DatosPartida datosPartida;
+	private DatosPartida datosPartida; 
 
     
 

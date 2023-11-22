@@ -64,42 +64,54 @@ public class ClienteHandler implements Runnable {
     				checkDatosPartida(objRecibido); //setea la partida en el servidor
     			
     			}
-    			
-    			
-    			else if (objRecibido.equals("postUser")) { //logea al user en el handler
-    					Object user = input.readObject();
-    					this.user = (Jugador) user; 
-    					repost = false;
+    			else {
+    				switch ((String) objRecibido) {
+	    			    case "postUser":
+	    			        Object user = input.readObject();
+	    			        this.user = (Jugador) user;
+	    			        repost = false;
+	    			        break;
+	    			   
+	    			    case "joinGame":
+	    			    	Object gameIDFuturo = input.readObject();
+	    					// de momento siempre va a joinear al jugador a la primera partida en partidas pk aún no hay ventana para elegir a cual 
+	    					
+	    				    String gameID = partidas.entrySet().iterator().next().getKey();
+	    				    
+	    					curPartida = partidas.get(gameID);
+	    					curPartida.setJugador(this.user);
+	    					clientes.get(curPartida.getGameId()).add(this);
+	    					
+	    					
+	    					//Envia la info a actualizar
+	    					output.writeObject("updateConfData"); 
+	    					output.writeObject(curPartida); 
+	    					
+	    					System.out.println("ENVIANDO USER JOIN A ");
+	    					System.out.println(clientes.get(curPartida.getGameId()));
+	    					//Enviamos la info al resto de jugadores tmb
+	    					reenviar2Datos("updateConfData",curPartida);
+	    					repost = false;
+	    					
+	    			    case "chatMsg":
+	    			    	Object msg = input.readObject();
+	    			    	reenviar3Datos("chatMsg",this.user,msg);
+	    			    	repost = false;
+	    			    	
+    				}
+    				
+    				
     			}
+    			
+
     			
     			
     				
-    			else if (objRecibido.equals("joinGame")) { //cuando alguien se conecta a la partida
-    					Object gameIDFuturo = input.readObject();
-    					// de momento siempre va a joinear al jugador a la primera partida en partidas pk aún no hay ventana para elegir a cual 
-    					
-    				    String gameID = partidas.entrySet().iterator().next().getKey();
-    				    
-    					curPartida = partidas.get(gameID);
-    					curPartida.setJugador(user);
-    					clientes.get(curPartida.getGameId()).add(this);
-    					
-    					
-    					//Envia la info a actualizar
-    					output.writeObject("updateConfData"); 
-    					output.writeObject(curPartida); 
-    					
-    					System.out.println("ENVIANDO USER JOIN A ");
-    					System.out.println(clientes.get(curPartida.getGameId()));
-    					//Enviamos la info al resto de jugadores tmb
-    					updateConfData();
-    					repost = false;
-    			}
-    			
+   
     			
     			
     			if (repost) {
-    				reenviarObjeto(objRecibido);	// Envía el mensaje al resto de clientes
+    				reenviarObjetoRaw(objRecibido);	// Envía el mensaje al resto de clientes
     			}
     			
     			
@@ -115,19 +127,33 @@ public class ClienteHandler implements Runnable {
 	
 	
 	
-	
-	
-	
-	private void updateConfData() {
+	private void reenviar2Datos(String preDato,Object dato) {
     	if (curPartida==null) {return;}
     	for (ClienteHandler cliente: clientes.get(curPartida.getGameId())) {
 			ObjectOutputStream clientOutput = cliente.getOutput();
 			if (clientOutput!=output) {  // Al cliente actual no, solo al resto
 				try {
-					System.out.println("Re-enviando objeto a :"+cliente.getUser().getNombre());
-					clientOutput.writeObject("updateConfData");
-					clientOutput.writeObject(curPartida);
+					clientOutput.writeObject(preDato);
+					clientOutput.writeObject(dato);
 					
+					
+				} catch (Exception e) {
+		    		e.printStackTrace();
+					System.out.println("Error al enviar de server a cliente");
+		    		
+				}
+			}
+		}
+	}
+	private void reenviar3Datos(String preDato,Object dato,Object dato2) {
+    	if (curPartida==null) {return;}
+    	for (ClienteHandler cliente: clientes.get(curPartida.getGameId())) {
+			ObjectOutputStream clientOutput = cliente.getOutput();
+			if (clientOutput!=output) {  // Al cliente actual no, solo al resto
+				try {
+					clientOutput.writeObject(preDato);
+					clientOutput.writeObject(dato);
+					clientOutput.writeObject(dato2);
 					
 				} catch (Exception e) {
 		    		e.printStackTrace();
@@ -140,7 +166,7 @@ public class ClienteHandler implements Runnable {
 	
 	
 
-    private void reenviarObjeto(Object objRecibido) {
+    private void reenviarObjetoRaw(Object objRecibido) {
     	if (curPartida==null) {return;}
     	for (ClienteHandler cliente: clientes.get(curPartida.getGameId())) {
 			ObjectOutputStream clientOutput = cliente.getOutput();
