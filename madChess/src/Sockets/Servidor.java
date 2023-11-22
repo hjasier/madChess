@@ -14,7 +14,7 @@ public class Servidor {
     private List<ClienteHandler> clientes = new ArrayList<ClienteHandler>();
     private HashMap<String, DatosPartida> partidas = new HashMap<String, DatosPartida>();
     
-    private int PUERTO = 4444;
+    private int PUERTO = 8005;
     private ConfPOnline panelConfOnline;
     
     public Servidor() {
