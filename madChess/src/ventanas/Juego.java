@@ -1,6 +1,7 @@
 package ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -89,7 +90,9 @@ public class Juego extends JPanel {
 	protected JLabel labelChat = new JLabel();
 	protected JLabel labelBoost = new JLabel();
 	protected JPanel panelAbajo = new JPanel();
-	
+	protected JPanel panelCardL = new JPanel();
+	protected JPanel panelBoost = new JPanel();
+	CardLayout cardLayout = new CardLayout();
 	
 	public Juego() {
 
@@ -242,7 +245,7 @@ public class Juego extends JPanel {
 	    
 	    panelTabs.setLayout(new BoxLayout(panelTabs, BoxLayout.X_AXIS));
 
-	    JPanel panelLabels = new JPanel();
+	    JPanel panelLabels = new JPanel();	
 	    panelLabels.setLayout(new BoxLayout(panelLabels, BoxLayout.X_AXIS));
 	    
 	    labelChat = new JLabel("CHAT");
@@ -289,8 +292,14 @@ public class Juego extends JPanel {
 	    areaMovimientos.setForeground(Color.WHITE); //Color del texto
 	    areaChat.setForeground(Color.WHITE);
 	    
+	    panelCardL.setLayout(cardLayout);
+	    panelCardL.add(panelChat, "CHAT");
+	    panelCardL.add(panelBoost, "BOOST");
+	    
 	    panelAbajo.add(panelTabs, BorderLayout.NORTH);
-	    panelAbajo.add(panelChat, BorderLayout.CENTER);
+	    panelAbajo.add(panelCardL, BorderLayout.CENTER);
+	    
+	    
 	    
 	    panelControles.add(panelMovimentos);
 	    panelControles.add(panelAbajo);
@@ -390,7 +399,27 @@ public class Juego extends JPanel {
         });
         
         
+        labelChat.addMouseListener(new MouseAdapter() {
+
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		
+        		cardLayout.show(panelCardL,"CHAT");
+        	}
+        });
+        
+        labelBoost.addMouseListener(new MouseAdapter() {
+
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		
+        		cardLayout.show(panelCardL,"BOOST");
+        	}
+        });
+        
+        
     }
+	
 	
 	private void enviarMensaje() { 
         String texto = textfieldChat.getText();        

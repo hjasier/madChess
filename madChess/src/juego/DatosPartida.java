@@ -12,7 +12,8 @@ import objetos.Movimiento;
 public class DatosPartida implements Serializable{
 
 	protected String modoDeJuego;
-	protected Date fecha;
+	protected Date fechaIni;
+	protected Date fechaFin;
 	protected String gameId;
 	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
 	protected ArrayList<Movimiento> movimientos;
@@ -24,7 +25,8 @@ public class DatosPartida implements Serializable{
 	public DatosPartida(String modoDeJuego) {
 		super();
 		this.modoDeJuego = modoDeJuego;
-		setFecha();
+		setFechaIni();
+		setFechaFin();
 		setGameId();
 	}
 	
@@ -44,9 +46,15 @@ public class DatosPartida implements Serializable{
 	}
 
 
-	private void setFecha() {
-		if (this.fecha==null) {
-			this.fecha = new Date(); 
+	private void setFechaIni() {
+		if (this.fechaIni==null) {
+			this.fechaIni = new Date(); 
+		}
+		
+	}
+	private void setFechaFin() {
+		if (this.fechaFin==null) {
+			this.fechaFin = new Date(); 
 		}
 		
 	}
