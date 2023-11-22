@@ -86,6 +86,8 @@ public class VentanaBd extends JFrame {
         GestionBd.insertarUsuario(username, passw, img, rank);
         tfUsername.setText("");
         tfPassw.setText("");
+        tfImg.setText("");
+        tfRank.setText("");
     }
 
     private void mostrarUsuariosDesdeVentana() {
@@ -109,6 +111,8 @@ public class VentanaBd extends JFrame {
          GestionBd.modificarUsuarios(username, passw, img, rank);
         tfUsername.setText("");
         tfPassw.setText("");
+        tfImg.setText("");
+        tfRank.setText("");
     }
     
     
@@ -121,7 +125,8 @@ public class VentanaBd extends JFrame {
                 
                 GestionBd.crearTablaUsuario();
 
-                GestionBd.insertarUsuario("admin", "admin","C:/ruta", 39);
+                GestionBd.eliminarUsuarios("admin");
+                GestionBd.insertarUsuario("admin", "root","C:/ruta", 39);
 
             }
         });

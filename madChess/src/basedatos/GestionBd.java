@@ -102,7 +102,8 @@ public class GestionBd {
 			 
 			 try (Connection conn = ConexionBd.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		            
+				 
+				 	pstmt.setString(1, username);
 		            pstmt.executeUpdate();
 		            System.out.println("Usuario eliminado correctamente.");
 		        } catch (Exception e) {
@@ -113,6 +114,8 @@ public class GestionBd {
 		 }
 	 }
 	 
+	 
+	 
 	 public static void eliminarPartida(String gameId) {
 		 if(existeUsuario(gameId)) {
 			 String sql = "DELETE FROM Partida WHERE gameId = ? ";
@@ -120,6 +123,7 @@ public class GestionBd {
 			 try (Connection conn = ConexionBd.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            
+				 pstmt.setString(1, gameId);
 		            pstmt.executeUpdate();
 		            System.out.println("Partida eliminada correctamente.");
 		        } catch (Exception e) {
