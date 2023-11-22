@@ -11,11 +11,11 @@ import ventanas.ConfPOnline;
 
 public class Servidor {
     private ServerSocket serverSocket;
-    private List<ClienteHandler> clientes = new ArrayList<ClienteHandler>();
+    private HashMap<String, ArrayList<ClienteHandler>> clientes = new HashMap<String, ArrayList<ClienteHandler>> ();
     private HashMap<String, DatosPartida> partidas = new HashMap<String, DatosPartida>();
     
     private int PUERTO = 8005;
-    private ConfPOnline panelConfOnline;
+
     
     public Servidor() {
         try {
@@ -25,12 +25,6 @@ public class Servidor {
             e.printStackTrace();
         }
     }
-
-    public Servidor(ConfPOnline panelConfOnline) {
-    	this();
-		this.panelConfOnline = panelConfOnline;
-		this.iniciar();
-	}
 
 	public void iniciar() {
     	System.out.println("Esperando jugadores");
@@ -46,8 +40,6 @@ public class Servidor {
                 ClienteHandler clienteHandler = new ClienteHandler(clienteSocket,partidas, clientes);
                 
 
-                
-                clientes.add(clienteHandler);
                 Thread clienteThread = new Thread(clienteHandler);
                 clienteThread.start();
                 
@@ -58,13 +50,6 @@ public class Servidor {
     }
     
     
-
-    private void actualizarConfigMenu(ClienteHandler cliente) {
-		if (panelConfOnline!=null) {
-			panelConfOnline.setUser2(cliente);
-		}
-		
-	}
 
 	public static void main(String[] args) {
         Servidor servidor = new Servidor();

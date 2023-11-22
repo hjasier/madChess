@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import Sockets.Servidor;
+import juego.Configuracion;
 import juego.DatosPartida;
 import juego.LogicaPartida;
 import juego.Session;
@@ -45,6 +46,7 @@ public class VentanaPrincipal extends JFrame{
 		
 		this.setSize(1000,800);
 		this.setLocationRelativeTo(null);
+		
 		
 		
 		panelPrincipal.setLayout(cardLayout);
@@ -91,8 +93,8 @@ public class VentanaPrincipal extends JFrame{
             		
             		startServerCnx();
                 	curDatosPartida = new DatosPartida("online");
+                	curDatosPartida.setJugador(Session.getCurrentUser());
                 	panelConfOnline.setDatosPartida(curDatosPartida);
-                	panelConfOnline.setUser1(Session.getCurrentUser());
                     cardLayout.show(panelPrincipal, "CONFONLINE");
                     try {
 						Session.getCtsConnection().setGameSettings(curDatosPartida);
@@ -171,7 +173,7 @@ public class VentanaPrincipal extends JFrame{
         
         
 
-        panelConfOnline.botonUser1.addActionListener(new ActionListener() {
+        panelConfOnline.user1Btn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -271,7 +273,7 @@ public class VentanaPrincipal extends JFrame{
         this.add(panelPrincipal);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-        
+        Session.setVentana(this);
         
         
         
@@ -281,7 +283,7 @@ public class VentanaPrincipal extends JFrame{
         
 
         
-        
+      
         
         
 	}
@@ -321,6 +323,28 @@ public class VentanaPrincipal extends JFrame{
 	private void alert(String string) {
 		JOptionPane.showMessageDialog(null, string, "Info", JOptionPane.ERROR_MESSAGE);
 	}
+
+	public Juego getPanelJuego() {
+		return panelJuego;
+	}
+
+	public Login getPanelLogin() {
+		return panelLogin;
+	}
+
+	public MenuInicio getPanelMenuInicio() {
+		return panelMenuInicio;
+	}
+
+	public ConfPLocal getPanelConfLocal() {
+		return panelConfLocal;
+	}
+
+	public ConfPOnline getPanelConfOnline() {
+		return panelConfOnline;
+	}
+	
+	
 	
 
 }

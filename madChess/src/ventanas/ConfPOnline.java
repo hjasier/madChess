@@ -15,9 +15,9 @@ import componentes.*;
 public class ConfPOnline extends JPanel {
     
     protected BButton botonIniciarPartida = new BButton("Iniciar Partida");
-    protected RButton botonUser1 = new RButton("Login");
-    protected MLabel labelUser2 = new MLabel("Esperando...");
-    protected BLabel labelCodigoValor= new BLabel("ZNSAD");
+    protected RButton user1Btn = new RButton("Login");
+    protected RButton user2Btn = new RButton("Esperando...");
+    protected BLabel labelCodigoValor= new BLabel("CÓDIGO");
     protected JPanel navBar;
     protected JPanel opciones = new JPanel();
     
@@ -26,28 +26,17 @@ public class ConfPOnline extends JPanel {
     
     protected JPanel opcionesenY = new JPanel();
     protected RButton volverBtn = new RButton("Volver");
-    
-    
-    private Jugador user1;
-    private Jugador user2;
-    private String idPartida;
+
     
 	private DatosPartida datosPartida;
-	private Servidor server;
-    
+
     
 
 
 	public ConfPOnline(Jugador user1) {
         
-    	if (user1!=null) {
-    		this.user1 = user1;
-    		JLabel botonUser1 = new JLabel("hjasier");
-    		
-    	}else {
-    		botonUser1.setMaximumSize(new Dimension(100, 25));
-    	}
-    	
+		user1Btn.setMaximumSize(new Dimension(100, 25));
+		user2Btn.setMaximumSize(new Dimension(100, 25));
     	
     	
         setLayout(new BorderLayout());
@@ -75,7 +64,7 @@ public class ConfPOnline extends JPanel {
         opcionesenY.setAlignmentX(Component.CENTER_ALIGNMENT);	
       		
       		
-
+        user2Btn.setEnabled(false);
 		
         
 		
@@ -139,7 +128,7 @@ public class ConfPOnline extends JPanel {
         
         thirdRowPanel.add(labelJugador1);
         thirdRowPanel.add(Box.createRigidArea(new Dimension(55, 0)));
-        thirdRowPanel.add(botonUser1);
+        thirdRowPanel.add(user1Btn);
         thirdRowPanel.add(labelNombre1);
         thirdRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
         //labelNombre1.setVisible(false);
@@ -155,7 +144,7 @@ public class ConfPOnline extends JPanel {
         fourthRowPanel.setLayout(new BoxLayout(fourthRowPanel, BoxLayout.X_AXIS));
         fourthRowPanel.add(labelJugador2);
         fourthRowPanel.add(Box.createRigidArea(new Dimension(55, 0)));
-        fourthRowPanel.add(labelUser2);
+        fourthRowPanel.add(user2Btn);
         fourthRowPanel.add(labelNombre2);
         fourthRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
         fourthRowPanel.setBackground(colorFondo);
@@ -204,31 +193,31 @@ public class ConfPOnline extends JPanel {
 
 
 	public void setUser1(Jugador user) {
-		this.user1 = user;
-		botonUser1.setText(user.getNombre());
-		botonUser1.setEnabled(false);
-		datosPartida.setJugador(user);
+		user1Btn.setText(user.getNombre());
+		user1Btn.setEnabled(false);
+	}
+	public void setUser2(Jugador user) {
+		user2Btn.setText(user.getNombre());
 	}
 	
-    public Servidor getServer() {
-		return server;
-	}
 
 
-	public void setServer(Servidor server) {
-		this.server = server;
-	}
 
 
-	public void setUser2(ClienteHandler cliente) {
-		this.user2 = cliente.getUser();
-		labelUser2.setText(user2.getNombre());
-		
-	}
+
 
 
 	public void setDatosPartida(DatosPartida curDatosPartida) {
 		this.datosPartida = curDatosPartida;
+		System.out.println(curDatosPartida.getJugadores());
+		
+		labelCodigoValor.setText(curDatosPartida.getGameId());
+		setUser1(curDatosPartida.getJugadores().get(0));
+		try {
+			setUser2(curDatosPartida.getJugadores().get(1));
+		} catch (Exception e) {}
+		
+		
 		
 	}
 

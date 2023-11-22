@@ -15,6 +15,7 @@ import java.util.Random;
 import objetos.Jugador;
 import componentes.*;
 import juego.Configuracion;
+import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 
@@ -45,6 +46,11 @@ public class Login extends JPanel {
 		this.setLayout(new BorderLayout());
 		
 		cargarUsuarios("users.dat");
+		
+		if (Configuracion.LOGIN_DEBUG) {
+			 Session.setCurrentUser(users.get("hjasier"));
+	      }
+		
 		
 		opciones = new JPanel();
 

@@ -6,13 +6,14 @@ import Sockets.ClientCnx;
 import Sockets.ClientGET;
 import Sockets.ClientPOST;
 import objetos.Jugador;
+import ventanas.VentanaPrincipal;
 
 public class Session {
     private static Jugador currentUser;
     private static ClientCnx clientCnx;
     private static ClientPOST ctsConnection;
     private static ClientGET stcConnection;
-    
+    private static VentanaPrincipal ventana;
     
     
     public static ClientPOST getCtsConnection() {
@@ -23,7 +24,15 @@ public class Session {
         currentUser = user;
     }
 
-    public static Jugador getCurrentUser() {
+    public static void setVentana(VentanaPrincipal ventana) {
+		Session.ventana = ventana;
+	}
+
+	public static VentanaPrincipal getVentana() {
+		return ventana;
+	}
+
+	public static Jugador getCurrentUser() {
         return currentUser;
     }
     
@@ -37,9 +46,10 @@ public class Session {
     public static void startServerCnx() throws ClassNotFoundException, IOException {
     	if (clientCnx==null) {
     		clientCnx = new ClientCnx();
-    		System.out.println(clientCnx.toString());
     		ctsConnection = new ClientPOST(clientCnx.getServerOut());
-    		stcConnection = new ClientGET(clientCnx.getServerIn());
+            Thread clientGetLoop = new Thread(new ClientGET(clientCnx.getServerIn()));
+            clientGetLoop.start();
+
     	}
     }
 
