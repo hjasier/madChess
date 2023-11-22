@@ -20,6 +20,8 @@ public class VentanaBd extends JFrame {
         // Crear componentes
         tfUsername = new JTextField(20);
         tfPassw = new JTextField(20);
+        tfImg = new JTextField(20);
+        tfRank = new JTextField();
         JButton btnInsertar = new JButton("Insertar Usuario");
         JButton btnMostrar = new JButton("Mostrar Usuarios");
         JButton btnEliminar = new JButton("Eliminar Usuario");
@@ -117,7 +119,7 @@ public class VentanaBd extends JFrame {
                 
                 GestionBd.crearTablaUsuario();
 
-                
+                GestionBd.insertarUsuario("admin", "admin","C:/ruta", 39);
 
             }
         });
