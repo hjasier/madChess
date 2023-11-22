@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 
 public class VentanaBd extends JFrame {
 
-    private JTextField tfUsername, tfPassw, tfImg, tfRank;
-
+    private JTextField tfUsername, tfImg, tfRank;
+    private JPasswordField tfPassw;
     public VentanaBd() {
         // Configuración básica de la ventana
         super("Ventana de Prueba BD");
@@ -19,9 +19,9 @@ public class VentanaBd extends JFrame {
 
         // Crear componentes
         tfUsername = new JTextField(20);
-        tfPassw = new JTextField(20);
+        tfPassw = new JPasswordField(20);
         tfImg = new JTextField(20);
-        tfRank = new JTextField();
+        tfRank = new JTextField(20);
         JButton btnInsertar = new JButton("Insertar Usuario");
         JButton btnMostrar = new JButton("Mostrar Usuarios");
         JButton btnEliminar = new JButton("Eliminar Usuario");
@@ -45,7 +45,7 @@ public class VentanaBd extends JFrame {
         panelBotones.add(btnEliminar);
         panelBotones.add(btnModificar);
         add(panelBotones);
-        
+        pack();
         // Configurar acciones para los botones
         btnInsertar.addActionListener(new ActionListener() {
             @Override
@@ -78,7 +78,8 @@ public class VentanaBd extends JFrame {
 
     private void insertarUsuarioDesdeVentana() {
         String username = tfUsername.getText();
-        String passw = tfPassw.getText();
+        char[] pass = tfPassw.getPassword();
+        String passw = "" + pass;
         String img = tfImg.getText();
         String strrank = tfRank.getText();
         int rank = Integer.parseInt(strrank);
@@ -100,7 +101,8 @@ public class VentanaBd extends JFrame {
 
     private void modificarUsuarioDesdeVentana() {
     	 String username = tfUsername.getText();
-         String passw = tfPassw.getText();
+         char[] pass = tfPassw.getPassword();
+         String passw = "" + pass;
          String img = tfImg.getText();
          String strrank = tfRank.getText();
          int rank = Integer.parseInt(strrank);
