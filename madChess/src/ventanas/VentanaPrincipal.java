@@ -93,6 +93,7 @@ public class VentanaPrincipal extends JFrame{
                 	DatosPartida curDatosPartida = new DatosPartida("local");
                 	curDatosPartida.setJugador(Session.getCurrentUser());
                 	Session.setDatosPartida(curDatosPartida);
+                	panelConfOnline.setDatosPartida(curDatosPartida);
                     cardLayout.show(panelPrincipal, "CONFONLINE");
                     try {
 						Session.getCtsConnection().setGameSettings(curDatosPartida);

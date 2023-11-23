@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.swing.*;
 
+import juego.Configuracion;
 import piezas.Alfil;
 import piezas.Caballo;
 import piezas.Reina;
@@ -42,8 +43,7 @@ public class Tablero extends JPanel{
 	private JButton promCaballo = new JButton("Caballo");
 	private JButton promTorre = new JButton("Torre");
 	private Jugador nowPlaying;
-	
-	public Boolean DEBUG_MODE;
+
 	
     public Tablero() { 
 
@@ -145,7 +145,7 @@ public class Tablero extends JPanel{
 		
 		if (prevCasilla.getPieza()!=null && !dragging ) {
 			
-			if ((nowPlaying==null || (nowPlaying.getIsWhite()!=prevCasilla.getPieza().getIsWhite()))&&!DEBUG_MODE) {return;}
+			if ((nowPlaying==null || (nowPlaying.getIsWhite()!=prevCasilla.getPieza().getIsWhite()))&&!Configuracion.DEBUG_MODE) {return;}
 			
 			
 			dragging = true;

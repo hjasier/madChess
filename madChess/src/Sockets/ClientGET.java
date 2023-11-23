@@ -2,11 +2,15 @@ package Sockets;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 import juego.DatosPartida;
 import juego.LogicaPartida;
 import juego.Session;
+import objetos.Casilla;
 import objetos.Jugador;
+import objetos.Movimiento;
+
 
 public class ClientGET implements Runnable {
     private LogicaPartida partida;
@@ -38,6 +42,15 @@ public class ClientGET implements Runnable {
                 		String msg = (String) serverIn.readObject();
                 		
                 		Session.getVentana().getPanelJuego().addChatMsg(author.getNombre(),msg);
+                		
+                	case "nuevoMov":
+                		Movimiento movimiento = (Movimiento) serverIn.readObject();
+                		//actualizarTablero(); igual al final pasamos el tablero nuevo en vez de la pieza ns
+                		moverPiza(movimiento);
+                		
+                	case "updateCasillas":
+                		ArrayList<Casilla> casillas = (ArrayList<Casilla>) serverIn.readObject();
+                		Session.getPartida().setCasillas(casillas);
                 }
                 }
                 
@@ -55,11 +68,17 @@ public class ClientGET implements Runnable {
             } catch (IOException | ClassNotFoundException e) {
                 // Manejar la excepción apropiadamente
                 e.printStackTrace();
+                break; //Si se rompe la conexión no se queda infinitamente intentando conectarse
             }
         }
     }
 
-    private void updatePartidaDatos(Object datosPartida) {
+    private void moverPiza(Movimiento movimiento) {
+		//Session.getPartida().moverPieza(null,null);
+		
+	}
+
+	private void updatePartidaDatos(Object datosPartida) {
         Session.getVentana().getPanelConfOnline().setDatosPartida((DatosPartida) datosPartida);
     }
 

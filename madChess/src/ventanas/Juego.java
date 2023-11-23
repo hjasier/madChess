@@ -92,6 +92,7 @@ public class Juego extends JPanel {
 	protected JPanel panelAbajo = new JPanel();
 	protected JPanel panelCardL = new JPanel();
 	protected JPanel panelBoost = new JPanel();
+	protected JPanel panelLabels;
 	CardLayout cardLayout = new CardLayout();
 	
 	public Juego() {
@@ -245,7 +246,7 @@ public class Juego extends JPanel {
 	    
 	    panelTabs.setLayout(new BoxLayout(panelTabs, BoxLayout.X_AXIS));
 
-	    JPanel panelLabels = new JPanel();	
+	    panelLabels = new JPanel();	
 	    panelLabels.setLayout(new BoxLayout(panelLabels, BoxLayout.X_AXIS));
 	    
 	    labelChat = new JLabel("CHAT");
@@ -470,20 +471,26 @@ public class Juego extends JPanel {
 	}
 
 	
-    public void setNewMovimiento(String movimiento) {
+    public void printMovimiento(String movimiento) {
     	areaMovimientos.append(movimiento+ "\n");
     }
 
-	public void setInterfaz(String modoDeJuego) {
+	public void setInterfaz(String modoDeJuego, String tipoPartida) {
 		/*
 		 * FIXME: Cuando limpiemos el código estaria guay que directamente haya un mapa con ejemplo modo local --> chat:false,nsq:true... 
 		 * y esta función solo setea los valores a uno de ese mapa en vez de eliminarlo una vez ya cargado...
 		 */
 		if (modoDeJuego=="local") {
-			panelControles.remove(panelChat);
-			panelControles.setLayout(new GridLayout(1,1));
+			//panelControles.remove(panelAbajo);
+			//panelControles.setLayout(new GridLayout(1,1));
+			cardLayout.show(panelCardL,"BOOST");
+			panelLabels.remove(labelChat);
 			
 		}
+		
+
+		
+		
 		
 	}
 
@@ -503,6 +510,15 @@ public class Juego extends JPanel {
 
 	public void addChatMsg(String nombre, String msg) {
 		areaChat.append("<"+nombre+"> "+ " "+ msg + "\n");
+	}
+	
+	public void initWindow() {
+		if (Configuracion.DEBUG_MODE) {
+        	printMovimiento("--------------------");
+        	printMovimiento("MODO DEBUG: ACTIVADO");
+        	printMovimiento("--------------------");
+        }
+        setInterfaz(Session.getDatosPartida().getModoDeJuego(),Session.getDatosPartida().getTipoPartida());
 	}
 
 
