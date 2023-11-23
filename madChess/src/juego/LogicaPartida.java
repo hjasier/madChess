@@ -88,10 +88,7 @@ public class LogicaPartida {
         
         
         
-        /*
-         * Carga temporal de jugadores
-         */
-        
+
         initPlayers();
         
         ventana.initWindow();
@@ -224,8 +221,14 @@ public class LogicaPartida {
 	}
 
 
-	private void moverPieza(Casilla casillaSalida,Casilla casillaLlegada) {
+	public void moverPiezaOnline(Casilla casillaSalida,Casilla casillaLlegada) {
 		
+		System.out.println(casillaSalida.toString());
+		casillaSalida = getCasilla(casillaSalida.getFila(), casillaSalida.getColumna());
+		casillaLlegada = getCasilla(casillaLlegada.getFila(), casillaLlegada.getColumna());
+		
+		casillaLlegada.setPieza(casillaSalida.getPieza());
+		casillaSalida.setPieza(null);		
 	}
 
 	private boolean checkJaqueMoveValid(Casilla prevCasilla,Casilla newCasilla) {
@@ -325,7 +328,15 @@ public class LogicaPartida {
 		}
 		return null;
 	}
-
+	
+    public Casilla getCasilla(int fila, char columna) {
+        for (Casilla casilla : casillas) {
+            if (casilla.getFila() == fila && casilla.getColumna() == columna) {
+                return casilla;
+            }
+        }
+        return null;
+    }
 
 
 
@@ -524,7 +535,13 @@ public class LogicaPartida {
 		casillas.get(62).setPieza(new Caballo(true));
 		casillas.get(63).setPieza(new Torre(true));
         
+		//System.out.println(Session.getDatosPartida().getModoDeJuego());
+		//System.out.println(Session.getDatosPartida().getJugadores().get(0));
+		
+		
+		
 		if (Session.getDatosPartida().getModoDeJuego().equals("online")&&Session.getDatosPartida().getJugadores().get(0).equals(Session.getCurrentUser())) {
+			
 			try {
 				Session.getCtsConnection().postCasillas(casillas);
 			} catch (IOException e) {

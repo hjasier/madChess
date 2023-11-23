@@ -86,11 +86,11 @@ public class VentanaPrincipal extends JFrame{
         panelMenuInicio.crearPOnline.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-            	
+            	System.out.println("-----CONSOLA CREADOR------");
             	if (Session.getCurrentUser()!=null) {
             		
             		startServerCnx();
-                	DatosPartida curDatosPartida = new DatosPartida("local");
+                	DatosPartida curDatosPartida = new DatosPartida("online");
                 	curDatosPartida.setJugador(Session.getCurrentUser());
                 	Session.setDatosPartida(curDatosPartida);
                 	panelConfOnline.setDatosPartida(curDatosPartida);
@@ -128,7 +128,7 @@ public class VentanaPrincipal extends JFrame{
         panelMenuInicio.joinPOnline.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                
+                System.out.println("-----CONSOLA JOINER------");
             	startServerCnx();
             	try {
 					Session.getCtsConnection().joinGame("CODIGODELAPARTIDA");

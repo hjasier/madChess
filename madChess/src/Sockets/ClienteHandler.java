@@ -83,29 +83,32 @@ public class ClienteHandler implements Runnable {
 	    					clientes.get(curPartida.getGameId()).add(this);
 	    					
 	    					
-	    					//Envia la info a actualizar
+	    					//Envia la info a actualizar al nuevo jugador
 	    					output.writeObject("updateConfData"); 
 	    					output.writeObject(curPartida); 
 	    					
-	    					System.out.println("ENVIANDO USER JOIN A ");
-	    					System.out.println(clientes.get(curPartida.getGameId()));
+	    				
 	    					//Enviamos la info al resto de jugadores tmb
 	    					reenviar2Datos("updateConfData",curPartida);
 	    					repost = false;
+	    					break;
 	    					
 	    			    case "chatMsg":
 	    			    	Object msg = input.readObject();
 	    			    	reenviar3Datos("chatMsg",this.user,msg);
 	    			    	repost = false;
+	    			    	break;
 	    			    	
 	    			    	
 	    			    case "piezaMov":
 	    			    	Object movimiento = input.readObject();
 	    			    	reenviar2Datos("nuevoMov",movimiento);
+	    			    	break;
 	    			    	
 	    			    case "updateCasillas":
 	    			    	Object casillas = input.readObject();
 	    			    	reenviar2Datos("updateCasillas",casillas);
+	    			    	break;
 	    			    	
     				}
     				

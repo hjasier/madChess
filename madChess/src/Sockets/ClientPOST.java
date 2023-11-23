@@ -57,6 +57,7 @@ public class ClientPOST {
 	}
 	
 	public void postCasillas(ArrayList<Casilla> casillas) throws IOException {
+		System.out.println("posteando casillas");
 		serverOut.writeObject("updateCasillas");
 		serverOut.writeObject(casillas);
 		

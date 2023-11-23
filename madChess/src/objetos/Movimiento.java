@@ -29,8 +29,13 @@ public class Movimiento implements Serializable{
 	}
 	
 	
+	public Casilla getCasillaSalida() {
+		return casillaSalida;
+	}
+
+	public Casilla getCasillaLlegada() {
+		return casillaLlegada;
+	}
 	
-	//Para las analiticas podríamos usar esta clase movimiento para tenerlo mas ordenado
-	// Y para el online podemos enviar un Objeto tipo Movimiento serializado
 	
 }

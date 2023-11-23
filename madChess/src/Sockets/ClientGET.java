@@ -36,21 +36,23 @@ public class ClientGET implements Runnable {
                 	case "updateConfData":
                 		Object datosPartida = serverIn.readObject();
                         updatePartidaDatos(datosPartida);
-                        Session.setDatosPartida((DatosPartida) datosPartida);
+                        Session.setDatosPartida((DatosPartida) datosPartida);  
+                        break;
                 	case "chatMsg":
                 		Jugador author = (Jugador) serverIn.readObject();
                 		String msg = (String) serverIn.readObject();
-                		
                 		Session.getVentana().getPanelJuego().addChatMsg(author.getNombre(),msg);
-                		
+                		break;
                 	case "nuevoMov":
+                		System.out.println("Datos de movimiento IN");
                 		Movimiento movimiento = (Movimiento) serverIn.readObject();
-                		//actualizarTablero(); igual al final pasamos el tablero nuevo en vez de la pieza ns
-                		moverPiza(movimiento);
+                		Session.getPartida().moverPiezaOnline(movimiento.getCasillaSalida(),movimiento.getCasillaLlegada());
+                		break;
                 		
                 	case "updateCasillas":
                 		ArrayList<Casilla> casillas = (ArrayList<Casilla>) serverIn.readObject();
                 		Session.getPartida().setCasillas(casillas);
+                		break;
                 }
                 }
                 
@@ -73,11 +75,7 @@ public class ClientGET implements Runnable {
         }
     }
 
-    private void moverPiza(Movimiento movimiento) {
-		//Session.getPartida().moverPieza(null,null);
-		
-	}
-
+ 
 	private void updatePartidaDatos(Object datosPartida) {
         Session.getVentana().getPanelConfOnline().setDatosPartida((DatosPartida) datosPartida);
     }
