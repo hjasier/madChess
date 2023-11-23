@@ -86,7 +86,7 @@ public class PanelBoost extends JPanel {
         botonBoost1.setSize(new Dimension(90,60));
         
         panelBoost1.add(panelBoost1View, BorderLayout.WEST);
-        panelBoost1.add(botonBoost1, BorderLayout.NORTH);
+        panelBoost1.add(botonBoost1, BorderLayout.CENTER);
         panelBoost1.add(labelBoost1Cargas, BorderLayout.EAST);
         panelBoost1.setMaximumSize(new Dimension(getMaximumSize().width,250));
         
