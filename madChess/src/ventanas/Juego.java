@@ -42,7 +42,7 @@ import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import componentes.MButton;
+import componentes.*;
 import componentes.MScrollPane;
 import componentes.userInfo;
 import juego.Configuracion;
@@ -91,7 +91,7 @@ public class Juego extends JPanel {
 	protected JLabel labelBoost = new JLabel();
 	protected JPanel panelAbajo = new JPanel();
 	protected JPanel panelCardL = new JPanel();
-	protected JPanel panelBoost = new JPanel();
+	protected PanelBoost panelBoost = new PanelBoost();
 	CardLayout cardLayout = new CardLayout();
 	
 	public Juego() {
@@ -291,6 +291,9 @@ public class Juego extends JPanel {
 	    
 	    areaMovimientos.setForeground(Color.WHITE); //Color del texto
 	    areaChat.setForeground(Color.WHITE);
+	    
+
+	    
 	    
 	    panelCardL.setLayout(cardLayout);
 	    panelCardL.add(panelChat, "CHAT");
