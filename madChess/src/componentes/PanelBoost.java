@@ -11,6 +11,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.Component;
+import javax.swing.SwingConstants;
 
 public class PanelBoost extends JPanel {
     protected JPanel panelBoosts = new JPanel();
@@ -45,8 +47,7 @@ public class PanelBoost extends JPanel {
         this.setLayout(new BorderLayout());
         panelBoosts.setLayout(new BoxLayout(panelBoosts, BoxLayout.Y_AXIS));
         panelDesc.setLayout(new BorderLayout());
-        panelBoost1.setLayout(new BorderLayout());
-        
+        panelBoost1View.setLayout(new BorderLayout());
         
         
         panelDesc.setBackground(Color.GREEN);
@@ -58,11 +59,11 @@ public class PanelBoost extends JPanel {
         panelBoost2.setBackground(Color.pink);
         panelBoost2View.setBackground(Color.BLUE);
         
-        MScrollPane scrollPane = new MScrollPane(panelBoosts);
         
 
         labelBoost1Nombre = new JLabel("Bomba");
         labelBoost1Icono = new JLabel("IconoB");
+        labelBoost1Icono.setHorizontalAlignment(SwingConstants.CENTER);
         botonBoost1 = new MButton("Usar");
         labelBoost1Cargas = new JLabel("1/1");
 
@@ -79,16 +80,22 @@ public class PanelBoost extends JPanel {
         iconoDesc = new JLabel("Icono");
         labelDesc = new JLabel("Descripcion");
         labelDesc.setHorizontalAlignment(JLabel.CENTER);
+        
 
         panelBoost1View.add(labelBoost1Nombre, BorderLayout.WEST);
         panelBoost1View.add(labelBoost1Icono, BorderLayout.CENTER);
         
-        botonBoost1.setSize(new Dimension(90,60));
+        botonBoost1.setPreferredSize (new Dimension(200, 60));
+        panelBoost1.setLayout(new BoxLayout(panelBoost1, BoxLayout.X_AXIS));
         
-        panelBoost1.add(panelBoost1View, BorderLayout.WEST);
-        panelBoost1.add(botonBoost1, BorderLayout.NORTH);
-        panelBoost1.add(labelBoost1Cargas, BorderLayout.EAST);
-        panelBoost1.setMaximumSize(new Dimension(getMaximumSize().width,250));
+        
+        
+        
+        panelBoost1.add(panelBoost1View);
+        panelBoost1.add(Box.createRigidArea(new Dimension(80,0)));
+        panelBoost1.add(botonBoost1);
+        panelBoost1.add(labelBoost1Cargas);
+        //panelBoost1.setMaximumSize(new Dimension(getMaximumSize().width,250));
         
         panelBoost2View.add(labelBoost2Nombre, BorderLayout.WEST);
         panelBoost2View.add(labelBoost2Icono, BorderLayout.CENTER);
@@ -96,7 +103,7 @@ public class PanelBoost extends JPanel {
         panelBoost2.add(panelBoost2View, BorderLayout.WEST);
         panelBoost2.add(botonBoost2, BorderLayout.CENTER);
         panelBoost2.add(labelBoost2Cargas, BorderLayout.EAST);
-        panelBoost2.setMaximumSize(new Dimension(getMaximumSize().width,250));
+        
         //panelBoost2.setBorder(BorderFactory.createEmptyBorder(0,0,100,0));
         
         panelBoost3View.add(labelBoost3Nombre, BorderLayout.WEST);
@@ -105,7 +112,7 @@ public class PanelBoost extends JPanel {
         panelBoost3.add(panelBoost3View, BorderLayout.WEST);
         panelBoost3.add(botonBoost3, BorderLayout.CENTER);
         panelBoost3.add(labelBoost3Cargas, BorderLayout.EAST);
-        panelBoost3.setMaximumSize(new Dimension(getMaximumSize().width,250));
+        
         
         panelBoosts.add(Box.createRigidArea(new Dimension(0, 40)));
         panelBoosts.add(panelBoost1);
