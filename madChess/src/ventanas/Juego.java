@@ -245,7 +245,7 @@ public class Juego extends JPanel {
 	    
 	    panelTabs.setLayout(new BoxLayout(panelTabs, BoxLayout.X_AXIS));
 
-	    panelLabels = new JPanel();	
+	    JPanel panelLabels = new JPanel();	
 	    panelLabels.setLayout(new BoxLayout(panelLabels, BoxLayout.X_AXIS));
 	    
 	    labelChat = new JLabel("CHAT");
