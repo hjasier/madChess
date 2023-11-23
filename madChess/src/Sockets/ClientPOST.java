@@ -3,9 +3,12 @@ package Sockets;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.sql.Date;
+import java.util.ArrayList;
 
 import juego.DatosPartida;
 import juego.Session;
+import objetos.Casilla;
+import objetos.Movimiento;
 
 public class ClientPOST {
 	
@@ -43,6 +46,19 @@ public class ClientPOST {
 		private String gameId;
 		private int userId;
 		private Date date;
+		
+	}
+
+
+	public void postPiezaMov(Movimiento movimiento) throws IOException {
+		serverOut.writeObject("piezaMov");
+		serverOut.writeObject(movimiento);
+		
+	}
+	
+	public void postCasillas(ArrayList<Casilla> casillas) throws IOException {
+		serverOut.writeObject("updateCasillas");
+		serverOut.writeObject(casillas);
 		
 	}
 	

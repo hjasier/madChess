@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import juego.DatosPartida;
+import juego.Session;
+import objetos.Jugador;
 import ventanas.ConfPOnline;
 
 public class Servidor {
@@ -53,6 +55,7 @@ public class Servidor {
 
 	public static void main(String[] args) {
         Servidor servidor = new Servidor();
+        Session.setCurrentUser(new Jugador("SERVER"));
         servidor.iniciar();
     }
 

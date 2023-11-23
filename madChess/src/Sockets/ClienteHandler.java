@@ -76,9 +76,9 @@ public class ClienteHandler implements Runnable {
 	    			    	Object gameIDFuturo = input.readObject();
 	    					// de momento siempre va a joinear al jugador a la primera partida en partidas pk aún no hay ventana para elegir a cual 
 	    					
-	    				    String gameID = partidas.entrySet().iterator().next().getKey();
-	    				    
-	    					curPartida = partidas.get(gameID);
+	    			    	String ultimoGameID = partidas.entrySet().stream().reduce((first, second) -> second).orElse(null).getKey();
+
+	    					curPartida = partidas.get(ultimoGameID);
 	    					curPartida.setJugador(this.user);
 	    					clientes.get(curPartida.getGameId()).add(this);
 	    					
@@ -97,6 +97,15 @@ public class ClienteHandler implements Runnable {
 	    			    	Object msg = input.readObject();
 	    			    	reenviar3Datos("chatMsg",this.user,msg);
 	    			    	repost = false;
+	    			    	
+	    			    	
+	    			    case "piezaMov":
+	    			    	Object movimiento = input.readObject();
+	    			    	reenviar2Datos("nuevoMov",movimiento);
+	    			    	
+	    			    case "updateCasillas":
+	    			    	Object casillas = input.readObject();
+	    			    	reenviar2Datos("updateCasillas",casillas);
 	    			    	
     				}
     				

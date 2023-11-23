@@ -2,6 +2,7 @@ package juego;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
@@ -37,14 +38,13 @@ public class LogicaPartida {
 	
 	
 	public LogicaPartida(Juego ventana) {
+		Session.setPartida(this);
+		
 		this.ventana = ventana;
 		this.datosPartida = Session.getDatosPartida();
-		if (datosPartida.jugadores!=null) {	
-			this.jugadores = datosPartida.jugadores;
-		}
-		
-		
+		if (datosPartida.jugadores!=null) {this.jugadores = datosPartida.jugadores;}
 		this.tablero = ventana.getTablero();
+		
 		
 		casillas = tablero.getCasillas();
 		resetearVentana();
@@ -94,19 +94,10 @@ public class LogicaPartida {
         
         initPlayers();
         
+        ventana.initWindow();
         
+
         
-        
-        tablero.DEBUG_MODE = DEBUG_MODE;
-        
-        if (DEBUG_MODE) {
-        	printMovimiento("--------------------");
-        	printMovimiento("MODO DEBUG: ACTIVADO");
-        	printMovimiento("--------------------");
-        }
-        else {
-        	ventana.setInterfaz(datosPartida.modoDeJuego);
-        }
         printMovimiento("*/* "+curPlayer.getNombre()+" empieza la partida con blancas */*");
 		
         
@@ -205,20 +196,17 @@ public class LogicaPartida {
 
        		}
        		
+
        		
-       		
-       		// Quitamos la pieza de la casilla anterior y la metemos en la nueva
-       		prevCasilla.setPieza(null); 
+       		prevCasilla.setPieza(null); // Quitamos la pieza de la casilla anterior y la metemos en la nueva
        		curCasilla.setPieza(pieza);
        		
        		pieza.setPMoved(); //Seteamos el piezaMoved en true
+       		
        		guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
-       		
-       		
-       		
+       			
        		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
     		
-       		
        		checkReyInJaque();
     		
 			}
@@ -227,17 +215,18 @@ public class LogicaPartida {
 			tablero.dragImg.setIcon(null); // Borramos la img del panel superior
 
     		for(Casilla casillaDisp: casillasDisp) {
-    			casillaDisp.setDisponible(false);
+    			casillaDisp.setDisponible(false); //Borramos los puntos de las casillas
     		} 
-    		
-    		
+
     		       
 		}
 		
 	}
 
 
-
+	private void moverPieza(Casilla casillaSalida,Casilla casillaLlegada) {
+		
+	}
 
 	private boolean checkJaqueMoveValid(Casilla prevCasilla,Casilla newCasilla) {
 		
@@ -376,11 +365,12 @@ public class LogicaPartida {
 	private void setNextPlayer() {
 		pararTemporizador();
 		
-		if (datosPartida.modoDeJuego=="local") {
+		if (datosPartida.getModoDeJuego().equals("local")) {
 			int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
 			tablero.setCurPlayer(jugadores.get(newIndex));
 			curPlayer = jugadores.get(newIndex);
 		}
+		
 		
 		
 		iniciarTemporizador();
@@ -441,6 +431,14 @@ public class LogicaPartida {
 		String extra = (piezaComida==null) ? " ":" 💀";
 		printMovimiento("<"+curPlayer.getNombre()+"> "+prevCasilla.getPos()+" ⏩ "+curCasilla.getPos()+extra);
 		
+		if (datosPartida.getModoDeJuego().equals("online")) {
+			try {
+				Session.getCtsConnection().postPiezaMov(movimiento);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 
 		
@@ -448,7 +446,7 @@ public class LogicaPartida {
 	
 	
 	private void printMovimiento(String movimiento) {
-		ventana.setNewMovimiento(movimiento);
+		ventana.printMovimiento(movimiento);
 	}
 	
 
@@ -480,9 +478,14 @@ public class LogicaPartida {
 	
 	
 	
-	
-	
-	
+	public void setCasillas(ArrayList<Casilla> casillas) {
+		this.casillas = casillas;
+	}
+
+
+
+
+
 	//init del tablero
 	protected void resetearVentana() {
 		limpiarTablero();
@@ -520,7 +523,16 @@ public class LogicaPartida {
 		casillas.get(61).setPieza(new Alfil(true));
 		casillas.get(62).setPieza(new Caballo(true));
 		casillas.get(63).setPieza(new Torre(true));
-        }
+        
+		if (Session.getDatosPartida().getModoDeJuego().equals("online")&&Session.getDatosPartida().getJugadores().get(0).equals(Session.getCurrentUser())) {
+			try {
+				Session.getCtsConnection().postCasillas(casillas);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 
 
