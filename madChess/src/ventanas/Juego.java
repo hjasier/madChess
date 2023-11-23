@@ -91,7 +91,11 @@ public class Juego extends JPanel {
 	protected JLabel labelBoost = new JLabel();
 	protected JPanel panelAbajo = new JPanel();
 	protected JPanel panelCardL = new JPanel();
-
+	protected PanelBoost panelBoost = new PanelBoost();
+	
+	
+	
+	
 	CardLayout cardLayout = new CardLayout();
 	
 	public Juego() {
@@ -486,7 +490,7 @@ public class Juego extends JPanel {
 			//panelControles.remove(panelAbajo);
 			//panelControles.setLayout(new GridLayout(1,1));
 			cardLayout.show(panelCardL,"BOOST");
-			panelLabels.remove(labelChat);
+			panelTabs.remove(labelChat);
 			
 		}
 		
