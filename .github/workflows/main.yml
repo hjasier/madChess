@@ -37,7 +37,7 @@ jobs:
           # sftp args
           args: '-o ConnectTimeout=5'
           
-      - name: Run this action with only post
+      - name: Recompilar y reiniciar server
         uses: gacts/run-and-post-run@v1
         with:
-          post: echo "Second post"
+          post: pme restart recompile
