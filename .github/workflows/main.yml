@@ -1,23 +1,15 @@
 name: CI-SFTP
 
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ master ]
-#  pull_request:
-#    branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in paralle
 jobs:
-  # This workflow contains a single job called "SFTP"
   deploy-via-sftp:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
           
       - name: SFTP Deploy
@@ -37,7 +29,15 @@ jobs:
           # sftp args
           args: '-o ConnectTimeout=5'
           
-      - name: Recompilar y reiniciar server
-        uses: gacts/run-and-post-run@v1
+  execute-commands:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Conexión al server x2
+        uses: webfactory/ssh-agent@v0.5.4
         with:
-          post: pm2 restart recompile
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Ejecutar recompilador
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME}}@${{ secrets.SERVER_IP }}  "source /home/ubuntu/.nvm/nvm.sh && /home/ubuntu/.nvm/versions/node/v16.15.1/bin/pm2 restart recompile"
+
