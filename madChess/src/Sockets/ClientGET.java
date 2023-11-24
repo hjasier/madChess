@@ -34,6 +34,7 @@ public class ClientGET implements Runnable {
                 }
                 else {
                 switch ((String) feedback) {
+                	
                 
                 	case "initGame":
                 		Session.getVentana().initGame();

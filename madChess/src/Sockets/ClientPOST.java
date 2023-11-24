@@ -20,6 +20,10 @@ public class ClientPOST {
 	}
 	
 	
+	public void createGame() throws IOException {
+		serverOut.writeObject("hostNewGame");
+	}
+	
 	public void postUser() throws IOException {
 		serverOut.writeObject("postUser");
 		serverOut.writeObject(Session.getCurrentUser());
@@ -70,5 +74,7 @@ public class ClientPOST {
 	public void postInitGame() throws IOException {
 		serverOut.writeObject("initGame");
 	}
+
+
 	
 }

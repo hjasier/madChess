@@ -45,10 +45,10 @@ public class ClienteHandler implements Runnable {
 		while(!finComunicacion) {  // Bucle de comunicación de tiempo real con el cliente
 			try {
     			Object objRecibido = input.readObject();  // Espera a recibir petición de cliente (1) - se acaba con timeout
-    			boolean repost = true;
+    			boolean repost = false;
     			
     			if (objRecibido==null) {  // Si se recibe un objeto nulo es un error
-    	    		System.out.println("OObjeto null");
+    	    		System.out.println("Objeto null");
     			}
     			
     			else if(objRecibido.equals("fin")) { // Si se recibe fin se acaba el proceso con este cliente
@@ -60,67 +60,72 @@ public class ClienteHandler implements Runnable {
     			
     			
     			
-    			if (objRecibido instanceof DatosPartida) {
-    				checkDatosPartida(objRecibido); //setea la partida en el servidor
     			
-    			}
-    			else {
-    				switch ((String) objRecibido) {
+    			
+				switch ((String) objRecibido) {
+					
+					
+    			    case "postUser":
+    			        Object user = input.readObject();
+    			        this.user = (Jugador) user;
+    			        break;
+    			        
+    			    case "hostNewGame":
+    			    	DatosPartida datosPartida = new DatosPartida("online");
+    			    	datosPartida.setJugador(this.user);
+    			    	
+    			    	checkDatosPartida(datosPartida);
+    			    	
+    			    	output.writeObject("updateConfData"); 
+    					output.writeObject(curPartida); 
+    					break;
+    			    	
+    			   
+    			    case "joinGame":
+    			    	Object gameID = input.readObject();
+    			    	
+    					curPartida = partidas.get(gameID);
+    					curPartida.setJugador(this.user);
+    					clientes.get(gameID).add(this);
+    					System.out.println(curPartida.getJugadores());
+    					
+    					//Envia la info de la partida al nuevo jugador
+    					output.writeObject("updateConfData"); 
+    					output.writeObject(curPartida); 
+    					
     				
-	    			    case "postUser":
-	    			        Object user = input.readObject();
-	    			        this.user = (Jugador) user;
-	    			        repost = false;
-	    			        break;
-	    			   
-	    			    case "joinGame":
-	    			    	Object gameID = input.readObject();
-	    			    	
-	    					curPartida = partidas.get(gameID);
-	    					curPartida.setJugador(this.user);
-	    					clientes.get(gameID).add(this);
-	    					System.out.println(curPartida.getJugadores());
-	    					
-	    					//Envia la info de la partida al nuevo jugador
-	    					output.writeObject("updateConfData"); 
-	    					output.writeObject(curPartida); 
-	    					
-	    				
-	    					//Enviamos la info al resto de jugadores tmb
-	    					reenviar2Datos("updateConfData",curPartida);
-	    					repost = false;
-	    					break;
-	    					
-	    			    case "initGame":
-	    			    	repost = true;
-	    			    	break;
-	    			    	
-	    			    case "chatMsg":
-	    			    	Object msg = input.readObject();
-	    			    	reenviar3Datos("chatMsg",this.user,msg);
-	    			    	repost = false;
-	    			    	break;
-	    			    	
-	    			    	
-	    			    case "piezaMov":
-	    			    	Object movimiento = input.readObject();
-	    			    	reenviar2Datos("nuevoMov",movimiento);
-	    			    	break;
-	    			    	
-	    			    case "updateCasillas":
-	    			    	Object casillas = input.readObject();
-	    			    	reenviar2Datos("updateCasillas",casillas);
-	    			    	break;
-	    			    	
-	    			    case "getCurGames":
-	    			    	output.writeObject("reloadGamesList"); 
-	    			    	output.writeObject(partidas);
-	    			    	repost = false;
-	    			    	break;
-    				}
+    					//Enviamos la info al resto de jugadores tmb
+    					reenviar2Datos("updateConfData",curPartida);
+    					break;
+    					
+    			    case "initGame":
+    			    	repost = true;
+    			    	break;
+    			    	
+    			    case "chatMsg":
+    			    	Object msg = input.readObject();
+    			    	reenviar3Datos("chatMsg",this.user,msg);
+    			    	break;
+    			    	
+    			    	
+    			    case "piezaMov":
+    			    	Object movimiento = input.readObject();
+    			    	reenviar2Datos("nuevoMov",movimiento);
+    			    	break;
+    			    	
+    			    case "updateCasillas":
+    			    	Object casillas = input.readObject();
+    			    	reenviar2Datos("updateCasillas",casillas);
+    			    	break;
+    			    	
+    			    case "getCurGames":
+    			    	output.writeObject("reloadGamesList"); 
+    			    	output.writeObject(partidas);
+    			    	break;
+				}
     				
     				
-    			}
+    			
     			
 
     			
@@ -206,9 +211,7 @@ public class ClienteHandler implements Runnable {
 	}
 
 
-	private void checkDatosPartida(Object objRecibido) {
-    	
-		DatosPartida datos = (DatosPartida) objRecibido;
+	private void checkDatosPartida(DatosPartida datos) {
 		if (!partidas.containsKey(datos.getGameId())) {
 			partidas.put(datos.getGameId(), datos);
 			
@@ -218,13 +221,6 @@ public class ClienteHandler implements Runnable {
 			clientes.put(datos.getGameId(), clientesPartida);
 		
 			curPartida = datos;
-			
-			System.out.println("Registrando clientes en mapa");
-			System.out.println(clientes);
-		}
-		else {
-			curPartida = partidas.get(datos.getGameId());
-			curPartida.setTipoPartida(datos.getTipoPartida());//así con todas las opciones futuras , tiempo de partida,boosts...
 		}
 		System.out.println(partidas);
 		

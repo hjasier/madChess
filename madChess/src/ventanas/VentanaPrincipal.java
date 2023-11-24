@@ -100,17 +100,15 @@ public class VentanaPrincipal extends JFrame{
             	if (Session.getCurrentUser()!=null) {
             		
             		startServerCnx();
-                	DatosPartida curDatosPartida = new DatosPartida("online");
-                	curDatosPartida.setJugador(Session.getCurrentUser());
-                	Session.setDatosPartida(curDatosPartida);
-                	panelConfOnline.setDatosPartida(curDatosPartida);
-                    cardLayout.show(panelPrincipal, "CONFONLINE");
-                    try {
-						Session.getCtsConnection().setGameSettings(curDatosPartida);
+                	try {
+						Session.getCtsConnection().createGame();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+                	
+                    cardLayout.show(panelPrincipal, "CONFONLINE");
+                    
             	}
             	else {
             		cardLayout.show(panelPrincipal, "LOGIN");
