@@ -40,4 +40,4 @@ jobs:
       - name: Recompilar y reiniciar server
         uses: gacts/run-and-post-run@v1
         with:
-          post: pme restart recompile
+          post: pm2 restart recompile
