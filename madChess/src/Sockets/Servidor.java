@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import juego.Configuracion;
 import juego.DatosPartida;
 import juego.Session;
 import objetos.Jugador;
@@ -22,7 +23,7 @@ public class Servidor {
     public Servidor() {
         try {
             serverSocket = new ServerSocket(PUERTO);
-            System.out.println("Servidor runeado en: " + PUERTO);
+            System.out.println("|| Servidor runeado en: " + PUERTO + " || VERSIÓN: "+Configuracion.VERSION + " ||");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,9 +36,6 @@ public class Servidor {
                 Socket clienteSocket = serverSocket.accept();
                 System.out.println("Cliente conectado --> " + clienteSocket);
 
-                
-                
-                
                 
                 ClienteHandler clienteHandler = new ClienteHandler(clienteSocket,partidas, clientes);
                 

@@ -15,8 +15,9 @@ import librerias.FontAwesome;
 import librerias.IconFontSwing;
 
 public class Perfil extends JPanel{
-	protected RButton volverBtn = new RButton("Volver");
+	protected RButton backBtn = new RButton("Volver");
 	protected navBar navBar;
+	protected JLabel nombre = new JLabel();
 	
 	public Perfil() {
 		this.setLayout(new BorderLayout());
@@ -24,15 +25,23 @@ public class Perfil extends JPanel{
   		//--------------------- NAVBAR-------------------------------------------
 		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, 15);
 		
-		volverBtn.setIcon(icon);
+		backBtn.setIcon(icon);
   		
-  		navBar = new navBar(volverBtn);
+  		navBar = new navBar(backBtn);
   		//--------------------- NAVBAR-------------------------------------------	   
 
 
   		this.setBackground(Configuracion.BACKGROUND);
   		
   		this.add(navBar,BorderLayout.NORTH);
-		this.add(new JLabel(Session.getCurrentUser().getNombre()),BorderLayout.CENTER);
+  		
+  		
+  		
+  		this.add(nombre,BorderLayout.CENTER);
+  		
+	}
+
+	public void reloadData() {
+		nombre.setText(Session.getCurrentUser().getNombre());
 	} 
 }

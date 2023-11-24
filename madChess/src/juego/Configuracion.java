@@ -5,6 +5,7 @@ import java.awt.Font;
 
 public class Configuracion {
 	
+	public static final String VERSION = "V1.1"; 
 	
 	//public static final String HOST = "madchess.tabernagogorra.eu"; 
 	public static final String HOST = "localhost"; 
@@ -18,5 +19,5 @@ public class Configuracion {
 	
 	public static final Font DEFAULTFONT = new Font("Dialog", Font.PLAIN, 12);
 	
-	public static final Boolean LOGIN_DEBUG = false;
+	public static final Boolean LOGIN_DEBUG = true;
 }

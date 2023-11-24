@@ -210,7 +210,6 @@ public class ConfPOnline extends JPanel {
 
 	public void setDatosPartida(DatosPartida curDatosPartida) {
 		this.datosPartida = curDatosPartida;
-		System.out.println(curDatosPartida.getJugadores());
 		
 		labelCodigoValor.setText(curDatosPartida.getGameId());
 		setUser1(curDatosPartida.getJugadores().get(0));

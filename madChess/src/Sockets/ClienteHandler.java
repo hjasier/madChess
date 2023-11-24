@@ -66,6 +66,7 @@ public class ClienteHandler implements Runnable {
     			}
     			else {
     				switch ((String) objRecibido) {
+    				
 	    			    case "postUser":
 	    			        Object user = input.readObject();
 	    			        this.user = (Jugador) user;
@@ -73,17 +74,14 @@ public class ClienteHandler implements Runnable {
 	    			        break;
 	    			   
 	    			    case "joinGame":
-	    			    	Object gameIDFuturo = input.readObject();
-	    					// de momento siempre va a joinear al jugador a la primera partida en partidas pk aún no hay ventana para elegir a cual 
-	    					
-	    			    	String ultimoGameID = partidas.entrySet().stream().reduce((first, second) -> second).orElse(null).getKey();
-
-	    					curPartida = partidas.get(ultimoGameID);
+	    			    	Object gameID = input.readObject();
+	    			    	
+	    					curPartida = partidas.get(gameID);
 	    					curPartida.setJugador(this.user);
-	    					clientes.get(curPartida.getGameId()).add(this);
+	    					clientes.get(gameID).add(this);
+	    					System.out.println(curPartida.getJugadores());
 	    					
-	    					
-	    					//Envia la info a actualizar al nuevo jugador
+	    					//Envia la info de la partida al nuevo jugador
 	    					output.writeObject("updateConfData"); 
 	    					output.writeObject(curPartida); 
 	    					
@@ -93,6 +91,10 @@ public class ClienteHandler implements Runnable {
 	    					repost = false;
 	    					break;
 	    					
+	    			    case "initGame":
+	    			    	repost = true;
+	    			    	break;
+	    			    	
 	    			    case "chatMsg":
 	    			    	Object msg = input.readObject();
 	    			    	reenviar3Datos("chatMsg",this.user,msg);
@@ -110,6 +112,11 @@ public class ClienteHandler implements Runnable {
 	    			    	reenviar2Datos("updateCasillas",casillas);
 	    			    	break;
 	    			    	
+	    			    case "getCurGames":
+	    			    	output.writeObject("reloadGamesList"); 
+	    			    	output.writeObject(partidas);
+	    			    	repost = false;
+	    			    	break;
     				}
     				
     				

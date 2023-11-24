@@ -3,6 +3,8 @@ package Sockets;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import juego.DatosPartida;
 import juego.LogicaPartida;
@@ -32,11 +34,17 @@ public class ClientGET implements Runnable {
                 }
                 else {
                 switch ((String) feedback) {
-                	
+                
+                	case "initGame":
+                		Session.getVentana().initGame();
+                		break;
                 	case "updateConfData":
-                		Object datosPartida = serverIn.readObject();
-                        updatePartidaDatos(datosPartida);
-                        Session.setDatosPartida((DatosPartida) datosPartida);  
+                		DatosPartida datosPartida = (DatosPartida) serverIn.readObject();
+                		System.out.println(datosPartida.getJugadores());
+                		
+                		Session.setDatosPartida(datosPartida);  
+                		Session.getVentana().getPanelConfOnline().setDatosPartida(datosPartida);
+                        
                         break;
                 	case "chatMsg":
                 		Jugador author = (Jugador) serverIn.readObject();
@@ -44,7 +52,6 @@ public class ClientGET implements Runnable {
                 		Session.getVentana().getPanelJuego().addChatMsg(author.getNombre(),msg);
                 		break;
                 	case "nuevoMov":
-                		System.out.println("Datos de movimiento IN");
                 		Movimiento movimiento = (Movimiento) serverIn.readObject();
                 		Session.getPartida().moverPiezaOnline(movimiento.getCasillaSalida(),movimiento.getCasillaLlegada());
                 		break;
@@ -53,8 +60,14 @@ public class ClientGET implements Runnable {
                 		ArrayList<Casilla> casillas = (ArrayList<Casilla>) serverIn.readObject();
                 		Session.getPartida().setCasillas(casillas);
                 		break;
+                		
+                	case "reloadGamesList":
+                		HashMap<String, DatosPartida> games = (HashMap<String, DatosPartida>) serverIn.readObject();
+                		Session.getVentana().getPanelListaPartidas().reLoadCurrentGames(games);
+                		break;
+                	
                 }
-                }
+            }
                 
                 
                 
@@ -76,9 +89,6 @@ public class ClientGET implements Runnable {
     }
 
  
-	private void updatePartidaDatos(Object datosPartida) {
-        Session.getVentana().getPanelConfOnline().setDatosPartida((DatosPartida) datosPartida);
-    }
 
 
 }

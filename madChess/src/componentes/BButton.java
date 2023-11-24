@@ -9,7 +9,11 @@ public class BButton extends JButton {
 
     private static final Color DEFAULT_COLOR = new Color(220, 220, 220);
     private static final Color HOVER_COLOR = new Color(180, 180, 180);
-
+    
+    
+    
+    
+    
     public BButton(String text) {
         super(text);
 

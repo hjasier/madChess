@@ -64,7 +64,7 @@ public class PanelBoost extends JPanel {
         JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
         BButton usarButton = new BButton("Usar");
         panelBoton.setBackground(colorFondo);
-        usarButton.setPreferredSize(new Dimension(60, 30));
+        usarButton.setPreferredSize(new Dimension(80, 30));
         panelBoton.add(usarButton);
         elementoPanel.add(panelBoton, BorderLayout.CENTER);
 

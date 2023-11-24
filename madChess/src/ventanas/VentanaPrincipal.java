@@ -1,6 +1,7 @@
 package ventanas;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -38,12 +40,15 @@ public class VentanaPrincipal extends JFrame{
     
     ConfPOnline panelConfOnline =  new ConfPOnline(null);
     
+    ListaPartidas panelListaPartidas = new ListaPartidas();
+    
+    Perfil panelPerfil = new Perfil();
     //no paneles
 
     
 	public VentanaPrincipal() {
 		
-		this.setSize(1000,800);
+		this.setSize(1250,1000);
 		this.setLocationRelativeTo(null);
 		
 		
@@ -57,6 +62,9 @@ public class VentanaPrincipal extends JFrame{
         panelPrincipal.add(panelConfLocal, "CONFLOCAL");  
         panelPrincipal.add(panelConfOnline, "CONFONLINE");
         
+		panelPrincipal.add(panelListaPartidas, "LISTAPARTIDAS");
+		panelPrincipal.add(panelPerfil, "PERFILUSUARIO");
+        
         
         
         panelMenuInicio.loginBtn.addActionListener(new ActionListener() {
@@ -66,7 +74,7 @@ public class VentanaPrincipal extends JFrame{
                     cardLayout.show(panelPrincipal, "LOGIN");
             	}
             	else {
-            		panelPrincipal.add(new Perfil(), "PERFILUSUARIO");
+            		panelPerfil.reloadData();
             		cardLayout.show(panelPrincipal, "PERFILUSUARIO");
             	}
 
@@ -78,7 +86,9 @@ public class VentanaPrincipal extends JFrame{
         panelMenuInicio.partidaLocal.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-            	Session.setDatosPartida(new DatosPartida("local"));
+            	DatosPartida datos = new DatosPartida("local");
+            	Session.setDatosPartida(datos);
+            	panelConfLocal.setDatosPartida(datos);
                 cardLayout.show(panelPrincipal, "CONFLOCAL");
             }
         });
@@ -110,16 +120,7 @@ public class VentanaPrincipal extends JFrame{
                 
                 
                 
-//                if (panelConfOnline.getServer()==null) {
-//                	Thread server = new Thread(new Runnable() {@Override
-//                	public void run() {
-//                		panelConfOnline.setServer(new Servidor(null));
-//                		
-//                	}
-//					});
-//                	server.start();
-//                	
-//                }
+
                
                 
             }
@@ -131,17 +132,18 @@ public class VentanaPrincipal extends JFrame{
                 System.out.println("-----CONSOLA JOINER------");
             	startServerCnx();
             	try {
-					Session.getCtsConnection().joinGame("CODIGODELAPARTIDA");
+					Session.getCtsConnection().getListaPartidas();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
             	
-                cardLayout.show(panelPrincipal, "CONFONLINE");
+                cardLayout.show(panelPrincipal, "LISTAPARTIDAS");
                 
                 
             }
         });
+        
+
         
         
 
@@ -155,8 +157,19 @@ public class VentanaPrincipal extends JFrame{
         panelConfOnline.botonIniciarPartida.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panelPrincipal, "JUEGO");
-                new LogicaPartida(panelJuego);
+            	ArrayList<Jugador> jugadores = Session.getDatosPartida().getJugadores();
+            	if (jugadores.size()>1&&jugadores.get(0).getNombre().equals(Session.getCurrentUser().getNombre())) {
+            	try {
+					Session.getCtsConnection().postInitGame();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+                initGame();
+            	}
+            	else {
+            		alert("No eres el admin o faltan jugadores");
+            	}
                 
             }
         });
@@ -259,11 +272,23 @@ public class VentanaPrincipal extends JFrame{
         
         
         
+        panelListaPartidas.backBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent  e) {
+				
+				cardLayout.show(panelPrincipal, "MENUINICIO");
+			}
+		});
         
         
         
-        
-        
+        panelPerfil.backBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent  e) {
+				
+				cardLayout.show(panelPrincipal, "MENUINICIO");
+			}
+		});
         
         
         
@@ -285,6 +310,12 @@ public class VentanaPrincipal extends JFrame{
       
         
         
+	}
+
+	public void initGame() {
+		cardLayout.show(panelPrincipal, "JUEGO");
+        new LogicaPartida(panelJuego);
+		
 	}
 
 	protected void startServerCnx() {
@@ -342,8 +373,20 @@ public class VentanaPrincipal extends JFrame{
 	public ConfPOnline getPanelConfOnline() {
 		return panelConfOnline;
 	}
-	
-	
+
+	public ListaPartidas getPanelListaPartidas() {
+		return panelListaPartidas;
+	}
+
+	public CardLayout getCardLayout() {
+		return cardLayout;
+	}
+
+	public JPanel getPanelPrincipal() {
+		return panelPrincipal;
+	}
+
+
 	
 
 }

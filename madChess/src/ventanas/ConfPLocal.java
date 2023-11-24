@@ -99,8 +99,6 @@ public class ConfPLocal extends JPanel {
     public void setDatosPartida(DatosPartida datos) {
 		this.datos = datos;
 		gameId.setText(datos.getGameId());
-		
-		
 	}
 
 

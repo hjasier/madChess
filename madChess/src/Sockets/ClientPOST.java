@@ -41,6 +41,9 @@ public class ClientPOST {
 		serverOut.writeObject(msgText);
 	}
 
+	public void getListaPartidas() throws IOException {
+		serverOut.writeObject("getCurGames");
+	}
 	
 	public class Mensaje {
 		private String gameId;
@@ -57,10 +60,15 @@ public class ClientPOST {
 	}
 	
 	public void postCasillas(ArrayList<Casilla> casillas) throws IOException {
-		System.out.println("posteando casillas");
+		//este método ya no se usa
 		serverOut.writeObject("updateCasillas");
 		serverOut.writeObject(casillas);
 		
+	}
+
+
+	public void postInitGame() throws IOException {
+		serverOut.writeObject("initGame");
 	}
 	
 }
