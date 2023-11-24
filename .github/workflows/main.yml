@@ -36,4 +36,8 @@ jobs:
           
           # sftp args
           args: '-o ConnectTimeout=5'
-
+          
+      - name: Run this action with only post
+        uses: gacts/run-and-post-run@v1
+        with:
+          post: echo "Second post"
