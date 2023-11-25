@@ -518,8 +518,8 @@ public class LogicaPartida {
 	}
 	
 	protected void cargarPiezasTablero() { //En principio no hay alters
-		reyBlack = new Rey(false);
-		reyWhite = new Rey(true);
+		reyBlack = new Rey(false,false);
+		reyWhite = new Rey(true,false);
 		
 		casillas.get(0).setPieza(new Torre(false,false));
 		casillas.get(1).setPieza(new Caballo(false,false));
