@@ -519,11 +519,11 @@ public class LogicaPartida {
 		casillas.get(7).setPieza(new Torre(false));
 
 		for (int i = 8; i <= 15; i++) {
-			casillas.get(i).setPieza(new Peon(false));
+			casillas.get(i).setPieza(new Peon(false, false)); //En principio no es alter
 		}
 
 		for (int i = 48; i <= 55; i++) {
-			casillas.get(i).setPieza(new Peon(true));
+			casillas.get(i).setPieza(new Peon(true, false)); //En principio no es alter
 		}
 		
 		casillas.get(56).setPieza(new Torre(true));
