@@ -242,7 +242,7 @@ public class Tablero extends JPanel{
 	            } else if (source == promCaballo) {
 	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite(),false));
 	            } else if (source == promTorre) {
-	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite()));
+	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite(),false));
 	            }
 
 	            promocionPanel.setVisible(false);

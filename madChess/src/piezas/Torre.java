@@ -6,9 +6,10 @@ import objetos.Pieza;
 import piezas.Rey;
 
 public class Torre extends Pieza implements PiezaMustHave {
-
-    public Torre(Boolean isWhite) {
+	protected boolean isAlter;
+    public Torre(Boolean isWhite, boolean isAlter) {
         super("r", isWhite);
+        this.isAlter = isAlter;
     }
 
     @Override
@@ -24,7 +25,27 @@ public class Torre extends Pieza implements PiezaMustHave {
         		{0, 1}, {-1, 0},
         			{1, 0}
         };
+        if (isAlter) {
+	    	movimientos = new int[][] {
+	    		{-1, -1},{0, -1},{1, -1},
+        		{-1, 0}, {1, 0}, 
+        		{-1, 1}, {0, 1}, {1, 1}
+	    	    };
+        
 
+	    for (int[] movimiento : movimientos) {
+	        int nuevaFila = fila + movimiento[0];
+	        char nuevaColumna = (char) (columna + movimiento[1]);
+
+	        // Verificar que la casilla resultante esté dentro del tablero (filas 0 a 7 y columnas A a H)
+	        if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+	            Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
+	            if (casillaDisp.getPieza()!=null&&casillaDisp.getPieza().getIsWhite()==this.getIsWhite()) {continue;}
+	            casillasDisp.add(casillaDisp);
+	        }
+	    }	
+	    }
+	    else {
         for (int[] movimiento : movimientos) { //Recorre cada movimiento posible desde la posicion de la torre
             int nuevaFila = fila + movimiento[0];
             char nuevaColumna = (char) (columna + movimiento[1]);
@@ -49,9 +70,9 @@ public class Torre extends Pieza implements PiezaMustHave {
                 nuevaFila += movimiento[0];
                 nuevaColumna = (char) (nuevaColumna + movimiento[1]);
                 if (casillaDisp.getPieza()!=null) {break;}
-            }
-        }
-
+            	}
+        	}
+	    }
         return casillasDisp;
     }
     
@@ -61,13 +82,45 @@ public class Torre extends Pieza implements PiezaMustHave {
         ArrayList<Casilla> casillasDisp = new ArrayList<>();
         int fila = curCasilla.getFila();
         char columna = curCasilla.getColumna();
-
+        
         // Posibles movimientos de la torre: arriba, abajo, izquierda y derecha
         int[][] movimientos = {
-        			{0, -1}, 
-        		{0, 1}, {-1, 0},
-        			{1, 0}
+        		
         };
+        if(isAlter) { //FixMe hay que hacer que dependiendo del movimiento que haga la torre, las casillas
+        			  //que se pueda comer sean las cuatro que hay, dependiendo de la opcion 
+        	 movimientos = new int[][] {
+        			{-1,0},{-2,-1},{-2,0},{-2,1},    // Arriba
+        			{0,-1},{-1,-2},{0,-2},{1,-2},    // Izquierda
+        			{0,1},{-1,2},{0,2},{1,2}, 	     // Derecha
+        			{1,0},{2,-1},{2,0},{2,1},	     // Abajo
+        	        {-1,-1},{-1,-2},{-2,-1},{-2,-2}, // Arriba-Izquierda
+        	        {-1,1},{-2,1},{-1,2},{-2,2},	 // Arriba-Derecha
+        	        {1,1},{2,1},{1,2},{2,2},         // Abajo-Derecha
+        	        {1,-1},{1,-2},{2,-1},{2,-2}      // Abaje-Izquierda
+        	        
+        	        
+        	    };
+
+        	    for (int[] movimiento : movimientos) {
+        	        int nuevaFila = fila + movimiento[0];
+        	        char nuevaColumna = (char) (columna + movimiento[1]);
+
+        	        // Verificar que la casilla resultante esté dentro del tablero (filas 0 a 7 y columnas A a H)
+        	        if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+        	            Casilla casillaDisp = casillas.get(nuevaFila * 8 + (nuevaColumna - 'A'));
+        	            if (
+                        		casillaDisp.getPieza()!=null&&
+                        		casillaDisp.getPieza().getIsWhite()==this.getIsWhite())
+                        {
+                        	casillasDisp.add(casillaDisp);
+                        	continue;}
+        	            casillasDisp.add(casillaDisp);
+        	        }
+        	    }
+        	}
+        else{
+       
 
         for (int[] movimiento : movimientos) { //Recorre cada movimiento posible desde la posicion de la torre
             int nuevaFila = fila + movimiento[0];
@@ -98,9 +151,9 @@ public class Torre extends Pieza implements PiezaMustHave {
                 		continue;
                 	}
                 	break;}
-            }
+            	}
+        	}
         }
-
         return casillasDisp;
     }
 }

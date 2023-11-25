@@ -509,31 +509,31 @@ public class LogicaPartida {
 		reyBlack = new Rey(false);
 		reyWhite = new Rey(true);
 		
-		casillas.get(0).setPieza(new Torre(false));
-		casillas.get(1).setPieza(new Caballo(false, false));
+		casillas.get(0).setPieza(new Torre(false,false));
+		casillas.get(1).setPieza(new Caballo(false,false));
 		casillas.get(2).setPieza(new Alfil(false));
 		casillas.get(3).setPieza(new Reina(false));
 		casillas.get(4).setPieza(reyBlack);
 		casillas.get(5).setPieza(new Alfil(false));
-		casillas.get(6).setPieza(new Caballo(false, false));
-		casillas.get(7).setPieza(new Torre(false));
+		casillas.get(6).setPieza(new Caballo(false,false));
+		casillas.get(7).setPieza(new Torre(false,false));
 
 		for (int i = 8; i <= 15; i++) {
-			casillas.get(i).setPieza(new Peon(false, false));
+			casillas.get(i).setPieza(new Peon(false,false));
 		}
 
 		for (int i = 48; i <= 55; i++) {
-			casillas.get(i).setPieza(new Peon(true, false)); 
+			casillas.get(i).setPieza(new Peon(true,false)); 
 		}
 		
-		casillas.get(56).setPieza(new Torre(true));
-		casillas.get(57).setPieza(new Caballo(true, false));
+		casillas.get(56).setPieza(new Torre(true,false));
+		casillas.get(57).setPieza(new Caballo(true,false));
 		casillas.get(58).setPieza(new Alfil(true));
 		casillas.get(59).setPieza(new Reina(true));
 		casillas.get(60).setPieza(reyWhite);
 		casillas.get(61).setPieza(new Alfil(true));
-		casillas.get(62).setPieza(new Caballo(true, false));
-		casillas.get(63).setPieza(new Torre(true));
+		casillas.get(62).setPieza(new Caballo(true,false));
+		casillas.get(63).setPieza(new Torre(true,false));
         
 		//System.out.println(Session.getDatosPartida().getModoDeJuego());
 		//System.out.println(Session.getDatosPartida().getJugadores().get(0));
