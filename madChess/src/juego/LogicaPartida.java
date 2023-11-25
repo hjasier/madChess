@@ -200,12 +200,18 @@ public class LogicaPartida {
        		
        		pieza.setPMoved(); //Seteamos el piezaMoved en true
        		
-       		guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
+       		if(pieza instanceof Alfil && ((Alfil) pieza).alfilIsAlter() && piezaComida != null) {
+                revertirMovimiento(prevCasilla, curCasilla, pieza, piezaComida);
+       			}else {
+       				guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
+       	       		
+       			}
        			
        		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
     		
        		checkReyInJaque();
-    		
+       		
+       		
 			}
 			 
 			prevCasilla.setDragging(false);
@@ -214,10 +220,16 @@ public class LogicaPartida {
     		for(Casilla casillaDisp: casillasDisp) {
     			casillaDisp.setDisponible(false); //Borramos los puntos de las casillas
     		} 
-
-    		       
 		}
-		
+	}
+	private void revertirMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
+	    // Revertimos el movimiento
+	    prevCasilla.setPieza(pieza);
+	    curCasilla.setPieza(null);
+
+	    // Imprimimos un mensaje indicando que el alfil ha vuelto a su posición original después de comer
+	    printMovimiento("<" + curPlayer.getNombre() + "> " + prevCasilla.getPos() + " ⏩ "+ curCasilla.getPos()
+	            + " 💀 ⏩ "+ prevCasilla.getPos());
 	}
 
 
@@ -511,10 +523,10 @@ public class LogicaPartida {
 		
 		casillas.get(0).setPieza(new Torre(false,false));
 		casillas.get(1).setPieza(new Caballo(false,false));
-		casillas.get(2).setPieza(new Alfil(false));
-		casillas.get(3).setPieza(new Reina(false));
+		casillas.get(2).setPieza(new Alfil(false,false));
+		casillas.get(3).setPieza(new Reina(false,false));
 		casillas.get(4).setPieza(reyBlack);
-		casillas.get(5).setPieza(new Alfil(false));
+		casillas.get(5).setPieza(new Alfil(false,false));
 		casillas.get(6).setPieza(new Caballo(false,false));
 		casillas.get(7).setPieza(new Torre(false,false));
 
@@ -528,10 +540,10 @@ public class LogicaPartida {
 		
 		casillas.get(56).setPieza(new Torre(true,false));
 		casillas.get(57).setPieza(new Caballo(true,false));
-		casillas.get(58).setPieza(new Alfil(true));
-		casillas.get(59).setPieza(new Reina(true));
+		casillas.get(58).setPieza(new Alfil(true,true));
+		casillas.get(59).setPieza(new Reina(true, false));
 		casillas.get(60).setPieza(reyWhite);
-		casillas.get(61).setPieza(new Alfil(true));
+		casillas.get(61).setPieza(new Alfil(true,true));
 		casillas.get(62).setPieza(new Caballo(true,false));
 		casillas.get(63).setPieza(new Torre(true,false));
         

@@ -236,9 +236,9 @@ public class Tablero extends JPanel{
 	            Object source = e.getSource();
 	            
 	            if (source == promReina) {
-	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite()));
+	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite(),false));
 	            } else if (source == promAlfil) {
-	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite()));
+	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite(),false));
 	            } else if (source == promCaballo) {
 	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite(),false));
 	            } else if (source == promTorre) {

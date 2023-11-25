@@ -6,9 +6,15 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Alfil extends Pieza implements PiezaMustHave {
-
-	public Alfil(Boolean isWhite) {
+	protected boolean isAlter;
+	
+	public Alfil(Boolean isWhite, boolean isAlter) {
 		super("b",isWhite);
+		this.isAlter = isAlter;
+	}
+	
+	public boolean alfilIsAlter() {
+		return isAlter;
 	}
 
 	@Override

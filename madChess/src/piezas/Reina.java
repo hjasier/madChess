@@ -6,9 +6,10 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Reina extends Pieza implements PiezaMustHave {
-
-	public Reina(Boolean isWhite) {
+	protected boolean isAlter;
+	public Reina(Boolean isWhite, boolean isAlter) {
 		super("q",isWhite);
+		this.isAlter = isAlter;
 	}
 
 	@Override
