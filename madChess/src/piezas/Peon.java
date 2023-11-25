@@ -7,8 +7,7 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Peon extends Pieza implements PiezaMustHave{
-	protected boolean isAlter = true;
-	
+	protected boolean isAlter;
 	public Peon(Boolean isWhite, boolean isAlter) {
 		super("p",isWhite);
 		this.isAlter = isAlter;
@@ -49,9 +48,12 @@ public class Peon extends Pieza implements PiezaMustHave{
                 if ((casillaDisp.getPieza() != null && casillaDisp.getPieza().getIsWhite() == this.getIsWhite()) ||
                 	    (movimiento[0] == -1 && movimiento[1] == -1 && casillaDisp.getPieza() == null) ||
                 	    (movimiento[0] == -1 && movimiento[1] == 1 && casillaDisp.getPieza() == null) ||
+                	    (movimiento[0] == -2 && movimiento[1] == 0 && casillaDisp.getPieza() != null) ||
                 	    (movimiento[0] == -1 && movimiento[1] == 0 && casillaDisp.getPieza() != null)) {
+                		
                 	    continue;
                 	}
+                
                 casillasDisp.add(casillaDisp);
 
                 
