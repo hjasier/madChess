@@ -35,6 +35,10 @@ public class BButton extends JButton {
         setContentAreaFilled(false);
         setFocusPainted(false);
         
+        
+        setMargin(new Insets(Escalador.escalar(5), 0, 0, 0));
+        
+        
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {

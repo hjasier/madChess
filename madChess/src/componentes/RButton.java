@@ -35,7 +35,7 @@ public class RButton extends JButton {
         setPreferredSize(buttonSize);
         
 
-        ((AbstractButton) this).setMargin(new Insets(5, 0, 0, 0));
+        ((AbstractButton) this).setMargin(new Insets(Escalador.escalar(5), 0, 0, 0));
         setVerticalTextPosition(SwingConstants.TOP);
         
         addMouseListener(new java.awt.event.MouseAdapter() {

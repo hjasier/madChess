@@ -16,6 +16,8 @@ import java.io.Serializable;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import juego.Escalador;
+
 
 public class Casilla extends JPanel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -126,6 +128,8 @@ public class Casilla extends JPanel implements Serializable {
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g; // para que se vea nice
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         super.paintComponent(g);
         
         
@@ -149,14 +153,16 @@ public class Casilla extends JPanel implements Serializable {
             	g.fillOval(height/2 - radius2/2, height/2 - radius2/2,radius2,radius2);
         	}
         	else {
-            	final int radius = 25; //FIXME: En circulo tendría que tener relación al tamaño de la casilla
+            	final int radius = Escalador.escalar(25); //FIXME: En circulo tendría que tener relación al tamaño de la casilla
             	g.fillOval(height/2 - radius/2, height/2 - radius/2,radius,radius);	
         	}
 
         }
         
+        
         if (this.pieza != null && !dragging) {	
-        	g.drawImage(this.pieza.getImg().getImage(), x, y, imgSize, imgSize, this);
+        	Image img = this.pieza.getImg().getImage();
+        	g.drawImage(img, x, y, imgSize, imgSize, null);
         }
         
         

@@ -255,9 +255,12 @@ public class Juego extends JPanel {
 	    
 	    labelChat = new JLabel("CHAT");
 	    labelChat.setFont(labelChat.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
+	    labelChat.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	    
 	    labelBoost = new JLabel("BOOSTS");
 	    labelBoost.setFont(labelBoost.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
+	    labelBoost.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	    
 	    
 	    panelLabels.add(labelChat);
 	    panelLabels.add(Box.createRigidArea(new java.awt.Dimension(15,0)));
@@ -413,6 +416,8 @@ public class Juego extends JPanel {
         	public void mouseClicked(MouseEvent e) {
         		
         		cardLayout.show(panelCardL,"CHAT");
+        		labelChat.setForeground(Color.white);
+        		labelBoost.setForeground(Color.gray);
         	}
         });
         
@@ -422,6 +427,9 @@ public class Juego extends JPanel {
         	public void mouseClicked(MouseEvent e) {
         		
         		cardLayout.show(panelCardL,"BOOST");
+        		
+        		labelBoost.setForeground(Color.white);
+        		labelChat.setForeground(Color.gray);
         	}
         });
         
@@ -492,7 +500,13 @@ public class Juego extends JPanel {
 			//panelControles.setLayout(new GridLayout(1,1));
 			cardLayout.show(panelCardL,"BOOST");
 			panelTabs.remove(labelChat);
+			labelBoost.setForeground(Color.white);
+			labelChat.setForeground(Color.gray);
 			
+		}
+		else {
+			labelBoost.setForeground(Color.white);
+			labelChat.setForeground(Color.gray);
 		}
 		
 
