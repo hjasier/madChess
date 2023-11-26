@@ -46,6 +46,7 @@ import componentes.*;
 import componentes.MScrollPane;
 import componentes.userInfo;
 import juego.Configuracion;
+import juego.Escalador;
 import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
@@ -170,11 +171,11 @@ public class Juego extends JPanel {
 		panelJuego.add(panelUsuario2);
 		
 	    
-	    Icon backIcon = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, 20, Color.white);
-	    Icon backIconHover = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, 20, Color.red);
+	    Icon backIcon = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, Escalador.escalar(20), Color.white);
+	    Icon backIconHover = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, Escalador.escalar(20), Color.red);
 	    
-	    Icon configIcon = IconFontSwing.buildIcon(FontAwesome.COG, 20, Color.white);
-	    Icon configIconHover = IconFontSwing.buildIcon(FontAwesome.COG, 20, Color.red);
+	    Icon configIcon = IconFontSwing.buildIcon(FontAwesome.COG, Escalador.escalar(20), Color.white);
+	    Icon configIconHover = IconFontSwing.buildIcon(FontAwesome.COG, Escalador.escalar(20), Color.red);
 	    
 	    
 		backBtn = new JLabel(backIcon);
@@ -240,7 +241,7 @@ public class Juego extends JPanel {
 	    panelChat.add(panelControlChat, BorderLayout.SOUTH);
 	    
 
-	    areaChat.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
+	    areaChat.setFont(new Font("Monospaced", Font.PLAIN, Escalador.escalar(14))); 
 	    areaChat.setEditable(false);
 
 
@@ -253,10 +254,10 @@ public class Juego extends JPanel {
 	    panelLabels.setLayout(new BoxLayout(panelLabels, BoxLayout.X_AXIS));
 	    
 	    labelChat = new JLabel("CHAT");
-	    labelChat.setFont(labelChat.getFont().deriveFont(Font.BOLD, 12));
+	    labelChat.setFont(labelChat.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
 	    
 	    labelBoost = new JLabel("BOOSTS");
-	    labelBoost.setFont(labelBoost.getFont().deriveFont(Font.BOLD, 12));
+	    labelBoost.setFont(labelBoost.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
 	    
 	    panelLabels.add(labelChat);
 	    panelLabels.add(Box.createRigidArea(new java.awt.Dimension(15,0)));
@@ -268,13 +269,13 @@ public class Juego extends JPanel {
 	    // panel movimiento de las piezas
 	    
 	    labelMovimientos = new JLabel("MOVIMIENTOS");
-	    labelMovimientos.setFont(labelMovimientos.getFont().deriveFont(Font.BOLD, 12));
+	    labelMovimientos.setFont(labelMovimientos.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
 
 	    areaMovimientos = new JTextArea(5,2);
 	    areaMovimientos.setLineWrap(true); 
 	    areaMovimientos.setWrapStyleWord(true); 
 
-	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
+	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, Escalador.escalar(14))); 
 	    areaMovimientos.setEditable(false);
 	    
 	    scrollMovimientos = new MScrollPane(areaMovimientos);	

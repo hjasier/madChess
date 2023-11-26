@@ -200,12 +200,17 @@ public class LogicaPartida {
        		
        		pieza.setPMoved(); //Seteamos el piezaMoved en true
        		
+       		checkAlters(prevCasilla, curCasilla, pieza, piezaComida);
+       		
        		guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
+       	       		
+       			
        			
        		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
     		
        		checkReyInJaque();
-    		
+       		
+       		
 			}
 			 
 			prevCasilla.setDragging(false);
@@ -214,10 +219,29 @@ public class LogicaPartida {
     		for(Casilla casillaDisp: casillasDisp) {
     			casillaDisp.setDisponible(false); //Borramos los puntos de las casillas
     		} 
-
-    		       
 		}
+	}
+	private void checkAlters(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
+		if(pieza instanceof Alfil && ((Alfil) pieza).isAlter() && piezaComida != null) {
+            // Revertimos el movimiento
+    		prevCasilla.setPieza(pieza);
+    	    curCasilla.setPieza(null);
+   		}
+		if(pieza instanceof Reina && ((Reina) pieza).isAlter() && piezaComida != null) {
+			
+		}
+		//Miramos si el rey del oponente queda en jaque
+		int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
+		Jugador oponente = jugadores.get(newIndex);
 		
+		Casilla curReyCasilla = getCasillaPieza(oponente.getRey());
+		if (oponente.getRey().reCheckJaqueStatus( curReyCasilla, casillas) && oponente.getRey().reyIsAlter()) {
+			System.out.println("alter");
+			prevCasilla.setPieza(pieza);
+    	    curCasilla.setPieza(null);
+    	    oponente.getRey().setReyIsAlter(false);
+		}
+	
 	}
 
 
@@ -505,35 +529,35 @@ public class LogicaPartida {
 		cargarPiezasTablero();
 	}
 	
-	protected void cargarPiezasTablero() {
-		reyBlack = new Rey(false);
-		reyWhite = new Rey(true);
+	protected void cargarPiezasTablero() { //En principio no hay alters
+		reyBlack = new Rey(false,false);
+		reyWhite = new Rey(true,false);
 		
-		casillas.get(0).setPieza(new Torre(false));
-		casillas.get(1).setPieza(new Caballo(false));
-		casillas.get(2).setPieza(new Alfil(false));
-		casillas.get(3).setPieza(new Reina(false));
+		casillas.get(0).setPieza(new Torre(false,false));
+		casillas.get(1).setPieza(new Caballo(false,false));
+		casillas.get(2).setPieza(new Alfil(false,false));
+		casillas.get(3).setPieza(new Reina(false,false));
 		casillas.get(4).setPieza(reyBlack);
-		casillas.get(5).setPieza(new Alfil(false));
-		casillas.get(6).setPieza(new Caballo(false));
-		casillas.get(7).setPieza(new Torre(false));
+		casillas.get(5).setPieza(new Alfil(false,false));
+		casillas.get(6).setPieza(new Caballo(false,false));
+		casillas.get(7).setPieza(new Torre(false,false));
 
 		for (int i = 8; i <= 15; i++) {
-			casillas.get(i).setPieza(new Peon(false));
+			casillas.get(i).setPieza(new Peon(false,false));
 		}
 
 		for (int i = 48; i <= 55; i++) {
-			casillas.get(i).setPieza(new Peon(true));
+			casillas.get(i).setPieza(new Peon(true,false)); 
 		}
 		
-		casillas.get(56).setPieza(new Torre(true));
-		casillas.get(57).setPieza(new Caballo(true));
-		casillas.get(58).setPieza(new Alfil(true));
-		casillas.get(59).setPieza(new Reina(true));
+		casillas.get(56).setPieza(new Torre(true,false));
+		casillas.get(57).setPieza(new Caballo(true,false));
+		casillas.get(58).setPieza(new Alfil(true,false));
+		casillas.get(59).setPieza(new Reina(true, true));
 		casillas.get(60).setPieza(reyWhite);
-		casillas.get(61).setPieza(new Alfil(true));
-		casillas.get(62).setPieza(new Caballo(true));
-		casillas.get(63).setPieza(new Torre(true));
+		casillas.get(61).setPieza(new Alfil(true,false));
+		casillas.get(62).setPieza(new Caballo(true,false));
+		casillas.get(63).setPieza(new Torre(true,false));
         
 		//System.out.println(Session.getDatosPartida().getModoDeJuego());
 		//System.out.println(Session.getDatosPartida().getJugadores().get(0));

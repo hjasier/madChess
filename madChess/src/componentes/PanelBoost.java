@@ -1,8 +1,10 @@
 package componentes;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import juego.Configuracion;
+import juego.Escalador;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,12 +34,15 @@ public class PanelBoost extends JPanel {
 
         // Panel Descripción
         JPanel panelDescripcion = new JPanel(new BorderLayout());
+
+        
         JLabel iconoLabel = new JLabel("Icono");
         iconoLabel.setHorizontalAlignment(JLabel.LEFT);
         panelDescripcion.add(iconoLabel, BorderLayout.WEST);
 
         JLabel descripcionLabel = new JLabel("Descripción");
         descripcionLabel.setHorizontalAlignment(JLabel.CENTER);
+        
         panelDescripcion.add(descripcionLabel, BorderLayout.CENTER);
 
         panelDescripcion.setBackground(colorFondo);
@@ -64,7 +69,7 @@ public class PanelBoost extends JPanel {
         JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
         BButton usarButton = new BButton("Usar");
         panelBoton.setBackground(colorFondo);
-        usarButton.setPreferredSize(new Dimension(80, 30));
+        usarButton.setPreferredSize(new Dimension(Escalador.escalar(80), Escalador.escalar(30)));
         panelBoton.add(usarButton);
         elementoPanel.add(panelBoton, BorderLayout.CENTER);
 

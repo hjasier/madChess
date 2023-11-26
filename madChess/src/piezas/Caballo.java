@@ -6,9 +6,10 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Caballo extends Pieza implements PiezaMustHave {
-
-	public Caballo(Boolean isWhite) {
+	
+	public Caballo(Boolean isWhite, boolean isAlter) {
 		super("n",isWhite);
+		this.isAlter = isAlter;
 	}
 
 	
@@ -29,6 +30,16 @@ public class Caballo extends Pieza implements PiezaMustHave {
 	      {-2, -1},		 {-2, 1}, 
 	      	{2, -1},  {2, 1}
 	    };
+	    if (isAlter) {
+	    	movimientos = new int[][] {
+	    	      {-1,-2}, {-1,2}, 
+	    	      {1, -2}, {1, 2},
+	    	      {-2,-1}, {-2,1}, 
+	    	      {2, -1}, {2, 1},
+	    	      {0,-2},  {0, 2},
+	    	      {2, 0},  {-2,0}
+	    	    };
+        }
 
 	    for (int[] movimiento : movimientos) {
 	        int nuevaFila = fila + movimiento[0];

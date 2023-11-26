@@ -6,10 +6,15 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Alfil extends Pieza implements PiezaMustHave {
-
-	public Alfil(Boolean isWhite) {
+	
+	
+	public Alfil(Boolean isWhite, boolean isAlter) {
 		super("b",isWhite);
+		this.isAlter = isAlter;
 	}
+	
+
+
 
 	@Override
     public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {
@@ -55,7 +60,7 @@ public class Alfil extends Pieza implements PiezaMustHave {
         int fila = curCasilla.getFila();
         char columna = curCasilla.getColumna();
 
-        // Posibles movimientos de la torre: arriba, abajo, izquierda y derecha
+        // Posibles movimientos del alfil
         int[][] movimientos = {
         			
         		{-1, -1},    {-1, 1},

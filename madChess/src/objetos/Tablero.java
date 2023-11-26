@@ -224,7 +224,7 @@ public class Tablero extends JPanel{
         this.repaint();
 	}
 
-	public void initPromocion(Casilla promCasilla, MouseEvent e) {
+	public void initPromocion(Casilla promCasilla, MouseEvent e) { //En principio no son alter
 		// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
 		promocionPanel.setLocation(e.getX(),e.getY());
 		promocionPanel.setVisible(true);
@@ -236,13 +236,13 @@ public class Tablero extends JPanel{
 	            Object source = e.getSource();
 	            
 	            if (source == promReina) {
-	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite()));
+	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite(),false));
 	            } else if (source == promAlfil) {
-	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite()));
+	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite(),false));
 	            } else if (source == promCaballo) {
-	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite()));
+	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite(),false));
 	            } else if (source == promTorre) {
-	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite()));
+	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite(),false));
 	            }
 
 	            promocionPanel.setVisible(false);

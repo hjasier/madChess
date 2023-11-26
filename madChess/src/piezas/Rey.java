@@ -9,9 +9,11 @@ import objetos.Pieza;
 
 public class Rey extends Pieza implements PiezaMustHave{
 	protected Boolean isAmenezado = false;
+
 	
-	public Rey(Boolean isWhite) {
+	public Rey(Boolean isWhite, boolean isAlter) {
 		super("k",isWhite);
+		this.isAlter = isAlter;
 	}
 
 	
@@ -20,7 +22,13 @@ public class Rey extends Pieza implements PiezaMustHave{
 		return isAmenezado;
 	}
 
-
+	public boolean reyIsAlter() {
+		return isAlter;
+	}
+	
+	public void setReyIsAlter(boolean isalter) {
+		this.isAlter = isalter;
+	}
 
 	public void setIsAmenezado(Boolean isAmenezado) {
 		this.isAmenezado = isAmenezado;

@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import juego.Escalador;
+
 public class userInfo extends JPanel{
 	
 	protected JLabel labelUsuario; 
@@ -22,22 +24,21 @@ public class userInfo extends JPanel{
 	
 	public userInfo() {		
 		this.setLayout(new BorderLayout());
-		this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
+		this.setMaximumSize(new Dimension(Integer.MAX_VALUE, Escalador.escalar(35)));
 		this.setBackground(new Color(16,16,16));
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		
-		Font font = new Font("Arial", Font.BOLD, 13); 
 	        
 		
-		labelUsuario = new JLabel("Usuario 1");
+		labelUsuario = new JLabel("user");
 		labelUsuario.setForeground(Color.white);
 		labelUsuario.setSize(10,10);
-		labelUsuario.setFont(font);
+		
 		
 		labelTemp = new JLabel("100");
 		labelTemp.setForeground(Color.white);
-		labelTemp.setFont(font);
+		
 		
 		this.add(labelUsuario,BorderLayout.WEST);
 		this.add(labelTemp,BorderLayout.EAST);

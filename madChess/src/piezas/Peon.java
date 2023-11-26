@@ -7,9 +7,10 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Peon extends Pieza implements PiezaMustHave{
-	
-	public Peon(Boolean isWhite) {
+	protected boolean isAlter;
+	public Peon(Boolean isWhite, boolean isAlter) {
 		super("p",isWhite);
+		this.isAlter = isAlter;
 	}
 
 	
@@ -29,7 +30,7 @@ public class Peon extends Pieza implements PiezaMustHave{
         		{-1, 0}, /**Peon**/
         		{-1, 1}
         };
-        if (!pMoved) {
+        if (!pMoved||isAlter) {
             movimientos[1][0] = -2; // Cambia el movimiento de una casilla a dos casillas
         }
         
