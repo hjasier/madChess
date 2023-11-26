@@ -200,26 +200,12 @@ public class LogicaPartida {
        		
        		pieza.setPMoved(); //Seteamos el piezaMoved en true
        		
-       		if(pieza instanceof Alfil && ((Alfil) pieza).alfilIsAlter() && piezaComida != null) {
-                revertirMovimiento(prevCasilla, curCasilla, pieza, piezaComida);
-       			}else {
-       				guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos	
-       			}
+       		checkAlters(prevCasilla, curCasilla, pieza, piezaComida);
        		
-       		setNextPlayer(); //Miramos si el otro rey queda en jaque
-       		Casilla curReyCasilla = null;
-    		for (Casilla casilla:casillas) {
-    			if (casilla.getPieza()==curPlayer.getRey()) {
-    				curReyCasilla = casilla;
-    				break;
-    			}
-    		}
-    		if (curPlayer.getRey().reCheckJaqueStatus(curReyCasilla,casillas)) {
-    			revertirMovimientoRey(prevCasilla, curCasilla, pieza, piezaComida);
-    		}
-    		
-       		
-       		
+       		guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
+       	       		
+       			
+       			
        		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
     		
        		checkReyInJaque();
@@ -235,23 +221,24 @@ public class LogicaPartida {
     		} 
 		}
 	}
-	private void revertirMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
-	    // Revertimos el movimiento
-	    prevCasilla.setPieza(pieza);
-	    curCasilla.setPieza(null);
-
-	    // Imprimimos un mensaje indicando que el alfil ha vuelto a su posición original después de comer
-	    printMovimiento("<" + curPlayer.getNombre() + "> " + prevCasilla.getPos() + " ⏩ "+ curCasilla.getPos()
-	            + " 💀 ⏩ "+ prevCasilla.getPos());
-	}
-	private void revertirMovimientoRey(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
-	    // Revertimos el movimiento
-	    prevCasilla.setPieza(pieza);
-	    curCasilla.setPieza(null);
-
-	    // Imprimimos un mensaje indicando que el alfil ha vuelto a su posición original después de comer
-	    printMovimiento("<" + curPlayer.getNombre() + "> " + prevCasilla.getPos() + " ⏩ "+ curCasilla.getPos()
-	            + " 💀 ⏩ "+ prevCasilla.getPos());
+	private void checkAlters(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
+		if(pieza instanceof Alfil && ((Alfil) pieza).alfilIsAlter() && piezaComida != null) {
+            // Revertimos el movimiento
+    		prevCasilla.setPieza(pieza);
+    	    curCasilla.setPieza(null);
+   		}
+		//Miramos si el rey del oponente queda en jaque
+		int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
+		Jugador oponente = jugadores.get(newIndex);
+		
+		Casilla curReyCasilla = getCasillaPieza(oponente.getRey());
+		if (oponente.getRey().reCheckJaqueStatus( curReyCasilla, casillas) && oponente.getRey().reyIsAlter()) {
+			System.out.println("alter");
+			prevCasilla.setPieza(pieza);
+    	    curCasilla.setPieza(null);
+    	    oponente.getRey().setReyIsAlter(false);
+		}
+	
 	}
 
 
@@ -562,11 +549,11 @@ public class LogicaPartida {
 		
 		casillas.get(56).setPieza(new Torre(true,false));
 		casillas.get(57).setPieza(new Caballo(true,false));
-		casillas.get(58).setPieza(new Alfil(true,true));
-		casillas.get(59).setPieza(new Reina(true, true));
+		casillas.get(58).setPieza(new Alfil(true,false));
+		casillas.get(59).setPieza(new Reina(true, false));
 		casillas.get(60).setPieza(reyWhite);
-		casillas.get(61).setPieza(new Alfil(true,true));
-		casillas.get(62).setPieza(new Caballo(true,true));
+		casillas.get(61).setPieza(new Alfil(true,false));
+		casillas.get(62).setPieza(new Caballo(true,false));
 		casillas.get(63).setPieza(new Torre(true,false));
         
 		//System.out.println(Session.getDatosPartida().getModoDeJuego());
