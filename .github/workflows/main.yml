@@ -29,8 +29,9 @@ jobs:
           # sftp args
           args: '-o ConnectTimeout=5'
           
-  execute-commands:
+  recompilar-server:
     runs-on: ubuntu-latest
+    needs: deploy-via-sftp
 
     steps:
       - name: Conexión al server x2
