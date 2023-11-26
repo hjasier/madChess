@@ -6,7 +6,7 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Reina extends Pieza implements PiezaMustHave {
-	protected boolean isAlter;
+
 	public Reina(Boolean isWhite, boolean isAlter) {
 		super("q",isWhite);
 		this.isAlter = isAlter;
@@ -71,7 +71,8 @@ public class Reina extends Pieza implements PiezaMustHave {
     	                        if (siguienteFila >= 0 && siguienteFila <= 7 &&
     	                            siguienteColumna >= 'A' && siguienteColumna <= 'H') {
     	                            Casilla siguienteCasilla = casillas.get(siguienteFila * 8 + (siguienteColumna - 'A'));
-    	                            if (siguienteCasilla.getPieza() != null &&
+    	                            if (contador <= 2 &&
+    	                            	siguienteCasilla.getPieza() != null &&
     	                                siguienteCasilla.getPieza().getIsWhite() != this.getIsWhite()) {
     	                                casillasDisp.add(siguienteCasilla);
     	                                

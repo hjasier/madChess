@@ -6,16 +6,15 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Alfil extends Pieza implements PiezaMustHave {
-	protected boolean isAlter;
+	
 	
 	public Alfil(Boolean isWhite, boolean isAlter) {
 		super("b",isWhite);
 		this.isAlter = isAlter;
 	}
 	
-	public boolean alfilIsAlter() {
-		return isAlter;
-	}
+
+
 
 	@Override
     public ArrayList<Casilla> getCasillasDisponibles(Casilla curCasilla, ArrayList<Casilla> casillas) {

@@ -222,11 +222,14 @@ public class LogicaPartida {
 		}
 	}
 	private void checkAlters(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
-		if(pieza instanceof Alfil && ((Alfil) pieza).alfilIsAlter() && piezaComida != null) {
+		if(pieza instanceof Alfil && ((Alfil) pieza).isAlter() && piezaComida != null) {
             // Revertimos el movimiento
     		prevCasilla.setPieza(pieza);
     	    curCasilla.setPieza(null);
    		}
+		if(pieza instanceof Reina && ((Reina) pieza).isAlter() && piezaComida != null) {
+			
+		}
 		//Miramos si el rey del oponente queda en jaque
 		int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
 		Jugador oponente = jugadores.get(newIndex);
@@ -550,7 +553,7 @@ public class LogicaPartida {
 		casillas.get(56).setPieza(new Torre(true,false));
 		casillas.get(57).setPieza(new Caballo(true,false));
 		casillas.get(58).setPieza(new Alfil(true,false));
-		casillas.get(59).setPieza(new Reina(true, false));
+		casillas.get(59).setPieza(new Reina(true, true));
 		casillas.get(60).setPieza(reyWhite);
 		casillas.get(61).setPieza(new Alfil(true,false));
 		casillas.get(62).setPieza(new Caballo(true,false));

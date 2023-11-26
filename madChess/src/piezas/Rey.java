@@ -9,7 +9,7 @@ import objetos.Pieza;
 
 public class Rey extends Pieza implements PiezaMustHave{
 	protected Boolean isAmenezado = false;
-	protected boolean isAlter;
+
 	
 	public Rey(Boolean isWhite, boolean isAlter) {
 		super("k",isWhite);

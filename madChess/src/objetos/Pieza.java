@@ -17,7 +17,7 @@ public class Pieza implements Serializable {
 	private Jugador propietario;
 	private Boolean isWhite;
 	protected Boolean pMoved = false;
-	
+	protected Boolean isAlter = false;
 	
 	public ArrayList<Casilla> getCasillasCome(Casilla curCasilla, ArrayList<Casilla> casillas) {
 
@@ -25,7 +25,7 @@ public class Pieza implements Serializable {
 
     }
 	
-
+	
 	
 	public Pieza(String nombre, Boolean isWhite) {
 		super();
@@ -66,6 +66,14 @@ public class Pieza implements Serializable {
 		return this.pMoved;
 	}
 	
-		
+	
+	public boolean isAlter() {
+		return isAlter;
+	}
+
+
+	public void setAlter(boolean isAlter) {
+		this.isAlter = isAlter;
+	}
 	
 }

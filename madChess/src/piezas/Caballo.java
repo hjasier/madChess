@@ -6,7 +6,7 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Caballo extends Pieza implements PiezaMustHave {
-	protected boolean isAlter;
+	
 	public Caballo(Boolean isWhite, boolean isAlter) {
 		super("n",isWhite);
 		this.isAlter = isAlter;

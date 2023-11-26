@@ -6,7 +6,7 @@ import objetos.Pieza;
 import piezas.Rey;
 
 public class Torre extends Pieza implements PiezaMustHave {
-	protected boolean isAlter;
+
     public Torre(Boolean isWhite, boolean isAlter) {
         super("r", isWhite);
         this.isAlter = isAlter;
