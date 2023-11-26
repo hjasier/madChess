@@ -15,6 +15,7 @@ import java.util.Random;
 import objetos.Jugador;
 import componentes.*;
 import juego.Configuracion;
+import juego.Escalador;
 import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
@@ -75,8 +76,10 @@ public class Login extends JPanel {
 		opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
 
 		
-		inputNombre.setMaximumSize(new Dimension(200, 40));
-		inputContra.setMaximumSize(new Dimension(200, 40));
+		inputNombre.setMaximumSize(new Dimension(Escalador.escalar(200), Escalador.escalar(40)));
+		inputContra.setMaximumSize(new Dimension(Escalador.escalar(200), Escalador.escalar(40)));
+		loginBtn.setMaximumSize(new Dimension(Escalador.escalar(200), Escalador.escalar(40)));
+		
 		
 		registerLabel.setForeground(new Color(213,213,213));
 		labelTitulo.setForeground(new Color(236,236,236));
@@ -96,13 +99,13 @@ public class Login extends JPanel {
 		
 		
 		opciones.add(labelTitulo);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 40))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(40)))); // Espacio entre los botones
 		opciones.add(inputNombre);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(10)))); // Espacio entre los botones
         opciones.add(inputContra);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 20))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(20)))); // Espacio entre los botones
         opciones.add(loginBtn);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 20))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(20)))); // Espacio entre los botones
         opciones.add(registerLabel);
 
 

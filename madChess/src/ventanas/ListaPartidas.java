@@ -108,7 +108,7 @@ public class ListaPartidas extends JPanel {
         codigoLabel.setForeground(Color.WHITE);
 
         // Botón "Join"
-        BButton joinButton = new BButton("Unirme a la partida");
+        BButton joinButton = new BButton("Unirme");
 
         // Nombre de jugador
         JLabel jugadorLabel = new JLabel(jugador);

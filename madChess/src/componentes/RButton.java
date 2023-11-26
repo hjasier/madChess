@@ -1,8 +1,16 @@
 package componentes;
 
 import javax.swing.*;
+
+import juego.Configuracion;
+import juego.Escalador;
+
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+
+/*
+ * BOTONES REDONDOS COMO EL DE LOGIN
+ */
 
 public class RButton extends JButton {
 
@@ -12,17 +20,23 @@ public class RButton extends JButton {
     public RButton(String text) {
         super(text);
 
-        setPreferredSize(new Dimension(90, 25));
         setBackground(DEFAULT_COLOR);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Dimension buttonSize = new Dimension(200, 50);
-        setMaximumSize(buttonSize);
+        
         
         // Quitar bordes del botón y del texto
         setBorderPainted(false);
         setContentAreaFilled(false);
         setFocusPainted(false);
         
+        
+        
+        Dimension buttonSize = new Dimension(Escalador.escalar(90), Escalador.escalar(25));
+        setPreferredSize(buttonSize);
+        
+
+        ((AbstractButton) this).setMargin(new Insets(5, 0, 0, 0));
+        setVerticalTextPosition(SwingConstants.TOP);
         
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -34,6 +48,8 @@ public class RButton extends JButton {
             }
         });
         
+        
+        
     }
 
     @Override
@@ -41,7 +57,7 @@ public class RButton extends JButton {
         Graphics2D g2d = (Graphics2D) g.create();
         int height = getHeight();
         int width = getWidth();
-        int arc = 20; // Ajusta el radio de las esquinas redondeadas
+        int arc = Escalador.escalar(20); // Ajusta el radio de las esquinas redondeadas
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 

@@ -59,9 +59,6 @@ public class ClienteHandler implements Runnable {
     			
     			
     			
-    			
-    			
-    			
 				switch ((String) objRecibido) {
 					
 					
@@ -90,11 +87,12 @@ public class ClienteHandler implements Runnable {
     					System.out.println(curPartida.getJugadores());
     					
     					//Envia la info de la partida al nuevo jugador
+    					output.reset();
     					output.writeObject("updateConfData"); 
     					output.writeObject(curPartida); 
     					
     				
-    					//Enviamos la info al resto de jugadores tmb
+    					//Envia la info al resto de jugadores tmb
     					reenviar2Datos("updateConfData",curPartida);
     					break;
     					
@@ -157,6 +155,7 @@ public class ClienteHandler implements Runnable {
 			ObjectOutputStream clientOutput = cliente.getOutput();
 			if (clientOutput!=output) {  // Al cliente actual no, solo al resto
 				try {
+					clientOutput.reset();
 					clientOutput.writeObject(preDato);
 					clientOutput.writeObject(dato);
 					

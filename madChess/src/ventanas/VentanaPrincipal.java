@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 import Sockets.Servidor;
 import juego.Configuracion;
 import juego.DatosPartida;
+import juego.Escalador;
 import juego.LogicaPartida;
 import juego.Session;
 import objetos.Jugador;
@@ -48,7 +49,7 @@ public class VentanaPrincipal extends JFrame{
     
 	public VentanaPrincipal() {
 		
-		this.setSize(1250,1000);
+		this.setSize(Escalador.escalar(1000),Escalador.escalar(800));
 		this.setLocationRelativeTo(null);
 		
 		
@@ -296,17 +297,7 @@ public class VentanaPrincipal extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         Session.setVentana(this);
-        
-        
-        
-        
-        
-        
-        
-
-        
-      
-        
+    
         
 	}
 

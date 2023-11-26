@@ -1,6 +1,10 @@
 package componentes;
 
 import javax.swing.*;
+
+import juego.Configuracion;
+import juego.Escalador;
+
 import java.awt.*;
 import java.io.IOException;
 
@@ -11,7 +15,7 @@ public class BLabel extends JLabel {
         try {
             String nombreFont = "/srcmedia/unsh.ttf";
             Font f = Font.createFont(Font.TRUETYPE_FONT, BLabel.class.getResourceAsStream(nombreFont));
-            f = f.deriveFont(Font.PLAIN, 16);
+            f = f.deriveFont(Font.PLAIN, Escalador.escalarF(18));
             setFont(f);
         } catch (FontFormatException | IOException e) {
             System.out.println("Error al cargar la fuente");

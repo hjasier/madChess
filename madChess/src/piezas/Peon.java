@@ -47,9 +47,12 @@ public class Peon extends Pieza implements PiezaMustHave{
                 if ((casillaDisp.getPieza() != null && casillaDisp.getPieza().getIsWhite() == this.getIsWhite()) ||
                 	    (movimiento[0] == -1 && movimiento[1] == -1 && casillaDisp.getPieza() == null) ||
                 	    (movimiento[0] == -1 && movimiento[1] == 1 && casillaDisp.getPieza() == null) ||
+                	    (movimiento[0] == -2 && movimiento[1] == 0 && casillaDisp.getPieza() != null) ||
                 	    (movimiento[0] == -1 && movimiento[1] == 0 && casillaDisp.getPieza() != null)) {
+                		
                 	    continue;
                 	}
+                
                 casillasDisp.add(casillaDisp);
 
                 

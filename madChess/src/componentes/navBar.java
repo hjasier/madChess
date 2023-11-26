@@ -11,12 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import juego.Configuracion;
+import juego.Escalador;
 
 public class navBar extends JPanel{
 	private Color colorFondo = Configuracion.BACKGROUND;
 	protected JPanel panelBtn = new JPanel();
 	protected JPanel panelLogo = new JPanel();
-	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo110x300.png"));
+	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo430x155.png"));
     protected JLabel foto = new JLabel(imgFoto);
 	
     public navBar() {
@@ -33,7 +34,7 @@ public class navBar extends JPanel{
    		
    		
    		// Escalar la imagen
-         Image imagenEscalada = imgFoto.getImage().getScaledInstance(300, 110, Image.SCALE_SMOOTH);
+         Image imagenEscalada = imgFoto.getImage().getScaledInstance(Escalador.escalar(317), Escalador.escalar(114), Image.SCALE_SMOOTH);
          imgFoto = new ImageIcon(imagenEscalada);
          foto.setIcon(imgFoto);
 

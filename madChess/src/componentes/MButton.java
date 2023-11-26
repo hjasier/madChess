@@ -8,6 +8,10 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/*
+ * BOTONES CUADRADOS OSCUROS COMO CHAT	
+ */
+
 public class MButton extends JButton {
     public MButton(String text) {
         super(text);
@@ -23,10 +27,6 @@ public class MButton extends JButton {
         // Configurar el fondo y el color de fuente
         setBackground(new Color(36, 36, 36)); // Fondo oscuro
         setForeground(Color.WHITE); // Texto en color blanco
-
-        // Configurar la fuente y el tamaño del texto
-        Font buttonFont = new Font("Arial", Font.BOLD, 16); // Puedes ajustar la fuente y el tamaño
-        setFont(buttonFont);
 
         // Crear un borde redondeado personalizado
         LineBorder roundedBorder = new LineBorder(Color.WHITE, 2, true);

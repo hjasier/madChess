@@ -39,8 +39,9 @@ public class ClientGET implements Runnable {
                 	case "initGame":
                 		Session.getVentana().initGame();
                 		break;
-                	case "updateConfData":
+                	case "updateConfData":	
                 		DatosPartida datosPartida = (DatosPartida) serverIn.readObject();
+                		
                 		System.out.println(datosPartida.getJugadores());
                 		
                 		Session.setDatosPartida(datosPartida);  

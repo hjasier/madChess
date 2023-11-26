@@ -3,6 +3,7 @@ package ventanas;
 import componentes.*;
 import juego.Configuracion;
 import juego.DatosPartida;
+import juego.Escalador;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
@@ -38,24 +39,25 @@ public class ConfPLocal extends JPanel {
 
         JLabel labelModoJuego = new JLabel("Modo de juego:");
         MComboBox<String> comboModoJuego = new MComboBox<>(new String[]{"Clásico", "madChess"});
-        comboModoJuego.setMaximumSize(new Dimension(150, 25));
+        comboModoJuego.setMaximumSize(new Dimension(Escalador.escalar(150), Escalador.escalar(35)));
 
         JLabel labelJugador1 = new JLabel("Jugador 1:");
         botonUser1 = new RButton("Login");
-        botonUser1.setMaximumSize(new Dimension(100, 25)); // Ajustar el tamaño máximo del botón
+        botonUser1.setMaximumSize(new Dimension(Escalador.escalar(120), Escalador.escalar(25)));
 
         JLabel labelNombre1 = new JLabel("Nombre");
         labelNombre1.setVisible(false);
 
         JLabel labelJugador2 = new JLabel("Jugador 2:");
         botonUser2 = new RButton("Login");
-        botonUser2.setMaximumSize(new Dimension(100, 25)); // Ajustar el tamaño máximo del botón
+        botonUser2.setMaximumSize(new Dimension(Escalador.escalar(120), Escalador.escalar(25))); // Ajustar el tamaño máximo del botón
 
         JLabel labelNombre2 = new JLabel("Nombre");
         labelNombre2.setVisible(false);
 
         botonIniciarPartida = new BButton("Iniciar Partida");
-
+        botonIniciarPartida.setPreferredSize(new Dimension(Escalador.escalar(150), Escalador.escalar(35)));
+        
         // Configuración del layout con BoxLayout en el eje Y
         setLayout(new BorderLayout());
 

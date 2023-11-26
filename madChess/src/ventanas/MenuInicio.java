@@ -8,6 +8,7 @@ import componentes.BButton;
 import componentes.RButton;
 import componentes.navBar;
 import juego.Configuracion;
+import juego.Escalador;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 
@@ -36,7 +37,7 @@ public class MenuInicio extends JPanel {
 		
 		
   		//--------------------- NAVBAR-------------------------------------------
-  		Icon icon = IconFontSwing.buildIcon(FontAwesome.USER_CIRCLE, 15);
+  		Icon icon = IconFontSwing.buildIcon(FontAwesome.USER_CIRCLE, Escalador.escalarF(15));
 		loginBtn.setIcon(icon);
   		
   		navBar = new navBar(loginBtn);
@@ -50,19 +51,17 @@ public class MenuInicio extends JPanel {
 
 		
 		
-		
-		
 		partidaLocal.setAlignmentX(Component.CENTER_ALIGNMENT);
 		crearPOnline.setAlignmentX(Component.CENTER_ALIGNMENT);
 		joinPOnline.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		
-		opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 150))); //en el medio 250
+		opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(150)))); //en el medio 250
 		
 		opciones.add(partidaLocal);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(10)))); // Espacio entre los botones
         opciones.add(crearPOnline);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 10))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(10)))); // Espacio entre los botones
         opciones.add(joinPOnline);
         
 

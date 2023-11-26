@@ -1,6 +1,10 @@
 package componentes;
 import javax.swing.*;
 import javax.swing.plaf.basic.*;
+
+import juego.Configuracion;
+import juego.Escalador;
+
 import java.awt.*;
 
 public class MComboBox<T> extends JComboBox<T> {
@@ -10,8 +14,8 @@ public class MComboBox<T> extends JComboBox<T> {
         setRenderer(new ModernComboBoxRenderer<>());
         setForeground(Color.BLACK); // Color del texto
         setBackground(Color.WHITE); // Color de fondo
-        setPreferredSize(new Dimension(150, 30)); // Tamaño preferido
-        // Otros ajustes de estilo que desees aplicar
+        setPreferredSize(new Dimension(Escalador.escalar(150), Escalador.escalar(30))); // Tamaño preferido
+        
     }
 
     private static class ModernComboBoxUI extends BasicComboBoxUI {
@@ -58,6 +62,7 @@ public class MComboBox<T> extends JComboBox<T> {
             label.setForeground(Color.BLACK); // Color del texto
             label.setOpaque(true);
             label.setBackground(Color.white); // Color de fondo para cada elemento
+            label.setBorder(BorderFactory.createCompoundBorder(label.getBorder(), BorderFactory.createEmptyBorder(5,0,0,0)));//Mrgen arriba praa la fuente cambiada
             if (isSelected) {
                 label.setBackground(Color.LIGHT_GRAY); // Color de fondo cuando está seleccionado
             }

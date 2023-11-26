@@ -16,7 +16,7 @@ public class Session {
     private static VentanaPrincipal ventana;
     private static DatosPartida datosPartida;
     private static LogicaPartida partida;
-    
+	
     
     public static ClientPOST getCtsConnection() {
 		return ctsConnection;

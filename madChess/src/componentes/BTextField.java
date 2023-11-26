@@ -4,6 +4,9 @@ import javax.swing.*;
 
 import org.w3c.dom.Text;
 
+import juego.Configuracion;
+import juego.Escalador;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,7 +29,8 @@ public class BTextField extends JPasswordField  {
         setPreferredSize(new Dimension(200, 100));
         setBackground(DEFAULT_COLOR);
 
-        setFont(new Font("Arial", Font.PLAIN, 14));
+        setFont(new Font("Arial", Font.PLAIN, 20));
+        
         setForeground(TEXT_COLOR); // Color del texto de placeholder
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setCursor(new Cursor(Cursor.TEXT_CURSOR));
@@ -46,26 +50,6 @@ public class BTextField extends JPasswordField  {
             }
         });
     }
-/*
-    @Override
-    protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g.create();
-        int height = getHeight();
-        int width = getWidth();
-        int arc = 20; // Ajusta el radio de las esquinas redondeadas
-
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        if (isFocusOwner() || !getText().isEmpty()) {
-            g2d.setColor(HOVER_COLOR);
-        } else {
-            g2d.setColor(getBackground());
-        }
-
-        g2d.fillRoundRect(0, 0, width, height, arc, arc);
-        super.paintComponent(g2d);
-        g2d.dispose();
-    }*/
 
     @Override
     protected void paintComponent(java.awt.Graphics g) {
@@ -74,7 +58,7 @@ public class BTextField extends JPasswordField  {
         if(getText().isEmpty() && ! (FocusManager.getCurrentKeyboardFocusManager().getFocusOwner() == this)){
             Graphics2D g2 = (Graphics2D)g.create();
             g2.setBackground(Color.gray);
-            g2.drawString(placeholder, 25, 25); //figure out x, y from font's FontMetrics and size of component.
+            g2.drawString(placeholder, Escalador.escalar(25), Escalador.escalar(25)); //figure out x, y from font's FontMetrics and size of component.
             g2.dispose();
         }
       }

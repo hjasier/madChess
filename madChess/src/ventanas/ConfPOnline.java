@@ -7,6 +7,7 @@ import Sockets.ClienteHandler;
 import Sockets.Servidor;
 import juego.Configuracion;
 import juego.DatosPartida;
+import juego.Escalador;
 import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
@@ -36,10 +37,10 @@ public class ConfPOnline extends JPanel {
 
 	public ConfPOnline(Jugador user1) {
         
-		user1Btn.setMaximumSize(new Dimension(100, 25));
-		user2Btn.setMaximumSize(new Dimension(100, 25));
-    	
-    	
+		user1Btn.setMaximumSize(new Dimension((int) Escalador.escalar(120), (int) Escalador.escalar(25)));
+		user2Btn.setMaximumSize(new Dimension((int) Escalador.escalar(120), (int) Escalador.escalar(25)));
+		
+		
         setLayout(new BorderLayout());
         setBackground(colorFondo);
 
@@ -156,23 +157,22 @@ public class ConfPOnline extends JPanel {
         fifthRowPanel.add(botonIniciarPartida);
         fifthRowPanel.setBackground(colorFondo);
         
-
-        
+        botonIniciarPartida.setPreferredSize(new Dimension(Escalador.escalar(150), Escalador.escalar(35)));
         
      // Agregar los paneles al contenedor opcionesenY
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 120)));
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(120))));
         opcionesenY.add(opcionesenX);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0,40))); // Espacio entre filas
+        opcionesenY.add(Box.createRigidArea(new Dimension(0,Escalador.escalar(40)))); // Espacio entre filas
         opcionesenY.add(privacidadRowPanel);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 10)));
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(10))));
         opcionesenY.add(secondRowPanel);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio entre filas
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(20)))); // Espacio entre filas
         opcionesenY.add(thirdRowPanel);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre filas
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(10))));// Espacio entre filas
         opcionesenY.add(fourthRowPanel);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 30))); // Espacio entre filas
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(30)))); // Espacio entre filas
         opcionesenY.add(fifthRowPanel);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0, 5))); // Espacio entre botones
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(5)))); // Espacio entre botones
         opcionesenY.add(Box.createVerticalGlue()); // Espacio en blanco abajo
         
         
