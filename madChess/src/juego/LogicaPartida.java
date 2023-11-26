@@ -563,10 +563,10 @@ public class LogicaPartida {
 		casillas.get(56).setPieza(new Torre(true,false));
 		casillas.get(57).setPieza(new Caballo(true,false));
 		casillas.get(58).setPieza(new Alfil(true,true));
-		casillas.get(59).setPieza(new Reina(true, false));
+		casillas.get(59).setPieza(new Reina(true, true));
 		casillas.get(60).setPieza(reyWhite);
 		casillas.get(61).setPieza(new Alfil(true,true));
-		casillas.get(62).setPieza(new Caballo(true,false));
+		casillas.get(62).setPieza(new Caballo(true,true));
 		casillas.get(63).setPieza(new Torre(true,false));
         
 		//System.out.println(Session.getDatosPartida().getModoDeJuego());
