@@ -61,7 +61,7 @@ public class Alfil extends Pieza implements PiezaMustHave {
         int fila = curCasilla.getFila();
         char columna = curCasilla.getColumna();
 
-        // Posibles movimientos de la torre: arriba, abajo, izquierda y derecha
+        // Posibles movimientos del alfil
         int[][] movimientos = {
         			
         		{-1, -1},    {-1, 1},

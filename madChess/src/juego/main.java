@@ -14,6 +14,7 @@ public class main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		System.setProperty("sun.java2d.uiScale", "1");
 		setDefaultFont();
 		VentanaPrincipal v1 = new VentanaPrincipal();
 		
