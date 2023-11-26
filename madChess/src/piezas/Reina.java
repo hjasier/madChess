@@ -74,8 +74,11 @@ public class Reina extends Pieza implements PiezaMustHave {
     	                            if (siguienteCasilla.getPieza() != null &&
     	                                siguienteCasilla.getPieza().getIsWhite() != this.getIsWhite()) {
     	                                casillasDisp.add(siguienteCasilla);
-    	                            }
+    	                                
+    	                            }else {break;}
+    	                            
     	                        }
+    	                        
     	                    }
     	                } else if (esMovimientoLateral && contador >= 2) {
     	                    break; // Si ya se han comido dos piezas en el lateral, terminamos el movimiento
@@ -84,10 +87,12 @@ public class Reina extends Pieza implements PiezaMustHave {
     	                }
     	            }
 
-    	            System.out.println(contador);
+    	            
     	            // Avanzar en la dirección del movimiento
     	            nuevaFila += movimiento[0];
     	            nuevaColumna = (char) (nuevaColumna + movimiento[1]);
+    	            
+    	            
     	        }
     	    }}
         
