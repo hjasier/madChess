@@ -34,6 +34,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -84,7 +85,6 @@ public class Juego extends JPanel {
 	protected Tablero tablero = new Tablero();
 	protected Color colorFondo = Configuracion.BACKGROUND;
 	
-	protected boolean vacio = false;
 	protected JPanel panelBotones = new JPanel();
 	protected JPanel panelContenedor = new JPanel();
 	protected JPanel panelTabs = new JPanel();
@@ -94,7 +94,7 @@ public class Juego extends JPanel {
 	protected JPanel panelCardL = new JPanel();
 	protected PanelBoost panelBoost = new PanelBoost();
 	
-	
+	protected MScrollPane scrollChat;
 	
 	
 	CardLayout cardLayout = new CardLayout();
@@ -212,7 +212,7 @@ public class Juego extends JPanel {
 	    areaChat.setWrapStyleWord(true); 
 	    
 	    textfieldChat = new JTextField(0);
-	    MScrollPane scrollChat = new MScrollPane(areaChat);
+	    scrollChat = new MScrollPane(areaChat);
 
 	    panelDatosChat = new JPanel();
 	    textfieldUsuario = new JTextField(0);

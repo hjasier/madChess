@@ -228,7 +228,15 @@ public class LogicaPartida {
     	    curCasilla.setPieza(null);
    		}
 		if(pieza instanceof Reina && ((Reina) pieza).isAlter() && piezaComida != null) {
-			
+			ArrayList<Casilla> casillasIntermedias = calcularCasillasIntermedias(prevCasilla,curCasilla);
+			String kills = "💀";
+			for(Casilla casilla : casillasIntermedias ) {
+				if (casilla.getPieza()!=null){
+					casilla.setPieza(null);
+					kills+="💀";
+				}
+			}
+			if (!casillasIntermedias.isEmpty()) {printMovimiento(kills);}
 		}
 		//Miramos si el rey del oponente queda en jaque
 		int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
@@ -454,7 +462,27 @@ public class LogicaPartida {
 	
 	}
 
+    private ArrayList<Casilla> calcularCasillasIntermedias(Casilla casillaInicio, Casilla casillaFin) {
+        ArrayList<Casilla> casillas = new ArrayList<Casilla>();
 
+        int columnDiff = casillaFin.getColumna() - casillaInicio.getColumna();
+        int rowDiff = casillaFin.getFila() - casillaInicio.getFila();
+
+        int minMoves = Math.max(Math.abs(columnDiff), Math.abs(rowDiff));
+
+        char currentColumn = casillaInicio.getColumna();
+        int currentRow = casillaInicio.getFila();
+
+        for (int i = 1; i < minMoves; i++) {
+            currentColumn += Integer.compare(columnDiff, 0);
+            currentRow += Integer.compare(rowDiff, 0);
+            
+            Casilla casilla = getCasilla(currentRow,currentColumn);
+            casillas.add(casilla);
+        }
+
+        return casillas;
+    }
 
 
 
