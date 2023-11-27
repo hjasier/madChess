@@ -1,0 +1,31 @@
+# Archivos generados por el IDE (por ejemplo, IntelliJ o Eclipse)
+.idea/
+
+# Archivos de salida del compilador Java
+bin/
+
+# Archivos de configuración específicos del sistema operativo
+*.iml
+*.iws
+*.ipr
+
+# Archivos de configuración de Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+
+# Logs y archivos temporales
+*.log
+*.log.*
+*. *. tmp
+*. *. log
+hs_err_pid * .log
+
+# Archivos de configuración para Gradle
+.gradle/
+build/
+
+
+# Ignorar archivos de clases con acceso package-private
+*.class
