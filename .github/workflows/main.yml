@@ -5,25 +5,33 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in paralle
 jobs:
-  volcar-proyecto:
+  deploy-via-sftp:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
           
       - name: SFTP Deploy
-        uses: appleboy/ssh-action@master
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
         with:
           username: ${{ secrets.SERVER_USERNAME}}
-          host: ${{ secrets.SERVER_IP}}
+          server: ${{ secrets.SERVER_IP}}
           port: 22 # default is 22
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "."
-          target: ${{ secrets.SERVER_PATH}}
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          
+          # will put all file under this path
+          local_path: ./* # default is ./*
+          # files will copy to under remote_path
+          remote_path: ${{ secrets.SERVER_PATH}}
+          
+          # sftp args
+          args: '-o ConnectTimeout=5'
           
   recompilar-server:
     runs-on: ubuntu-latest
-    needs: volcar-proyecto
+    needs: deploy-via-sftp
 
     steps:
       - name: Conexión al server x2
