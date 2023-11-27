@@ -238,6 +238,20 @@ public class LogicaPartida {
 			}
 			if (!casillasIntermedias.isEmpty()) {printMovimiento(kills);}
 		}
+		
+		if(pieza instanceof Torre && ((Torre) pieza).isAlter()) {
+			ArrayList<Casilla> casillasAfectadas = casillasAfectadas(prevCasilla,curCasilla);
+			String killsExpansiva = "Onda EXPANSIVA";
+			for(Casilla casilla : casillasAfectadas ) {
+				if(casilla.getPieza()!= null)
+				{killsExpansiva+="💀";
+				casilla.setPieza(null);
+				}
+			}
+			printMovimiento(killsExpansiva);
+		}
+		
+		
 		//Miramos si el rey del oponente queda en jaque
 		int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
 		Jugador oponente = jugadores.get(newIndex);
@@ -484,7 +498,172 @@ public class LogicaPartida {
         return casillas;
     }
 
+    
+    
+    
+    private ArrayList<Casilla> casillasAfectadas(Casilla origen, Casilla destino) {
+        int[][] direcciones = {
+            {0, 1},   // derecha (0)
+            {0, -1},  // izquierda (1)
+            {-1, 0},  // abajo (2)
+            {-1, -1},  // diagonal inferior izquierda (3)
+            {-1, 1},  // diagonal inferior derecha (4)
+            {1, 0},   // arriba (5)
+            {1, 1},   // diagonal superior derecha (6)
+            {1, -1}  // diagonal superior izquierda (7)
+        };
+        int[][] direccionesLaterales = {
+                {0, 1},   // derecha (0)
+                {1, 1},   // diagonal superior derecha (1)
+                {-1, 1},  // diagonal inferior derecha (2)
+                
+                {-1, -1},  // diagonal inferior izquierda (3)
+                {0, -1},  // izquierda (4)
+                {1, -1}  // diagonal superior izquierda (5)
+            };
+        int[][] direccionesDiagonales = {
+        		
+                //(aunque parezca contradictorio funciona asi)
+        		//diagonal arriba dercha 
+        		{0, 1},   // derecha (0)
+        		{-1, 0},  // abajo (1)
+        		{-1, 1},  // diagonal inferior derecha (2)
+                
+                //diagonal arriba izquierda
+        		{-1, 0},  // abajo (3)
+                {0, -1},  // izquierda (4)
+                {-1, -1},  // diagonal inferior izquierda (5)
+                
+                //diagonal abajo derecha
+                {1, 0},   // arriba (6)
+                {1, 1},   // diagonal superior derecha (7)
+                {0, 1},   // derecha (8)
+                
+              //diagonal abajo izquierda
+                {1, 0},   // arriba (9)
+                {0, -1},  // izquierda (10)
+                {1, -1}  // diagonal superior izquierda (11)
+            };
 
+        ArrayList<Casilla> afectadas = new ArrayList<>();
+
+        int diferenciaFilas = destino.getFila() - origen.getFila();
+        int diferenciaColumnas = destino.getColumna() - origen.getColumna();
+        
+        // Si el movimiento es hacia arriba
+        if (diferenciaFilas == -1 && diferenciaColumnas == 0) {
+            // Agregar las casillas superiores a la casilla destino
+            for (int i = 5; i <= 7; i++) { // Las direcciones correspondientes a arriba
+                int nuevaFila = destino.getFila() - direcciones[i][0];
+                char nuevaColumna = (char) (destino.getColumna() - direcciones[i][1]);
+
+                // Verificar si la nueva casilla está dentro del tablero
+                if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+                    afectadas.add(getCasilla(nuevaFila, nuevaColumna));
+                }
+            }
+        } 
+        // Si el movimiento es hacia abajo
+        else if(diferenciaFilas == 1 && diferenciaColumnas == 0){
+        	// Agregar las casillas superiores a la casilla destino
+            for (int i = 2; i <= 4; i++) { // Las direcciones correspondientes a arriba
+                int nuevaFila = destino.getFila() - direcciones[i][0];
+                char nuevaColumna = (char) (destino.getColumna() - direcciones[i][1]);
+
+                // Verificar si la nueva casilla está dentro del tablero
+                if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+                    afectadas.add(getCasilla(nuevaFila, nuevaColumna));
+                }
+            }
+        }
+        // Si el movimiento es hacia la derecha
+        else if (diferenciaFilas == 0 && diferenciaColumnas == 1){
+        	// Agregar las casillas superiores a la casilla destino
+            for (int i = 0; i <= 2; i++) { // Las direcciones correspondientes a arriba
+                int nuevaFila = destino.getFila() + direccionesLaterales[i][0];
+                char nuevaColumna = (char) (destino.getColumna() + direccionesLaterales[i][1]);
+
+                // Verificar si la nueva casilla está dentro del tablero
+                if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+                    afectadas.add(getCasilla(nuevaFila, nuevaColumna));
+                }
+            }
+        }
+        // Si el movimiento es hacia la izquierda
+        else if (diferenciaFilas == 0 && diferenciaColumnas == -1){
+        	// Agregar las casillas superiores a la casilla destino
+            for (int i = 3; i <= 5; i++) { // Las direcciones correspondientes a arriba
+                int nuevaFila = destino.getFila() + direccionesLaterales[i][0];
+                char nuevaColumna = (char) (destino.getColumna() + direccionesLaterales[i][1]);
+
+                // Verificar si la nueva casilla está dentro del tablero
+                if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+                    afectadas.add(getCasilla(nuevaFila, nuevaColumna));
+                }
+            }
+        }
+        // Si el movimiento es hacia arriba derecha
+        else if (diferenciaFilas == -1 && diferenciaColumnas == 1){
+        	// Agregar las casillas superiores a la casilla destino
+            for (int i = 0; i <= 2; i++) { // Las direcciones correspondientes a arriba
+                int nuevaFila = destino.getFila() + direccionesDiagonales[i][0];
+                char nuevaColumna = (char) (destino.getColumna() + direccionesDiagonales[i][1]);
+
+                // Verificar si la nueva casilla está dentro del tablero
+                if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+                    afectadas.add(getCasilla(nuevaFila, nuevaColumna));
+                }
+            }
+        }
+        // Si el movimiento es hacia arriba izquierda
+        else if (diferenciaFilas == -1 && diferenciaColumnas == -1){
+        	// Agregar las casillas superiores a la casilla destino
+            for (int i = 3; i <= 5; i++) { // Las direcciones correspondientes a arriba
+                int nuevaFila = destino.getFila() + direccionesDiagonales[i][0];
+                char nuevaColumna = (char) (destino.getColumna() + direccionesDiagonales[i][1]);
+
+                // Verificar si la nueva casilla está dentro del tablero
+                if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+                    afectadas.add(getCasilla(nuevaFila, nuevaColumna));
+                }
+            }
+        }
+        // Si el movimiento es hacia abajo derecha
+        else if (diferenciaFilas == 1 && diferenciaColumnas == 1){
+        	// Agregar las casillas superiores a la casilla destino
+            for (int i = 6; i <= 8; i++) { // Las direcciones correspondientes a arriba
+                int nuevaFila = destino.getFila() + direccionesDiagonales[i][0];
+                char nuevaColumna = (char) (destino.getColumna() + direccionesDiagonales[i][1]);
+
+                // Verificar si la nueva casilla está dentro del tablero
+                if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+                    afectadas.add(getCasilla(nuevaFila, nuevaColumna));
+                }
+            }
+        }
+        // Si el movimiento es hacia abajo izquierda
+        else if (diferenciaFilas == 1 && diferenciaColumnas == -1){
+        	// Agregar las casillas superiores a la casilla destino
+            for (int i = 9; i <= 11; i++) { // Las direcciones correspondientes a arriba
+                int nuevaFila = destino.getFila() + direccionesDiagonales[i][0];
+                char nuevaColumna = (char) (destino.getColumna() + direccionesDiagonales[i][1]);
+
+                // Verificar si la nueva casilla está dentro del tablero
+                if (nuevaFila >= 0 && nuevaFila <= 7 && nuevaColumna >= 'A' && nuevaColumna <= 'H') {
+                    afectadas.add(getCasilla(nuevaFila, nuevaColumna));
+                }
+            }
+        }
+        	
+        	
+
+        return afectadas;
+    }
+    
+    
+
+    
+    
 
 	private void guardarMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida, Pieza pieza) {
 		
@@ -581,11 +760,11 @@ public class LogicaPartida {
 		casillas.get(56).setPieza(new Torre(true,false));
 		casillas.get(57).setPieza(new Caballo(true,false));
 		casillas.get(58).setPieza(new Alfil(true,false));
-		casillas.get(59).setPieza(new Reina(true, true));
+		casillas.get(59).setPieza(new Reina(true, false));
 		casillas.get(60).setPieza(reyWhite);
 		casillas.get(61).setPieza(new Alfil(true,false));
 		casillas.get(62).setPieza(new Caballo(true,false));
-		casillas.get(63).setPieza(new Torre(true,false));
+		casillas.get(63).setPieza(new Torre(true,true));
         
 		//System.out.println(Session.getDatosPartida().getModoDeJuego());
 		//System.out.println(Session.getDatosPartida().getJugadores().get(0));

@@ -87,8 +87,8 @@ public class Torre extends Pieza implements PiezaMustHave {
         int[][] movimientos = {
         		
         };
-        if(isAlter) { //FixMe hay que hacer que dependiendo del movimiento que haga la torre, las casillas
-        			  //que se pueda comer sean las cuatro que hay, dependiendo de la opcion 
+        if(isAlter) { 
+        	
         	 movimientos = new int[][] {
         			{-1,0},{-2,-1},{-2,0},{-2,1},    // Arriba
         			{0,-1},{-1,-2},{0,-2},{1,-2},    // Izquierda
