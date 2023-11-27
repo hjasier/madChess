@@ -9,9 +9,9 @@ Información relevante para la ejecución:
 
 #### 1- Desactivar modo DEBUG
 
-En la clase partida cambiar la variable de la línea 41 **``DEBUG_MODE``** a false
+En la clase Configuración cambiar la variable **``DEBUG_MODE``**  y **``LOGIN_DEBUG``**  a false
 ```
-    Partida.java
+    Configuración.java
 ```
 #### Mientras el modo debug este activado:
 - Las piezas se podrán mover a **cualquier posición** independientemente de si es un movimiento permitido
@@ -21,7 +21,9 @@ En la clase partida cambiar la variable de la línea 41 **``DEBUG_MODE``** a fal
 - El panel chat se activa para poder debugearlo
 
 - Las partidas no se guardarán en las analíticas ni estadísticas de usuario (cuando se hagan)
-
+- 
+#### Mientras ``LOGIN_DEBUG`` este activado:
+- Se iniciará sesión automaticamente con una cuenta demo
 
 
 ## Jugar en modo local (Jugador contra jugador)
@@ -41,13 +43,15 @@ En la clase partida cambiar la variable de la línea 41 **``DEBUG_MODE``** a fal
 
 
 
-## Jugar en modo online (No funcional)
+## Jugar en modo online (En progreso)
 
-#### 1- Ejecutar
+#### 1 - Cambios necesarios
 
-
+En la clase **``Configuración.java``** descomentar la variable host de url y comentar localhost
 ```
-    Server.java
+	public static final String HOST = "madchess.tabernagogorra.eu"; 
+	//public static final String HOST = "localhost"; 
+    
 ```
 
 #### 2- Ejecutar
@@ -56,4 +60,8 @@ En la clase partida cambiar la variable de la línea 41 **``DEBUG_MODE``** a fal
 ```
     main.java
 ```
-#### Seleccionar el modo de juego ``Crear  partida online`` en el menú de inicio. ()
+Seleccionar el modo de juego ``Crear  partida online`` en el menú de inicio.
+
+
+#### El segundo jugador selecciona el modo ``Join  partida online`` en el menú de inicio.
+
