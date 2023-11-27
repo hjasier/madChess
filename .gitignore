@@ -31,3 +31,5 @@ build/
 
 # Ignorar la carpeta private
 private/
+madChess/private/madChess/Keys.java
+private/madChess/Keys.java
