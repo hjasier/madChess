@@ -17,7 +17,7 @@ public class Servidor {
     private HashMap<String, ArrayList<ClienteHandler>> clientes = new HashMap<String, ArrayList<ClienteHandler>> ();
     private HashMap<String, DatosPartida> partidas = new HashMap<String, DatosPartida>();
     
-    private int PUERTO = 8005;
+    private int PUERTO = 6968;
 
     
     public Servidor() {
