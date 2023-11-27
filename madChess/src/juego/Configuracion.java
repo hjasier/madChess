@@ -5,7 +5,7 @@ import java.awt.Font;
 
 public class Configuracion {
 	
-	public static final String VERSION = "V1.3"; 
+	public static final String VERSION = "V1.4"; 
 	
 	//public static final String HOST = "madchess.tabernagogorra.eu"; 
 	public static final String HOST = "localhost"; 
