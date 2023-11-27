@@ -1,6 +1,7 @@
 package juego;
 
 import java.awt.Toolkit;
+import java.awt.Dimension;
 
 public class Escalador {
 
@@ -18,5 +19,11 @@ public class Escalador {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         int resolucion = toolkit.getScreenResolution();
         ESCALA = (double) resolucion / 96.0;
+        
     }
+    
+    public static Dimension newDimension(int x,int y) {
+    	return new Dimension(escalar(x),escalar(y));
+    }
+    
 }

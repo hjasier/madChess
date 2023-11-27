@@ -15,15 +15,15 @@ import ventanas.VentanaPrincipal;
 public class main {
 
 	public static void main(String[] args) {
-		System.setProperty("sun.java2d.uiScale", "1");
-		Escalador.setScreenSize();
+		loadScreenConf();
 		setDefaultFont();
 		VentanaPrincipal v1 = new VentanaPrincipal();
 		
 	}
 	
-	
-    private static void setDefaultFont() {
+
+
+	private static void setDefaultFont() {
         try {
             String nombreFont = "/srcmedia/unsr.ttf";
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, main.class.getResourceAsStream(nombreFont));
@@ -46,7 +46,10 @@ public class main {
         }
     }
     
-    
+    private static void loadScreenConf() {
+    	System.setProperty("sun.java2d.uiScale", "1");
+		Escalador.setScreenSize();
+	}
 
 
 }

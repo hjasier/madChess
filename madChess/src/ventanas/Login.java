@@ -95,17 +95,17 @@ public class Login extends JPanel {
 		
 		
 		
-		opciones.add(Box.createRigidArea(new java.awt.Dimension(0, 100))); 
+		opciones.add(Box.createRigidArea(Escalador.newDimension(0, 100))); 
 		
 		
 		opciones.add(labelTitulo);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(40)))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(Escalador.newDimension(0, 40))); // Espacio entre los botones
 		opciones.add(inputNombre);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(10)))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(Escalador.newDimension(0,10))); // Espacio entre los botones
         opciones.add(inputContra);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(20)))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(Escalador.newDimension(0,20))); // Espacio entre los botones
         opciones.add(loginBtn);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(20)))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(Escalador.newDimension(0, 20))); // Espacio entre los botones
         opciones.add(registerLabel);
 
 

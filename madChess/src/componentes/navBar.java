@@ -2,6 +2,7 @@ package componentes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.BorderFactory;
@@ -42,7 +43,7 @@ public class navBar extends JPanel{
    		panelLogo.add(foto, BorderLayout.WEST);
    	
    		panelBtn.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
-   		panelBtn.add(Box.createRigidArea(new java.awt.Dimension(0, 80)));
+   		panelBtn.add(Box.createRigidArea(Escalador.newDimension(0, 80)));
    		
    		if (btn!=null) {
    			panelBtn.add(btn);
