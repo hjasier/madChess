@@ -25,6 +25,7 @@ public class LogicaPartida {
 	private Boolean DEBUG_MODE = Configuracion.DEBUG_MODE; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
 
 	protected ArrayList<Casilla> casillas;
+	protected ArrayList<Casilla> casillasDiponibles;
 	protected HashMap<String,Pieza> piezas = new HashMap<String,Pieza>();
 	private HashMap<Pieza, ArrayList<Casilla>> piezasDefensa;
 	protected Tablero tablero;
@@ -57,7 +58,7 @@ public class LogicaPartida {
         		Casilla curCasilla = tablero.getCurCasilla(e);
         		moverPiezaTablero(tablero.prevCasilla,curCasilla,e);
         		tablero.dragging = false;	
-        		
+        		try {Session.getCtsConnection().postResetDragg();} catch (IOException e1) {e1.printStackTrace();}
         	}
         	
         	
@@ -74,6 +75,12 @@ public class LogicaPartida {
                 
                 if (Configuracion.DEBUG_MODE||(!checkJaque() || prevCasilla.getPieza() instanceof Rey)) {
                     tablero.arrastrarPieza(e);
+                    try {
+						Session.getCtsConnection().postMouseDragged(e,prevCasilla);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 } 
                 else {
                 	if (piezasDefensa.containsKey(prevCasilla.getPieza())) {
@@ -724,8 +731,17 @@ public class LogicaPartida {
 		this.casillas = casillas;
 	}
 
+	
+	public void setDragPieza(Casilla casilla) {
+		Casilla casillaLocal = getCasilla(casilla.getFila(), casilla.getColumna());
+		tablero.setDragPieza(casillaLocal);
+	}
 
+	
 
+	public Tablero getTablero() {
+		return tablero;
+	}
 
 
 	//init del tablero
@@ -792,6 +808,11 @@ public class LogicaPartida {
 			casilla.setPieza(null);
 		}
 	}
+
+
+
+	
+	
 	
 	}
 

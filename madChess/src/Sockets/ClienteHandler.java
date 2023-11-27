@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import andosockets.ConfigCS;
 import juego.DatosPartida;
 import objetos.Jugador;
 import objetos.Movimiento;
@@ -116,10 +115,24 @@ public class ClienteHandler implements Runnable {
     			    	reenviar2Datos("updateCasillas",casillas);
     			    	break;
     			    	
+    			    
     			    case "getCurGames":
     			    	output.writeObject("reloadGamesList"); 
     			    	output.writeObject(partidas);
     			    	break;
+    			    	
+    			    case "setDraggPieza":
+    			    	Object casilla = input.readObject();
+    			    	reenviar2Datos("setDraggPieza",casilla);
+    			    	break;
+                	case "mouseDragged":
+                		String pos = (String) input.readObject();
+    			    	reenviar2Datos("mouseDragged",pos);
+    			    	break;
+                	case "resetDragg":
+                		repost = true;
+                		break;
+    			    
 				}
     				
     				
@@ -174,6 +187,7 @@ public class ClienteHandler implements Runnable {
 			ObjectOutputStream clientOutput = cliente.getOutput();
 			if (clientOutput!=output) {  // Al cliente actual no, solo al resto
 				try {
+					clientOutput.reset();
 					clientOutput.writeObject(preDato);
 					clientOutput.writeObject(dato);
 					clientOutput.writeObject(dato2);
@@ -195,11 +209,8 @@ public class ClienteHandler implements Runnable {
 			ObjectOutputStream clientOutput = cliente.getOutput();
 			if (clientOutput!=output) {  // Al cliente actual no, solo al resto
 				try {
-					System.out.println("Re-enviando objeto al cliente");
-					clientOutput.writeObject(objRecibido);
-					clientOutput.writeObject(user);
-					
-					
+					clientOutput.reset();
+					clientOutput.writeObject(objRecibido);					
 				} catch (Exception e) {
 		    		e.printStackTrace();
 					System.out.println("Error al enviar de server a cliente");

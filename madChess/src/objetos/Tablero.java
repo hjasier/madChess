@@ -269,6 +269,28 @@ public class Tablero extends JPanel{
 		return prevCasilla;
 	}
 
+	public void resetDraggPieza() {
+		System.out.println("Reseteando");
+		dragImg.setIcon(null);
+	}
+
+	public void setDragPieza(Casilla casilla) {
+		Image piezaImg = casilla.getPieza().getImg().getImage();
+		int escala = casilla.imgSize;
+		ImageIcon imgReEscalada = new ImageIcon(piezaImg.getScaledInstance(escala, escala, Image.SCALE_SMOOTH));
+		casilla.setPieza(null);
+		dragImg.setIcon(imgReEscalada);
+		
+	}
+	
+	public void setDraggPiezaPos(String pos) {
+		String[] xy = pos.split(";");
+		 int x = Integer.parseInt(xy[0]);
+		 int y = Integer.parseInt(xy[1]);
+		dragImg.setLocation(x,y);
+				
+	}
+
 
 	
 

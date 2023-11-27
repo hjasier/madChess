@@ -1,9 +1,12 @@
 package Sockets;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import juego.DatosPartida;
 import juego.Session;
@@ -13,6 +16,9 @@ import objetos.Movimiento;
 public class ClientPOST {
 	
 	private ObjectOutputStream serverOut;
+	private long lastMouseDraggedTime;
+	private boolean piezaSent = false;
+	
 	public ClientPOST(ObjectOutputStream serverOut) throws IOException {
 		this.serverOut = serverOut;
 		postUser();
@@ -49,13 +55,6 @@ public class ClientPOST {
 		serverOut.writeObject("getCurGames");
 	}
 	
-	public class Mensaje {
-		private String gameId;
-		private int userId;
-		private Date date;
-		
-	}
-
 
 	public void postPiezaMov(Movimiento movimiento) throws IOException {
 		serverOut.writeObject("piezaMov");
@@ -63,6 +62,24 @@ public class ClientPOST {
 		
 	}
 	
+    public void postMouseDragged(MouseEvent e,Casilla casilla) throws IOException {
+        long currentTime = System.currentTimeMillis();
+        if (!piezaSent) {
+        	serverOut.writeObject("setDraggPieza");
+            serverOut.writeObject(casilla);
+            piezaSent = true;
+        }
+        if (currentTime - lastMouseDraggedTime >= 10) {
+            serverOut.writeObject("mouseDragged");
+            serverOut.writeObject(e.getX() + ";" + e.getY());
+            lastMouseDraggedTime = currentTime;
+        } else {}
+    }
+	public void postResetDragg() throws IOException {
+		serverOut.writeObject("resetDragg");
+		piezaSent = false;
+	}
+    
 	public void postCasillas(ArrayList<Casilla> casillas) throws IOException {
 		//este método ya no se usa
 		serverOut.writeObject("updateCasillas");

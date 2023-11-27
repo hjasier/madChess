@@ -12,10 +12,10 @@ import juego.Session;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Movimiento;
+import objetos.Tablero;
 
 
 public class ClientGET implements Runnable {
-    private LogicaPartida partida;
     private ObjectInputStream serverIn;
 
     public ClientGET(ObjectInputStream serverIn) {
@@ -67,7 +67,19 @@ public class ClientGET implements Runnable {
                 		HashMap<String, DatosPartida> games = (HashMap<String, DatosPartida>) serverIn.readObject();
                 		Session.getVentana().getPanelListaPartidas().reLoadCurrentGames(games);
                 		break;
-                	
+                		
+                	case "mouseDragged":
+                		String pos = (String) serverIn.readObject();
+                		Session.getPartida().getTablero().setDraggPiezaPos(pos);
+                		break;
+
+                	case "setDraggPieza":
+                		Casilla casilla = (Casilla) serverIn.readObject();
+                		Session.getPartida().setDragPieza(casilla);
+                		break;
+                	case "resetDragg":
+                		//Session.getPartida().getTablero().resetDraggPieza();
+                		break;
                 }
             }
                 

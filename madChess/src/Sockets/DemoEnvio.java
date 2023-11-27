@@ -5,7 +5,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
-import andosockets.ConfigCS;
 import objetos.Jugador;
 import objetos.Movimiento;
 
