@@ -72,7 +72,7 @@ public class LogicaPartida {
                 Casilla curCasilla = tablero.getCurCasilla(e);
                 
                 
-                if (!checkJaque() || prevCasilla.getPieza() instanceof Rey) {
+                if (Configuracion.DEBUG_MODE||(!checkJaque() || prevCasilla.getPieza() instanceof Rey)) {
                     tablero.arrastrarPieza(e);
                 } 
                 else {
@@ -159,8 +159,8 @@ public class LogicaPartida {
        		
        		int casillaInx = casillas.indexOf(curCasilla);
        		
-       	
-       		if (checkJaque() && !checkJaqueMoveValid(prevCasilla,curCasilla)){
+       		
+       		if (!Configuracion.DEBUG_MODE&&(checkJaque() && !checkJaqueMoveValid(prevCasilla,curCasilla))){
        			printMovimiento("¡Proteje al rey! 😡");
        			return;
        		}
