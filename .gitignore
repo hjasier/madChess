@@ -26,6 +26,3 @@ hs_err_pid * .log
 .gradle/
 build/
 
-
-# Ignorar archivos de clases con acceso package-private
-*.class
