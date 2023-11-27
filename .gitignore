@@ -27,5 +27,7 @@ hs_err_pid * .log
 build/
 
 
-# Ignorar archivos de clases con acceso package-private
 *.class
+
+# Ignorar la carpeta private
+private/
