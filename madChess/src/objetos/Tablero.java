@@ -2,12 +2,14 @@ package objetos;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.*;
 
 
 import javax.swing.*;
 
 import juego.Configuracion;
+import juego.Session;
 import piezas.Alfil;
 import piezas.Caballo;
 import piezas.Reina;
@@ -166,6 +168,9 @@ public class Tablero extends JPanel{
 		int imgOffset = dragImg.getWidth()/2;
 		dragImg.setLocation(e.getX()-imgOffset,e.getY()-imgOffset);
 		
+		//Enviamos el movimiento al resto de clientes
+		try {Session.getCtsConnection().postMouseDragged(e,prevCasilla);} catch (IOException e1) {e1.printStackTrace();}
+        
 	}
     
     
@@ -269,16 +274,22 @@ public class Tablero extends JPanel{
 		return prevCasilla;
 	}
 
+	private Pieza piezaDraggOnline;
+	private Casilla casillaOnline;
+	
+	
 	public void resetDraggPieza() {
-		System.out.println("Reseteando");
 		dragImg.setIcon(null);
+		casillaOnline.setPieza(piezaDraggOnline);
 	}
 
-	public void setDragPieza(Casilla casilla) {
-		Image piezaImg = casilla.getPieza().getImg().getImage();
-		int escala = casilla.imgSize;
+	public void setDragPieza(Casilla casillaLocal) {
+		Image piezaImg = casillaLocal.getPieza().getImg().getImage();
+		piezaDraggOnline = casillaLocal.getPieza();
+		casillaOnline = casillaLocal;
+		int escala = casillaLocal.imgSize;
 		ImageIcon imgReEscalada = new ImageIcon(piezaImg.getScaledInstance(escala, escala, Image.SCALE_SMOOTH));
-		casilla.setPieza(null);
+		casillaLocal.setPieza(null);
 		dragImg.setIcon(imgReEscalada);
 		
 	}

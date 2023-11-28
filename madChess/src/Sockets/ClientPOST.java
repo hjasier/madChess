@@ -75,6 +75,7 @@ public class ClientPOST {
             lastMouseDraggedTime = currentTime;
         } else {}
     }
+    
 	public void postResetDragg() throws IOException {
 		serverOut.writeObject("resetDragg");
 		piezaSent = false;

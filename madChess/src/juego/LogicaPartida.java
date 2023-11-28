@@ -55,10 +55,11 @@ public class LogicaPartida {
         tablero.tableroDiv.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent e) {
+        		try {Session.getCtsConnection().postResetDragg();} catch (IOException e1) {e1.printStackTrace();}
         		Casilla curCasilla = tablero.getCurCasilla(e);
         		moverPiezaTablero(tablero.prevCasilla,curCasilla,e);
         		tablero.dragging = false;	
-        		try {Session.getCtsConnection().postResetDragg();} catch (IOException e1) {e1.printStackTrace();}
+        		
         	}
         	
         	
@@ -75,12 +76,6 @@ public class LogicaPartida {
                 
                 if (Configuracion.DEBUG_MODE||(!checkJaque() || prevCasilla.getPieza() instanceof Rey)) {
                     tablero.arrastrarPieza(e);
-                    try {
-						Session.getCtsConnection().postMouseDragged(e,prevCasilla);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
                 } 
                 else {
                 	if (piezasDefensa.containsKey(prevCasilla.getPieza())) {
@@ -276,12 +271,13 @@ public class LogicaPartida {
 
 	public void moverPiezaOnline(Casilla casillaSalida,Casilla casillaLlegada) {
 		
-		System.out.println(casillaSalida.toString());
 		casillaSalida = getCasilla(casillaSalida.getFila(), casillaSalida.getColumna());
 		casillaLlegada = getCasilla(casillaLlegada.getFila(), casillaLlegada.getColumna());
 		
 		casillaLlegada.setPieza(casillaSalida.getPieza());
-		casillaSalida.setPieza(null);		
+		casillaSalida.setPieza(null);	
+		
+		
 	}
 
 	private boolean checkJaqueMoveValid(Casilla prevCasilla,Casilla newCasilla) {

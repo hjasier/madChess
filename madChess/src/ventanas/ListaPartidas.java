@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +25,14 @@ import componentes.RButton;
 import componentes.navBar;
 import juego.Configuracion;
 import juego.DatosPartida;
+import juego.Escalador;
 import juego.Session;
 
 public class ListaPartidas extends JPanel {
     private Color colorFondo = Configuracion.BACKGROUND;
     private JPanel listaPanel = new JPanel();
     protected RButton backBtn;
+    private static volatile boolean rotate = true;
     
     public ListaPartidas() {
         setLayout(new BorderLayout());
@@ -51,9 +56,11 @@ public class ListaPartidas extends JPanel {
         labelPanel.setBackground(colorFondo);
 
         JLabel labelListaPartidas = new JLabel("Lista de partidas:");
-        Icon recargarIcon = IconFontSwing.buildIcon(FontAwesome.REFRESH, 15, new Color(220,220,220));
+        Icon recargarIcon = IconFontSwing.buildIcon(FontAwesome.REFRESH, Escalador.escalar(15), new Color(220,220,220));
         JLabel labelRecargar = new JLabel(recargarIcon);
-
+        labelRecargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        
         labelPanel.add(Box.createRigidArea(new Dimension(300, 0))); // Espacio a la izquierda del label
         labelPanel.add(labelListaPartidas);
         labelPanel.add(Box.createHorizontalGlue());
@@ -77,6 +84,43 @@ public class ListaPartidas extends JPanel {
         add(centerPanel, BorderLayout.CENTER);
         
         
+        labelRecargar.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+        		labelRecargar.setBackground(Color.red);
+        	}
+        	@Override
+        	public void mouseExited(MouseEvent e) {
+        		labelRecargar.setBackground(Color.white);
+        		
+        	}
+        	@Override
+            public void mouseClicked(MouseEvent e) {
+                rotate = true; // Start rotation
+                rotateLabel();
+            }
+        	private void rotateLabel() {
+                new Thread(() -> {
+                    while (rotate) {
+                        try {
+                            Thread.sleep(50); // Adjust the sleep duration as needed
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(5),
+                        		labelRecargar.getWidth() / 2.0, labelRecargar.getHeight() / 2.0);
+                        labelRecargar.setIcon(new ImageIcon(((ImageIcon) labelRecargar.getIcon()).getImage().getScaledInstance(labelRecargar.getWidth(), labelRecargar.getHeight(), Image.SCALE_DEFAULT)));
+                        ((Graphics2D) labelRecargar.getGraphics()).drawImage(((ImageIcon) labelRecargar.getIcon()).getImage(), transform, null);
+
+                        labelRecargar.repaint();
+                    }
+                }).start();
+            
+        	}
+        	
+		});
+        
         
     }
 
@@ -89,7 +133,7 @@ public class ListaPartidas extends JPanel {
         for (String gameID : games.keySet()) {  
             JPanel partidaPanel = createPartidaPanel(gameID, games.get(gameID).getJugadores().get(0).getNombre());
             listaPanel.add(partidaPanel);
-            listaPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            listaPanel.add(Box.createRigidArea(Escalador.newDimension(0, 10)));
         }
         listaPanel.revalidate();
         listaPanel.repaint();
@@ -115,13 +159,13 @@ public class ListaPartidas extends JPanel {
         jugadorLabel.setForeground(Color.WHITE);
 
         // Configurar elementos en el panel de la partida
-        partidaPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        partidaPanel.add(Box.createRigidArea(Escalador.newDimension(10,0)));
         partidaPanel.add(codigoLabel);
-        partidaPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        partidaPanel.add(Box.createRigidArea(Escalador.newDimension(10,0)));
         partidaPanel.add(jugadorLabel);
         partidaPanel.add(Box.createHorizontalGlue());
         partidaPanel.add(joinButton);
-        partidaPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        partidaPanel.add(Box.createRigidArea(Escalador.newDimension(10,0)));
 
         
         
@@ -146,7 +190,7 @@ public class ListaPartidas extends JPanel {
     }
 
     
-
+    
     	
     // Clase para bordes redondeados
     private class RoundedBorder implements Border {

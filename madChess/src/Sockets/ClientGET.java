@@ -78,7 +78,7 @@ public class ClientGET implements Runnable {
                 		Session.getPartida().setDragPieza(casilla);
                 		break;
                 	case "resetDragg":
-                		//Session.getPartida().getTablero().resetDraggPieza();
+                		Session.getPartida().getTablero().resetDraggPieza();
                 		break;
                 }
             }
