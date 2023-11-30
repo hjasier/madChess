@@ -1,22 +1,22 @@
 package ventanas;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.InputStream;
 
 import componentes.BButton;
 import componentes.RButton;
 import componentes.navBar;
 import juego.Configuracion;
+import juego.DatosPartida;
 import juego.Escalador;
+import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 
 import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+
 
 public class MenuInicio extends JPanel {
 
@@ -71,8 +71,75 @@ public class MenuInicio extends JPanel {
 		this.add(opciones, BorderLayout.CENTER);
 
 
+		partidaLocal.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            	VentanaPrincipal ventanaPrincip = Session.getVentana();
+            	DatosPartida datos = new DatosPartida("local");
+            	Session.setDatosPartida(datos);
+            	ventanaPrincip.getPanelConfLocal().setDatosPartida(datos);
+            	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "CONFLOCAL");
+            }
+        });
+        
+        crearPOnline.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            	VentanaPrincipal ventanaPrincip = Session.getVentana();
+            	System.out.println("-----CONSOLA CREADOR------");
+            	if (Session.getCurrentUser()!=null) {
+            		
+            		startServerCnx();
+                	try {
+						Session.getCtsConnection().createGame();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                	
+                	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "CONFONLINE");
+                    
+            	}
+            	else {
+            		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LOGIN");
+            	}   
+            }
+        });
+        
+        joinPOnline.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            	VentanaPrincipal ventanaPrincip = Session.getVentana();
+            	System.out.println("-----CONSOLA JOINER------");
+            	
+				if (Session.getCurrentUser()!=null) {
+	            	startServerCnx();
+	            	try {
+						Session.getCtsConnection().getListaPartidas();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+	            	
+	            	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LISTAPARTIDAS");
+                    
+            	}
+            	else {
+            		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LOGIN");
+            	}  
+            }
+        });
+
+	}
 
 
+
+
+	protected void startServerCnx() {
+		try {
+			Session.startServerCnx();
+		} catch (ClassNotFoundException | IOException e1) {
+			System.out.println("Error al conectarse con el server");
+		}
 	}
 
 

@@ -4,12 +4,19 @@ import componentes.*;
 import juego.Configuracion;
 import juego.DatosPartida;
 import juego.Escalador;
+import juego.LogicaPartida;
+import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ConfPLocal extends JPanel {
     protected BButton botonIniciarPartida = new BButton("Iniciar Partida");
@@ -82,6 +89,60 @@ public class ConfPLocal extends JPanel {
         // Agregar el navBar en la posición NORTH
         add(navBar, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
+        
+        
+        
+        comboModoJuego.addActionListener(new ActionListener() {
+        	@Override
+            public void actionPerformed(ActionEvent e) {
+                String modoDeJuego = comboModoJuego.getSelectedItem().toString();
+                datos.setTipoPartida(modoDeJuego);
+            }
+		});
+
+        // ACTION LISTENERS
+        
+        
+		
+        botonIniciarPartida.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            	VentanaPrincipal ventana = Session.getVentana();
+            	
+            	if (!datos.getTipoPartida().equals("madChess")) {
+            		
+            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), "JUEGO");
+            		new LogicaPartida();
+            	}
+            	else {
+            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), "CONFMADCHESS");
+            	}
+            }
+        });
+        
+        
+
+        botonUser1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaPrincipal ventana = Session.getVentana();
+				ventana.getPanelLogin().setRedirect("CONFLOCAL");
+				ventana.getCardLayout().show(ventana.getPanelPrincipal(), "LOGIN");
+				
+			}
+		});
+        botonUser2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaPrincipal ventana = Session.getVentana();
+				ventana.getPanelLogin().setRedirect("CONFLOCAL");
+				ventana.getCardLayout().show(ventana.getPanelPrincipal(), "LOGIN");
+			}
+		});
+        
+        
     }
 
 

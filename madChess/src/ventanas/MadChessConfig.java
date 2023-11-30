@@ -7,10 +7,14 @@ import componentes.RButton;
 import componentes.navBar;
 import juego.Configuracion;
 import juego.Escalador;
+import juego.LogicaPartida;
+import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -59,14 +63,24 @@ public class MadChessConfig extends JPanel {
         gbc.gridy++;
         gbc.gridx = 0;
 
-        // Botón "Listo"
         BButton botonListo = new BButton("Listo");
         botonListo.setPreferredSize(Escalador.newDimension(100, 40));
         gbc.gridy++;
         addCenteredComponent(centerPanel, gbc, botonListo);
-
+        
         // Alinea el panel central en el centro de la ventana
         add(centerPanel, BorderLayout.CENTER);
+        
+        
+        botonListo.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            	VentanaPrincipal ventana = Session.getVentana();
+            	ventana.getCardLayout().show(ventana.getPanelPrincipal(), "JUEGO");
+        		new LogicaPartida();
+            	
+            }
+        });
     }
 
     private JPanel createImagePanel(int numImages, int rows, int cols) {

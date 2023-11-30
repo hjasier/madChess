@@ -65,7 +65,8 @@ public class GestionBd {
 	                if (verificarContraseña(passw, storedPassword)) {
 	                    // La contraseña es correcta, crear una instancia de Jugador
 	                    Jugador jugador = new Jugador(rs.getString("username"),rs.getInt("ranking"),rs.getString("img_route"),0);
-	                    Session.setCurrentUser(jugador);
+	                    Session.getVentana().loginReturn(jugador);
+	                    
 	                    return true;
 	                } else {
 	                    System.out.println("Contraseña incorrecta");

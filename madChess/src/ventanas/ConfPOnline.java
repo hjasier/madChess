@@ -1,6 +1,11 @@
 package ventanas;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 import Sockets.ClienteHandler;
@@ -8,6 +13,7 @@ import Sockets.Servidor;
 import juego.Configuracion;
 import juego.DatosPartida;
 import juego.Escalador;
+import juego.LogicaPartida;
 import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
@@ -187,9 +193,41 @@ public class ConfPOnline extends JPanel {
         
         
 
-        botonIniciarPartida.addActionListener(e -> {
-            // Lógica para iniciar la partida
+        botonIniciarPartida.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            	ArrayList<Jugador> jugadores = Session.getDatosPartida().getJugadores();
+            	if (jugadores.size()>1&&jugadores.get(0).getNombre().equals(Session.getCurrentUser().getNombre())) {
+            	try {
+					Session.getCtsConnection().postInitGame();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            	Session.getVentana().initGame();
+            	}
+            	else {
+            		JOptionPane.showMessageDialog(null, "No eres el admin o faltan jugadores", "Error", JOptionPane.ERROR_MESSAGE);
+            	}
+                
+            }
         });
+        
+		user1Btn.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						VentanaPrincipal ventanaPrincip = Session.getVentana();
+						ventanaPrincip.getPanelLogin().setRedirect("LOGIN");
+						ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "CONFONLINE");
+					}
+				});
+        
+        
+        
+        
+        
     }
 
 

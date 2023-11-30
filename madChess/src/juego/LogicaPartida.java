@@ -38,10 +38,10 @@ public class LogicaPartida {
 	protected DatosPartida datosPartida;
 	
 	
-	public LogicaPartida(Juego ventana) {
+	public LogicaPartida() {
 		Session.setPartida(this);
 		
-		this.ventana = ventana;
+		this.ventana = Session.getVentana().getPanelJuego();
 		this.datosPartida = Session.getDatosPartida();
 		if (datosPartida.jugadores!=null) {this.jugadores = datosPartida.jugadores;}
 		this.tablero = ventana.getTablero();
@@ -527,7 +527,8 @@ public class LogicaPartida {
     
     
     
-    private ArrayList<Casilla> casillasAfectadas(Casilla origen, Casilla destino) {
+    
+    private ArrayList<Casilla> casillasAfectadas(Casilla origen, Casilla destino) {//FIXME: IMPOSIBLE QUE ESTO NO SE PUEDA SIMPLIFICAR
         int[][] direcciones = {
             {0, 1},   // derecha (0)
             {0, -1},  // izquierda (1)
