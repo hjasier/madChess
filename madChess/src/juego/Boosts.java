@@ -8,9 +8,9 @@ public class Boosts {
 	}
 	
 	
-public static void boostMismoDestino () {
+public static void boostMalPresagio () {
+		System.out.println("Mal Presagio");
 		
-		System.out.println("Mismo Destino");
 		
 	}
 	

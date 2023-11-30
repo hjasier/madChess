@@ -25,7 +25,7 @@ public class PanelBoost extends JPanel {
 
         // Agrega elementos al panel de elementos (puedes agregar más según tus necesidades)
         for (int i = 1; i <= 10; i++) {
-            JPanel elementoPanel = crearElementoPanel("Boost" + i, "icono ");
+            JPanel elementoPanel = crearElementoPanel("Boost" + i, "icono ", i);
             panelElementos.add(elementoPanel);
         }
 
@@ -50,7 +50,7 @@ public class PanelBoost extends JPanel {
         add(panelDescripcion, BorderLayout.SOUTH);
     }
 
-    private JPanel crearElementoPanel(String nombreBoost, String nombreIcono) {
+    private JPanel crearElementoPanel(String nombreBoost, String nombreIcono, int boostIndex) {
         JPanel elementoPanel = new JPanel();
         elementoPanel.setBackground(colorFondo);
         elementoPanel.setLayout(new BorderLayout());
@@ -83,12 +83,20 @@ public class PanelBoost extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Lógica cuando se hace clic en el botón "Usar"
-                JOptionPane.showMessageDialog(null, "Botón 'Usar' clicado para " + nombreBoost);
-                Boosts.boostHielo();
+            	JOptionPane.showMessageDialog(null, "Botón 'Usar' clicado para " + nombreBoost);
+                onUsarButtonClick(boostIndex); // Ejecuta la función específica del botón
             }
         });
 
         return elementoPanel;
         
+    }
+    
+    private void onUsarButtonClick(int boostIndex) {
+        if (boostIndex == 1) {
+            Boosts.boostHielo();
+        } else if(boostIndex == 2){
+           Boosts.boostMalPresagio();
+        }
     }
 }
