@@ -1,4 +1,4 @@
-package basedatos;
+package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,18 +8,14 @@ import java.sql.SQLException;
 public class GestionBd {
 
 
-
-
-
-
    
 	public static void crearTablaUsuario() {
 	        String sql = "CREATE TABLE IF NOT EXISTS Usuario (\n"
-	                + "    username TEXT NOT NULL,\n"
+	                + "    username VARCHAR(255) NOT NULL,\n"
 	                + "    passw TEXT NOT NULL,\n"
 	                + "    img_route TEXT NOT NULL,\n"
-	                + "    rank INTEGER NOT NULL, \n"
-	                + "    PRIMARY KEY(username)"	
+	                + "    ranking INTEGER NOT NULL, \n" 
+	                + "    PRIMARY KEY(username(100))"	
 	                + ");";
 
 	        
@@ -35,11 +31,11 @@ public class GestionBd {
 	
 	public static void crearTablaPartida() {
         String sql = "CREATE TABLE IF NOT EXISTS Partida (\n"
-                + "    gameId TEXT NOT NULL,\n"
+                + "    gameId VARCHAR(255) NOT NULL,\n" 
                 + "    FechaIni TEXT NOT NULL,\n"
                 + "    FechaFin TEXT NOT NULL,\n"
-                + "    rank INTEGER NOT NULL, \n"
-                + "    PRIMARY KEY(gameId)"	
+                + "    ranking INTEGER NOT NULL, \n" 
+                + "    PRIMARY KEY(gameId(100))"
                 + ");";
         
         
@@ -51,26 +47,30 @@ public class GestionBd {
         }
     }
 
-	 public static void insertarUsuario(String username, String passw, String img_route, int rank) {
-		    // Verificar si el usuario ya existe antes de insertar
-		    if (!existeUsuario(username)) {
-		        String sql = "INSERT INTO Usuario(username, passw, img_route , rank ) VALUES(?,?,?,?)";
-
-		        try (Connection conn = ConexionBd.obtenerConexion();
-		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		            pstmt.setString(1, username);
-		            pstmt.setString(2, passw);
-		            pstmt.setString(3, img_route);
-		            pstmt.setInt(4, rank);
-		            
-		            pstmt.executeUpdate();
-		            System.out.println("Usuario insertado correctamente.");
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		    } else {
-		        System.out.println("El usuario ya existe. No se puede insertar.");
+	 public static String insertarUsuario(String username, String passw) {
+		    
+		 	String img_route = "/default.png";
+		 	int rank = 0;
+		 	
+		    if (existeUsuario(username)) {
+		       return "Error, El usuario ya existe";
 		    }
+		    
+		    String sql = "INSERT INTO Usuario(username, passw, img_route , ranking ) VALUES(?,?,?,?)";
+
+	        try (Connection conn = ConexionBd.obtenerConexion();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, username);
+	            pstmt.setString(2, passw);
+	            pstmt.setString(3, img_route);
+	            pstmt.setInt(4, rank);
+	            
+	            pstmt.executeUpdate();
+	            return "Usuario insertado correctamente.";
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+			return "Ha sucedido un error durante el registro";
 		}
 	 
 	 public static void insertarPartida(String gameId, String fechaIni, String FechaFin) {
@@ -137,7 +137,7 @@ public class GestionBd {
 	 
 	 public static void modificarUsuarios(String username, String passw, String img_route, int rank) {
 		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank = ? WHERE username = ?";
+			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, ranking = ? WHERE username = ?";
 			 
 			 try (Connection conn = ConexionBd.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -183,7 +183,7 @@ public class GestionBd {
 	             PreparedStatement pstmt = conn.prepareStatement(sql);
 	             ResultSet rs = pstmt.executeQuery()) {
 	            while (rs.next()) {
-	                System.out.println("Username: " + rs.getString("Username") + "\tRank: " + rs.getInt("rank"));
+	                System.out.println("Username: " + rs.getString("Username") + "\tRank: " + rs.getInt("ranking"));
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
@@ -245,4 +245,6 @@ public class GestionBd {
 	            return false;
 	        }
 	    }
+		
+		
 }

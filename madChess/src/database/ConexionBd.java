@@ -1,16 +1,16 @@
-package basedatos;
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import madChess.Keys;
 
 public class ConexionBd {
-	private static final String URL = "jdbc:sqlite:MadChess.db"; //direcion del .db
 
     // Método para obtener una conexión a la base de datos
     public static Connection obtenerConexion() throws SQLException {
-        return DriverManager.getConnection(URL);
+        return DriverManager.getConnection(Keys.DBURL, Keys.DBUSER, Keys.DBPASSWORD);
     }
 
     // Método para cerrar una conexión
@@ -24,8 +24,3 @@ public class ConexionBd {
         }
     }
 }
-
-
-
-
-    

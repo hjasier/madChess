@@ -146,15 +146,8 @@ public class Login extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String username = inputNombre.getText();
-				String passw = inputContra.getText();
-				
-				if (!username.equals("")&&!passw.equals(""));
-				
-				int  newUserId = 10000 + new Random().nextInt(90000); // de momento no comprobamos si el id existe pk no hay base de datos y es absurdo, ademas de que probablemente no se acabe creando aquí al user
-				
-				users.put(username, new Jugador(newUserId,username,passw)); // si ya hay un user lo sobreescribe pero nos da igual pk todo esto es temp
-				guardarUsuarios("users.dat");
+				VentanaPrincipal ventanaPrincip = Session.getVentana();
+				ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "REGISTER");
 			}
 		});
 	}

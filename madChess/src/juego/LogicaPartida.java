@@ -55,7 +55,7 @@ public class LogicaPartida {
         tablero.tableroDiv.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent e) {
-        		try {Session.getCtsConnection().postResetDragg();} catch (IOException e1) {e1.printStackTrace();}
+        		resetMouseSocket();
         		Casilla curCasilla = tablero.getCurCasilla(e);
         		moverPiezaTablero(tablero.prevCasilla,curCasilla,e);
         		tablero.dragging = false;	
@@ -103,6 +103,21 @@ public class LogicaPartida {
         
 	}
 	
+
+
+
+
+
+	protected void resetMouseSocket() {
+		if (datosPartida.getModoDeJuego().equals("online")) {
+			try {
+				Session.getCtsConnection().postResetDragg();} 
+			catch (IOException e1) {
+				e1.printStackTrace();
+				}
+    	}
+	}
+
 
 
 

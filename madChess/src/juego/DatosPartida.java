@@ -11,13 +11,14 @@ import objetos.Movimiento;
 
 public class DatosPartida implements Serializable{
 
-	protected String modoDeJuego;
+	protected String modoDeJuego;//Online o local
+	protected String tipoPartida; //Normal o madChess
 	protected Date fechaIni;
 	protected Date fechaFin;
 	protected String gameId;
 	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
 	protected ArrayList<Movimiento> movimientos;
-	protected String tipoPartida;
+	
 
 	
 	
@@ -40,7 +41,10 @@ public class DatosPartida implements Serializable{
 		return modoDeJuego;
 	}
 
-
+	public boolean isOnline() {
+		return modoDeJuego.equals("online");
+	}
+	
 	public String getGameId() {
 		return gameId;
 	}

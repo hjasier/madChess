@@ -168,9 +168,13 @@ public class Tablero extends JPanel{
 		int imgOffset = dragImg.getWidth()/2;
 		dragImg.setLocation(e.getX()-imgOffset,e.getY()-imgOffset);
 		
-		//Enviamos el movimiento al resto de clientes
-		try {Session.getCtsConnection().postMouseDragged(e,prevCasilla);} catch (IOException e1) {e1.printStackTrace();}
-        
+		
+		if (Session.getDatosPartida().getModoDeJuego().equals("online")) {
+			//Enviamos el movimiento al resto de clientes
+			try {Session.getCtsConnection().postMouseDragged(e,prevCasilla);} catch (IOException e1) {e1.printStackTrace();}
+	        
+		}
+		
 	}
     
     

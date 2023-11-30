@@ -44,8 +44,10 @@ public class VentanaPrincipal extends JFrame{
     ListaPartidas panelListaPartidas = new ListaPartidas();
     
     Perfil panelPerfil = new Perfil();
-    //no paneles
+    
+    MadChessConfig panelMadChessConfig = new MadChessConfig();
 
+    Register panelRegister = new Register();
     
 	public VentanaPrincipal() {
 		
@@ -56,17 +58,22 @@ public class VentanaPrincipal extends JFrame{
 		
 		panelPrincipal.setLayout(cardLayout);
 		
+		//panelPrincipal.add(panelRegister, "DEBUG");
+		
 		
 		panelPrincipal.add(panelMenuInicio, "MENUINICIO");
         panelPrincipal.add(panelJuego, "JUEGO");
         panelPrincipal.add(panelLogin, "LOGIN");
+        panelPrincipal.add(panelRegister, "REGISTER");
         panelPrincipal.add(panelConfLocal, "CONFLOCAL");  
         panelPrincipal.add(panelConfOnline, "CONFONLINE");
         
 		panelPrincipal.add(panelListaPartidas, "LISTAPARTIDAS");
 		panelPrincipal.add(panelPerfil, "PERFILUSUARIO");
-        
-        
+		
+		
+		
+		
         
         panelMenuInicio.loginBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -1,6 +1,7 @@
-package basedatos;
+package database;
 
 import javax.swing.*;
+
 
 import java.awt.GridLayout;
 import java.awt.Panel;
@@ -83,7 +84,7 @@ public class VentanaBd extends JFrame {
         String img = tfImg.getText();
         String strrank = tfRank.getText();
         int rank = Integer.parseInt(strrank);
-        GestionBd.insertarUsuario(username, passw, img, rank);
+        GestionBd.insertarUsuario(username, passw);
         tfUsername.setText("");
         tfPassw.setText("");
         tfImg.setText("");
@@ -126,7 +127,7 @@ public class VentanaBd extends JFrame {
                 GestionBd.crearTablaUsuario();
 
                 GestionBd.eliminarUsuarios("admin");
-                GestionBd.insertarUsuario("admin", "root","C:/ruta", 39);
+                GestionBd.insertarUsuario("admin", "root");
 
             }
         });

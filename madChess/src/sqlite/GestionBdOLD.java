@@ -1,28 +1,31 @@
-package basedatosmysql;
-
+package sqlite;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GestionBd {
+public class GestionBdOLD {
+
+
+
+
 
 
    
 	public static void crearTablaUsuario() {
 	        String sql = "CREATE TABLE IF NOT EXISTS Usuario (\n"
-	                + "    username VARCHAR(255) NOT NULL,\n"
+	                + "    username TEXT NOT NULL,\n"
 	                + "    passw TEXT NOT NULL,\n"
 	                + "    img_route TEXT NOT NULL,\n"
-	                + "    ranking INTEGER NOT NULL, \n" 
-	                + "    PRIMARY KEY(username(100))"	
+	                + "    rank INTEGER NOT NULL, \n"
+	                + "    PRIMARY KEY(username)"	
 	                + ");";
 
 	        
 	        
 	        
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionBdOLD.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.executeUpdate();
 	        } catch (SQLException e) {
@@ -32,15 +35,15 @@ public class GestionBd {
 	
 	public static void crearTablaPartida() {
         String sql = "CREATE TABLE IF NOT EXISTS Partida (\n"
-                + "    gameId VARCHAR(255) NOT NULL,\n" 
+                + "    gameId TEXT NOT NULL,\n"
                 + "    FechaIni TEXT NOT NULL,\n"
                 + "    FechaFin TEXT NOT NULL,\n"
-                + "    ranking INTEGER NOT NULL, \n" 
-                + "    PRIMARY KEY(gameId(100))"
+                + "    rank INTEGER NOT NULL, \n"
+                + "    PRIMARY KEY(gameId)"	
                 + ");";
         
         
-        try (Connection conn = ConexionBd.obtenerConexion();
+        try (Connection conn = ConexionBdOLD.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -51,9 +54,9 @@ public class GestionBd {
 	 public static void insertarUsuario(String username, String passw, String img_route, int rank) {
 		    // Verificar si el usuario ya existe antes de insertar
 		    if (!existeUsuario(username)) {
-		        String sql = "INSERT INTO Usuario(username, passw, img_route , ranking ) VALUES(?,?,?,?)";
+		        String sql = "INSERT INTO Usuario(username, passw, img_route , rank ) VALUES(?,?,?,?)";
 
-		        try (Connection conn = ConexionBd.obtenerConexion();
+		        try (Connection conn = ConexionBdOLD.obtenerConexion();
 		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            pstmt.setString(1, username);
 		            pstmt.setString(2, passw);
@@ -75,7 +78,7 @@ public class GestionBd {
 		    if (!existeUsuario(gameId)) {
 		        String sql = "INSERT INTO Partida(gameId, fechaIni, FechaFin ) VALUES(?,?,?)";
 
-		        try (Connection conn = ConexionBd.obtenerConexion();
+		        try (Connection conn = ConexionBdOLD.obtenerConexion();
 		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            pstmt.setString(1, gameId);
 		            pstmt.setString(2, fechaIni);
@@ -97,7 +100,7 @@ public class GestionBd {
 		 if(existeUsuario(username)) {
 			 String sql = "DELETE FROM Usuario WHERE username = ? ";
 			 
-			 try (Connection conn = ConexionBd.obtenerConexion();
+			 try (Connection conn = ConexionBdOLD.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				 
 				 	pstmt.setString(1, username);
@@ -117,7 +120,7 @@ public class GestionBd {
 		 if(existeUsuario(gameId)) {
 			 String sql = "DELETE FROM Partida WHERE gameId = ? ";
 			 
-			 try (Connection conn = ConexionBd.obtenerConexion();
+			 try (Connection conn = ConexionBdOLD.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            
 				 pstmt.setString(1, gameId);
@@ -134,9 +137,9 @@ public class GestionBd {
 	 
 	 public static void modificarUsuarios(String username, String passw, String img_route, int rank) {
 		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, ranking = ? WHERE username = ?";
+			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank = ? WHERE username = ?";
 			 
-			 try (Connection conn = ConexionBd.obtenerConexion();
+			 try (Connection conn = ConexionBdOLD.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            pstmt.setString(1, username);
 		            pstmt.setString(2, passw);
@@ -157,7 +160,7 @@ public class GestionBd {
 		 if(existeUsuario(gameId)) {
 			 String sql = "UPDATE Partida SET gameId = ? , fechaIni = ?, FechaFin = ? WHERE username = ?";
 			 
-			 try (Connection conn = ConexionBd.obtenerConexion();
+			 try (Connection conn = ConexionBdOLD.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            pstmt.setString(1, gameId);
 		            pstmt.setString(2, fechaIni);
@@ -176,11 +179,11 @@ public class GestionBd {
 	    public static void mostrarUsuarios() {
 	        String sql = "SELECT * FROM Usuario";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionBdOLD.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql);
 	             ResultSet rs = pstmt.executeQuery()) {
 	            while (rs.next()) {
-	                System.out.println("Username: " + rs.getString("Username") + "\tRank: " + rs.getInt("ranking"));
+	                System.out.println("Username: " + rs.getString("Username") + "\tRank: " + rs.getInt("rank"));
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
@@ -190,7 +193,7 @@ public class GestionBd {
 	    public static void mostrarUsuariosPassw() {
 	        String sql = "SELECT * FROM Usuario";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionBdOLD.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql);
 	             ResultSet rs = pstmt.executeQuery()) {
 	            while (rs.next()) {
@@ -204,7 +207,7 @@ public class GestionBd {
 	    public static void mostrarPartidas() {
 	        String sql = "SELECT * FROM Partida";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionBdOLD.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql);
 	             ResultSet rs = pstmt.executeQuery()) {
 	            while (rs.next()) {
@@ -218,7 +221,7 @@ public class GestionBd {
 		public static boolean existeUsuario(String username) {
 	        String sql = "SELECT * FROM Usuario WHERE username = ?";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionBdOLD.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.setString(1, username);
 	            ResultSet rs = pstmt.executeQuery();
@@ -232,7 +235,7 @@ public class GestionBd {
 		public static boolean existePartida(String gameId) {
 	        String sql = "SELECT * FROM Partida WHERE gameId = ?";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionBdOLD.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.setString(1, gameId);
 	            ResultSet rs = pstmt.executeQuery();
@@ -242,6 +245,4 @@ public class GestionBd {
 	            return false;
 	        }
 	    }
-		
-		
 }

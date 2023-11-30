@@ -54,17 +54,18 @@ public class MenuInicio extends JPanel {
 		partidaLocal.setAlignmentX(Component.CENTER_ALIGNMENT);
 		crearPOnline.setAlignmentX(Component.CENTER_ALIGNMENT);
 		joinPOnline.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 		
-		opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(150)))); //en el medio 250
+		
+		
+		
+		opciones.add(Box.createRigidArea(Escalador.newDimension(0, 150))); //en el medio 250
 		
 		opciones.add(partidaLocal);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(10)))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(Escalador.newDimension(0, 10))); // Espacio entre los botones
         opciones.add(crearPOnline);
-        opciones.add(Box.createRigidArea(new java.awt.Dimension(0, Escalador.escalar(10)))); // Espacio entre los botones
+        opciones.add(Box.createRigidArea(Escalador.newDimension(0, 10))); // Espacio entre los botones
         opciones.add(joinPOnline);
         
-
 
 		this.add(navBar, BorderLayout.NORTH);	
 		this.add(opciones, BorderLayout.CENTER);
