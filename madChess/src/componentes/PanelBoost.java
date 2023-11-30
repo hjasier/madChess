@@ -3,6 +3,7 @@ package componentes;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import juego.Boosts;
 import juego.Configuracion;
 import juego.Escalador;
 
