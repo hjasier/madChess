@@ -74,6 +74,8 @@ public class LogicaPartida {
                 Casilla curCasilla = tablero.getCurCasilla(e);
                 
                 
+                if(prevCasilla.getIsHielo()) {return;}
+                
                 if (Configuracion.DEBUG_MODE||(!checkJaque() || prevCasilla.getPieza() instanceof Rey)) {
                     tablero.arrastrarPieza(e);
                 } 
@@ -84,6 +86,8 @@ public class LogicaPartida {
                 	}
                 	
                }
+               
+                
                 
             }
 		});
@@ -167,6 +171,8 @@ public class LogicaPartida {
 		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
 			ArrayList<Casilla> casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla, casillas);
 			
+			if(prevCasilla.getIsHielo()) {return;}
+			
 			if (prevCasilla.getPieza().getIsWhite()!=curPlayer.getIsWhite()&&!DEBUG_MODE) {return;} // Si no es tu turno y mueves..
 			if (casillasDisp==null) {return;}
 			
@@ -225,6 +231,8 @@ public class LogicaPartida {
        			
        		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
     		
+       		Boosts.updateBoost();
+       		
        		checkReyInJaque();
        		
        		

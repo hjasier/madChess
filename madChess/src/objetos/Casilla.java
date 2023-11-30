@@ -29,6 +29,7 @@ public class Casilla extends JPanel implements Serializable {
     protected Boolean iluminada = false;
     protected int imgSize;
     protected Boolean isDisponible = false;
+    protected Boolean isHielo = false;
 
 
 	public Casilla(Color color, int fila, int c) {
@@ -182,7 +183,24 @@ public class Casilla extends JPanel implements Serializable {
 	}
 
 
+	public Boolean getIsHielo() {
+		return isHielo;
+	}
 
+
+	public void setIsHielo(Boolean isHielo) {
+		this.isHielo = isHielo;
+		if(isHielo) {
+        	this.color = new Color( color.getRed(),color.getGreen(),color.getBlue()+30);
+        	
+        }else {
+        	this.color = new Color( color.getRed(),color.getGreen(),color.getBlue()-30);
+        }
+		repaint();
+	}
+
+
+	
 
 	
 	

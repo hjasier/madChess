@@ -1,6 +1,7 @@
 package juego;
 
 import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.event.*;
 
@@ -12,6 +13,8 @@ import objetos.Tablero;
 public class Boosts {
 	
 		protected static String curBoost;
+		public static ArrayList<Boost> boostActivos = new ArrayList<>();
+		
 	
 		public static void checkBoosts(Casilla casilla) {
 			
@@ -19,8 +22,10 @@ public class Boosts {
 			switch(curBoost) {
 				case "HIELO":
 					//casilla.setDebugClr(Color.blue);
-					bloquearCasillasAdyacentes(casilla);
+					Hielo boostHielo = new Hielo(casilla);
+					setBloqueoCasillasAdyacentes(casilla,true);
 					curBoost = null;
+					boostActivos.add(boostHielo);
 					break;
 					
 			}
@@ -36,10 +41,10 @@ public class Boosts {
 	    }
 			
 	    
-	    private static void bloquearCasillasAdyacentes(Casilla casilla) {
+	    public static void setBloqueoCasillasAdyacentes(Casilla casilla,Boolean estado) {
 	        int fila = casilla.getFila();
 	        char columna = casilla.getColumna();
-
+	        
 	        // Array de desplazamientos para las casillas adyacentes
 	        int[] dx = {0, 0, -1, 1,-1,1,-1,1,0};
 	        int[] dy = {-1, 1, 0, 0,1,-1,-1,1,0};
@@ -47,22 +52,60 @@ public class Boosts {
 	        for (int i = 0; i < 9; i++) {
 	            int nuevaFila = fila + dx[i];
 	            char nuevaColumna = (char) (columna + dy[i]);
-
+	            
 	            // Obtener la casilla adyacente si está dentro de los límites del tablero
 	            Casilla adyacente = Session.getPartida().getCasilla(nuevaFila, nuevaColumna);
 	            if (adyacente != null) {
-	            	adyacente.setDebugClr(Color.blue);
-	            }}
+	            	//adyacente.setDebugClr(Color.blue);
+	            	adyacente.setIsHielo(estado); 
+	            	}
+	            }
 	        }
 	
-	
-public static void boostMismoDestino () {
+	    
+	    
+	    public static void boostMalPresagio () {
+		System.out.println("Mal Presagio");
 		
-		System.out.println("Mismo Destino");
 		
 	}
 	
 	
+	    public static void updateBoost() {
+	    	
+	    	for (Boost boost : boostActivos) {
+	    		boost.check();
+	    		
+	    	}
+	    }
 	
+}
+
+
+class Hielo extends Boost{
 	
+	protected Casilla casillaCentral;
+	
+	public Hielo(Casilla casillaCentral){
+		cont = 4;
+		this.casillaCentral = casillaCentral;
+	}
+	@Override
+	public void check() {
+		cont--;
+		if(cont==0) {
+			Boosts.setBloqueoCasillasAdyacentes(casillaCentral, false);
+//			Boosts.boostActivos.remove((Boost)this);
+			
+		}
+	}
+	
+}
+
+class Boost {
+	protected int cont;
+
+	public void check() {
+
+	}
 }
