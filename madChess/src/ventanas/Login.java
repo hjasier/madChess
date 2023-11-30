@@ -14,6 +14,7 @@ import java.util.Random;
 
 import objetos.Jugador;
 import componentes.*;
+import database.GestionBd;
 import juego.Configuracion;
 import juego.Escalador;
 import juego.Session;
@@ -122,21 +123,27 @@ public class Login extends JPanel {
 				String passw = inputContra.getText();
 				
 				
-				//método temporal para "logear" usuarios antes de configrara la base de datos final
+//				Jugador expectedUser = users.get(username);
+//				
+//				if (expectedUser!=null&&expectedUser.checkPassword(passw)) {
+//					System.out.println("Logeado como "+ expectedUser);
+//					ventanaPrincipal.loginReturn(redirect,expectedUser);
+//					inputNombre.setText("");
+//					inputContra.setText("");
+//				}
+//				else {
+//					
+//					JOptionPane.showMessageDialog(null, "Contraseña o usuario incorrectos", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+//
+//				}
 				
-				Jugador expectedUser = users.get(username);
 				
-				if (expectedUser!=null&&expectedUser.checkPassword(passw)) {
-					System.out.println("Logeado como "+ expectedUser);
-					ventanaPrincipal.loginReturn(redirect,expectedUser);
-					inputNombre.setText("");
-					inputContra.setText("");
+				boolean loginSucces = GestionBd.iniciarSesion(username, passw);
+				if (loginSucces) {
+					VentanaPrincipal ventanaPrincip = Session.getVentana();
+					ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "MENUINICIO");
 				}
-				else {
-					
-					JOptionPane.showMessageDialog(null, "Contraseña o usuario incorrectos", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
-
-				}
+				
 				
 			
 			}

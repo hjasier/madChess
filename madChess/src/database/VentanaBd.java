@@ -62,19 +62,7 @@ public class VentanaBd extends JFrame {
             }
         });
         
-        btnEliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	eliminarUsuarioDesdeVentana();
-            }
-        });
-        
-        btnModificar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	modificarUsuarioDesdeVentana();
-            }
-        });
+
     }
 
     private void insertarUsuarioDesdeVentana() {
@@ -95,41 +83,5 @@ public class VentanaBd extends JFrame {
     	GestionBd.mostrarUsuarios();
     }
     
-    private void eliminarUsuarioDesdeVentana() {
-        String username = tfUsername.getText();
-        GestionBd.eliminarUsuarios(username);
-        tfUsername.setText("");
-        tfPassw.setText("");
-    }
 
-    private void modificarUsuarioDesdeVentana() {
-    	 String username = tfUsername.getText();
-         char[] pass = tfPassw.getPassword();
-         String passw = "" + pass;
-         String img = tfImg.getText();
-         String strrank = tfRank.getText();
-         int rank = Integer.parseInt(strrank);
-         GestionBd.modificarUsuarios(username, passw, img, rank);
-        tfUsername.setText("");
-        tfPassw.setText("");
-        tfImg.setText("");
-        tfRank.setText("");
-    }
-    
-    
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new VentanaBd().setVisible(true);
-                
-                GestionBd.crearTablaUsuario();
-
-                GestionBd.eliminarUsuarios("admin");
-                GestionBd.insertarUsuario("admin", "root");
-
-            }
-        });
-    }
 }

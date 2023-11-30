@@ -28,8 +28,13 @@ public class Jugador implements Serializable{
 		this.passw = passw;
 	}
 	
-
-
+	public Jugador(String username , int rank, String img_route, int preferedTheme) {
+		super();
+		this.rank = rank;
+		this.username = username;
+		this.img_route = img_route;
+		this.preferedTheme = preferedTheme;
+	}
 
 	public Jugador(String string) {
 		this.username = string;

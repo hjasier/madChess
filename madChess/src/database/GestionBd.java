@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import juego.Session;
+import objetos.Jugador;
+
 public class GestionBd {
 
 
@@ -46,6 +49,42 @@ public class GestionBd {
             e.printStackTrace();
         }
     }
+		
+	public static boolean iniciarSesion(String username, String passw) {
+	    String sql = "SELECT * FROM Usuario WHERE username = ?";
+
+	    try (Connection conn = ConexionBd.obtenerConexion();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	        pstmt.setString(1, username);
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                String storedPassword = rs.getString("passw");
+
+	                if (verificarContraseña(passw, storedPassword)) {
+	                    // La contraseña es correcta, crear una instancia de Jugador
+	                    Jugador jugador = new Jugador(rs.getString("username"),rs.getInt("ranking"),rs.getString("img_route"),0);
+	                    Session.setCurrentUser(jugador);
+	                    return true;
+	                } else {
+	                    System.out.println("Contraseña incorrecta");
+	                }
+	            } else {
+	                System.out.println("Usuario no encontrado");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
+    
+    private static boolean verificarContraseña(String ingresada, String almacenada) {
+    	//Aqui se desencriptaría y se combrobaría..
+        return ingresada.equals(almacenada);  
+    }
 
 	 public static String insertarUsuario(String username, String passw) {
 		    
@@ -73,9 +112,10 @@ public class GestionBd {
 			return "Ha sucedido un error durante el registro";
 		}
 	 
+	 
 	 public static void insertarPartida(String gameId, String fechaIni, String FechaFin) {
 		    // Verificar si el usuario ya existe antes de insertar
-		    if (!existeUsuario(gameId)) {
+		    if (!existePartida(gameId)) {
 		        String sql = "INSERT INTO Partida(gameId, fechaIni, FechaFin ) VALUES(?,?,?)";
 
 		        try (Connection conn = ConexionBd.obtenerConexion();
@@ -96,7 +136,7 @@ public class GestionBd {
 	 
 	 
 	
-	 public static void eliminarUsuarios(String username) {
+	 public static void eliminarUsuario(String username) {
 		 if(existeUsuario(username)) {
 			 String sql = "DELETE FROM Usuario WHERE username = ? ";
 			 
@@ -135,7 +175,7 @@ public class GestionBd {
 	 }
 	 
 	 
-	 public static void modificarUsuarios(String username, String passw, String img_route, int rank) {
+	 public static void modificarUsuario(String username, String passw, String img_route, int rank) {
 		 if(existeUsuario(username)) {
 			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, ranking = ? WHERE username = ?";
 			 
@@ -190,33 +230,7 @@ public class GestionBd {
 	        }
 	    }
 	    
-	    public static void mostrarUsuariosPassw() {
-	        String sql = "SELECT * FROM Usuario";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
-	             PreparedStatement pstmt = conn.prepareStatement(sql);
-	             ResultSet rs = pstmt.executeQuery()) {
-	            while (rs.next()) {
-	                System.out.println("Username: " + rs.getString("Username") + "\tPassword: " + rs.getString("passw"));
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-
-	    public static void mostrarPartidas() {
-	        String sql = "SELECT * FROM Partida";
-
-	        try (Connection conn = ConexionBd.obtenerConexion();
-	             PreparedStatement pstmt = conn.prepareStatement(sql);
-	             ResultSet rs = pstmt.executeQuery()) {
-	            while (rs.next()) {
-	                System.out.println("gameId: " + rs.getString("gameId") + "\tFechaIni: " + rs.getInt("fechaIni") + "\tFechaFin: " + rs.getInt("FechaFin"));
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
 	   
 		public static boolean existeUsuario(String username) {
 	        String sql = "SELECT * FROM Usuario WHERE username = ?";
