@@ -16,7 +16,7 @@ public class PanelBoost extends JPanel {
     public PanelBoost() {
         setLayout(new BorderLayout());
         setBackground(colorFondo);
-
+        
         // Panel de elementos
         JPanel panelElementos = new JPanel();
         panelElementos.setLayout(new BoxLayout(panelElementos, BoxLayout.Y_AXIS));
@@ -83,9 +83,11 @@ public class PanelBoost extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Lógica cuando se hace clic en el botón "Usar"
                 JOptionPane.showMessageDialog(null, "Botón 'Usar' clicado para " + nombreBoost);
+                Boosts.boostHielo();
             }
         });
 
         return elementoPanel;
+        
     }
 }

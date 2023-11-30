@@ -94,6 +94,8 @@ public class Juego extends JPanel {
 	protected JPanel panelCardL = new JPanel();
 	protected PanelBoost panelBoost = new PanelBoost();
 	
+	
+	
 	protected MScrollPane scrollChat;
 	
 	
