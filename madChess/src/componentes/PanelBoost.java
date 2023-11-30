@@ -83,8 +83,6 @@ public class PanelBoost extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Lógica cuando se hace clic en el botón "Usar"
-                JOptionPane.showMessageDialog(null, "Botón 'Usar' clicado para " + nombreBoost);
-                Boosts.boostHielo();
             }
         });
 

@@ -8,6 +8,7 @@ import java.util.*;
 
 import javax.swing.*;
 
+import juego.Boosts;
 import juego.Configuracion;
 import juego.Session;
 import piezas.Alfil;
@@ -124,11 +125,17 @@ public class Tablero extends JPanel{
                 
         	}
         	
-        	
-        	
 		});
         
-
+        tableroDiv.addMouseListener(new MouseAdapter() {
+		
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		Boosts.checkBoosts(getCurCasilla(e));
+        		
+        	}
+        
+        });
         
         
     }
@@ -305,9 +312,5 @@ public class Tablero extends JPanel{
 		dragImg.setLocation(x,y);
 				
 	}
-
-
-	
-
 	
 }
