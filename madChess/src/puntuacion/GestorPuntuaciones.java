@@ -98,8 +98,8 @@ public class GestorPuntuaciones {
 //        gestor.agregarPartida("Jugador2", "Blitz", Resultado.VICTORIA_JUGADOR2);
 //
 //        // Obtener puntuaciones
-//        System.out.println("Puntuación de Jugador1 en Blitz: " + gestor.obtenerPuntuacion("Jugador1", "Blitz"));
-//        System.out.println("Puntuación de Jugador1 en Clasico: " + gestor.obtenerPuntuacion("Jugador1", "Clasico"));
-//        System.out.println("Puntuación de Jugador2 en Blitz: " + gestor.obtenerPuntuacion("Jugador2", "Blitz"));
+//        System.out.println("Puntuación de Jugador1 en Blitz: " + gestor.getPuntuacionModo("Jugador1", "Blitz"));
+//        System.out.println("Puntuación de Jugador1 en Clasico: " + gestor.getPuntuacionModo("Jugador1", "Clasico"));
+//        System.out.println("Puntuación de Jugador2 en Blitz: " + gestor.getPuntuacionModo("Jugador2", "Blitz"));
 //    }
 }
