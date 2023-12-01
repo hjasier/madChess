@@ -151,10 +151,13 @@ class Bomba extends Boost {
         cont--;
         if (cont == 0) {
         	Boosts.explotacionBomba(encontrarCasillaDePieza(piezaBomba));
-        	System.out.println("EXPLOTACION");
+        	
+			Session.getVentana().getPanelJuego().printMovimiento("EXPLOTACION");
+        	
         }else if (cont < 0){return;}    
         else {
-        	System.out.println("Movimiento para que explote: "+ cont);
+        	Session.getVentana().getPanelJuego().printMovimiento("Movimiento para que explote: "+ cont);
+        	
         }
     }
 
@@ -164,7 +167,6 @@ class Bomba extends Boost {
         for (Casilla fila : casillas) {
             
                 if (fila.getPieza() != null && fila.getPieza().equals(pieza)) {
-                    //System.out.println("bucle" + fila.getPieza());
                 	return fila; // Si se encuentra la pieza, se devuelve la casilla
                 
             }
