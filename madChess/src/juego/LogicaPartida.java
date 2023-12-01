@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
 
-
+import javax.swing.*;
+import javax.swing.text.*;
+import java.awt.*;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Movimiento;
@@ -20,6 +22,7 @@ import piezas.Reina;
 import piezas.Rey;
 import piezas.Torre;
 import utils.Configuracion;
+import utils.Escalador;
 import utils.Session;
 import ventanas.Juego;
 
@@ -39,6 +42,9 @@ public class LogicaPartida {
 
 	protected DatosPartida datosPartida;
 	
+	private ArrayList<String> infoTurnoList = new ArrayList<String>();
+	
+	protected Color secondaryColor = new Color(236,212,146);
 	
 	public LogicaPartida() {
 		Session.setPartida(this);
@@ -102,8 +108,8 @@ public class LogicaPartida {
         ventana.initWindow();
         
 
-        
-        printMovimiento("*/* "+curPlayer.getNombre()+" empieza la partida con blancas */*");
+        addInfo("*/* "+curPlayer.getNombre()+" empieza la partida con blancas */*", new Color(236,212,146), true,false);
+        printMovimiento();
 		
         
         
@@ -144,7 +150,12 @@ public class LogicaPartida {
 		user1.setIsWhite(true);
 		user1.setRey(reyWhite);
 		user2.setRey(reyBlack);
-        
+		
+		
+		user1.setPlayColor(new Color(255,100,17));
+		user2.setPlayColor(new Color(236,146,225));
+		
+		
         curPlayer = user1;
         tablero.setCurPlayer(curPlayer);
         
@@ -186,7 +197,8 @@ public class LogicaPartida {
        		
        		
        		if (!Configuracion.DEBUG_MODE&&(checkJaque() && !checkJaqueMoveValid(prevCasilla,curCasilla))){
-       			printMovimiento("¡Proteje al rey! 😡");
+       			addInfo("¡Proteje al rey! 😡",Color.red,true,false);
+       			printMovimiento();
        			return;
        		}
        		
@@ -194,18 +206,19 @@ public class LogicaPartida {
        			Pieza torre = casillas.get(casillaInx+1).getPieza();
        			casillas.get(casillaInx-1).setPieza(torre);
        			casillas.get(casillaInx+1).setPieza(null);//Borramos la torre de donde esta ahora
-       			printMovimiento("Enroque largo");
+       			addInfo("0-0",secondaryColor,false,false);
+       			
        			
        		}
        		else if (checkEnroqueLargo(pieza,curCasilla)) {
        			Pieza torre = casillas.get(casillaInx-2).getPieza();
        			casillas.get(casillaInx+1).setPieza(torre);
        			casillas.get(casillaInx-2).setPieza(null);
-       			printMovimiento("Enroque largo");
+       			addInfo("0-0-0",secondaryColor,false,false);
        		}
        		else if (checkPromotion(pieza,curCasilla)) {
        			tablero.initPromocion(curCasilla,e);
-       			printMovimiento("Pieza promocionada ");
+       			addInfo("PROM",secondaryColor,false,false);
        			// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
        		}
   
@@ -248,6 +261,9 @@ public class LogicaPartida {
     		} 
 		}
 	}
+	
+	
+	
 	private void checkAlters(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
 		if(pieza instanceof Alfil && ((Alfil) pieza).isAlter() && piezaComida != null) {
             // Revertimos el movimiento
@@ -263,19 +279,19 @@ public class LogicaPartida {
 					kills+="💀";
 				}
 			}
-			if (!casillasIntermedias.isEmpty()) {printMovimiento(kills);}
+			if (!casillasIntermedias.isEmpty()) {addInfo(kills); }
 		}
 		
 		if(pieza instanceof Torre && ((Torre) pieza).isAlter()) {
 			ArrayList<Casilla> casillasAfectadas = casillasAfectadas(prevCasilla,curCasilla);
-			String killsExpansiva = "Onda EXPANSIVA";
+			String kills = "[OndaExpansiva]";
 			for(Casilla casilla : casillasAfectadas ) {
 				if(casilla.getPieza()!= null)
-				{killsExpansiva+="💀";
+				{kills+="💀";
 				casilla.setPieza(null);
 				}
 			}
-			printMovimiento(killsExpansiva);
+			addInfo(kills);
 		}
 		
 		
@@ -480,6 +496,51 @@ public class LogicaPartida {
 	    }
 	}
 
+	private void addInfo(String text) {
+		addInfo(text,Color.white, false,false);
+	}
+	
+	private void addInfo(String text, Color color, boolean bold, boolean post) {
+	    StringBuilder styledText = new StringBuilder("<html>");
+	    String fontName = "Arial";
+	    int fontSize = Escalador.escalar(4);
+	    if (bold) {
+	        styledText.append("<b>");
+	    }
+
+	    styledText.append("<font color='").append(toHexString(color)).append("'");
+
+	    // Agregar nombre de la fuente y tamaño si están presentes
+	    if (fontName != null && !fontName.isEmpty()) {
+	        styledText.append(" face='").append(fontName).append("'");
+	    }
+	    if (fontSize > 0) {
+	        styledText.append(" size='").append(fontSize).append("'");
+	    }
+
+	    styledText.append(">");
+	    styledText.append(text);
+	    styledText.append("</font>");
+
+	    if (bold) {
+	        styledText.append("</b>");
+	    }
+
+	    styledText.append("</html>");
+
+	    if (!post) {
+	        infoTurnoList.add(styledText.toString());
+	    } else {
+	        infoTurnoList.add(0, styledText.toString());
+	    }
+	}
+
+	
+	
+	
+	private String toHexString(Color color) {
+	    return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+	}
 
 
 
@@ -700,7 +761,12 @@ public class LogicaPartida {
 		
 		//Aquí guardaríamos el movimiento en la base de datos, con su user etc para las analíticas
 		String extra = (piezaComida==null) ? " ":" 💀";
-		printMovimiento("<"+curPlayer.getNombre()+"> "+prevCasilla.getPos()+" ⏩ "+curCasilla.getPos()+extra);
+		
+		String info = (prevCasilla.getPos()+" ⏩ "+curCasilla.getPos()+extra);
+		
+		addInfo("║"+curPlayer.getNombre()+"║ ",curPlayer.getPlayColor(),false,true);
+		addInfo(info,Color.white,false,false);
+		printMovimiento();
 		
 		if (datosPartida.getModoDeJuego().equals("online")) {
 			try {
@@ -714,10 +780,22 @@ public class LogicaPartida {
 
 		
 	}
+	public static String joinHtml(ArrayList<String> htmlList) {
+        StringBuilder resultHtml = new StringBuilder();
+        for (String htmlFragment : htmlList) {
+            String modifiedFragment = htmlFragment.replace("<html>", "<text>");
+            modifiedFragment = modifiedFragment.replace("</html>", "</text>");
+
+            resultHtml.append(modifiedFragment);
+        }
+        return "<html>" + resultHtml.toString() + "</html>";
+    }
 	
-	
-	private void printMovimiento(String movimiento) {
-		ventana.printMovimiento(movimiento);
+	private void printMovimiento() {
+		
+		ventana.printMovimiento(joinHtml(infoTurnoList));
+		infoTurnoList = new ArrayList<String>();
+		
 	}
 	
 
@@ -830,6 +908,10 @@ public class LogicaPartida {
 			casilla.setPieza(null);
 		}
 	}
+
+
+
+
 
 
 

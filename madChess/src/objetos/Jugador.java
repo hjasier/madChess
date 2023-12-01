@@ -1,5 +1,6 @@
 package objetos;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ public class Jugador implements Serializable{
 	private Date initTime; 
 	private Rey rey;
 	private int preferedTheme;
+	private Color playColor;
 	
 
 
@@ -96,8 +98,16 @@ public class Jugador implements Serializable{
 	public Boolean checkPassword(String passwd) {
 		return this.passw.equals(passwd);
 	}
+	
+	
 
+	public Color getPlayColor() {
+		return playColor;
+	}
 
+	public void setPlayColor(Color playColor) {
+		this.playColor = playColor;
+	}
 
 	public String getNombre() {
 		return this.username;

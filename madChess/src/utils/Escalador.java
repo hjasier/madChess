@@ -11,7 +11,7 @@ public class Escalador {
         return (int) (valor * ESCALA);
     }
     
-    public static float escalarF(int valor) {
+    public static float escalarF(float valor) {
         return (float) (valor * ESCALA);
     }
     
