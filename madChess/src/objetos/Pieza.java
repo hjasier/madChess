@@ -18,6 +18,7 @@ public class Pieza implements Serializable {
 	private Boolean isWhite;
 	protected Boolean pMoved = false;
 	protected Boolean isAlter = false;
+	protected Boolean isBomberman = false;
 	
 	public ArrayList<Casilla> getCasillasCome(Casilla curCasilla, ArrayList<Casilla> casillas) {
 
@@ -75,5 +76,19 @@ public class Pieza implements Serializable {
 	public void setAlter(boolean isAlter) {
 		this.isAlter = isAlter;
 	}
+
+
+
+	public Boolean getIsBomberman() {
+		return isBomberman;
+	}
+
+
+
+	public void setIsBomberman(Boolean isBomberman) {
+		this.isBomberman = isBomberman;
+	}
+	
+	
 	
 }

@@ -8,6 +8,7 @@ import java.awt.event.*;
 import javax.swing.JOptionPane;
 
 import objetos.Casilla;
+import objetos.Pieza;
 import objetos.Tablero;
 
 public class Boosts {
@@ -27,6 +28,12 @@ public class Boosts {
 					curBoost = null;
 					boostActivos.add(boostHielo);
 					break;
+				case "BOMBA":
+				    Bomba boostBomba = new Bomba(casilla.getPieza());
+				    curBoost = null;
+				    casilla.getPieza().setIsBomberman(true);
+				    boostActivos.add(boostBomba);
+				    break;
 					
 			}
 			
@@ -38,6 +45,11 @@ public class Boosts {
 	    public static void boostHielo() {
 	        curBoost = "HIELO";
 	    	JOptionPane.showMessageDialog(null, "Selecciona una casilla");
+	    }
+	    
+	    public static void boostBomba() {
+	        curBoost = "BOMBA";
+	        JOptionPane.showMessageDialog(null, "Selecciona una casilla aliada para colocar la Bomba");
 	    }
 			
 	    
@@ -61,7 +73,7 @@ public class Boosts {
 	            	}
 	            }
 	        }
-	
+	    
 	    
 	    
 	    public static void boostMalPresagio () {
@@ -100,6 +112,31 @@ class Hielo extends Boost{
 		}
 	}
 	
+}
+
+
+class Bomba extends Boost {
+
+	protected Pieza piezaBomba;
+
+    public Bomba(Pieza pieza) {
+        cont = 5; // Duración de la cuenta regresiva antes de la explosión
+        this.piezaBomba = pieza;
+    }
+
+    
+    
+    @Override
+    public void check() {
+        cont--;
+        if (cont == 0) {
+        	System.out.println("EXPLOTACION");
+        }else {
+        	System.out.println("Movimiento para que explote: "+ cont);
+        }
+    }
+
+    
 }
 
 class Boost {

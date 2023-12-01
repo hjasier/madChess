@@ -97,6 +97,8 @@ public class PanelBoost extends JPanel {
             Boosts.boostHielo();
         } else if(boostIndex == 2){
            Boosts.boostMalPresagio();
+        }else if(boostIndex == 3){
+            Boosts.boostBomba();
         }
     }
 }

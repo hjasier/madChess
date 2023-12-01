@@ -55,7 +55,12 @@ public class Casilla extends JPanel implements Serializable {
 	
 	public void setPieza(Pieza pieza) {
 		this.pieza = pieza;
+//		if(pieza.getIsBomberman()) {
+//			this.color = Color.red;
+//		}
+		
 		this.repaint();
+		
 		
 	}
 	
