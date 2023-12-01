@@ -764,8 +764,10 @@ public class LogicaPartida {
 		
 		String info = (prevCasilla.getPos()+" ⏩ "+curCasilla.getPos()+extra);
 		
+		
+		addInfo(info,Color.white,false,true);
 		addInfo("║"+curPlayer.getNombre()+"║ ",curPlayer.getPlayColor(),false,true);
-		addInfo(info,Color.white,false,false);
+		
 		printMovimiento();
 		
 		if (datosPartida.getModoDeJuego().equals("online")) {
