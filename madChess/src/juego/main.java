@@ -10,6 +10,9 @@ import java.io.IOException;
 
 import javax.swing.UIManager;
 
+import utils.Audio;
+import utils.Configuracion;
+import utils.Escalador;
 import ventanas.VentanaPrincipal;
 
 public class main {
@@ -19,6 +22,7 @@ public class main {
 		setDefaultFont();
 		VentanaPrincipal v1 = new VentanaPrincipal();
 		
+		Audio.play("notify.wav"); //temp
 	}
 	
 

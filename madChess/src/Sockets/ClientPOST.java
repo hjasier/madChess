@@ -9,9 +9,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import juego.DatosPartida;
-import juego.Session;
 import objetos.Casilla;
 import objetos.Movimiento;
+import utils.Session;
 
 public class ClientPOST {
 	

@@ -9,10 +9,10 @@ import javax.swing.border.Border;
 
 import componentes.RButton;
 import componentes.navBar;
-import juego.Configuracion;
-import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
+import utils.Configuracion;
+import utils.Session;
 
 public class Perfil extends JPanel{
 	protected RButton backBtn = new RButton("Volver");

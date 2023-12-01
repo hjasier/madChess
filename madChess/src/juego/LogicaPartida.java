@@ -19,6 +19,8 @@ import piezas.Peon;
 import piezas.Reina;
 import piezas.Rey;
 import piezas.Torre;
+import utils.Configuracion;
+import utils.Session;
 import ventanas.Juego;
 
 public class LogicaPartida {

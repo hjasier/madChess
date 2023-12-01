@@ -8,12 +8,12 @@ import java.io.IOException;
 import componentes.BButton;
 import componentes.RButton;
 import componentes.navBar;
-import juego.Configuracion;
 import juego.DatosPartida;
-import juego.Escalador;
-import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
+import utils.Configuracion;
+import utils.Escalador;
+import utils.Session;
 
 import javax.swing.*;
 
@@ -28,7 +28,7 @@ public class MenuInicio extends JPanel {
 	protected BButton crearPOnline = new BButton("Crear partida online");
 	protected BButton joinPOnline = new BButton("Join partida online");
 	
-
+	protected BButton contPartida = new BButton("Continuar partida iniciada");
 
 	
 	public MenuInicio () {
@@ -55,7 +55,7 @@ public class MenuInicio extends JPanel {
 		crearPOnline.setAlignmentX(Component.CENTER_ALIGNMENT);
 		joinPOnline.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		
+		contPartida.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		
 		opciones.add(Box.createRigidArea(Escalador.newDimension(0, 150))); //en el medio 250
@@ -65,6 +65,10 @@ public class MenuInicio extends JPanel {
         opciones.add(crearPOnline);
         opciones.add(Box.createRigidArea(Escalador.newDimension(0, 10))); // Espacio entre los botones
         opciones.add(joinPOnline);
+        opciones.add(Box.createRigidArea(Escalador.newDimension(0, 30))); // Espacio entre los botones
+        opciones.add(contPartida);
+        
+        
         
 
 		this.add(navBar, BorderLayout.NORTH);	

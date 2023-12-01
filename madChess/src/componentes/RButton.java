@@ -2,8 +2,8 @@ package componentes;
 
 import javax.swing.*;
 
-import juego.Configuracion;
-import juego.Escalador;
+import utils.Configuracion;
+import utils.Escalador;
 
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;

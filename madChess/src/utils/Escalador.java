@@ -1,4 +1,4 @@
-package juego;
+package utils;
 
 import java.awt.Toolkit;
 import java.awt.Dimension;

@@ -12,7 +12,7 @@ import objetos.Movimiento;
 public class DatosPartida implements Serializable{
 
 	protected String modoDeJuego;//Online o local
-	protected String tipoPartida; //Normal o madChess
+	protected String tipoPartida = "Clásico"; //Normal o madChess
 	protected Date fechaIni;
 	protected Date fechaFin;
 	protected String gameId;

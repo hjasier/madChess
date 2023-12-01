@@ -1,14 +1,14 @@
 package ventanas;
 
 import componentes.*;
-import juego.Configuracion;
 import juego.DatosPartida;
-import juego.Escalador;
 import juego.LogicaPartida;
-import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
+import utils.Configuracion;
+import utils.Escalador;
+import utils.Session;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

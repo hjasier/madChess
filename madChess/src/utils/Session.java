@@ -1,10 +1,12 @@
-package juego;
+package utils;
 
 import java.io.IOException;
 
 import Sockets.ClientCnx;
 import Sockets.ClientGET;
 import Sockets.ClientPOST;
+import juego.DatosPartida;
+import juego.LogicaPartida;
 import objetos.Jugador;
 import ventanas.VentanaPrincipal;
 

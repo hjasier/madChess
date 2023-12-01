@@ -19,12 +19,12 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import Sockets.Servidor;
-import juego.Configuracion;
 import juego.DatosPartida;
-import juego.Escalador;
 import juego.LogicaPartida;
-import juego.Session;
 import objetos.Jugador;
+import utils.Configuracion;
+import utils.Escalador;
+import utils.Session;
 
 public class VentanaPrincipal extends JFrame{
 	JPanel panelPrincipal = new JPanel();

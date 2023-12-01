@@ -46,12 +46,12 @@ import javax.swing.border.EmptyBorder;
 import componentes.*;
 import componentes.MScrollPane;
 import componentes.userInfo;
-import juego.Configuracion;
-import juego.Escalador;
-import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.*;
+import utils.Configuracion;
+import utils.Escalador;
+import utils.Session;
 
 
 public class Juego extends JPanel {

@@ -4,8 +4,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import juego.Boosts;
-import juego.Configuracion;
-import juego.Escalador;
+import utils.Audio;
+import utils.Configuracion;
+import utils.Escalador;
+import utils.Session;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -99,6 +101,12 @@ public class PanelBoost extends JPanel {
            Boosts.boostMalPresagio();
         }else if(boostIndex == 3){
             Boosts.boostBomba();
+        }
+        else if(boostIndex == 5){
+        	//DEBUG 
+        	System.out.println("DEBUGEANDO ANIAMCIÓN");
+            Session.getPartida().getTablero().initAnimacionExplosion(Session.getPartida().getCasilla(0,(char)'A'));
+            Audio.play("explosion.wav");
         }
     }
 }

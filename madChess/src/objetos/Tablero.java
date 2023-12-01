@@ -7,14 +7,16 @@ import java.util.*;
 
 
 import javax.swing.*;
+import javax.swing.Timer;
 
 import juego.Boosts;
-import juego.Configuracion;
-import juego.Session;
 import piezas.Alfil;
 import piezas.Caballo;
 import piezas.Reina;
 import piezas.Torre;
+import utils.Audio;
+import utils.Configuracion;
+import utils.Session;
 
 
 
@@ -28,6 +30,7 @@ public class Tablero extends JPanel{
 	protected JPanel casillasDiv = new JPanel();
 	public JPanel tableroDiv = new JPanel(); //Panel por encima de las casillas
 	public JLabel dragImg = new JLabel(); // Label que va a actuar como img dentro de tableroDiv
+	private JLabel animacion = new JLabel(); // Label que va a actuar como img dentro de tableroDiv
 	
 	
 	//Eventos mouse variables
@@ -68,6 +71,10 @@ public class Tablero extends JPanel{
     	tableroDiv.setBackground(Color.magenta); 
     	tableroDiv.setOpaque(false); // Hace el panel de encima transparente
     	tableroDiv.add(dragImg);
+    	tableroDiv.add(animacion);
+    	
+    	animacion.setVisible(false);
+    	
     	
         this.add(tableroDiv);
         this.add(casillasDiv);
@@ -312,5 +319,41 @@ public class Tablero extends JPanel{
 		dragImg.setLocation(x,y);
 				
 	}
+	
+    public void initAnimacionExplosion(Casilla casilla) {
+    	
+    	//AUDIO 
+    	Audio.play("explosion.wav");
+    	
+        ImageIcon explosionIcon = new ImageIcon(getClass().getResource("../srcmedia/explosión.gif"));
+        animacion.setIcon(explosionIcon);
+        animacion.setSize(explosionIcon.getIconWidth(), explosionIcon.getIconHeight());
+        animacion.setVisible(true);
+
+        Point pos = getPosCasillaTablero(casilla);
+
+        int x = pos.x - animacion.getWidth() / 2; //quitamos la mitad para centrar la pos de la img al centro 
+        int y = pos.y - animacion.getHeight() / 2;
+        
+        animacion.setLocation(x, y);
+
+        Timer timer = new Timer(550, e -> animacion.setVisible(false));//Para la animación
+        timer.setRepeats(false); 
+        timer.start();
+    }
+
+	
+	public Point getPosCasillaTablero(Casilla casilla) {
+        double tamanoCasilla = casillasDiv.getSize().getWidth() / 8;
+
+        int fila = casilla.getFila();
+        char columna = casilla.getColumna();
+
+        int x = (int) (columna - 'A') * (int) tamanoCasilla;
+        int y = fila * (int) tamanoCasilla;
+
+        return new Point(x, y);
+    }
+
 	
 }

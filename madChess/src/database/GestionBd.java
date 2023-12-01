@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import juego.Session;
 import objetos.Jugador;
+import utils.Session;
 
 public class GestionBd {
 

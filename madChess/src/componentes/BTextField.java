@@ -4,8 +4,8 @@ import javax.swing.*;
 
 import org.w3c.dom.Text;
 
-import juego.Configuracion;
-import juego.Escalador;
+import utils.Configuracion;
+import utils.Escalador;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

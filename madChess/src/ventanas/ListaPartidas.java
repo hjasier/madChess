@@ -2,6 +2,9 @@ package ventanas;
 
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
+import utils.Configuracion;
+import utils.Escalador;
+import utils.Session;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,10 +26,7 @@ import componentes.MButton;
 import componentes.MScrollPane;
 import componentes.RButton;
 import componentes.navBar;
-import juego.Configuracion;
 import juego.DatosPartida;
-import juego.Escalador;
-import juego.Session;
 
 public class ListaPartidas extends JPanel {
     private Color colorFondo = Configuracion.BACKGROUND;

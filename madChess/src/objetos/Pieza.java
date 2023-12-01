@@ -8,6 +8,8 @@ import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 
+import utils.Session;
+
 public class Pieza implements Serializable {
 
 	
@@ -88,6 +90,21 @@ public class Pieza implements Serializable {
 	public void setIsBomberman(Boolean isBomberman) {
 		this.isBomberman = isBomberman;
 	}
+
+
+
+	
+	public Casilla getCasillaParent() {
+        ArrayList<Casilla> casillas = Session.getPartida().getTablero().getCasillas();
+        for (Casilla fila : casillas) {
+            
+                if (fila.getPieza() != null && fila.getPieza().equals(this)) {
+                	return fila; // Si se encuentra la pieza, se devuelve la casilla
+                
+            }
+        }
+        return null; // Si no se encuentra la pieza, se devuelve null
+    }
 	
 	
 	

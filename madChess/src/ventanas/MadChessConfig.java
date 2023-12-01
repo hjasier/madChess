@@ -5,12 +5,12 @@ import javax.swing.*;
 import componentes.BButton;
 import componentes.RButton;
 import componentes.navBar;
-import juego.Configuracion;
-import juego.Escalador;
 import juego.LogicaPartida;
-import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
+import utils.Configuracion;
+import utils.Escalador;
+import utils.Session;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

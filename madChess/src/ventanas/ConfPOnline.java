@@ -10,14 +10,14 @@ import javax.swing.*;
 
 import Sockets.ClienteHandler;
 import Sockets.Servidor;
-import juego.Configuracion;
 import juego.DatosPartida;
-import juego.Escalador;
 import juego.LogicaPartida;
-import juego.Session;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
+import utils.Configuracion;
+import utils.Escalador;
+import utils.Session;
 import componentes.*;
 
 public class ConfPOnline extends JPanel {

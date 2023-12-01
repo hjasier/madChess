@@ -1,15 +1,13 @@
 package juego;
 
-import java.awt.event.MouseAdapter;
+
 import java.util.ArrayList;
-import java.awt.Color;
-import java.awt.event.*;
 
-import javax.swing.JOptionPane;
 
+import componentes.InfoMsg;
 import objetos.Casilla;
 import objetos.Pieza;
-import objetos.Tablero;
+import utils.Session;
 
 public class Boosts {
 	
@@ -44,12 +42,13 @@ public class Boosts {
 		
 	    public static void boostHielo() {
 	        curBoost = "HIELO";
-	    	JOptionPane.showMessageDialog(null, "Selecciona una casilla");
+	    	InfoMsg.alert("Selecciona la casilla central a la que aplicar el rango");
 	    }
 	    
 	    public static void boostBomba() {
 	        curBoost = "BOMBA";
-	        JOptionPane.showMessageDialog(null, "Selecciona una casilla aliada para colocar la Bomba");
+	        InfoMsg.alert("Selecciona una casilla aliada para colocar la Bomba");
+	        
 	    }
 			
 	    
@@ -150,9 +149,12 @@ class Bomba extends Boost {
     public void check() {
         cont--;
         if (cont == 0) {
-        	Boosts.explotacionBomba(encontrarCasillaDePieza(piezaBomba));
+        	Casilla curCasilla = piezaBomba.getCasillaParent();
+        	System.out.println(curCasilla.getPos());
+        	Boosts.explotacionBomba(curCasilla);
         	
 			Session.getVentana().getPanelJuego().printMovimiento("EXPLOTACION");
+			Session.getPartida().getTablero().initAnimacionExplosion(curCasilla);
         	
         }else if (cont < 0){return;}    
         else {
@@ -161,18 +163,7 @@ class Bomba extends Boost {
         }
     }
 
-    private Casilla encontrarCasillaDePieza(Pieza pieza) {
-        // Suponiendo que el tablero tiene un arreglo de casillas
-        ArrayList<Casilla> casillas = Session.getPartida().getTablero().getCasillas();
-        for (Casilla fila : casillas) {
-            
-                if (fila.getPieza() != null && fila.getPieza().equals(pieza)) {
-                	return fila; // Si se encuentra la pieza, se devuelve la casilla
-                
-            }
-        }
-        return null; // Si no se encuentra la pieza, se devuelve null
-    }
+    
 }
 
 class Boost {

@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import juego.Configuracion;
 import juego.DatosPartida;
-import juego.Session;
 import objetos.Jugador;
+import utils.Configuracion;
+import utils.Session;
 import ventanas.ConfPOnline;
 
 public class Servidor {

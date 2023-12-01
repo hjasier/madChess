@@ -25,29 +25,19 @@ public class GestorPuntuaciones {
         int puntuacionUser2 = getPuntuacionModo(usuario2, modo);
         
              
-        if (puntuacionUser1 > puntuacionUser2) { //usuario 1 tiene el elo mas alto por lo que gana poco y el usuario 2 pierde mas
-        	 if (resultado == Resultado.VICTORIA_JUGADOR1) {
-        		 puntuacionUser1 += 35;
-        		 puntuacionUser2 -= 35;
-             } else if (resultado == Resultado.VICTORIA_JUGADOR2) {
-            	 puntuacionUser1 -= 50;
-        		 puntuacionUser2 += 50;
-             } else if (resultado == Resultado.EMPATE) {
-            	 puntuacionUser1 += 15;
-            	 puntuacionUser2 += 20;
-             }
-        } else { //usuario 2 tiene el elo mas alto
-        	if (resultado == Resultado.VICTORIA_JUGADOR1) {
-       		 puntuacionUser1 += 50;
-       		 puntuacionUser2 -= 50;
-            } else if (resultado == Resultado.VICTORIA_JUGADOR2) {
-           	 puntuacionUser1 -= 35;
-       		 puntuacionUser2 += 35;
-            } else if (resultado == Resultado.EMPATE) {
-           	 puntuacionUser1 += 20;
-           	 puntuacionUser2 += 15;
-            }
+        int newPuntuacionUser1 = 0;
+        int newPuntuacionUser2 = 0;
+
+        if (puntuacionUser1 > puntuacionUser2) {
+        	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? 35 : (resultado == Resultado.EMPATE) ? 15 : -50;
+            newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? 50 : (resultado == Resultado.EMPATE) ? 20 : -35;
+        } else {
+        	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? 50 : (resultado == Resultado.EMPATE) ? 20 : -35;
+            newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? 35 : (resultado == Resultado.EMPATE) ? 15 : -50;
         }
+
+        puntuacionUser1 += newPuntuacionUser1;
+        puntuacionUser2 += newPuntuacionUser2;
         
         
         puntuacionesUsuario.put(modo, puntuacionUser1);

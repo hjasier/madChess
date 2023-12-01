@@ -2,8 +2,8 @@ package componentes;
 import javax.swing.*;
 import javax.swing.plaf.basic.*;
 
-import juego.Configuracion;
-import juego.Escalador;
+import utils.Configuracion;
+import utils.Escalador;
 
 import java.awt.*;
 

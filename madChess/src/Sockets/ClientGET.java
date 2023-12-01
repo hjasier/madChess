@@ -8,11 +8,11 @@ import java.util.Set;
 
 import juego.DatosPartida;
 import juego.LogicaPartida;
-import juego.Session;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Movimiento;
 import objetos.Tablero;
+import utils.Session;
 
 
 public class ClientGET implements Runnable {

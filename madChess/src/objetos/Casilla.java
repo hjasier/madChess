@@ -16,8 +16,8 @@ import java.io.Serializable;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-import juego.Escalador;
-import juego.Session;
+import utils.Escalador;
+import utils.Session;
 
 
 public class Casilla extends JPanel implements Serializable {
@@ -149,6 +149,19 @@ public class Casilla extends JPanel implements Serializable {
         int x = (getWidth() - imgSize) / 2;
         int y = (getHeight() - imgSize) / 2;
         
+        //Img esquina sup izquieda
+        if (isHielo ||(pieza!=null&& pieza.isBomberman)) {
+            String src;
+			if (!isHielo) {
+                src = "../srcmedia/bomba.png";
+            } else {
+            	src = "../srcmedia/hielo.png";
+            }
+
+            Image nuevaImagen = new ImageIcon(getClass().getResource(src)).getImage();
+            int nuevaImagenSize = 30;
+            g.drawImage(nuevaImagen, 5, 5, nuevaImagenSize, nuevaImagenSize, null);
+        }
         
         if (this.isDisponible) {
         	g.setColor(new Color(255, 201, 0 ));

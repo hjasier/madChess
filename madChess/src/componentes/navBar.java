@@ -11,8 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import juego.Configuracion;
-import juego.Escalador;
+import utils.Configuracion;
+import utils.Escalador;
 
 public class navBar extends JPanel{
 	private Color colorFondo = Configuracion.BACKGROUND;
