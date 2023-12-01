@@ -17,6 +17,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import juego.Escalador;
+import juego.Session;
 
 
 public class Casilla extends JPanel implements Serializable {
@@ -203,6 +204,9 @@ public class Casilla extends JPanel implements Serializable {
         }
 		repaint();
 	}
+	
+	
+	
 
 
 	

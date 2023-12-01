@@ -29,7 +29,7 @@ public class Boosts {
 					boostActivos.add(boostHielo);
 					break;
 				case "BOMBA":
-				    Bomba boostBomba = new Bomba(casilla.getPieza());
+				    Bomba boostBomba = new Bomba(casilla.getPieza(), casilla);
 				    curBoost = null;
 				    casilla.getPieza().setIsBomberman(true);
 				    boostActivos.add(boostBomba);
@@ -74,7 +74,28 @@ public class Boosts {
 	            }
 	        }
 	    
-	    
+	    public static void explotacionBomba(Casilla casilla) {
+	    	
+	    	
+	        int fila = casilla.getFila();
+	        char columna = casilla.getColumna();
+	        
+	        // Array de desplazamientos para las casillas adyacentes
+	        int[] dx = {0, 0, -1, 1,-1,1,-1,1,0};
+	        int[] dy = {-1, 1, 0, 0,1,-1,-1,1,0};
+
+	        for (int i = 0; i < 9; i++) {
+	            int nuevaFila = fila + dx[i];
+	            char nuevaColumna = (char) (columna + dy[i]);
+	            
+	            // Obtener la casilla adyacente si está dentro de los límites del tablero
+	            Casilla adyacente = Session.getPartida().getCasilla(nuevaFila, nuevaColumna);
+	            if (adyacente != null) {
+	            	//adyacente.setDebugClr(Color.blue);
+	            	adyacente.setPieza(null);
+	            	}
+	            }
+	        }
 	    
 	    public static void boostMalPresagio () {
 		System.out.println("Mal Presagio");
@@ -118,8 +139,7 @@ class Hielo extends Boost{
 class Bomba extends Boost {
 
 	protected Pieza piezaBomba;
-
-    public Bomba(Pieza pieza) {
+    public Bomba(Pieza pieza,Casilla casillaCentral) {
         cont = 5; // Duración de la cuenta regresiva antes de la explosión
         this.piezaBomba = pieza;
     }
@@ -130,13 +150,27 @@ class Bomba extends Boost {
     public void check() {
         cont--;
         if (cont == 0) {
+        	Boosts.explotacionBomba(encontrarCasillaDePieza(piezaBomba));
         	System.out.println("EXPLOTACION");
-        }else {
+        }else if (cont < 0){return;}    
+        else {
         	System.out.println("Movimiento para que explote: "+ cont);
         }
     }
 
-    
+    private Casilla encontrarCasillaDePieza(Pieza pieza) {
+        // Suponiendo que el tablero tiene un arreglo de casillas
+        ArrayList<Casilla> casillas = Session.getPartida().getTablero().getCasillas();
+        for (Casilla fila : casillas) {
+            
+                if (fila.getPieza() != null && fila.getPieza().equals(pieza)) {
+                    //System.out.println("bucle" + fila.getPieza());
+                	return fila; // Si se encuentra la pieza, se devuelve la casilla
+                
+            }
+        }
+        return null; // Si no se encuentra la pieza, se devuelve null
+    }
 }
 
 class Boost {
