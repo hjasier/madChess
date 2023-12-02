@@ -17,7 +17,8 @@ public class GestionBd {
 	                + "    username VARCHAR(255) NOT NULL,\n"
 	                + "    passw TEXT NOT NULL,\n"
 	                + "    img_route TEXT NOT NULL,\n"
-	                + "    ranking INTEGER NOT NULL, \n" 
+	                + "    rank_clasic INTEGER NOT NULL, \n" 
+	                + "    rank_mad INTEGER NOT NULL, \n"
 	                + "    PRIMARY KEY(username(100))"	
 	                + ");";
 
@@ -90,20 +91,22 @@ public class GestionBd {
 	 public static String insertarUsuario(String username, String passw) {
 		    
 		 	String img_route = "/default.png";
-		 	int rank = 0;
+		 	int rank_classic = 0;
+		 	int rank_mad = 0;
 		 	
 		    if (existeUsuario(username)) {
 		       return "Error, El usuario ya existe";
 		    }
-		    
-		    String sql = "INSERT INTO Usuario(username, passw, img_route , ranking ) VALUES(?,?,?,?)";
+		  
+		    String sql = "INSERT INTO Usuario(username, passw, img_route , rank_clasic, rank_mad ) VALUES(?,?,?,?,?)";
 
 	        try (Connection conn = ConexionBd.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.setString(1, username);
 	            pstmt.setString(2, passw);
 	            pstmt.setString(3, img_route);
-	            pstmt.setInt(4, rank);
+	            pstmt.setInt(4, rank_classic);
+	            pstmt.setInt(5, rank_mad);
 	            
 	            pstmt.executeUpdate();
 	            return "Usuario insertado correctamente.";
@@ -176,16 +179,17 @@ public class GestionBd {
 	 }
 	 
 	 
-	 public static void modificarUsuario(String username, String passw, String img_route, int rank) {
+	 public static void modificarUsuario(String username, String passw, String img_route, int rank_classic, int rank_mad) {
 		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, ranking = ? WHERE username = ?";
+			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank_classic = ?, rank_mad = ? WHERE username = ?";
 			 
 			 try (Connection conn = ConexionBd.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            pstmt.setString(1, username);
 		            pstmt.setString(2, passw);
 		            pstmt.setString(3, img_route);
-		            pstmt.setInt(4, rank);
+		            pstmt.setInt(4, rank_classic);
+		            pstmt.setInt(5, rank_mad);
 		            
 		            pstmt.executeUpdate();
 		            System.out.println("Usuario modificado correctamente.");
@@ -224,7 +228,7 @@ public class GestionBd {
 	             PreparedStatement pstmt = conn.prepareStatement(sql);
 	             ResultSet rs = pstmt.executeQuery()) {
 	            while (rs.next()) {
-	                System.out.println("Username: " + rs.getString("Username") + "\tRank: " + rs.getInt("ranking"));
+	                System.out.println("Username: " + rs.getString("username") + "\tRank: " + rs.getInt("rank_classic") + "\tRank Mad Chess: " + rs.getInt("rank_mad"));
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();

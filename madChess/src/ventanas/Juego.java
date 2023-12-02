@@ -38,10 +38,17 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 
 import componentes.*;
 import componentes.MScrollPane;
@@ -79,7 +86,7 @@ public class Juego extends JPanel {
 	
 	
 	protected JPanel panelMovimentos;
-	protected JTextArea areaMovimientos;
+	protected JTextPane areaMovimientos;
 	protected JLabel labelMovimientos;
 	
 	protected Tablero tablero = new Tablero();
@@ -88,12 +95,13 @@ public class Juego extends JPanel {
 	protected JPanel panelBotones = new JPanel();
 	protected JPanel panelContenedor = new JPanel();
 	protected JPanel panelTabs = new JPanel();
+	protected JPanel panelLabels = new JPanel();
 	protected JLabel labelChat = new JLabel();
 	protected JLabel labelBoost = new JLabel();
 	protected JPanel panelAbajo = new JPanel();
 	protected JPanel panelCardL = new JPanel();
 	protected PanelBoost panelBoost = new PanelBoost();
-	
+	protected StyledDocument styledAreaMovimientos;
 	
 	
 	protected MScrollPane scrollChat;
@@ -251,8 +259,6 @@ public class Juego extends JPanel {
 	    //panel tabs
 	    
 	    panelTabs.setLayout(new BoxLayout(panelTabs, BoxLayout.X_AXIS));
-
-	    JPanel panelLabels = new JPanel();	
 	    panelLabels.setLayout(new BoxLayout(panelLabels, BoxLayout.X_AXIS));
 	    
 	    labelChat = new JLabel("CHAT");
@@ -276,15 +282,19 @@ public class Juego extends JPanel {
 	    labelMovimientos = new JLabel("MOVIMIENTOS");
 	    labelMovimientos.setFont(labelMovimientos.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
 
-	    areaMovimientos = new JTextArea(5,2);
-	    areaMovimientos.setLineWrap(true); 
-	    areaMovimientos.setWrapStyleWord(true); 
+	    areaMovimientos = new JTextPane();
+	    areaMovimientos.setContentType("text/html");
+
 
 	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, Escalador.escalar(14))); 
 	    areaMovimientos.setEditable(false);
+	    styledAreaMovimientos = areaMovimientos.getStyledDocument();
+
+	    areaMovimientos.setPreferredSize(new Dimension(Escalador.escalar(120),Integer.MAX_VALUE));
+	    
+	    
 	    
 	    scrollMovimientos = new MScrollPane(areaMovimientos);	
-	    
 	    
 	    
 	    panelMovimentos.add(labelMovimientos, BorderLayout.NORTH);
@@ -488,27 +498,55 @@ public class Juego extends JPanel {
 	}
 
 	
-    public void printMovimiento(String movimiento) {
-    	areaMovimientos.append(movimiento+ "\n");
-    }
+    
+    
+    
+    public void printMovimiento(String infoTurno) {
+        HTMLEditorKit kit = new HTMLEditorKit();
+        HTMLDocument doc = (HTMLDocument) areaMovimientos.getDocument(); // Obtén el documento existente
 
-	public void setInterfaz(String modoDeJuego, String tipoPartida) {
-		/*
-		 * FIXME: Cuando limpiemos el código estaria guay que directamente haya un mapa con ejemplo modo local --> chat:false,nsq:true... 
-		 * y esta función solo setea los valores a uno de ese mapa en vez de eliminarlo una vez ya cargado...
-		 */
-		if (modoDeJuego=="local") {
-			//panelControles.remove(panelAbajo);
-			//panelControles.setLayout(new GridLayout(1,1));
-			cardLayout.show(panelCardL,"BOOST");
-			panelTabs.remove(labelChat);
+        try {
+            // Inserta un salto de línea antes de agregar el nuevo contenido
+            if (doc.getLength() > 0) {
+                kit.insertHTML(doc, doc.getLength(), "<br>", 0, 0, null);
+            }
+
+            // Ahora, agrega el nuevo contenido
+            kit.insertHTML(doc, doc.getLength(), infoTurno, 0, 0, null);
+        } catch (BadLocationException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+	public void setInterfaz() {
+		String modoDeJuego = Session.getDatosPartida().getModoDeJuego();
+		String tipoPartida = Session.getDatosPartida().getTipoPartida();
+		
+		if (modoDeJuego.equals("local")) { //LOCAL
+			panelLabels.remove(labelChat);
 			labelBoost.setForeground(Color.white);
 			labelChat.setForeground(Color.gray);
-			
+			cardLayout.show(panelCardL,"BOOST");
+		}
+		else { //ONLINE
+			labelChat.setForeground(Color.white);
+			labelBoost.setForeground(Color.gray);
+			cardLayout.show(panelCardL,"CHAT");
+		}
+		
+		if (tipoPartida.equals("madChess")) { //CLÁSICO
+			cardLayout.show(panelCardL,"BOOST");
 		}
 		else {
-			labelBoost.setForeground(Color.white);
-			labelChat.setForeground(Color.gray);
+			panelLabels.remove(labelBoost);
+			labelChat.setForeground(Color.white);
+			cardLayout.show(panelCardL,"CHAT");
+		}
+		
+		if (!tipoPartida.equals("madChess")&&modoDeJuego.equals("local")) { 
+			panelControles.remove(panelAbajo);
+			panelControles.setLayout(new GridLayout(1,1));
 		}
 		
 
@@ -537,11 +575,10 @@ public class Juego extends JPanel {
 	
 	public void initWindow() {
 		if (Configuracion.DEBUG_MODE) {
-        	printMovimiento("--------------------");
-        	printMovimiento("MODO DEBUG: ACTIVADO");
-        	printMovimiento("--------------------");
+			printMovimiento("<b color='yellow'> ------------------------------------ <br> MODO DEBUG: ACTIVADO <br> ------------------------------------  </b>");
+
         }
-        setInterfaz(Session.getDatosPartida().getModoDeJuego(),Session.getDatosPartida().getTipoPartida());
+        setInterfaz();
 	}
 
 
