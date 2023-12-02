@@ -138,7 +138,7 @@ public class Tablero extends JPanel{
 		
         	@Override
         	public void mouseClicked(MouseEvent e) {
-        		Boosts.checkBoosts(getCurCasilla(e));
+        		Boosts.checkBoosts(getCurCasilla(e), nowPlaying);
         		
         	}
         
@@ -286,6 +286,10 @@ public class Tablero extends JPanel{
 
 	public void setCurPlayer(Jugador jugador) {
 		this.nowPlaying = jugador;
+	}
+	
+	public Jugador getCurPlayer() {
+		return nowPlaying;
 	}
 
 	public Casilla getPrevCasilla() {
