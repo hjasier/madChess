@@ -34,7 +34,6 @@ public class Boosts {
 					if (!curJugador.getIsWhite()) {
 						color = "Negras";
 					}
-					
 					MalPresagio boostMalPresagio = new MalPresagio(color);
 					curBoost = null;
 					boostActivos.add(boostMalPresagio);
