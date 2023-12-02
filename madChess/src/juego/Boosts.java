@@ -16,9 +16,9 @@ public class Boosts {
 		
 		protected static String curBoost;
 		public static ArrayList<Boost> boostActivos = new ArrayList<>();
+		public static ArrayList<Boost> boostInactivos = new ArrayList<>();
 
-
-		public static void checkBoosts(Casilla casilla, Jugador curJugador) {
+		public static void checkBoosts(Casilla casilla, Jugador curPlayer) {
 			
 			if (curBoost == null) {return;}
 			switch(curBoost) {
@@ -30,11 +30,7 @@ public class Boosts {
 					boostActivos.add(boostHielo);
 					break;
 				case "PRESAGIO":
-					String color = "Blancas";
-					if (!curJugador.getIsWhite()) {
-						color = "Negras";
-					}
-					MalPresagio boostMalPresagio = new MalPresagio(color);
+					MalPresagio boostMalPresagio = new MalPresagio(curPlayer);
 					curBoost = null;
 					boostActivos.add(boostMalPresagio);
 					break;
@@ -60,6 +56,7 @@ public class Boosts {
 	    public static void boostMalPresagio() {
 		    curBoost = "PRESAGIO";
 		    InfoMsg.alert("Ganas la partida si dura más de 20 movimientos");
+		    checkBoosts(null, Session.getPartida().getCurPlayer());
 			
 		}
 	    
@@ -123,10 +120,20 @@ public class Boosts {
 	    public static void updateBoost() {
 	    	
 	    	for (Boost boost : boostActivos) {
+	    		
 	    		boost.check();
+	    		
 	    		
 	    	}
 	    }
+
+
+
+		private static void removeBoost(Boost boost) {
+			//igual sería interesante guardar en que ronda, que elementos ha matado etc para las analíticas
+			boostInactivos.add(boost);
+			boostActivos.remove(boost);
+		}
 	
 }
 
@@ -155,22 +162,24 @@ class Hielo extends Boost{
 class MalPresagio extends Boost{
 	
 	protected String color = null;
+	protected Jugador player;
 	
-	public MalPresagio(String color){
+	public MalPresagio(Jugador curPlayer){
 		cont = 20;
-		this.color = color;
+		player = curPlayer;
 		
 	}
+	
 	@Override
 	public void check() {
 		cont--;
 		
 		
 		if(cont==0) {
-			InfoMsg.alert("Han pasado veinte turnos, las "+ color + " ganan la partida!");
+			InfoMsg.alert("Han pasado veinte turnos, las "+ player.getNombre() + " gana");
 		}else if (cont < 0){return;
 		}else if(cont == 10 || cont == 5) {
-			Session.getVentana().getPanelJuego().printMovimiento("En " + cont + " turnos acabará la partida ⚠️");
+			Session.getPartida().printMovimientoFormateado("En " + cont + " turnos acabará la partida ⚠️");
 		}
 		
 		
@@ -196,13 +205,12 @@ class Bomba extends Boost {
         	System.out.println(curCasilla.getPos());
         	Boosts.explotacionBomba(curCasilla);
         	
-			Session.getVentana().getPanelJuego().printMovimiento("EXPLOTACION");
+        	Session.getPartida().printMovimientoFormateado("💥💥BOOOOOM!!!💥💥");
 			Session.getPartida().getTablero().initAnimacionExplosion(curCasilla);
         	
         }else if (cont < 0){return;}    
         else {
-        	Session.getVentana().getPanelJuego().printMovimiento("Movimiento para que explote: "+ cont);
-        	
+        	Session.getPartida().printMovimientoFormateado("Explosión en: "+ cont);
         }
     }
 
@@ -212,7 +220,7 @@ class Bomba extends Boost {
 class Boost {
 	protected int cont;
 
-	public void check() {
-
-	}
+	public void check() {}
+	
+	
 }

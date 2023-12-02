@@ -516,10 +516,15 @@ public class Juego extends JPanel {
         } catch (BadLocationException | IOException e) {
             e.printStackTrace();
         }
+        
+        areaMovimientos.setCaretPosition(areaMovimientos.getDocument().getLength());
     }
     
     
 	public void setInterfaz() {
+		if (Configuracion.DEBUG_MODE) {return;}
+		
+		
 		String modoDeJuego = Session.getDatosPartida().getModoDeJuego();
 		String tipoPartida = Session.getDatosPartida().getTipoPartida();
 		

@@ -42,7 +42,7 @@ public class LogicaPartida {
 
 	protected DatosPartida datosPartida;
 	
-	private ArrayList<String> infoTurnoList = new ArrayList<String>();
+	private ArrayList<String> infoTurno = new ArrayList<String>();
 	
 	protected Color secondaryColor = new Color(236,212,146);
 	
@@ -529,9 +529,9 @@ public class LogicaPartida {
 	    styledText.append("</html>");
 
 	    if (!post) {
-	        infoTurnoList.add(styledText.toString());
+	        infoTurno.add(styledText.toString());
 	    } else {
-	        infoTurnoList.add(0, styledText.toString());
+	    	infoTurno.add(0, styledText.toString());
 	    }
 	}
 
@@ -794,12 +794,17 @@ public class LogicaPartida {
     }
 	
 	private void printMovimiento() {
-		
-		ventana.printMovimiento(joinHtml(infoTurnoList));
-		infoTurnoList = new ArrayList<String>();
-		
+		ventana.printMovimiento(joinHtml(infoTurno));
+		infoTurno = new ArrayList<String>();
 	}
 	
+	public void printMovimientoFormateado(String info) {
+		ArrayList<String> recup = infoTurno;
+		infoTurno = new ArrayList<String>();
+		addInfo(info);
+		printMovimiento();
+		infoTurno = recup;
+	}
 
 	
 	//CHECKS BOOLEANOS
@@ -865,7 +870,7 @@ public class LogicaPartida {
 		casillas.get(4).setPieza(reyBlack);
 		casillas.get(5).setPieza(new Alfil(false,false));
 		casillas.get(6).setPieza(new Caballo(false,false));
-		casillas.get(7).setPieza(new Torre(false,false));
+		casillas.get(7).setPieza(new Torre(false,true));
 
 		for (int i = 8; i <= 15; i++) {
 			casillas.get(i).setPieza(new Peon(false,false));
@@ -898,6 +903,15 @@ public class LogicaPartida {
 				e.printStackTrace();
 			}
 		}
+	}
+
+
+
+	
+
+
+	public Jugador getCurPlayer() {
+		return curPlayer;
 	}
 
 
