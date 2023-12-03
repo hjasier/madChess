@@ -176,7 +176,7 @@ class MalPresagio extends Boost{
 		
 		
 		if(cont==0) {
-			InfoMsg.alert("Han pasado veinte turnos, las "+ player.getNombre() + " gana");
+			InfoMsg.alert("Han pasado veinte turnos, "+ player.getNombre() + " gana");
 		}else if (cont < 0){return;
 		}else if(cont == 10 || cont == 5) {
 			Session.getPartida().printMovimientoFormateado("En " + cont + " turnos acabará la partida ⚠️");
