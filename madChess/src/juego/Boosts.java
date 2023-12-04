@@ -255,6 +255,7 @@ class Control extends Boost{
 		this.pieza = pieza;
 		this.player = player;
 		
+		
 	}
 	
 	@Override
