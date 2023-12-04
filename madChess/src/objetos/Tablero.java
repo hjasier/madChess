@@ -360,6 +360,7 @@ public class Tablero extends JPanel{
         return new Point(x, y);
     }
 	
+
 	public void animateAsync(Casilla casilla, String source, double sizeFactor, double speedFactor) {
 	    Thread animationThread = new Thread(new Runnable() {
 	        @Override

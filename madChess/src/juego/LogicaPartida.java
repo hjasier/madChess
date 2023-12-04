@@ -9,6 +9,9 @@ import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.text.*;
+
+import componentes.InfoMsg;
+
 import java.awt.*;
 import objetos.Casilla;
 import objetos.Jugador;
@@ -242,14 +245,17 @@ public class LogicaPartida {
        		
        		guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
        	       		
-       			
+       		
        			
        		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
     		
+       		checkFinPartida();
+       		
        		Boosts.updateBoost();
        		
        		checkReyInJaque();
        		
+
        		
 			}
 			 
@@ -843,6 +849,15 @@ public class LogicaPartida {
 	}
 	
 
+	protected void checkFinPartida() {
+		if(checkReyIsAlive()) {
+			InfoMsg.alert("La partida ha terminado");
+		}
+	}
+	
+	protected boolean checkReyIsAlive() {
+		return curPlayer.getRey().getCasillaParent() == null;
+	}
 	
 	
 	

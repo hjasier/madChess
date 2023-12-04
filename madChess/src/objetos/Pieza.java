@@ -34,16 +34,19 @@ public class Pieza implements Serializable {
 		super();
 		this.nombre = nombre;
 		this.isWhite = isWhite;
-		char isWhiteChar = isWhite ? 'w':'b';
-		this.img = new ImageIcon(getClass().getResource("../srcmedia/" + isWhiteChar+nombre + ".png"));
-	}
+		setColor();
+		}
 
 	
 	public ImageIcon getImg() { 
 		return this.img;
 	}
 
+	public void setColor() {
+		char isWhiteChar = isWhite ? 'w':'b';
+		this.img = new ImageIcon(getClass().getResource("../srcmedia/" + isWhiteChar+nombre + ".png"));
 	
+	}
 	
 	public Boolean getIsWhite() {
 		return isWhite;
@@ -91,7 +94,10 @@ public class Pieza implements Serializable {
 		this.isBomberman = isBomberman;
 	}
 
-
+	public void setAlterColor() {
+		this.isWhite = !this.isWhite;
+		setColor();
+	}
 
 	
 	public Casilla getCasillaParent() {
@@ -105,6 +111,10 @@ public class Pieza implements Serializable {
         }
         return null; // Si no se encuentra la pieza, se devuelve null
     }
+
+
+
+	
 	
 	
 	

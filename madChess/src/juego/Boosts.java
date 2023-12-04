@@ -2,7 +2,7 @@ package juego;
 
 
 import java.util.ArrayList;
-
+import java.util.Random;
 
 import componentes.InfoMsg;
 import objetos.Casilla;
@@ -40,11 +40,7 @@ public class Boosts {
 				    casilla.getPieza().setIsBomberman(true);
 				    boostActivos.add(boostBomba);
 				    break;
-				case "CONTROL":
-					Control boostControl = new Control();
-					curBoost = null;
-					boostActivos.add(boostControl);
-					break;
+				
 			}
 			
 				
@@ -73,6 +69,12 @@ public class Boosts {
 	    public static void boostControl() {
 	        curBoost = "CONTROL";
 	        InfoMsg.alert("Una pieza aleatoria pasa a ser de tu color por 4 turnos");
+	        Pieza pieza = getPiezaAleatoria();
+	        Control boostControl = new Control(pieza, Session.getPartida().getCurPlayer());
+			curBoost = null;
+			pieza.setAlterColor();
+			pieza.getCasillaParent().repaint();
+			boostActivos.add(boostControl);
 	        
 	    }
 	    
@@ -124,9 +126,24 @@ public class Boosts {
 	            }
 	        }
 	    
-	    public static void setControl() {
-	       
-	        }
+	    public static ArrayList<Pieza> getCasillasEnemigas(ArrayList<Casilla> casillas, Jugador nowPlaying){
+			ArrayList<Pieza> piezas = new ArrayList<>();
+			for(Casilla casilla : casillas ) {
+				if (casilla.getPieza() != null && casilla.getPieza().getIsWhite() != nowPlaying.getIsWhite()) {
+					piezas.add(casilla.getPieza());
+				}
+			}
+			
+			return piezas;
+		}
+	    
+	    public static Pieza getPiezaAleatoria() {
+	    	ArrayList<Pieza> piezas = getCasillasEnemigas(Session.getPartida().getTablero().getCasillas(), Session.getPartida().getCurPlayer());
+	    	int numeroAleatorio = new Random().nextInt(piezas.size());
+	    	Pieza pieza = piezas.get(numeroAleatorio);
+	    	return pieza;
+	    }
+	    
 	
 	
 	    public static void updateBoost() {
@@ -231,11 +248,12 @@ class Bomba extends Boost {
 
 class Control extends Boost{
 	
-	protected String color = null;
 	protected Jugador player;
-	
-	public Control(){
+	protected Pieza pieza;
+	public Control(Pieza pieza, Jugador player){
 		cont = 4;
+		this.pieza = pieza;
+		this.player = player;
 		
 		
 	}
@@ -246,10 +264,10 @@ class Control extends Boost{
 		
 		if(cont==0) {
 			Session.getPartida().printMovimientoFormateado("Han pasado 4 turnos, "+ player.getNombre() + " pierde el control");
+			pieza.setAlterColor();
+			pieza.getCasillaParent().repaint();
 		}else if (cont < 0){return;}    
-        else {
-        	Boosts.setControl();
-        }
+        
 		
 		
 	}  

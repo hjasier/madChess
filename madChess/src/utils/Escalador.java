@@ -15,6 +15,7 @@ public class Escalador {
         return (float) (valor * ESCALA);
     }
     
+    
     public static void setScreenSize() {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         int resolucion = toolkit.getScreenResolution();
