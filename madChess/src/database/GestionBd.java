@@ -1,9 +1,11 @@
 package database;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import objetos.Jugador;
 import utils.Session;
@@ -35,10 +37,11 @@ public class GestionBd {
 	
 	public static void crearTablaPartida() {
         String sql = "CREATE TABLE IF NOT EXISTS Partida (\n"
-                + "    gameId VARCHAR(255) NOT NULL,\n" 
+        		+ "    gameId VARCHAR(255) NOT NULL,\n" 
                 + "    FechaIni TEXT NOT NULL,\n"
                 + "    FechaFin TEXT NOT NULL,\n"
-                + "    ranking INTEGER NOT NULL, \n" 
+                + "    modo TEXT ,\n"
+                + "    movimiento LONGBLOB NOT NULL, \n"
                 + "    PRIMARY KEY(gameId(100))"
                 + ");";
         
@@ -50,6 +53,32 @@ public class GestionBd {
             e.printStackTrace();
         }
     }
+	
+	
+
+	
+	public static void crearTablaPartidaUsuario() {
+        String sql = "CREATE TABLE IF NOT EXISTS PartidaUsuario (\n"
+        		+ "    gameId VARCHAR(255) NOT NULL,\n" 
+        		+ "    username VARCHAR(255) INT NOT NULL,\n" 
+        		+ "    gainedRank INT NOT NULL,\n" 
+        		+ "    PRIMARY KEY(gameId(100))"
+        		+ "    FOREIGN KEY (gameId) REFERENCES Partida(gameId)"
+        		+ "    FOREIGN KEY (username) REFERENCES Usuario(username)"
+                + ");";
+        
+        
+        try (Connection conn = ConexionBd.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
+
+	
+	
 		
 	public static boolean iniciarSesion(String username, String passw) {
 	    String sql = "SELECT * FROM Usuario WHERE username = ?";
@@ -117,28 +146,62 @@ public class GestionBd {
 		}
 	 
 	 
-	 public static void insertarPartida(String gameId, String fechaIni, String FechaFin) {
+	 public static void insertarPartida(String gameId, String fechaIni, String FechaFin, String modo, byte[] movimiento, String username1, String username2, int rank1, int rank2) {
 		    // Verificar si el usuario ya existe antes de insertar
 		    if (!existePartida(gameId)) {
-		        String sql = "INSERT INTO Partida(gameId, fechaIni, FechaFin ) VALUES(?,?,?)";
-
+		        String sql1 = "INSERT INTO Partida(gameId, fechaIni, FechaFin, modo ) VALUES(?,?,?,?)";
+		        String sql2 = "INSERT INTO PartidaUsuario(gameId, username, gainedRank) VALUES(?,?,?)";
+		        
+		        
 		        try (Connection conn = ConexionBd.obtenerConexion();
-		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		             PreparedStatement pstmt = conn.prepareStatement(sql1)) {
 		            pstmt.setString(1, gameId);
 		            pstmt.setString(2, fechaIni);
 		            pstmt.setString(3, FechaFin);
+		            pstmt.setString(4, modo);
+		            pstmt.setBytes(5, movimiento);
 		            
 		            pstmt.executeUpdate();
 		            System.out.println("Partida insertada correctamente.");
 		        } catch (SQLException e) {
 		            e.printStackTrace();
 		        }
+		        
+		        for (Jugador jugador : Session.getDatosPartida().getJugadores()) {
+		        	String username  =jugador.getNombre(); 
+		        	//rank
+		        	int rank = 0;
+		        	
+		        	try (Connection conn = ConexionBd.obtenerConexion();
+				             PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+				            pstmt.setString(1, gameId);
+				            pstmt.setString(2, username);
+				            pstmt.setInt(3, rank);
+ 
+				            pstmt.executeUpdate();
+				            System.out.println("Partida insertada correctamente.");
+				        } catch (SQLException e) {
+				            e.printStackTrace();
+				        }
+				}
 		    } else {
 		        System.out.println("La partida ya existe. No se puede insertar.");
 		    }
+		    
 		}
 	 
 	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 //demas metodos
 	
 	 public static void eliminarUsuario(String username) {
 		 if(existeUsuario(username)) {
