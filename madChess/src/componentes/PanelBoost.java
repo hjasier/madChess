@@ -101,10 +101,12 @@ public class PanelBoost extends JPanel {
            Boosts.boostMalPresagio();
         }else if(boostIndex == 3){
             Boosts.boostBomba();
+        }else if(boostIndex == 4){
+            Boosts.boostControl();
         }
         else if(boostIndex == 5){
         	//DEBUG 
-        	System.out.println("DEBUGEANDO ANIAMCIÓN");
+        	System.out.println("DEBUGEANDO ANIMACIÓN");
             Session.getPartida().getTablero().initAnimacionExplosion(Session.getPartida().getCasilla(0,(char)'A'));
             Audio.play("explosion.wav");
         }

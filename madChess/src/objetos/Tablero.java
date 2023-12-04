@@ -354,6 +354,8 @@ public class Tablero extends JPanel{
 
         return new Point(x, y);
     }
+	
+	
 
 	
 }
