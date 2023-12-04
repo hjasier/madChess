@@ -40,7 +40,11 @@ public class Boosts {
 				    casilla.getPieza().setIsBomberman(true);
 				    boostActivos.add(boostBomba);
 				    break;
-					
+				case "CONTROL":
+					Control boostControl = new Control();
+					curBoost = null;
+					boostActivos.add(boostControl);
+					break;
 			}
 			
 				
@@ -63,6 +67,12 @@ public class Boosts {
 	    public static void boostBomba() {
 	        curBoost = "BOMBA";
 	        InfoMsg.alert("Selecciona una casilla aliada para colocar la Bomba");
+	        
+	    }
+	    
+	    public static void boostControl() {
+	        curBoost = "CONTROL";
+	        InfoMsg.alert("Una pieza aleatoria pasa a ser de tu color por 4 turnos");
 	        
 	    }
 	    
@@ -114,7 +124,9 @@ public class Boosts {
 	            }
 	        }
 	    
-	    
+	    public static void setControl() {
+	       
+	        }
 	
 	
 	    public static void updateBoost() {
@@ -216,6 +228,33 @@ class Bomba extends Boost {
 
     
 }
+
+class Control extends Boost{
+	
+	protected String color = null;
+	protected Jugador player;
+	
+	public Control(){
+		cont = 4;
+		
+		
+	}
+	
+	@Override
+	public void check() {
+		cont--;
+		
+		if(cont==0) {
+			Session.getPartida().printMovimientoFormateado("Han pasado 4 turnos, "+ player.getNombre() + " pierde el control");
+		}else if (cont < 0){return;}    
+        else {
+        	Boosts.setControl();
+        }
+		
+		
+	}  
+	   
+}      
 
 class Boost {
 	protected int cont;
