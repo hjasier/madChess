@@ -7,8 +7,8 @@ public class Configuracion {
 	
 	public static final String VERSION = "V1.6"; 
 	
-	public static final String HOST = "madchess.tabernagogorra.eu"; 
-	//public static final String HOST = "localhost"; 
+	//public static final String HOST = "madchess.tabernagogorra.eu"; 
+	public static final String HOST = "localhost"; 
 	
 	
 	public static final int PUERTO = 6968; 
@@ -21,6 +21,6 @@ public class Configuracion {
 	public static Font CUSTOMFONT;
 	
 	
-	public static final Boolean LOGIN_DEBUG = false;
+	public static final Boolean LOGIN_DEBUG = true;
 
 }

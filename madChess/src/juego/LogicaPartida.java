@@ -284,14 +284,15 @@ public class LogicaPartida {
 		
 		if(pieza instanceof Torre && ((Torre) pieza).isAlter()) {
 			ArrayList<Casilla> casillasAfectadas = casillasAfectadas(prevCasilla,curCasilla);
-			String kills = "[OndaExpansiva]";
+			String kills = "[💨]";
 			for(Casilla casilla : casillasAfectadas ) {
 				if(casilla.getPieza()!= null)
 				{kills+="💀";
-				casilla.setPieza(null);
+				killPieza(casilla);
 				}
 			}
 			addInfo(kills);
+			
 		}
 		
 		
@@ -308,6 +309,17 @@ public class LogicaPartida {
 		}
 	
 	}
+
+
+	private void killPieza(Casilla casilla) {
+		casilla.setPieza(null);
+		//tablero.animateAsync(casilla,"kill4",0.3,0.7);
+		//tablero.animateAsync(casillas.get(0),"kill4",1,1);
+	}
+
+
+
+
 
 
 	public void moverPiezaOnline(Casilla casillaSalida,Casilla casillaLlegada) {

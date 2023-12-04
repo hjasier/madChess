@@ -49,6 +49,9 @@ public class VentanaPrincipal extends JFrame{
 
     Register panelRegister = new Register();
     
+    MenuInicioNuevo panelMenuInicioNuevo = new MenuInicioNuevo();
+    
+    
 	public VentanaPrincipal() {
 		
 		this.setSize(Escalador.escalar(1000),Escalador.escalar(800));
@@ -58,7 +61,7 @@ public class VentanaPrincipal extends JFrame{
 		
 		panelPrincipal.setLayout(cardLayout);
 		
-		//panelPrincipal.add(panelRegister, "DEBUG");
+		//panelPrincipal.add(panelMenuInicioNuevo, "DEBUG");
 		
 		
 		panelPrincipal.add(panelMenuInicio, "MENUINICIO");

@@ -2,10 +2,14 @@ package objetos;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -16,6 +20,7 @@ import piezas.Reina;
 import piezas.Torre;
 import utils.Audio;
 import utils.Configuracion;
+import utils.Escalador;
 import utils.Session;
 
 
@@ -353,6 +358,74 @@ public class Tablero extends JPanel{
         int y = fila * (int) tamanoCasilla;
 
         return new Point(x, y);
+    }
+	
+	public void animateAsync(Casilla casilla, String source, double sizeFactor, double speedFactor) {
+	    Thread animationThread = new Thread(new Runnable() {
+	        @Override
+	        public void run() {
+	            animate(casilla, source, sizeFactor, speedFactor);
+	        }
+	    });
+
+	    animationThread.start();
+	}
+	
+
+	private void animate(Casilla casilla,String source,double sizeFactor,double speedFactor) {
+		sizeFactor = Escalador.escalarF((float) sizeFactor);
+		
+		JLabel animacion = new JLabel();
+        ImageIcon animacionImg = new ImageIcon(getClass().getResource("../srcmedia/"+source+".gif"));
+        
+        animacion.setIcon(animacionImg);
+        animacion.setSize((int) (animacionImg.getIconWidth()*sizeFactor),(int) (animacionImg.getIconHeight()*sizeFactor));
+        animacion.setVisible(true);
+
+        Point pos = getPosCasillaTablero(casilla);
+
+        int x = pos.x - animacion.getWidth() / 2; //quitamos la mitad para centrar la pos de la img al centro 
+        int y = pos.y - animacion.getHeight() / 2;
+        
+        animacion.setLocation(x, y);
+
+        tableroDiv.add(animacion);
+        
+        int tiempo;
+        
+        try {
+			tiempo = getDuracionGif(source);
+		} catch (IOException e) {
+			tiempo = 550;
+		}
+        System.out.println("Animando -->"+source+"--> "+tiempo+" segundos");
+        
+        Timer timer = new Timer((int) tiempo, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                animacion.setVisible(false);
+                ((Timer) e.getSource()).stop(); // Detiene el temporizador después de la animación
+            }
+        });
+        timer.setRepeats(false); 
+        timer.start();
+	}
+	
+	public int getDuracionGif(String source) throws IOException {
+        File archivoGIF = new File(getClass().getResource("../srcmedia/" + source + ".gif").getFile());
+
+        ImageInputStream imageInputStream = ImageIO.createImageInputStream(archivoGIF);
+        Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(imageInputStream);
+        int numeroDeFotogramas = 0;
+        
+        if (imageReaders.hasNext()) {
+            ImageReader imageReader = imageReaders.next();
+            imageReader.setInput(imageInputStream);
+            numeroDeFotogramas = imageReader.getNumImages(true);
+        }
+
+        
+		return numeroDeFotogramas*120;
     }
 
 	
