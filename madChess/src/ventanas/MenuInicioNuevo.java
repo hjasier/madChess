@@ -1,49 +1,75 @@
 package ventanas;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import componentes.RButton;
-import componentes.navBarNew;
+import componentes.navBar;
+import juego.DatosPartida;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import utils.Configuracion;
 import utils.Escalador;
+import utils.Session;
 
+import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class MenuInicioNuevo extends JPanel {
     RButton loginBtn = new RButton("Login");
 
     public MenuInicioNuevo() {
         setBackground(Configuracion.BACKGROUND);
-
+        setLayout(new BorderLayout());
+        
+      //--------------------- NAVBAR-------------------------------------------
+  		Icon icon = IconFontSwing.buildIcon(FontAwesome.USER_CIRCLE, Escalador.escalarF(15));
+		loginBtn.setIcon(icon);
+  		
+		JPanel navBarContainer = new JPanel(new FlowLayout());
+		navBarContainer.add(new navBar(loginBtn));
+        navBarContainer.setBackground(Configuracion.BACKGROUND);
+      
+  		
+        this.add(navBarContainer, BorderLayout.NORTH);
         //--------------------- NAVBAR-------------------------------------------
-
-        Icon icon = IconFontSwing.buildIcon(FontAwesome.USER_CIRCLE, Escalador.escalarF(15));
-        loginBtn.setLocation(Escalador.escalar(787), Escalador.escalar(101));
-        loginBtn.setIcon(icon);
-        setLayout(null);
-
-        navBarNew navBarNew = new navBarNew(loginBtn);
-        navBarNew.setBounds(0, 0, Escalador.escalar(1000), Escalador.escalar(156));
-
-        this.add(navBarNew);
-        //--------------------- NAVBAR-------------------------------------------
+        
+        
 
         double escala = 0.7;
 
         JPanel panel = new JPanel();
         panel.setBackground(Configuracion.BACKGROUND);
-        panel.setBounds(0, Escalador.escalar(159), Escalador.escalar(1000), Escalador.escalar(641));
-        add(panel);
+        panel.setBounds(0, 0, Escalador.escalar(1000), Escalador.escalar(641));
+        panel.setPreferredSize(Escalador.newDimension(1000,641));
         panel.setLayout(null);
+        
+        
+        JPanel centeredPanel = new JPanel(new FlowLayout());
+        
+        centeredPanel.setBackground(Configuracion.BACKGROUND);
+
+        centeredPanel.add(panel);
+
+
+        // Agrega el nuevo panel centrado al panel principal usando BorderLayout
+        add(centeredPanel, BorderLayout.CENTER);
 
         //-----------------SinglePlayer-----------------
         JPanel singlePanel = new JPanel();
-        singlePanel.setBounds(Escalador.escalar(113), Escalador.escalar(69), Escalador.escalar(310), Escalador.escalar(260));
+        singlePanel.setBackground(Configuracion.BACKGROUND);
+        singlePanel.setBounds(Escalador.escalar(82), Escalador.escalar(64), Escalador.escalar(310), Escalador.escalar(260));
 
         // SinglePLayerBack
         ImageIcon singleplayerft = new ImageIcon(getClass().getResource("../srcmedia/singleplayer.png"));
@@ -66,7 +92,8 @@ public class MenuInicioNuevo extends JPanel {
 
         //-----------------Multiplayer-----------------
         JPanel multiPanel = new JPanel();
-        multiPanel.setBounds(Escalador.escalar(536), Escalador.escalar(69), Escalador.escalar(407), Escalador.escalar(263));
+        multiPanel.setBackground(Configuracion.BACKGROUND);
+        multiPanel.setBounds(Escalador.escalar(501), Escalador.escalar(64), Escalador.escalar(407), Escalador.escalar(263));
 
         // MultiplayerBack
         ImageIcon multiplayer = new ImageIcon(getClass().getResource("../srcmedia/multiplayer.png"));
@@ -105,7 +132,8 @@ public class MenuInicioNuevo extends JPanel {
 
         //-----------------LocalPlay----------------------
         JPanel localPanel = new JPanel();
-        localPanel.setBounds(Escalador.escalar(536), Escalador.escalar(360), Escalador.escalar(419), Escalador.escalar(219));
+        localPanel.setBackground(Configuracion.BACKGROUND);
+        localPanel.setBounds(Escalador.escalar(501), Escalador.escalar(362), Escalador.escalar(419), Escalador.escalar(219));
 
         // LocalPlayBack
         ImageIcon localplay = new ImageIcon(getClass().getResource("../srcmedia/localplay.png"));
@@ -140,11 +168,166 @@ public class MenuInicioNuevo extends JPanel {
         localPanel.add(localplayLabelBack2);
         localPanel.add(localplayLabelBack3);
         localPanel.add(localBack);
+        
 
         //-----------------FIN LocalPlay-----------------
-
+        
         panel.add(singlePanel);
         panel.add(localPanel);
         panel.add(multiPanel);
-    }
+        
+      //----------------- FIN PanelCentral -----------------
+        
+        
+        
+      //-----------------Hovers-----------------
+        agregarHoverEffect(multiplayerLabelBack, escala, "../srcmedia/multiplayerLabel1.png");
+        agregarHoverEffect(multiplayerLabelBack2, escala, "../srcmedia/multiplayerLabel2.png");
+        agregarHoverEffect(multiplayerLabelBack3, escala, "../srcmedia/multiplayerLabel3.png");
+        
+        agregarHoverEffect(localplayLabelBack, escala, "../srcmedia/localplayLabel1.png");
+        agregarHoverEffect(localplayLabelBack2, escala, "../srcmedia/localplayLabel2.png");
+        agregarHoverEffect(localplayLabelBack3, escala, "../srcmedia/localplayLabel3.png");
+        
+        agregarHoverEffect(singlePlayerLabel, escala, "../srcmedia/singleplayerLabel.png");
+        //-----------------FIN Hovers-----------------
+
+        
+        //-----------------Clicks-----------------
+        singlePlayerLabel.addMouseListener(new MouseAdapter() {
+        	
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		VentanaPrincipal ventanaPrincip = Session.getVentana();
+            	DatosPartida datos = new DatosPartida("local");
+            	Session.setDatosPartida(datos);
+            	ventanaPrincip.getPanelConfLocal().setDatosPartida(datos);
+            	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "CONFLOCAL");
+        	}
+
+        });
+        
+        multiplayerLabelBack.addMouseListener(new MouseAdapter() {
+
+            public void mouseClicked(ActionEvent e) {
+            	VentanaPrincipal ventanaPrincip = Session.getVentana();
+            	System.out.println("-----CONSOLA CREADOR------");
+            	if (Session.getCurrentUser()!=null) {
+            		
+            		startServerCnx();
+                	try {
+    					Session.getCtsConnection().createGame();
+    				} catch (IOException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				}
+                	
+                	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "CONFONLINE");
+                    
+            	}
+            	else {
+            		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LOGIN");
+            	}   
+            }
+        });
+        
+        multiplayerLabelBack3.addMouseListener(new MouseAdapter() {
+
+            public void mouseClicked(ActionEvent e) {
+            	VentanaPrincipal ventanaPrincip = Session.getVentana();
+            	System.out.println("-----CONSOLA JOINER------");
+            	
+    			if (Session.getCurrentUser()!=null) {
+                	startServerCnx();
+                	try {
+    					Session.getCtsConnection().getListaPartidas();
+    				} catch (IOException e1) {
+    					e1.printStackTrace();
+    				}
+                	
+                	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LISTAPARTIDAS");
+                    
+            	}
+            	else {
+            		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LOGIN");
+            	}  
+            }
+        });
+        
+        //-----------------FIN Clicks-----------------
+        
+
+
+       
+    
+    
+
 }
+
+
+
+
+protected void startServerCnx() {
+	try {
+		Session.startServerCnx();
+	} catch (ClassNotFoundException | IOException e1) {
+		System.out.println("Error al conectarse con el server");
+	}
+}
+
+
+
+
+public void setLoged(boolean b) {
+	if (b) {
+		loginBtn.setText("Perfil");
+	}
+	else {
+		loginBtn.setText("Login");
+	}
+	
+	
+	
+	
+}
+
+    
+    
+   
+
+
+
+	private void agregarHoverEffect(JLabel label, double escala, String normalPath) {
+        String hoverPath = normalPath.replace(".png", "Hover.png");
+
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ImageIcon imgLabel = new ImageIcon(getClass().getResource(hoverPath));
+                Image imgReescalada = imgLabel.getImage().getScaledInstance(
+                        label.getWidth(),
+                        label.getHeight(),
+                        Image.SCALE_SMOOTH
+                );
+                label.setIcon(new ImageIcon(imgReescalada));
+                label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ImageIcon imgLabel = new ImageIcon(getClass().getResource(normalPath));
+                Image imgReescalada = imgLabel.getImage().getScaledInstance(
+                        label.getWidth(),
+                        label.getHeight(),
+                        Image.SCALE_SMOOTH
+                );
+                label.setIcon(new ImageIcon(imgReescalada));
+            }
+        });
+    }
+
+
+}
+
+
+

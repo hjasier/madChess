@@ -31,20 +31,24 @@ import juego.DatosPartida;
 public class ListaPartidas extends JPanel {
     private Color colorFondo = Configuracion.BACKGROUND;
     private JPanel listaPanel = new JPanel();
-    protected RButton backBtn;
+    protected RButton backBtn = new RButton("Volver");;
     private static volatile boolean rotate = true;
     
     public ListaPartidas() {
         setLayout(new BorderLayout());
         setBackground(colorFondo);
 
+      //--------------------- NAVBAR-------------------------------------------
+  		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, Escalador.escalarF(15));
+  		backBtn.setIcon(icon);
+  		
+		JPanel navBarContainer = new JPanel(new FlowLayout());
+		navBarContainer.add(new navBar(backBtn));
+        navBarContainer.setBackground(Configuracion.BACKGROUND);
+        add(navBarContainer, BorderLayout.NORTH);
         // --------------------- NAVBAR -------------------------------------------
-        backBtn = new RButton("Volver");
-        Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, 15);
-        backBtn.setIcon(icon);
-        JPanel navBar = new navBar(backBtn);
-        add(navBar, BorderLayout.NORTH);
-        // --------------------- NAVBAR -------------------------------------------
+        
+        
 
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));

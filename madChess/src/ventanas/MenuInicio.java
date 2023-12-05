@@ -8,6 +8,7 @@ import java.io.IOException;
 import componentes.BButton;
 import componentes.RButton;
 import componentes.navBar;
+import componentes.navBar;
 import juego.DatosPartida;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
@@ -40,7 +41,11 @@ public class MenuInicio extends JPanel {
   		Icon icon = IconFontSwing.buildIcon(FontAwesome.USER_CIRCLE, Escalador.escalarF(15));
 		loginBtn.setIcon(icon);
   		
-  		navBar = new navBar(loginBtn);
+		JPanel navBarContainer = new JPanel(new FlowLayout());
+		navBarContainer.add(new navBar(loginBtn));
+        navBarContainer.setBackground(Configuracion.BACKGROUND);
+      
+  		
   		//--------------------- NAVBAR-------------------------------------------	   
       		
       		
@@ -71,7 +76,7 @@ public class MenuInicio extends JPanel {
         
         
 
-		this.add(navBar, BorderLayout.NORTH);	
+		this.add(navBarContainer, BorderLayout.NORTH);	
 		this.add(opciones, BorderLayout.CENTER);
 
 

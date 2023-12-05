@@ -61,7 +61,7 @@ public class VentanaPrincipal extends JFrame{
 		
 		panelPrincipal.setLayout(cardLayout);
 		
-		//panelPrincipal.add(panelMenuInicioNuevo, "DEBUG");
+		panelPrincipal.add(panelMenuInicioNuevo, "DEBUG");
 		
 		
 		panelPrincipal.add(panelMenuInicio, "MENUINICIO");

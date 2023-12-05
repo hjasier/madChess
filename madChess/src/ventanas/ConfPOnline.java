@@ -55,11 +55,15 @@ public class ConfPOnline extends JPanel {
   		
   		opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
   		
-  		//--------------------- NAVBAR-------------------------------------------
-  		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, 15);
+  	//--------------------- NAVBAR-------------------------------------------
+  		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, Escalador.escalarF(15));
   		volverBtn.setIcon(icon);
   		
-  		navBar = new navBar(volverBtn);
+		JPanel navBarContainer = new JPanel(new FlowLayout());
+		navBarContainer.add(new navBar(volverBtn));
+        navBarContainer.setBackground(Configuracion.BACKGROUND);
+      
+  		
   		//--------------------- NAVBAR-------------------------------------------	   
       		
       		
@@ -186,7 +190,7 @@ public class ConfPOnline extends JPanel {
         opcionesenY.setBackground(colorFondo);
 
         // Agregar el navBar en la posición NORTH
-        add(navBar, BorderLayout.NORTH);
+        add(navBarContainer, BorderLayout.NORTH);
         add(opcionesenY, BorderLayout.CENTER);
         
   

@@ -65,13 +65,17 @@ public class Login extends JPanel {
         
 		
 		
-  		//--------------------- NAVBAR-------------------------------------------
-		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, 15);
-		volverBtn.setIcon(icon);
+		//--------------------- NAVBAR-------------------------------------------
+  		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, Escalador.escalarF(15));
+  		volverBtn.setIcon(icon);
   		
-  		navBar = new navBar(volverBtn);
+		JPanel navBarContainer = new JPanel(new FlowLayout());
+		navBarContainer.add(new navBar(volverBtn));
+        navBarContainer.setBackground(Configuracion.BACKGROUND);
+      
+  		
   		//--------------------- NAVBAR-------------------------------------------	   
-
+      		
 
 		
 		
@@ -114,7 +118,7 @@ public class Login extends JPanel {
         opciones.add(Box.createRigidArea(Escalador.newDimension(0, 20))); // Espacio entre los botones
         opciones.add(errorLabel);
 
-		this.add(navBar, BorderLayout.NORTH);	
+		this.add(navBarContainer, BorderLayout.NORTH);	
 		this.add(opciones, BorderLayout.CENTER);
 
 		

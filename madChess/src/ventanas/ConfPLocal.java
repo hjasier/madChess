@@ -32,11 +32,20 @@ public class ConfPLocal extends JPanel {
     public ConfPLocal() {
         setBackground(colorFondo);
 
-        //--------------------- NAVBAR-------------------------------------------
-        Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, 15);
-        volverBtn.setIcon(icon);
-        navBar = new navBar(volverBtn);
-        //--------------------- NAVBAR-------------------------------------------
+       
+  		//--------------------- NAVBAR-------------------------------------------
+  		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, Escalador.escalarF(15));
+  		volverBtn.setIcon(icon);
+  		
+		JPanel navBarContainer = new JPanel(new FlowLayout());
+		navBarContainer.add(new navBar(volverBtn));
+        navBarContainer.setBackground(Configuracion.BACKGROUND);
+      
+  		
+  		//--------------------- NAVBAR-------------------------------------------	   
+      		
+        
+        
 
         // Elementos de la interfaz
         JLabel labelCodigoPartida = new JLabel("Código de la partida:");
@@ -87,7 +96,7 @@ public class ConfPLocal extends JPanel {
         centerPanel.add(Box.createVerticalGlue()); // Espacio en blanco abajo
 
         // Agregar el navBar en la posición NORTH
-        add(navBar, BorderLayout.NORTH);
+        add(navBarContainer, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
         
         
