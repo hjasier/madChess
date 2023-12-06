@@ -32,45 +32,15 @@ public class Bot {
 	Jugador botplayer;
 	
 	
-	public Bot() {
-		getPiezasPlayers();
-		
+	public Bot(Jugador botplayer) {
+		this.botplayer = botplayer;
 	}
 	
-	
-
+	public void calculaNuevoMovimiento(ArrayList<Casilla> estadoActual) {
+		minimax(estadoActual, true, 3);
+		//partida.moverPiezaTablero(curCasilla, newCasilla);
 		
-	private void getPiezasPlayers() {
-		for (Casilla casilla:tablero) {
-			if ((casilla.getPieza()!=null)&&casilla.getPieza().getIsWhite() == botplayer.getIsWhite()) {
-				piezasBot.add(casilla.getPieza());
-			}
-			else if(casilla.getPieza()!=null) {
-				piezasPlayer.add(casilla.getPieza());
-			}
-		}
 	}
-	
-
-	
-//	public class BotMov {
-//		public Pieza pieza;
-//		public Casilla casilla;
-//
-//		public BotMov(Pieza pieza, Casilla casilla) {
-//			this.pieza = pieza;
-//			this.casilla = casilla;
-//		}
-//	}
-//
-//	private BotMov getNextMov() {
-//		for (Pieza pieza : piezasBot) {
-//			ArrayList<Casilla>  outcome = getPosOutcome(pieza);
-//			
-//		}
-//		//get el mejor entre todos los outcomes
-//		return null;
-//	}
 
 	
 	private int minimax(ArrayList<Casilla> estadoActual, boolean turnoIsBot, int depth) {
@@ -79,24 +49,26 @@ public class Bot {
 	    }
 
 	    if (turnoIsBot) {
-	        int maxEval = Integer.MIN_VALUE;
+	        int maxEval = Integer.MIN_VALUE; //-infinito
 
 	        for (Pieza pieza : calcularPiezasJugador(estadoActual, turnoIsBot)) {
-	            for (Casilla movimientoPosible : pieza.getCasillasDisponibles(pieza.getCasillaParent(), estadoActual)) {
+	            for (Casilla movimientoPosible : casillasDisponiblesPieza(pieza,estadoActual)) {
 	                ArrayList<Casilla> nuevoEstado = crearNuevoEstado(estadoActual, pieza.getCasillaParent(), movimientoPosible);
 	                int eval = minimax(nuevoEstado, false, depth - 1);
+	                System.out.println("Evaluando movimiento de pieza aliada --> "+eval);
 	                maxEval = Math.max(maxEval, eval);
 	            }
 	        }
 
 	        return maxEval;
 	    } else {
-	        int minEval = Integer.MAX_VALUE;
+	        int minEval = Integer.MAX_VALUE; //infinito
 
 	        for (Pieza pieza : calcularPiezasJugador(estadoActual, turnoIsBot)) {
-	            for (Casilla movimientoPosible : pieza.getCasillasDisponibles(pieza.getCasillaParent(), estadoActual)) {
+	            for (Casilla movimientoPosible : casillasDisponiblesPieza(pieza,estadoActual)) {
 	                ArrayList<Casilla> nuevoEstado = crearNuevoEstado(estadoActual, pieza.getCasillaParent(), movimientoPosible);
 	                int eval = minimax(nuevoEstado, true, depth - 1);
+	                System.out.println("Evaluando movimiento de pieza enemiga --> "+eval);
 	                minEval = Math.min(minEval, eval);
 	            }
 	        }
@@ -109,6 +81,14 @@ public class Bot {
 
 
 
+
+	private ArrayList<Casilla> casillasDisponiblesPieza(Pieza pieza, ArrayList<Casilla> estadoActual) {
+		
+		
+		Casilla casillaPiezaEnEstado = estadoActual.get(partida.getTablero().getCasillas().indexOf(pieza.getCasillaParent()));
+		
+		return pieza.getCasillasDisponibles(casillaPiezaEnEstado, estadoActual);
+	}
 
 	private ArrayList<Pieza> calcularPiezasJugador(ArrayList<Casilla> estadoActual, boolean curPlayerIsBot) {
 		ArrayList<Pieza> piezas = new ArrayList<Pieza>();
@@ -128,7 +108,9 @@ public class Bot {
 
 	private ArrayList<Casilla> crearNuevoEstado(ArrayList<Casilla> estadoActual, Casilla casillaParent,Casilla movimientoPosible) {
 		ArrayList<Casilla> tableroCopia = partida.getCasillasSimulacion(estadoActual);
-		moverPiezaSimulada(tableroCopia,casillaParent, movimientoPosible);
+		Casilla casillaPiezaEnEstado = estadoActual.get(partida.getTablero().getCasillas().indexOf(casillaParent));
+		
+		moverPiezaSimulada(estadoActual,tableroCopia,casillaPiezaEnEstado, movimientoPosible);
 		return tableroCopia;
 	}
 
@@ -136,43 +118,29 @@ public class Bot {
 
 
 	private boolean checkFinPartida(ArrayList<Casilla> estadoActual) {
-		return false;
+	    boolean reyBlancoPresente = false;
+	    boolean reyNegroPresente = false;
+
+	    for (Casilla casilla : estadoActual) {
+	        Pieza pieza = casilla.getPieza();
+	        if (pieza != null && pieza instanceof Rey) {
+	            if (pieza.getIsWhite()) {
+	                reyBlancoPresente = true;
+	            } else {
+	                reyNegroPresente = true;
+	            }
+				if (reyBlancoPresente && reyNegroPresente) {
+					return false;
+				}
+	        }
+	    }
+
+	    return !reyBlancoPresente || !reyNegroPresente;
 	}
 
 
 
 
-//	private ArrayList<Casilla> getPosOutcome(Pieza pieza) {
-//		ArrayList<Casilla> movsPosibles = pieza.getCasillasDisponibles(pieza.getCasillaParent(),tablero);
-//		ArrayList<ArrayList<Casilla>> outcomesPosibles = new ArrayList<ArrayList<Casilla>>();
-//		
-//		for (Casilla movimientoPosible : movsPosibles) {
-//			
-//			ArrayList<Casilla> tableroCopia = partida.getCasillasSimulacion(tablero);
-//			moverPiezaSimulada(tableroCopia,pieza.getCasillaParent(),movimientoPosible);//Movemos la pieza a esa posibilidad
-//			int[] puntuaciónMovimiento = evaluarTablero(tableroCopia); //Calculamos la puntuación de ese movimiento
-//			
-//			outcomesPosibles.add(tableroCopia);//REVISAR
-//			
-//			//Calculamos cada una de las respuestas posibles a ese movimiento y a cada respuesta le damos un valor
-//			for (Pieza piezaAMover : piezasPlayer) {
-//				ArrayList<Casilla> movsPosiblesPlayer = piezaAMover.getCasillasDisponibles(piezaAMover.getCasillaParent(), tableroCopia); //para esa pieza a donde se puede mover
-//				
-//				//para cada una de las casillas a la que esa pieza se puede mover calculamos la puntuación
-//				for (Casilla movimientoPosibleRespuesta : movsPosiblesPlayer) {
-//					
-//					ArrayList<Casilla> tableroCopiaCopia = partida.getCasillasSimulacion(tableroCopia); //Creamos la copia de la copia del tablero
-//					moverPiezaSimulada(tableroCopiaCopia, piezaAMover.getCasillaParent(), movimientoPosibleRespuesta);
-//					int[] puntuaciónMovimientoRespuesta = evaluarTablero(tableroCopiaCopia);
-//
-//					outcomesPosibles.add(tableroCopiaCopia);//REVISAR
-//				}
-//			}
-//		
-//		}
-//		
-//		return null;
-//	}
 
 	
 	
@@ -180,25 +148,10 @@ public class Bot {
 
 
 
-
-//
-//
-//
-//	private void calcularMovimientosContrarios(ArrayList<Casilla> tableroCopia) {
-//		for (Pieza pieza : piezasPlayer) {
-//			ArrayList<Casilla> outcome = pieza.getCasillasDisponibles(pieza.getCasillaParent(), tableroCopia);
-//			
-//		}
-//		
-//	}
-
-
-
-
-	private void moverPiezaSimulada(ArrayList<Casilla> simulacion,Casilla prevCasilla, Casilla newCasilla) {
+	private void moverPiezaSimulada(ArrayList<Casilla>  estadoPasado , ArrayList<Casilla> simulacion,Casilla prevCasilla, Casilla newCasilla) {
 		Pieza piezaSeMueve = prevCasilla.getPieza();
-		int indexPrevCasilla = tablero.indexOf(prevCasilla);
-		int indexNewCasilla = tablero.indexOf(newCasilla);
+		int indexPrevCasilla = estadoPasado.indexOf(prevCasilla);
+		int indexNewCasilla = estadoPasado.indexOf(newCasilla);
 		
 		Casilla prevCasillaSimulada = simulacion.get(indexPrevCasilla);
 		Casilla newCasilalSimulada = simulacion.get(indexNewCasilla);
@@ -206,6 +159,11 @@ public class Bot {
 		newCasilalSimulada.setPieza(piezaSeMueve);
 		
 	}
+
+
+
+
+
 
 
 	

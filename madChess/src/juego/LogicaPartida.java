@@ -42,6 +42,7 @@ public class LogicaPartida {
 	private Rey reyWhite;
 	private Rey reyBlack;
 	protected ArrayList<Jugador> jugadores;
+	protected Bot bot;
 
 	protected DatosPartida datosPartida;
 	
@@ -69,7 +70,7 @@ public class LogicaPartida {
         		if (datosPartida.getIsTerminada()) {return;};
         		resetMouseSocket();
         		Casilla curCasilla = tablero.getCurCasilla(e);
-        		moverPiezaTablero(tablero.prevCasilla,curCasilla,e);
+        		moverPiezaTablero(tablero.prevCasilla,curCasilla);
         		tablero.dragging = false;	
         		
         	}
@@ -143,9 +144,18 @@ public class LogicaPartida {
 	private void initPlayers() {
 		int initTime = 600;
 		
+		boolean BOT_DEBUG = true;
+		
 		if (jugadores.isEmpty()) {
 			jugadores.add(new Jugador("Potzon"));       
 			jugadores.add(new Jugador("erGiova"));		
+		}
+		
+		if (BOT_DEBUG) {
+			jugadores.remove(1);
+			Jugador botplayer = new Jugador("BOT");
+			jugadores.add(botplayer);
+			bot = new Bot(botplayer);
 		}
 		
 		Jugador user1 = jugadores.get(0);
@@ -184,7 +194,7 @@ public class LogicaPartida {
 
 
 
-	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla, MouseEvent e) {
+	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla) {
 		
 		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
 			ArrayList<Casilla> casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla, casillas);
@@ -222,7 +232,7 @@ public class LogicaPartida {
        			addInfo("0-0-0",secondaryColor,false,false);
        		}
        		else if (checkPromotion(pieza,curCasilla)) {
-       			tablero.initPromocion(curCasilla,e);
+       			tablero.initPromocion(curCasilla);
        			addInfo("PROM",secondaryColor,false,false);
        			// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
        		}
@@ -490,6 +500,14 @@ public class LogicaPartida {
 			int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
 			tablero.setCurPlayer(jugadores.get(newIndex));
 			curPlayer = jugadores.get(newIndex);
+			
+			if (curPlayer.getNombre().equals("BOT")) {
+			    Thread botThread = new Thread(new Runnable() {
+			        @Override
+			        public void run() {bot.calculaNuevoMovimiento(casillas);}
+			    });
+			    botThread.start();
+			}
 		}
 		
 		
