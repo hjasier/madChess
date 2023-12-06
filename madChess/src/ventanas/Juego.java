@@ -587,6 +587,12 @@ public class Juego extends JPanel {
 	}
 
 
+	public void resetTextAreas() {
+		areaMovimientos.setText("");
+		areaChat.setText("");
+	}
+
+
 }
 
 

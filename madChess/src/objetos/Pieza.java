@@ -101,6 +101,9 @@ public class Pieza implements Serializable {
 
 	
 	public Casilla getCasillaParent() {
+		//PARA MEJORAR LA EFICIENCIA DEL BOT HABRÍA QUE HACER QUE CADA VEZ QUE MOVAMOS UNA PIEZA SE ACTUALICE SU CASILLA PARENT
+		// Y LA FUNCIÓN SOLO DEVUELVA EL VALOR DE LA VARIABLE
+		
         ArrayList<Casilla> casillas = Session.getPartida().getTablero().getCasillas();
         for (Casilla fila : casillas) {
             

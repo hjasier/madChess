@@ -57,7 +57,7 @@ public class VentanaPrincipal extends JFrame{
 		this.setSize(Escalador.escalar(1000),Escalador.escalar(800));
 		this.setLocationRelativeTo(null);
 		
-		
+		//this.setUndecorated(true); //para que no se vea el borde de la ventana
 		
 		panelPrincipal.setLayout(cardLayout);
 		

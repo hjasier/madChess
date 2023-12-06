@@ -22,6 +22,7 @@ import utils.Session;
 
 public class Casilla extends JPanel implements Serializable {
     private static final long serialVersionUID = 1L;
+    protected Color initColor;
     protected Color color;
     protected int fila;
 	protected char columna;
@@ -35,6 +36,7 @@ public class Casilla extends JPanel implements Serializable {
 
 	public Casilla(Color color, int fila, int c) {
 		this.color = color;
+		this.initColor = color;
 		this.fila = fila;
 		this.columna = posicionToAlfabeto(c);
 
@@ -215,6 +217,18 @@ public class Casilla extends JPanel implements Serializable {
         }else {
         	this.color = new Color( color.getRed(),color.getGreen(),color.getBlue()-30);
         }
+		repaint();
+	}
+
+
+	public void setDisabled(boolean b) {
+		if (b) {
+			this.color = new Color( color.getRed()/2,color.getGreen()/2,color.getBlue()/2);
+		}
+		else {
+			this.color = initColor;
+		}
+		
 		repaint();
 	}
 	

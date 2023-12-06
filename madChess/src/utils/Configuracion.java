@@ -20,7 +20,6 @@ public class Configuracion {
 	public static final Font DEFAULTFONT = new Font("Dialog", Font.PLAIN, 12);
 	public static Font CUSTOMFONT;
 	
-	
 	public static final Boolean LOGIN_DEBUG = true;
 
 }

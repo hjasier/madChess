@@ -20,7 +20,6 @@ public class Escalador {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         int resolucion = toolkit.getScreenResolution();
         ESCALA = (double) resolucion / 96.0;
-        
     }
     
     public static Dimension newDimension(int x,int y) {

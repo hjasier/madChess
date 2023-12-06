@@ -228,8 +228,6 @@ public class Rey extends Pieza implements PiezaMustHave{
 	public boolean reCheckJaqueStatus(Casilla curReyCasilla, ArrayList<Casilla> casillas) {
 		ArrayList<Casilla> casillasAmenaza = casillasJaque(casillas);
 		isAmenezado = casillasAmenaza.contains(curReyCasilla);
-//		String color = getIsWhite()? "blanco":"negro";
-//       	System.out.println("Rey "+color+" amenzadado: "+isAmenezado);
        	return this.isAmenezado;
 	}
 

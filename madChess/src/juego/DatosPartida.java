@@ -18,7 +18,7 @@ public class DatosPartida implements Serializable{
 	protected String gameId;
 	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
 	protected ArrayList<Movimiento> movimientos;
-	
+	protected Boolean isTerminada = false;
 
 	
 	
@@ -85,7 +85,20 @@ public class DatosPartida implements Serializable{
 	}
 	
 	
-    private void setGameId() {
+	
+    public Boolean getIsTerminada() {
+		return isTerminada;
+	}
+
+
+
+	public void setIsTerminada(Boolean isTerminada) {
+		this.isTerminada = isTerminada;
+	}
+
+
+
+	private void setGameId() {
     	if (this.gameId!=null) {return;}
         StringBuilder gameID = new StringBuilder();
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

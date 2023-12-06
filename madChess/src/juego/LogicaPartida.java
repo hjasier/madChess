@@ -66,6 +66,7 @@ public class LogicaPartida {
         tablero.tableroDiv.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent e) {
+        		if (datosPartida.getIsTerminada()) {return;};
         		resetMouseSocket();
         		Casilla curCasilla = tablero.getCurCasilla(e);
         		moverPiezaTablero(tablero.prevCasilla,curCasilla,e);
@@ -86,6 +87,7 @@ public class LogicaPartida {
                 
                 
                 if(prevCasilla.getIsHielo()) {return;}
+                if (datosPartida.getIsTerminada()) {return;};
                 
                 if (Configuracion.DEBUG_MODE||(!checkJaque() || prevCasilla.getPieza() instanceof Rey)) {
                     tablero.arrastrarPieza(e);
@@ -851,10 +853,30 @@ public class LogicaPartida {
 
 	protected void checkFinPartida() {
 		if(checkReyIsAlive()) {
+			initPartidaAcabada();
 			InfoMsg.alert("La partida ha terminado");
+			//guardarPartidaDB();
 		}
 	}
 	
+	private void initPartidaAcabada() {
+		//parar temporizador de ambos jugadores
+		addInfo("║🏁 Partida terminada 🏁 ║",Color.yellow,true,true);
+		printMovimiento();
+		
+		pararTemporizador();
+		
+		datosPartida.setIsTerminada(true);
+		for (Casilla casilla : casillas) {
+			casilla.setDisabled(true);
+		}
+	}
+
+
+
+
+
+
 	protected boolean checkReyIsAlive() {
 		return curPlayer.getRey().getCasillaParent() == null;
 	}
@@ -881,11 +903,17 @@ public class LogicaPartida {
 	//init del tablero
 	protected void resetearVentana() {
 		limpiarTablero();
-		//limpiarChat();
-		//limpiarMovimientos();
+		Session.getVentana().getPanelJuego().resetTextAreas();
 		cargarPiezasTablero();
 	}
 	
+
+
+
+
+
+
+
 	protected void cargarPiezasTablero() { //En principio no hay alters
 		reyBlack = new Rey(false,false);
 		reyWhite = new Rey(true,false);
@@ -949,6 +977,7 @@ public class LogicaPartida {
 	private void limpiarTablero() {
 		for (Casilla casilla:casillas) {
 			casilla.setPieza(null);
+			casilla.setDisabled(false);
 		}
 	}
 
