@@ -16,12 +16,45 @@ public class Evaluador {
         int pesoEstructuraPeones = 1;
         int pesoSeguridadRey = 2;
         int pesoControlCentro = 3;
+        int pesoJaqueMate = 100;
 
         evaluacionTotal += pesoEstructuraPeones * evaluarEstructuraPeones(estadoActual);
         evaluacionTotal += pesoSeguridadRey * evaluarSeguridadRey(estadoActual);
         evaluacionTotal += pesoControlCentro * evaluarControlCentro(estadoActual);
-
+        
+        evaluacionTotal += pesoJaqueMate * evaluarJaqueMate(estadoActual);
+        
+        
         return evaluacionTotal;
+    }
+    
+    private static int evaluarJaqueMate(ArrayList<Casilla> estadoActual) {
+	    boolean reyBlancoPresente = false;
+	    boolean reyNegroPresente = false;
+
+	    for (Casilla casilla : estadoActual) {
+	        Pieza pieza = casilla.getPieza();
+	        if (pieza != null && pieza instanceof Rey) {
+	            if (pieza.getIsWhite()) {
+	                reyBlancoPresente = true;
+	            } else {
+	                reyNegroPresente = true;
+	            }
+				if (reyBlancoPresente && reyNegroPresente) {
+					break;
+				}
+	        }
+	    }
+	    
+		if (!reyBlancoPresente) {
+			return 100;
+		} else if (!reyNegroPresente){
+			return -100;
+		}
+		else {
+			return 0;
+		}
+	    
     }
 
     private static int evaluarEstructuraPeones(ArrayList<Casilla> estadoActual) {

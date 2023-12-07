@@ -943,7 +943,7 @@ public class LogicaPartida {
 		casillas.get(4).setPieza(reyBlack);
 		casillas.get(5).setPieza(new Alfil(false,false));
 		casillas.get(6).setPieza(new Caballo(false,false));
-		casillas.get(7).setPieza(new Torre(false,true));
+		casillas.get(7).setPieza(new Torre(false,false));
 
 		for (int i = 8; i <= 15; i++) {
 			casillas.get(i).setPieza(new Peon(false,false));
@@ -960,7 +960,7 @@ public class LogicaPartida {
 		casillas.get(60).setPieza(reyWhite);
 		casillas.get(61).setPieza(new Alfil(true,false));
 		casillas.get(62).setPieza(new Caballo(true,false));
-		casillas.get(63).setPieza(new Torre(true,true));
+		casillas.get(63).setPieza(new Torre(true,false));
         
 		//System.out.println(Session.getDatosPartida().getModoDeJuego());
 		//System.out.println(Session.getDatosPartida().getJugadores().get(0));

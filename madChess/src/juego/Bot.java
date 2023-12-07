@@ -1,6 +1,7 @@
 package juego;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import objetos.Casilla;
@@ -30,6 +31,9 @@ public class Bot {
 	ArrayList<Pieza> piezasBot = new ArrayList<Pieza>();
 	ArrayList<Pieza> piezasPlayer = new ArrayList<Pieza>();
 	Jugador botplayer;
+	HashMap<Integer, int[]> posibilidadesPuntuadas = new HashMap<Integer, int[]>();
+	
+	int test = 0;
 	
 	
 	public Bot(Jugador botplayer) {
@@ -38,14 +42,28 @@ public class Bot {
 	
 	public void calculaNuevoMovimiento(ArrayList<Casilla> estadoActual) {
 		minimax(estadoActual, true, 3);
+		System.out.println(posibilidadesPuntuadas);
+		int[] mejorMovimiento = posibilidadesPuntuadas.get(Collections.max(posibilidadesPuntuadas.keySet()));
+		ejecutarMovimiento(mejorMovimiento);
+		posibilidadesPuntuadas.clear();
+		System.out.println(posibilidadesPuntuadas);
 		//partida.moverPiezaTablero(curCasilla, newCasilla);
 		
 	}
 
 	
+	private void ejecutarMovimiento(int[] mejorMovimiento) {
+		Casilla casillaSalida = tablero.get(mejorMovimiento[0]);
+		Casilla casillaLlegada = tablero.get(mejorMovimiento[1]);
+		partida.moverPiezaTablero(casillaSalida, casillaLlegada);
+	}
+
 	private int minimax(ArrayList<Casilla> estadoActual, boolean turnoIsBot, int depth) {
 	    if (checkFinPartida(estadoActual) || depth == 0) {
-	        return Evaluador.evaluarTablero(estadoActual);
+	    	int evalu = Evaluador.evaluarTablero(estadoActual);
+	    	test +=1;
+	    	System.out.println("Evaluando tablero --> "+evalu+"  "+test);
+	        return evalu;
 	    }
 
 	    if (turnoIsBot) {
@@ -53,10 +71,17 @@ public class Bot {
 
 	        for (Pieza pieza : calcularPiezasJugador(estadoActual, turnoIsBot)) {
 	            for (Casilla movimientoPosible : casillasDisponiblesPieza(pieza,estadoActual)) {
+	            	
 	                ArrayList<Casilla> nuevoEstado = crearNuevoEstado(estadoActual, pieza.getCasillaParent(), movimientoPosible);
 	                int eval = minimax(nuevoEstado, false, depth - 1);
 	                System.out.println("Evaluando movimiento de pieza aliada --> "+eval);
 	                maxEval = Math.max(maxEval, eval);
+	                
+					if (depth - 1 == 0) {
+						System.out.println("Guardando movimeinto " + eval);//Solo va a guardar uno de cada es decir si dos movs tienen la misma puntuacion solo guardara el último
+						int[] movimiento = {tablero.indexOf(pieza.getCasillaParent()),estadoActual.indexOf(movimientoPosible)};
+						posibilidadesPuntuadas.put(eval, movimiento);
+					}
 	            }
 	        }
 
@@ -77,6 +102,7 @@ public class Bot {
 	    }
 	}
 	
+
 
 
 
