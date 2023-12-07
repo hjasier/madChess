@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import utils.Configuracion;
 import utils.Escalador;
 
 public class userInfo extends JPanel{
@@ -25,7 +26,7 @@ public class userInfo extends JPanel{
 	public userInfo() {		
 		this.setLayout(new BorderLayout());
 		this.setMaximumSize(new Dimension(Integer.MAX_VALUE, Escalador.escalar(35)));
-		this.setBackground(new Color(16,16,16));
+		this.setBackground(Configuracion.BACKGROUND);
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		

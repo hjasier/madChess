@@ -7,19 +7,23 @@ public class Configuracion {
 	
 	public static final String VERSION = "V1.6"; 
 	
-	//public static final String HOST = "madchess.tabernagogorra.eu"; 
-	public static final String HOST = "localhost"; 
+	public static final String HOST = "madchess.tabernagogorra.eu"; 
+	//public static final String HOST = "localhost"; 
 	
 	
 	public static final int PUERTO = 6968; 
 	
-	public static final Color BACKGROUND = new Color(16,16,16);
-	
-	public static final Boolean DEBUG_MODE = true;
+	public static final Color BACKGROUND = new Color(28,28,28);
 	
 	public static final Font DEFAULTFONT = new Font("Dialog", Font.PLAIN, 12);
 	public static Font CUSTOMFONT;
 	
-	public static final Boolean LOGIN_DEBUG = true;
+	//MODOS DEBUG
+	
+	public static final boolean DEBUG_MODE = true;
+	
+	public static final boolean LOGIN_DEBUG = true;
+
+	public static final boolean BOT_DEBUG = false;
 
 }

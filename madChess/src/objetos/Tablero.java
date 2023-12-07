@@ -62,7 +62,7 @@ public class Tablero extends JPanel{
     	 * DEFINICIONES DE LA VENTANA
     	 */
     	
-    	this.setBackground(new Color(16,16,16)); //FIXME Solo devería estar declarado en un sitio
+    	this.setBackground(Configuracion.BACKGROUND); //FIXME Solo devería estar declarado en un sitio
     	this.setLayout(null);
     	tableroDiv.setLayout( null );
         dragImg.setSize(100,100); 
@@ -71,9 +71,9 @@ public class Tablero extends JPanel{
     	tableroDiv.setSize(this.getSize());
     	
     	casillasDiv.setLayout(new GridLayout(8, 8,0,0));
-    	casillasDiv.setBackground(new Color(60,60,60));
+    	casillasDiv.setBackground(Configuracion.BACKGROUND); //Borde alrededor del tablero
     	
-    	tableroDiv.setBackground(Color.magenta); 
+    	
     	tableroDiv.setOpaque(false); // Hace el panel de encima transparente
     	tableroDiv.add(dragImg);
     	tableroDiv.add(animacion);
@@ -83,7 +83,6 @@ public class Tablero extends JPanel{
     	
         this.add(tableroDiv);
         this.add(casillasDiv);
-        
         
         
   

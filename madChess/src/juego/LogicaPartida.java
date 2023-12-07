@@ -144,14 +144,14 @@ public class LogicaPartida {
 	private void initPlayers() {
 		int initTime = 600;
 		
-		boolean BOT_DEBUG = true;
+		
 		
 		if (jugadores.isEmpty()) {
 			jugadores.add(new Jugador("Potzon"));       
 			jugadores.add(new Jugador("erGiova"));		
 		}
 		
-		if (BOT_DEBUG) {
+		if (Configuracion.BOT_DEBUG) {
 			jugadores.remove(1);
 			Jugador botplayer = new Jugador("BOT");
 			jugadores.add(botplayer);

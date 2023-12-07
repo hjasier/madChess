@@ -53,12 +53,18 @@ public class Register extends JPanel {
         opciones.setBackground(Configuracion.BACKGROUND);
         opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
 
-        //--------------------- NAVBAR-------------------------------------------
-        Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, 15);
-        volverBtn.setIcon(icon);
+		//--------------------- NAVBAR-------------------------------------------
+  		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, Escalador.escalarF(15));
+  		volverBtn.setIcon(icon);
+  		
+		JPanel navBarContainer = new JPanel(new FlowLayout());
+		navBarContainer.add(new navBar(volverBtn));
+        navBarContainer.setBackground(Configuracion.BACKGROUND);
+      
+  		
+  		//--------------------- NAVBAR-------------------------------------------	   
+      		
 
-        navBar = new navBar(volverBtn);
-        //--------------------- NAVBAR-------------------------------------------
 
         opciones.setLayout(new BoxLayout(opciones, BoxLayout.Y_AXIS));
 
@@ -88,7 +94,7 @@ public class Register extends JPanel {
         opciones.add(Box.createRigidArea(Escalador.newDimension(0, 20))); // Espacio entre los botones
         opciones.add(loginLabel);
 
-        this.add(navBar, BorderLayout.NORTH);
+        this.add(navBarContainer, BorderLayout.NORTH);
         this.add(opciones, BorderLayout.CENTER);
 
         registerBtn.addActionListener(new ActionListener() {

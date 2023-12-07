@@ -10,9 +10,11 @@ import java.io.IOException;
 
 import javax.swing.UIManager;
 
+import objetos.Jugador;
 import utils.Audio;
 import utils.Configuracion;
 import utils.Escalador;
+import utils.Session;
 import ventanas.VentanaPrincipal;
 
 public class main {
@@ -23,6 +25,10 @@ public class main {
 		VentanaPrincipal v1 = new VentanaPrincipal();
 		
 		Audio.play("notify.wav"); //temp
+		
+		if (Configuracion.LOGIN_DEBUG) {
+			Session.setCurrentUser(new Jugador("jugadorDebug"));
+		}
 	}
 	
 

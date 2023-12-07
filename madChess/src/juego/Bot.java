@@ -70,7 +70,8 @@ public class Bot {
 	        int maxEval = Integer.MIN_VALUE; //-infinito
 
 	        for (Pieza pieza : calcularPiezasJugador(estadoActual, turnoIsBot)) {
-	            for (Casilla movimientoPosible : casillasDisponiblesPieza(pieza,estadoActual)) {
+	        	ArrayList<Casilla> casillasD = casillasDisponiblesPieza(pieza,estadoActual);
+	            for (Casilla movimientoPosible :casillasD) {
 	            	
 	                ArrayList<Casilla> nuevoEstado = crearNuevoEstado(estadoActual, pieza.getCasillaParent(), movimientoPosible);
 	                int eval = minimax(nuevoEstado, false, depth - 1);

@@ -35,7 +35,7 @@ public class VentanaPrincipal extends JFrame{
    
     Login panelLogin = new Login(this);
     
-    MenuInicio  panelMenuInicio = new MenuInicio();
+    //MenuInicio  panelMenuInicio = new MenuInicio();
     
     ConfPLocal panelConfLocal = new ConfPLocal();
     
@@ -49,7 +49,7 @@ public class VentanaPrincipal extends JFrame{
 
     Register panelRegister = new Register();
     
-    MenuInicioNuevo panelMenuInicioNuevo = new MenuInicioNuevo();
+    MenuInicio panelMenuInicio = new MenuInicio();
     
     
 	public VentanaPrincipal() {
@@ -61,7 +61,7 @@ public class VentanaPrincipal extends JFrame{
 		
 		panelPrincipal.setLayout(cardLayout);
 		
-		panelPrincipal.add(panelMenuInicioNuevo, "DEBUG");
+		//panelPrincipal.add(panelMenuInicioNuevo, "DEBUG");
 		
 		
 		panelPrincipal.add(panelMenuInicio, "MENUINICIO");

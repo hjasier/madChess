@@ -4,6 +4,9 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+
+import utils.Configuracion;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -34,7 +37,7 @@ public class MScrollPane extends JScrollPane {
 
         @Override
         protected void paintTrack(Graphics g, JComponent c, java.awt.Rectangle trackBounds) {
-            g.setColor(new Color(16,16,16)); // Color del fondo de la barra
+            g.setColor(Configuracion.BACKGROUND); // Color del fondo de la barra
             g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
         }
 
