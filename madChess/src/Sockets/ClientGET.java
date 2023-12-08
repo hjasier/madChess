@@ -80,6 +80,11 @@ public class ClientGET implements Runnable {
                 	case "resetDragg":
                 		Session.getPartida().getTablero().resetDraggPieza();
                 		break;
+                	
+                	case "reloadDatosPartida":
+						DatosPartida newDatos = (DatosPartida) serverIn.readObject();
+						System.out.println("Recibido reload data");
+						break;
                 }
             }
                 

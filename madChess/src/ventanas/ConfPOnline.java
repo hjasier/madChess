@@ -194,7 +194,18 @@ public class ConfPOnline extends JPanel {
         add(opcionesenY, BorderLayout.CENTER);
         
   
-        
+        comboModoJuego.addActionListener(new ActionListener() {
+        	@Override
+            public void actionPerformed(ActionEvent e) {
+                String modoDeJuego = comboModoJuego.getSelectedItem().toString();
+                Session.getDatosPartida().setTipoPartida(modoDeJuego);
+                try {
+					Session.getCtsConnection().postDatosPartida();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+            }
+		});
         
 
         botonIniciarPartida.addActionListener(new ActionListener() {

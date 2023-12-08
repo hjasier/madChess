@@ -9,6 +9,7 @@ import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
 import objetos.Tablero;
+import utils.Infos;
 import utils.Session;
 import ventanas.Juego;
 
@@ -50,25 +51,25 @@ public class Boosts {
 		
 	    public static void boostHielo() {
 	        curBoost = "HIELO";
-	    	InfoMsg.alert("Selecciona la casilla central a la que aplicar el rango");
+	    	InfoMsg.alert(Infos.HIELOINFO);
 	    }
 	    
 	    public static void boostMalPresagio() {
 		    curBoost = "PRESAGIO";
-		    InfoMsg.alert("Ganas la partida si dura más de 20 movimientos");
+		    InfoMsg.alert(Infos.PRESAGIOINFO);
 		    checkBoosts(null, Session.getPartida().getCurPlayer());
 			
 		}
 	    
 	    public static void boostBomba() {
 	        curBoost = "BOMBA";
-	        InfoMsg.alert("Selecciona una casilla aliada para colocar la Bomba");
+	        InfoMsg.alert(Infos.BOMBAINFO);
 	        
 	    }
 	    
 	    public static void boostControl() {
 	        curBoost = "CONTROL";
-	        InfoMsg.alert("Una pieza aleatoria pasa a ser de tu color por 4 turnos");
+	        InfoMsg.alert(Infos.CONTROLINFO);
 	        Pieza pieza = getPiezaAleatoria();
 	        Control boostControl = new Control(pieza, Session.getPartida().getCurPlayer());
 			curBoost = null;
@@ -100,7 +101,7 @@ public class Boosts {
 	            	adyacente.setIsHielo(estado); 
 	            	}
 	            }
-	        }
+	     }
 	    
 	    
 	    public static void explotacionBomba(Casilla casilla) {
@@ -124,7 +125,9 @@ public class Boosts {
 	            	adyacente.setPieza(null);
 	            	}
 	            }
-	        }
+	     }
+	    
+	    
 	    
 	    public static ArrayList<Pieza> getCasillasEnemigas(ArrayList<Casilla> casillas, Jugador nowPlaying){
 			ArrayList<Pieza> piezas = new ArrayList<>();
@@ -147,12 +150,8 @@ public class Boosts {
 	
 	
 	    public static void updateBoost() {
-	    	
 	    	for (Boost boost : boostActivos) {
-	    		
 	    		boost.check();
-	    		
-	    		
 	    	}
 	    }
 
@@ -208,7 +207,7 @@ class MalPresagio extends Boost{
 			InfoMsg.alert("Han pasado veinte turnos, "+ player.getNombre() + " gana");
 		}else if (cont < 0){return;
 		}else if(cont == 10 || cont == 5) {
-			Session.getPartida().printMovimientoFormateado("En " + cont + " turnos acabará la partida ⚠️");
+			Session.getPartida().printMovimientoFormateado("En " + cont + " "+Infos.FINPARTIDACONTADOR);
 		}
 		
 		
@@ -234,12 +233,12 @@ class Bomba extends Boost {
         	System.out.println(curCasilla.getPos());
         	Boosts.explotacionBomba(curCasilla);
         	
-        	Session.getPartida().printMovimientoFormateado("💥💥BOOOOOM!!!💥💥");
+        	Session.getPartida().printMovimientoFormateado(Infos.BOOM);
 			Session.getPartida().getTablero().initAnimacionExplosion(curCasilla);
         	
         }else if (cont < 0){return;}    
         else {
-        	Session.getPartida().printMovimientoFormateado("Explosión en: "+ cont);
+        	Session.getPartida().printMovimientoFormateado(Infos.CONTADOREXPLOSION + cont);
         }
     }
 

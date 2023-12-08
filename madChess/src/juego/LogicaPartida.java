@@ -26,6 +26,7 @@ import piezas.Rey;
 import piezas.Torre;
 import utils.Configuracion;
 import utils.Escalador;
+import utils.Infos;
 import utils.Session;
 import ventanas.Juego;
 
@@ -50,6 +51,9 @@ public class LogicaPartida {
 	
 	protected Color secondaryColor = new Color(236,212,146);
 	
+	
+	
+	
 	public LogicaPartida() {
 		Session.setPartida(this);
 		
@@ -57,8 +61,6 @@ public class LogicaPartida {
 		this.datosPartida = Session.getDatosPartida();
 		if (datosPartida.jugadores!=null) {this.jugadores = datosPartida.jugadores;}
 		this.tablero = ventana.getTablero();
-		
-		
 		casillas = tablero.getCasillas();
 		resetearVentana();
 		
@@ -90,7 +92,7 @@ public class LogicaPartida {
                 if(prevCasilla.getIsHielo()) {return;}
                 if (datosPartida.getIsTerminada()) {return;};
                 
-                if (Configuracion.DEBUG_MODE||(!checkJaque() || prevCasilla.getPieza() instanceof Rey)) {
+                if (DEBUG_MODE||(!checkJaque() || prevCasilla.getPieza() instanceof Rey)) {
                     tablero.arrastrarPieza(e);
                 } 
                 else {
@@ -114,7 +116,8 @@ public class LogicaPartida {
         ventana.initWindow();
         
 
-        addInfo("*/* "+curPlayer.getNombre()+" empieza la partida con blancas */*", new Color(236,212,146), true,false);
+        addInfo(Infos.NAMESEP+" "+curPlayer.getNombre()+" empieza la partida con blancas "+Infos.NAMESEP, new Color(236,212,146), true,false);
+        addInfo(Infos.PIEZAS, new Color(236,212,146), true,false);
         printMovimiento();
 		
         
@@ -126,15 +129,7 @@ public class LogicaPartida {
 
 
 
-	protected void resetMouseSocket() {
-		if (datosPartida.getModoDeJuego().equals("online")) {
-			try {
-				Session.getCtsConnection().postResetDragg();} 
-			catch (IOException e1) {
-				e1.printStackTrace();
-				}
-    	}
-	}
+
 
 
 
@@ -143,9 +138,7 @@ public class LogicaPartida {
 
 	private void initPlayers() {
 		int initTime = 600;
-		
-		
-		
+
 		if (jugadores.isEmpty()) {
 			jugadores.add(new Jugador("Potzon"));       
 			jugadores.add(new Jugador("erGiova"));		
@@ -190,98 +183,118 @@ public class LogicaPartida {
 		ventana.getPanelUsuario2().startTemp();
 	}
 
+	
+	
+	
 
+	protected void moverPiezaTablero(Casilla prevCasilla, Casilla curCasilla) {
+	    if (validarArrastrePieza(prevCasilla)) {
+	        Pieza pieza = prevCasilla.getPieza();
+	        Pieza piezaComida = null;
+	        ArrayList<Casilla> casillasDisp = pieza.getCasillasDisponibles(prevCasilla, casillas);
 
+	        if (!cumpleCondicionesMovimiento(prevCasilla, casillasDisp)) {
+	            return;
+	        }
+	        
+	        if (prevCasilla != curCasilla && (casillasDisp.contains(curCasilla)||DEBUG_MODE)){ // Si la casilla está entre las disponibles y no es la casilla de la que sale
+	        	esMovimientoEspecial(prevCasilla, curCasilla, pieza);//Si hay algún movimeinto especial se ejecuta antes de mover la pieza normal
+	        	movimientoEstandar(prevCasilla, curCasilla, pieza, piezaComida);
+	        }
+	        resetAgarrarPieza(prevCasilla, casillasDisp);
 
-
-	protected void moverPiezaTablero(Casilla prevCasilla,Casilla curCasilla) {
-		
-		if(prevCasilla != null && prevCasilla.getPieza()!=null) { //Confirmamos que estamos arrastrando una pieza
-			ArrayList<Casilla> casillasDisp = prevCasilla.getPieza().getCasillasDisponibles(prevCasilla, casillas);
-			
-			if(prevCasilla.getIsHielo()) {return;}
-			
-			if (prevCasilla.getPieza().getIsWhite()!=curPlayer.getIsWhite()&&!DEBUG_MODE) {return;} // Si no es tu turno y mueves..
-			if (casillasDisp==null) {return;}
-			
-			if (prevCasilla != curCasilla && (casillasDisp.contains(curCasilla)||DEBUG_MODE)){ // Si la casilla esta entre las disponibles y no es la casilla de la que sale
-       		Pieza pieza= prevCasilla.getPieza();
-       		Pieza piezaComida = null;
-       		
-       		int casillaInx = casillas.indexOf(curCasilla);
-       		
-       		
-       		if (!Configuracion.DEBUG_MODE&&(checkJaque() && !checkJaqueMoveValid(prevCasilla,curCasilla))){
-       			addInfo("¡Proteje al rey! 😡",Color.red,true,false);
-       			printMovimiento();
-       			return;
-       		}
-       		
-       		if (checkEnroqueCorto(pieza,curCasilla)) {
-       			Pieza torre = casillas.get(casillaInx+1).getPieza();
-       			casillas.get(casillaInx-1).setPieza(torre);
-       			casillas.get(casillaInx+1).setPieza(null);//Borramos la torre de donde esta ahora
-       			addInfo("0-0",secondaryColor,false,false);
-       			
-       			
-       		}
-       		else if (checkEnroqueLargo(pieza,curCasilla)) {
-       			Pieza torre = casillas.get(casillaInx-2).getPieza();
-       			casillas.get(casillaInx+1).setPieza(torre);
-       			casillas.get(casillaInx-2).setPieza(null);
-       			addInfo("0-0-0",secondaryColor,false,false);
-       		}
-       		else if (checkPromotion(pieza,curCasilla)) {
-       			tablero.initPromocion(curCasilla);
-       			addInfo("PROM",secondaryColor,false,false);
-       			// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
-       		}
-  
-       		else{ // Si no se cumple ninguno de los casos especiales entonces miramos si esta comiendo una pieza o simplemente moviendose
-       			
-       			if (curCasilla.getPieza()!=null) {
-           			//entonces estamos comiento una pieza
-           			piezaComida = curCasilla.getPieza();
-           		}
-
-       		}
-       		
-
-       		
-       		prevCasilla.setPieza(null); // Quitamos la pieza de la casilla anterior y la metemos en la nueva
-       		curCasilla.setPieza(pieza);
-       		
-       		pieza.setPMoved(); //Seteamos el piezaMoved en true
-       		
-       		checkAlters(prevCasilla, curCasilla, pieza, piezaComida);
-       		
-       		guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
-       	       		
-       		
-       			
-       		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
-    		
-       		checkFinPartida();
-       		
-       		Boosts.updateBoost();
-       		
-       		checkReyInJaque();
-       		
-
-       		
-			}
-			 
-			prevCasilla.setDragging(false);
-			tablero.dragImg.setIcon(null); // Borramos la img del panel superior
-
-    		for(Casilla casillaDisp: casillasDisp) {
-    			casillaDisp.setDisponible(false); //Borramos los puntos de las casillas
-    		} 
-		}
+	        
+	    }
 	}
 	
 	
+
+	private void movimientoEstandar(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
+		if (curCasilla.getPieza() != null) {
+	        piezaComida = curCasilla.getPieza();
+	    }
+	    moverPieza(prevCasilla, curCasilla, null, pieza);
+	    checkAlters(prevCasilla, curCasilla, pieza, piezaComida);
+	    initEventosPosMovimiento(prevCasilla, curCasilla, piezaComida, pieza);
+	}
+
+
+
+
+
 	
+	private void esMovimientoEspecial(Casilla prevCasilla, Casilla curCasilla, Pieza pieza) {
+	    
+	    if (checkEnroqueCorto(pieza, curCasilla)) {
+	        ejecutarEnroque(prevCasilla, curCasilla, 1, Infos.ENROQUE_CORTO);
+	    } else if (checkEnroqueLargo(pieza, curCasilla)) {
+	    	ejecutarEnroque(prevCasilla, curCasilla, -2, Infos.ENROQUE_LARGO);
+	    } else if (checkPromotion(pieza, curCasilla)) {
+	    	ejecutarPromocion(curCasilla);
+	    }
+	}
+	
+
+
+	private void ejecutarEnroque(Casilla prevCasilla, Casilla curCasilla, int casillaIndx, String mensaje) {
+		int torreIndx= casillas.indexOf(curCasilla)+casillaIndx;
+	    Pieza torre = casillas.get(torreIndx).getPieza();
+	    casillas.get(casillas.indexOf(curCasilla) - (1*(casillaIndx/Math.abs(casillaIndx)))).setPieza(torre);//Ponemos la torre en su nueva posicion
+	    casillas.get(torreIndx).setPieza(null);//Borramos la torre de donde esta ahora
+	    addInfo(mensaje, secondaryColor, false, false);
+	}
+
+
+
+	private void ejecutarPromocion(Casilla curCasilla) {
+		tablero.initPromocion(curCasilla);
+		addInfo(Infos.PROMOCION,secondaryColor,false,false);
+	}
+
+
+
+	
+	
+	
+	
+	private void resetAgarrarPieza(Casilla prevCasilla, ArrayList<Casilla> casillasDisp) {
+		prevCasilla.setDragging(false); //Mientras dragging es true , la pieza sigue en la casilla pero no se dibuja
+		tablero.dragImg.setIcon(null); // Borramos la img del panel superior
+
+		for(Casilla casillaDisp: casillasDisp) {//Borramos los puntos de las casillas
+			casillaDisp.setDisponible(false); 
+		} 
+		
+	}
+
+
+
+
+	private void moverPieza(Casilla prevCasilla, Casilla curCasilla, Pieza piezaAnt, Pieza pieza) {
+   		prevCasilla.setPieza(piezaAnt); // Quitamos la pieza de la casilla anterior y la metemos en la nueva
+   		curCasilla.setPieza(pieza);
+   		pieza.setPMoved(); //Seteamos el piezaMoved en true
+	}
+
+
+
+
+
+
+	private void initEventosPosMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida, Pieza pieza) {
+		
+		guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
+   		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
+   		checkFinPartida();
+   		Boosts.updateBoost();
+   		checkReyInJaque();
+		
+	}
+
+
+
+
+
 	private void checkAlters(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
 		if(pieza instanceof Alfil && ((Alfil) pieza).isAlter() && piezaComida != null) {
             // Revertimos el movimiento
@@ -290,26 +303,26 @@ public class LogicaPartida {
    		}
 		if(pieza instanceof Reina && ((Reina) pieza).isAlter() && piezaComida != null) {
 			ArrayList<Casilla> casillasIntermedias = calcularCasillasIntermedias(prevCasilla,curCasilla);
-			String kills = "💀";
+			String kills = Infos.KILL;
 			for(Casilla casilla : casillasIntermedias ) {
 				if (casilla.getPieza()!=null){
 					casilla.setPieza(null);
-					kills+="💀";
+					kills+=Infos.KILL;
 				}
 			}
-			if (!casillasIntermedias.isEmpty()) {addInfo(kills); }
+			if (!casillasIntermedias.isEmpty()) {addInfo(" "+kills); }
 		}
 		
 		if(pieza instanceof Torre && ((Torre) pieza).isAlter()) {
 			ArrayList<Casilla> casillasAfectadas = casillasAfectadas(prevCasilla,curCasilla);
-			String kills = "[💨]";
+			String kills = Infos.ONDA_EXPANSIVA;
 			for(Casilla casilla : casillasAfectadas ) {
 				if(casilla.getPieza()!= null)
-				{kills+="💀";
+				{kills+=Infos.KILL;
 				killPieza(casilla);
 				}
 			}
-			addInfo(kills);
+			addInfo(" "+kills);
 			
 		}
 		
@@ -320,7 +333,6 @@ public class LogicaPartida {
 		
 		Casilla curReyCasilla = getCasillaPieza(oponente.getRey());
 		if (oponente.getRey().reCheckJaqueStatus( curReyCasilla, casillas) && oponente.getRey().reyIsAlter()) {
-			System.out.println("alter");
 			prevCasilla.setPieza(pieza);
     	    curCasilla.setPieza(null);
     	    oponente.getRey().setReyIsAlter(false);
@@ -351,19 +363,17 @@ public class LogicaPartida {
 		
 	}
 
-	private boolean checkJaqueMoveValid(Casilla prevCasilla,Casilla newCasilla) {
-		
-		
-		return (
-				piezasDefensa!=null&&
-				(((piezasDefensa.containsKey(prevCasilla.getPieza())&&
-				  piezasDefensa.get(prevCasilla.getPieza()).contains(newCasilla))||
-				prevCasilla.getPieza() instanceof Rey))	
-				);
+	
+	protected void resetMouseSocket() {
+		if (datosPartida.getModoDeJuego().equals("online")) {
+			try {
+				Session.getCtsConnection().postResetDragg();} 
+			catch (IOException e1) {
+				e1.printStackTrace();
+				}
+    	}
 	}
-
-
-
+	
 
 
 	protected ArrayList<Casilla> getCasillasSimulacion(ArrayList<Casilla>  casillas) { //NO HACE FALTA
@@ -483,11 +493,7 @@ public class LogicaPartida {
 
 
 
-	private boolean checkJaque() {
-		return (
-				curPlayer.getRey().reCheckJaqueStatus(getCasillaPieza(curPlayer.getRey()), casillas)
-				);
-	}
+	
 
 
 
@@ -534,51 +540,7 @@ public class LogicaPartida {
 	    }
 	}
 
-	private void addInfo(String text) {
-		addInfo(text,Color.white, false,false);
-	}
 	
-	private void addInfo(String text, Color color, boolean bold, boolean post) {
-	    StringBuilder styledText = new StringBuilder("<html>");
-	    String fontName = "Arial";
-	    int fontSize = Escalador.escalar(4);
-	    if (bold) {
-	        styledText.append("<b>");
-	    }
-
-	    styledText.append("<font color='").append(toHexString(color)).append("'");
-
-	    // Agregar nombre de la fuente y tamaño si están presentes
-	    if (fontName != null && !fontName.isEmpty()) {
-	        styledText.append(" face='").append(fontName).append("'");
-	    }
-	    if (fontSize > 0) {
-	        styledText.append(" size='").append(fontSize).append("'");
-	    }
-
-	    styledText.append(">");
-	    styledText.append(text);
-	    styledText.append("</font>");
-
-	    if (bold) {
-	        styledText.append("</b>");
-	    }
-
-	    styledText.append("</html>");
-
-	    if (!post) {
-	        infoTurno.add(styledText.toString());
-	    } else {
-	    	infoTurno.add(0, styledText.toString());
-	    }
-	}
-
-	
-	
-	
-	private String toHexString(Color color) {
-	    return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
-	}
 
 
 
@@ -590,9 +552,7 @@ public class LogicaPartida {
 	    int restantes = (int) (curPlayer.getTiempoRestante()-segundos);
 	    curPlayer.setTiempoRestante(restantes);
 	    
-	    System.out.println("Tiempo restante "+curPlayer.getNombre()+" --> "+restantes+" segundos");
-	    
-	    //ya se hara mejor
+	    //FIXME: ESTO NO FUNCIONARÍA CON MÁS DE 2 JUGADORES
 	    if (jugadores.get(0)==curPlayer) {
 	    	ventana.getPanelUsuario2().setTemp(restantes);
 	    }
@@ -603,6 +563,7 @@ public class LogicaPartida {
 	
 	}
 
+	
     private ArrayList<Casilla> calcularCasillasIntermedias(Casilla casillaInicio, Casilla casillaFin) {
         ArrayList<Casilla> casillas = new ArrayList<Casilla>();
 
@@ -628,8 +589,8 @@ public class LogicaPartida {
     
     
     
-    
-    private ArrayList<Casilla> casillasAfectadas(Casilla origen, Casilla destino) {//FIXME: IMPOSIBLE QUE ESTO NO SE PUEDA SIMPLIFICAR
+    //FIXME : SIMPLIFICAD ESTO POR FAVOR
+    private ArrayList<Casilla> casillasAfectadas(Casilla origen, Casilla destino) {
         int[][] direcciones = {
             {0, 1},   // derecha (0)
             {0, -1},  // izquierda (1)
@@ -798,17 +759,17 @@ public class LogicaPartida {
 		Movimiento movimiento = new Movimiento(prevCasilla,curCasilla,piezaComida,pieza);
 		
 		//Aquí guardaríamos el movimiento en la base de datos, con su user etc para las analíticas
-		String extra = (piezaComida==null) ? " ":" 💀";
+		String extra = (piezaComida==null) ? " ":" "+Infos.KILL;
 		
-		String info = (prevCasilla.getPos()+" ⏩ "+curCasilla.getPos()+extra);
+		String info = (prevCasilla.getPos()+" "+Infos.MOVE+" "+curCasilla.getPos()+extra);
 		
 		
 		addInfo(info,Color.white,false,true);
-		addInfo("║"+curPlayer.getNombre()+"║ ",curPlayer.getPlayColor(),false,true);
+		addInfo(Infos.NAMESEP+curPlayer.getNombre()+Infos.NAMESEP+" ",curPlayer.getPlayColor(),false,true);
 		
 		printMovimiento();
 		
-		if (datosPartida.getModoDeJuego().equals("online")) {
+		if (datosPartida.getModoDeJuego().equals("online")) { //FIXME: ESTO NO DEBERÍA ESTAR AQUI
 			try {
 				Session.getCtsConnection().postPiezaMov(movimiento);
 			} catch (IOException e) {
@@ -820,32 +781,35 @@ public class LogicaPartida {
 
 		
 	}
-	public static String joinHtml(ArrayList<String> htmlList) {
-        StringBuilder resultHtml = new StringBuilder();
-        for (String htmlFragment : htmlList) {
-            String modifiedFragment = htmlFragment.replace("<html>", "<text>");
-            modifiedFragment = modifiedFragment.replace("</html>", "</text>");
-
-            resultHtml.append(modifiedFragment);
-        }
-        return "<html>" + resultHtml.toString() + "</html>";
-    }
 	
-	private void printMovimiento() {
-		ventana.printMovimiento(joinHtml(infoTurno));
-		infoTurno = new ArrayList<String>();
-	}
-	
-	public void printMovimientoFormateado(String info) {
-		ArrayList<String> recup = infoTurno;
-		infoTurno = new ArrayList<String>();
-		addInfo(info);
+	private void initPartidaAcabada() {
+		//parar temporizador de ambos jugadores
+		addInfo(Infos.PARTIDA_TERMINADA,Color.yellow,true,true);
 		printMovimiento();
-		infoTurno = recup;
+		
+		pararTemporizador();
+		
+		datosPartida.setIsTerminada(true);
+		for (Casilla casilla : casillas) {
+			casilla.setDisabled(true);
+		}
 	}
 
+
+
+
 	
-	//CHECKS BOOLEANOS
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//----------------- CHECKS BOOLEANOS -----------------
 	
 	protected boolean checkEnroqueCorto(Pieza curPieza,Casilla curCasilla) {
 		return(
@@ -868,37 +832,62 @@ public class LogicaPartida {
 				(!curPieza.getIsWhite())&& curCasilla.getFila() == 7);	
 	}
 	
+	private boolean checkJaqueMoveValid(Casilla prevCasilla,Casilla newCasilla) {
+		return (
+				piezasDefensa!=null&&
+				(((piezasDefensa.containsKey(prevCasilla.getPieza())&&
+				  piezasDefensa.get(prevCasilla.getPieza()).contains(newCasilla))||
+				prevCasilla.getPieza() instanceof Rey))	
+				);
+	}
+	
 
 	protected void checkFinPartida() {
 		if(checkReyIsAlive()) {
 			initPartidaAcabada();
-			InfoMsg.alert("La partida ha terminado");
+			InfoMsg.alert(Infos.PARTIDA_TERMINADA_ALERT);
 			//guardarPartidaDB();
 		}
 	}
 	
-	private void initPartidaAcabada() {
-		//parar temporizador de ambos jugadores
-		addInfo("║🏁 Partida terminada 🏁 ║",Color.yellow,true,true);
-		printMovimiento();
-		
-		pararTemporizador();
-		
-		datosPartida.setIsTerminada(true);
-		for (Casilla casilla : casillas) {
-			casilla.setDisabled(true);
-		}
-	}
-
-
-
-
-
-
 	protected boolean checkReyIsAlive() {
 		return curPlayer.getRey().getCasillaParent() == null;
 	}
 	
+	
+	private boolean cumpleCondicionesMovimiento(Casilla prevCasilla,ArrayList<Casilla> casillasDisp) {
+		return (
+				!(prevCasilla.getIsHielo())&&
+                !(prevCasilla.getPieza().getIsWhite()!=curPlayer.getIsWhite()&&!DEBUG_MODE)&&
+                !(casillasDisp==null)
+				);
+	}
+	
+	private boolean validarArrastrePieza(Casilla prevCasilla) {
+	    return prevCasilla != null && prevCasilla.getPieza() != null;
+	}
+	
+	private boolean checkJaque() {
+		return (
+				curPlayer.getRey().reCheckJaqueStatus(getCasillaPieza(curPlayer.getRey()), casillas)
+				);
+	}
+	
+	//-----------------FIN CHECKS-----------------
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+	
+	//-----------------GETTERS / SETTERS -----------------
 	
 	
 	public void setCasillas(ArrayList<Casilla> casillas) {
@@ -916,21 +905,29 @@ public class LogicaPartida {
 	public Tablero getTablero() {
 		return tablero;
 	}
+	
+	public Jugador getCurPlayer() {
+		return curPlayer;
+	}
 
+	
+	
+	//-----------------FIN GETTERS / SETTERS -----------------
+	
+	
 
-	//init del tablero
+	
+	
+	
+	
+	//-----------------INIT DEL TABLERO -----------------
+	
 	protected void resetearVentana() {
 		limpiarTablero();
 		Session.getVentana().getPanelJuego().resetTextAreas();
 		cargarPiezasTablero();
 	}
 	
-
-
-
-
-
-
 
 	protected void cargarPiezasTablero() { //En principio no hay alters
 		reyBlack = new Rey(false,false);
@@ -979,29 +976,91 @@ public class LogicaPartida {
 	}
 
 
-
-	
-
-
-	public Jugador getCurPlayer() {
-		return curPlayer;
-	}
-
-
-
-
-
-
 	private void limpiarTablero() {
 		for (Casilla casilla:casillas) {
 			casilla.setPieza(null);
 			casilla.setDisabled(false);
 		}
 	}
+	
+	//-----------------FIN INIT DEL TABLERO -----------------
 
 
 
+	
+	//----------------- FORMATEADOR DE MOVIMIENTOS -----------------
+	
+	public static String joinHtml(ArrayList<String> htmlList) {
+        StringBuilder resultHtml = new StringBuilder();
+        for (String htmlFragment : htmlList) {
+            String modifiedFragment = htmlFragment.replace("<html>", "<text>");
+            modifiedFragment = modifiedFragment.replace("</html>", "</text>");
 
+            resultHtml.append(modifiedFragment);
+        }
+        return "<html>" + resultHtml.toString() + "</html>";
+    }
+	
+	private void printMovimiento() {
+		ventana.printMovimiento(joinHtml(infoTurno));
+		infoTurno = new ArrayList<String>();
+	}
+	
+	public void printMovimientoFormateado(String info) {
+		ArrayList<String> recup = infoTurno;
+		infoTurno = new ArrayList<String>();
+		addInfo(info);
+		printMovimiento();
+		infoTurno = recup;
+	}
+	
+	private void addInfo(String text) {
+		addInfo(text,Color.white, false,false);
+	}
+	
+	private void addInfo(String text, Color color, boolean bold, boolean post) {
+	    StringBuilder styledText = new StringBuilder("<html>");
+	    String fontName = "Arial";
+	    int fontSize = Escalador.escalar(4);
+	    if (bold) {
+	        styledText.append("<b>");
+	    }
+
+	    styledText.append("<font color='").append(toHexString(color)).append("'");
+
+	    // Agregar nombre de la fuente y tamaño si están presentes
+	    if (fontName != null && !fontName.isEmpty()) {
+	        styledText.append(" face='").append(fontName).append("'");
+	    }
+	    if (fontSize > 0) {
+	        styledText.append(" size='").append(fontSize).append("'");
+	    }
+
+	    styledText.append(">");
+	    styledText.append(text);
+	    styledText.append("</font>");
+
+	    if (bold) {
+	        styledText.append("</b>");
+	    }
+
+	    styledText.append("</html>");
+
+	    if (!post) {
+	        infoTurno.add(styledText.toString());
+	    } else {
+	    	infoTurno.add(0, styledText.toString());
+	    }
+	}
+
+	
+	
+	
+	private String toHexString(Color color) {
+	    return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+	}
+	
+	//-----------------FIN FORMATEADOR DE MOVIMIENTOS -----------------
 
 
 

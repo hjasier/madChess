@@ -132,6 +132,12 @@ public class ClienteHandler implements Runnable {
                 	case "resetDragg":
                 		repost = true;
                 		break;
+                	
+					case "reloadDatosPartida":
+						DatosPartida newDatos = (DatosPartida) input.readObject();
+						reenviar2Datos("reloadDatosPartida",newDatos);
+					    break;
+                		
     			    
 				}
     				
@@ -162,6 +168,12 @@ public class ClienteHandler implements Runnable {
 	
 	
 	
+	private void updateDatosPartida(DatosPartida newDatos) {
+		curPartida.setTipoPartida(newDatos.getTipoPartida());
+		//mas cosas
+	}
+
+
 	private void reenviar2Datos(String preDato,Object dato) {
     	if (curPartida==null) {return;}
     	for (ClienteHandler cliente: clientes.get(curPartida.getGameId())) {

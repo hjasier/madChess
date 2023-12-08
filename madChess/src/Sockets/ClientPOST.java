@@ -94,5 +94,11 @@ public class ClientPOST {
 	}
 
 
+	public void postDatosPartida() throws IOException {
+		serverOut.writeObject("reloadDatosPartida");
+		serverOut.writeObject(Session.getDatosPartida());	
+	}
+
+
 	
 }
