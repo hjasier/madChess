@@ -28,7 +28,9 @@ public class Perfil extends JPanel{
 		backBtn.setIcon(icon);
   		
   		navBar = new navBar(backBtn);
-  		//--------------------- NAVBAR-------------------------------------------	   
+  		//--------------------- NAVBAR-------------------------------------------	
+  		
+  		
 
 
   		this.setBackground(Configuracion.BACKGROUND);

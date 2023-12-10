@@ -54,11 +54,14 @@ public class VentanaPrincipal extends JFrame{
     
 	public VentanaPrincipal() {
 		
+		
+		
 		this.setSize(Escalador.escalar(1000),Escalador.escalar(800));
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//this.setUndecorated(true); //para que no se vea el borde de la ventana
-		
+
 		panelPrincipal.setLayout(cardLayout);
 		
 		//panelPrincipal.add(panelMenuInicioNuevo, "DEBUG");

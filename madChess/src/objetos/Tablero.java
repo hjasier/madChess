@@ -242,7 +242,7 @@ public class Tablero extends JPanel{
 	
 	public void recalcularTamanyo() {
         Container ventana = this.getParent();
-        int minSize = Math.min(ventana.getWidth(), ventana.getHeight());
+        int minSize = Math.min(ventana.getWidth(), ventana.getHeight()-Escalador.escalar(35)*2);
         minSize = (minSize < 400) ? 400 : minSize;
         this.setSize(minSize,minSize);
         this.casillasDiv.setSize(this.getSize());

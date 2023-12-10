@@ -21,7 +21,7 @@ public class Bot {
 	 * 3. Para cada movimiento posible:
 	 * 		4. Hacer el movimiento en una copia del tablero
 	 * 		5. Calcular todos los movimientos posibles para el color contrario
-	 * 		6. A cada movimiento contrario asignar una puntuación basada en una función de evaluación
+	 * 		6. A cada movimiento contrario asignar una puntuación 
 	 * 7. Elegir el movimiento con la puntuación más alta (en caso de ser el turno del jugador maximizador) o más baja (en caso contrario)
 	 * 8. Realizar el movimiento elegido en el tablero original
 	*/
