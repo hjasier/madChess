@@ -3,6 +3,8 @@ package ventanas;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -123,6 +125,17 @@ public class Login extends JPanel {
 
 		
 		
+		// Enter Keylistener
+		inputContra.addKeyListener(new KeyAdapter() {
+		    @Override
+		    public void keyPressed(KeyEvent e) {
+		        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		            // Simular el clic en el botón "Iniciar Sesión"
+		            loginBtn.doClick();
+		        }
+		    }
+		});
+		
 		registerLabel.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -134,6 +147,9 @@ public class Login extends JPanel {
 		
 
 		loginBtn.addActionListener(new ActionListener() {
+			
+			
+			
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -154,6 +170,8 @@ public class Login extends JPanel {
 //					JOptionPane.showMessageDialog(null, "Contraseña o usuario incorrectos", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
 //
 //				}
+				
+				
 				
 				loginBtn.setEnabled(false);
 				boolean loginSucces = GestionBd.iniciarSesion(username, passw);
@@ -180,6 +198,8 @@ public class Login extends JPanel {
 		
 		
 	}
+	
+	
 	
 	
 	
