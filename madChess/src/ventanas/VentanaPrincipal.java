@@ -100,7 +100,7 @@ public class VentanaPrincipal extends JFrame{
         });
         
         
-
+        
         
         
 
@@ -126,8 +126,17 @@ public class VentanaPrincipal extends JFrame{
 		});
         
         
-
-       
+        
+        
+        //Config MADCHESS
+       panelMadChessConfig.volverBtn.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			cardLayout.show(panelPrincipal, "MENUINICIO");
+			
+		}
+	});
         
         
         
