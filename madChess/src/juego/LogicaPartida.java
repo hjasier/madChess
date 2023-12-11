@@ -174,8 +174,8 @@ public class LogicaPartida {
 		
 		iniciarTemporizador();
 		
-		ventana.getPanelUsuario().setUsuario(user2.getNombre());
-		ventana.getPanelUsuario2().setUsuario(user1.getNombre());
+		ventana.getPanelUsuario().setUsuario(user2);
+		ventana.getPanelUsuario2().setUsuario(user1);
 		
 		ventana.getPanelUsuario().setTemp(initTime);
 		ventana.getPanelUsuario2().setTemp(initTime);

@@ -241,8 +241,10 @@ public class Tablero extends JPanel{
 
 	
 	public void recalcularTamanyo() {
+		int tamanyoUserInfo = Escalador.escalar(55)*2;
+		
         Container ventana = this.getParent();
-        int minSize = Math.min(ventana.getWidth(), ventana.getHeight()-Escalador.escalar(35)*2);
+        int minSize = Math.min(ventana.getWidth(), ventana.getHeight()-tamanyoUserInfo);
         minSize = (minSize < 400) ? 400 : minSize;
         this.setSize(minSize,minSize);
         this.casillasDiv.setSize(this.getSize());
@@ -426,6 +428,15 @@ public class Tablero extends JPanel{
         
 		return numeroDeFotogramas*120;
     }
+	
+	
+	
+	
+	public void reloadCasillasColor() {
+		for (Casilla casilla : casillas) {
+			casilla.reloadColor();
+		}
+	}
 
 	
 }

@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import objetos.Jugador;
 import utils.Configuracion;
 import utils.Escalador;
 
@@ -22,35 +23,44 @@ public class userInfo extends JPanel{
 	protected JLabel labelTemp; 
 	protected int tiempoRestante;
 	protected boolean stopTimer;
+	private userTag userTag;
 	
-	public userInfo() {		
+	public userInfo() {	
+		
+		
+		
 		this.setLayout(new BorderLayout());
-		this.setMaximumSize(new Dimension(Integer.MAX_VALUE, Escalador.escalar(35)));
+		this.setMaximumSize(new Dimension(Integer.MAX_VALUE, Escalador.escalar(55)));
 		this.setBackground(Configuracion.BACKGROUND);
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		
 	        
 		
-		labelUsuario = new JLabel("user");
-		labelUsuario.setForeground(Color.white);
-		labelUsuario.setSize(10,10);
+		
+		userTag = new userTag();
+		
+		
+		
 		
 		
 		labelTemp = new JLabel("100");
 		labelTemp.setForeground(Color.white);
 		
 		
-		this.add(labelUsuario,BorderLayout.WEST);
+		this.add(userTag,BorderLayout.WEST);
 		this.add(labelTemp,BorderLayout.EAST);
 
 	}
 
 
+	public void resizePanel(int tableroSize) {
+		
+		this.setMaximumSize(new Dimension(Integer.MAX_VALUE, Escalador.escalar(55)));
+	}
 
-
-	public void setUsuario(String labelUsuario) {
-		this.labelUsuario.setText(labelUsuario);
+	public void setUsuario(Jugador jugador) {
+		userTag.setUser(jugador);
 	}
 
 

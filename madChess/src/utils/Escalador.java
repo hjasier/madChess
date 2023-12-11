@@ -2,6 +2,7 @@ package utils;
 
 import java.awt.Toolkit;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 
 public class Escalador {
 
@@ -25,5 +26,10 @@ public class Escalador {
     public static Dimension newDimension(int x,int y) {
     	return new Dimension(escalar(x),escalar(y));
     }
+
+	public static Rectangle newBounds(int i, int j, int k, int l) {
+		// TODO Auto-generated method stub
+		return new Rectangle(escalar(i),escalar(j),escalar(k),escalar(l));
+	}
     
 }

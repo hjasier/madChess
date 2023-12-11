@@ -176,6 +176,7 @@ public class Juego extends JPanel {
 
 		panelUsuario = new userInfo();
 		panelUsuario2 = new userInfo();
+		
 		panelJuego.add(panelUsuario);
 		panelJuego.add(tablero);
 		panelJuego.add(panelUsuario2);
@@ -361,7 +362,6 @@ public class Juego extends JPanel {
         	public void componentResized(ComponentEvent e) {
         		 tablero.recalcularTamanyo();
         	}
-        	//FIXME: Al maximizar la ventana también tendría que funcionar
 		});
         
         
@@ -400,6 +400,11 @@ public class Juego extends JPanel {
         		super.mouseExited(e);
         		configBtn.setIcon(configIcon);
         	}
+        	
+        	@Override
+			public void mouseClicked(MouseEvent e) {
+				Session.getVentana().showPanel("CONFIGMENU");
+			}
 		});
 
     

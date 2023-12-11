@@ -18,6 +18,8 @@ import javax.swing.border.LineBorder;
 
 import utils.Escalador;
 import utils.Session;
+import utils.Themes;
+import utils.Themes.tableroThemes;
 
 
 public class Casilla extends JPanel implements Serializable {
@@ -27,19 +29,21 @@ public class Casilla extends JPanel implements Serializable {
     protected int fila;
 	protected char columna;
     protected Pieza pieza;
-    protected Boolean dragging = false;
-    protected Boolean iluminada = false;
     protected int imgSize;
-    protected Boolean isDisponible = false;
-    protected Boolean isHielo = false;
+    
+    protected boolean dragging = false;
+    protected boolean iluminada = false;
+    protected boolean isDisponible = false;
+    protected boolean isHielo = false;
+    protected boolean isBlack = false;
+    protected boolean disabled = false;
 
-
-	public Casilla(Color color, int fila, int c) {
+	public Casilla(Color color, int fila, int col) {
 		this.color = color;
 		this.initColor = color;
 		this.fila = fila;
-		this.columna = posicionToAlfabeto(c);
-
+		this.columna = posicionToAlfabeto(col);
+		this.isBlack = (fila + col) % 2 != 0;
 	}
 
 	
@@ -215,13 +219,14 @@ public class Casilla extends JPanel implements Serializable {
         	this.color = new Color( color.getRed(),color.getGreen(),color.getBlue()+30);
         	
         }else {
-        	this.color = new Color( color.getRed(),color.getGreen(),color.getBlue()-30);
+        	this.color = initColor;
         }
 		repaint();
 	}
 
 
 	public void setDisabled(boolean b) {
+		this.disabled = b;
 		if (b) {
 			this.color = new Color( color.getRed()/2,color.getGreen()/2,color.getBlue()/2);
 		}
@@ -230,6 +235,22 @@ public class Casilla extends JPanel implements Serializable {
 		}
 		
 		repaint();
+	}
+
+
+	public void reloadColor() {
+		tableroThemes userTheme = Session.getCurrentUser().getPreferedTheme();
+		Color[] curThemeColors = Themes.getTableroTheme(userTheme);
+		if (this.isBlack) {
+			this.color = curThemeColors[0];
+		} else {
+			this.color = curThemeColors[1];
+		}
+		this.initColor = color;
+		setDisabled(disabled);
+		setIsHielo(isHielo);
+		
+		
 	}
 	
 	

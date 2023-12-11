@@ -51,6 +51,8 @@ public class VentanaPrincipal extends JFrame{
     
     MenuInicio panelMenuInicio = new MenuInicio();
     
+    MenuConfig panelMenuConfig = new MenuConfig();
+    
     
 	public VentanaPrincipal() {
 		
@@ -64,7 +66,7 @@ public class VentanaPrincipal extends JFrame{
 
 		panelPrincipal.setLayout(cardLayout);
 		
-		//panelPrincipal.add(panelMenuInicioNuevo, "DEBUG");
+		//panelPrincipal.add(panelMenuConfig, "DEBUG");
 		
 		
 		panelPrincipal.add(panelMenuInicio, "MENUINICIO");
@@ -78,7 +80,7 @@ public class VentanaPrincipal extends JFrame{
         
 		panelPrincipal.add(panelListaPartidas, "LISTAPARTIDAS");
 		panelPrincipal.add(panelPerfil, "PERFILUSUARIO");
-		
+		panelPrincipal.add(panelMenuConfig, "CONFIGMENU");
 		
 		
 		
@@ -283,6 +285,10 @@ public class VentanaPrincipal extends JFrame{
 
 	public JPanel getPanelPrincipal() {
 		return panelPrincipal;
+	}
+
+	public void showPanel(String string) {
+		cardLayout.show(panelPrincipal, string);
 	}
 
 
