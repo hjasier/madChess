@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class GestorPuntuaciones {
 	// mapa( usuario , mapa(modo , puntuacion))
-    private Map<String, Map<String, Integer>> mapaUsuarios;
+    private static Map<String, Map<String, Integer>> mapaUsuarios;
 
     public GestorPuntuaciones() {
         this.mapaUsuarios = new HashMap<>();
@@ -82,7 +82,7 @@ public class GestorPuntuaciones {
     }
   
     
-    public int getPuntuacionModo(String usuario, String modo) {
+    public static int getPuntuacionModo(String usuario, String modo) {
         Map<String, Integer> mapaModosUsuario = mapaUsuarios.get(usuario);
         if (mapaModosUsuario != null) {
             return mapaModosUsuario.get(modo);

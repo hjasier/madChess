@@ -25,6 +25,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -57,6 +59,7 @@ import componentes.userInfo;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.*;
+import puntuacion.GestorPuntuaciones;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
@@ -104,6 +107,9 @@ public class Juego extends JPanel {
 	protected PanelBoost panelBoost = new PanelBoost();
 	protected StyledDocument styledAreaMovimientos;
 	
+	
+	protected JLabel labelRank1;
+	protected JLabel labelRank2;
 	
 	protected MScrollPane scrollChat;
 	
@@ -208,8 +214,17 @@ public class Juego extends JPanel {
 	    
 
 	    
-	    
-
+	    //panel puntuaciones
+	    labelRank1 = new JLabel();
+	    labelRank2 = new JLabel();
+        
+        String usuario1 = "nombreUsuario1";
+        String usuario2 = "nombreUsuario2";
+        String modo = "modoJuego";
+        int puntuacionUsuario1 = GestorPuntuaciones.getPuntuacionModo(usuario1, modo);
+        int puntuacionUsuario2 = GestorPuntuaciones.getPuntuacionModo(usuario2, modo);
+        labelRank1.setText("" + puntuacionUsuario1);
+        labelRank2.setText("" + puntuacionUsuario2);
 	    
 	    // panel controles, movimiento y chat
 	    
