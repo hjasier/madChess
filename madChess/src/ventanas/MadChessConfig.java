@@ -72,7 +72,7 @@ public class MadChessConfig extends JPanel {
         gbc.gridx = 0;
 
         // Panel para seleccionar 3 boosts
-        String[] boostImgs = {"bomba","hielo","bb"};
+        String[] boostImgs = {"bomba","hielo","calavera"};
         addTextPanel(centerPanel, gbc, "Selecciona tus 3 boosts:");
         JPanel boostsPanel = createImagePanel(3, 1, 3,boostImgs,selectedBoosts);
         gbc.gridy++;
