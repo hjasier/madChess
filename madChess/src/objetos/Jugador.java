@@ -36,7 +36,7 @@ public class Jugador implements Serializable{
 		this.rank = rank;
 		this.username = username;
 		this.img_route = img_route;
-		this.preferedTheme = tableroThemes.valueOf(preferedTheme);
+		//this.preferedTheme = tableroThemes.valueOf(preferedTheme);
 	}
 
 	public Jugador(String string) {

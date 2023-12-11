@@ -27,11 +27,15 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 
 import javax.swing.JButton;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Perfil extends JPanel{
 	protected RButton backBtn = new RButton("Volver");
 	protected navBar navBar;
 	protected BLabel nombre = new BLabel();
+	
 	
 	public Perfil() {
 		
@@ -68,7 +72,7 @@ public class Perfil extends JPanel{
   		
   		// Foto perfil FIXME: hay que hacer que salga la doto del usuario logeado
   		ImageIcon fotoPerfilft = new ImageIcon(getClass().getResource("../srcmedia/bbb.jpg"));
-  		Image imgEscaladafotoPerfil = fotoPerfilft.getImage().getScaledInstance((int) (Escalador.escalar(200) * escala), (int) (Escalador.escalar(200) * escala), Image.SCALE_SMOOTH);
+  		Image imgEscaladafotoPerfil = fotoPerfilft.getImage().getScaledInstance((int) (Escalador.escalar(150) * escala), (int) (Escalador.escalar(150) * escala), Image.SCALE_SMOOTH);
   		JLabel fotoPerfil = new JLabel();
   		fotoPerfil.setBounds(Escalador.escalar(245), Escalador.escalar(10), Escalador.escalar(140), Escalador.escalar(140));
   		fotoPerfil.setIcon(new ImageIcon(imgEscaladafotoPerfil));
@@ -182,33 +186,7 @@ public class Perfil extends JPanel{
   		Botones.setBounds(Escalador.escalar(78), Escalador.escalar(555), Escalador.escalar(894), Escalador.escalar(225));
   		Botones.setLayout(null);
   		
-  		// Ajustes label
-  		BLabel ajusteslbl = new BLabel("Ajustes :");
-  		ajusteslbl.setForeground(new Color(255, 255, 255));
-  		ajusteslbl.setBounds(Escalador.escalar(386), Escalador.escalar(85), Escalador.escalar(137), Escalador.escalar(35));
   		
-  		// Log out con el icono invertido
-  		Icon logoutIcon = IconFontSwing.buildIcon(FontAwesome.SIGN_OUT, 18);
-
-  		int iconWidth = logoutIcon.getIconWidth();
-  		int iconHeight = logoutIcon.getIconHeight();
-  		BufferedImage image = new BufferedImage(iconWidth, iconHeight, BufferedImage.TYPE_INT_ARGB);
-  		Graphics g = image.createGraphics();
-  		logoutIcon.paintIcon(null, g, 0, 0);
-  		g.dispose();
-
-  		AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-  		tx.translate(-image.getWidth(null), 0);
-  		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-
-  			// Aplicar la transformación a la imagen para invertirla horizontalmente
-  		BufferedImage flippedImage = op.filter(image, null);
-
-  			// Crear un nuevo icono a partir de la imagen invertida
-  		Icon flippedIcon = new ImageIcon(flippedImage);
-  		Botones.add(ajusteslbl);
-  		//-----------------FIN Botones-----------------        
-        
 
   		
   	
@@ -229,28 +207,66 @@ public class Perfil extends JPanel{
         
   		// Boton Ver mis partidas
   		BButton vermisPartidas = new BButton("Ver mís partidas");
-  		vermisPartidas.setBounds(Escalador.newBounds(406, 399, 183, 47));
+  		vermisPartidas.setBounds(new Rectangle(Escalador.escalar(406), Escalador.escalar(404), Escalador.escalar(183), Escalador.escalar(47)));
   		panel.add(vermisPartidas);
   		
   		
   		// Boton Cambiar contraseña
   		BButton contraCambiar = new BButton("Cambiar Contraseña");
-  		contraCambiar.setBounds(Escalador.newBounds(138, 411, 183, 47));
+  		contraCambiar.setBounds(new Rectangle(Escalador.escalar(406), Escalador.escalar(505), Escalador.escalar(183), Escalador.escalar(47)));
   		panel.add(contraCambiar);
+  		
+  		
+  		
+  		// Ajustes label
+  		BLabel ajusteslbl = new BLabel("Ajustes :");
+  		ajusteslbl.setForeground(new Color(255, 255, 255));
+  		ajusteslbl.setBounds(Escalador.escalar(462), Escalador.escalar(465), Escalador.escalar(137), Escalador.escalar(35));
+  		
+  		// Log out con el icono invertido
+  		Icon logoutIcon = IconFontSwing.buildIcon(FontAwesome.SIGN_OUT, 18);
+
+  		int iconWidth = logoutIcon.getIconWidth();
+  		int iconHeight = logoutIcon.getIconHeight();
+  		BufferedImage image = new BufferedImage(iconWidth, iconHeight, BufferedImage.TYPE_INT_ARGB);
+  		Graphics g = image.createGraphics();
+  		logoutIcon.paintIcon(null, g, 0, 0);
+  		g.dispose();
+
+  		AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+  		tx.translate(-image.getWidth(null), 0);
+  		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+
+  			// Aplicar la transformación a la imagen para invertirla horizontalmente
+  		BufferedImage flippedImage = op.filter(image, null);
+
+  			// Crear un nuevo icono a partir de la imagen invertida
+  		Icon flippedIcon = new ImageIcon(flippedImage);
+  		panel.add(ajusteslbl);
   		
   		// Crear el botón con el texto y el icono invertido
   		RButton logOutBtn = new RButton(" Log-out");
-  		logOutBtn.setBounds(Escalador.newBounds(905, 10, 85, 25));
+  		logOutBtn.setBounds(Escalador.escalar(880), Escalador.escalar(0), Escalador.escalar(85), Escalador.escalar(25));
   		panel.add(logOutBtn);
   		logOutBtn.setIcon(flippedIcon);
   		logOutBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
+  		//-----------------FIN Botones-----------------        
+        
 
         add(navBarContainer,BorderLayout.NORTH);
         add(centeredPanel, BorderLayout.CENTER);
   		
   		
   		
-  		
+        logOutBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                VentanaPrincipal ventanaPrincipal = Session.getVentana();             
+                // Cambiar a la pantalla de inicio de sesión (Login)
+                ventanaPrincipal.getCardLayout().show(ventanaPrincipal.getPanelPrincipal(), "LOGIN");
+            }
+        });
   		
   		
   		
