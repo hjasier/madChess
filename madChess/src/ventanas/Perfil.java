@@ -261,7 +261,7 @@ public class Perfil extends JPanel{
         logOutBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+            	Session.setCurrentUser(null);
                 VentanaPrincipal ventanaPrincipal = Session.getVentana();             
                 // Cambiar a la pantalla de inicio de sesión (Login)
                 ventanaPrincipal.getCardLayout().show(ventanaPrincipal.getPanelPrincipal(), "LOGIN");
