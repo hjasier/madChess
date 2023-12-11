@@ -30,6 +30,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -262,11 +263,17 @@ public class Juego extends JPanel {
 	    panelTabs.setLayout(new BoxLayout(panelTabs, BoxLayout.X_AXIS));
 	    panelLabels.setLayout(new BoxLayout(panelLabels, BoxLayout.X_AXIS));
 	    
-	    labelChat = new JLabel("CHAT");
+	    labelChat = new JLabel();
+	    labelChat.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelChat.png")));
+	    
+	    
 	    labelChat.setFont(labelChat.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
 	    labelChat.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	    
-	    labelBoost = new JLabel("BOOSTS");
+	    labelBoost = new JLabel();
+	    labelBoost.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelBoost.png")));
+	    
+	    
 	    labelBoost.setFont(labelBoost.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
 	    labelBoost.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	    
@@ -280,7 +287,10 @@ public class Juego extends JPanel {
 	    panelTabs.setBackground(colorFondo);
 	    // panel movimiento de las piezas
 	    
-	    labelMovimientos = new JLabel("MOVIMIENTOS");
+	    labelMovimientos = new JLabel();
+	    labelMovimientos.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelMovimeintos.png")));
+	    
+	    
 	    labelMovimientos.setFont(labelMovimientos.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
 
 	    areaMovimientos = new JTextPane();
@@ -433,9 +443,11 @@ public class Juego extends JPanel {
         	public void mouseClicked(MouseEvent e) {
         		
         		cardLayout.show(panelCardL,"CHAT");
-        		labelChat.setForeground(Color.white);
-        		labelBoost.setForeground(Color.gray);
+        		labelBoost.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelBoost.png")));
+        		labelChat.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelChatSelected.png")));
+        	    
         	}
+        	
         });
         
         labelBoost.addMouseListener(new MouseAdapter() {
@@ -445,10 +457,11 @@ public class Juego extends JPanel {
         		
         		cardLayout.show(panelCardL,"BOOST");
         		
-        		labelBoost.setForeground(Color.white);
-        		labelChat.setForeground(Color.gray);
+        		labelBoost.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelBoostSelected.png")));
+        		labelChat.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelChat.png")));
         	}
         });
+        
         
         
     }

@@ -20,7 +20,7 @@ import utils.Escalador;
 public class userInfo extends JPanel{
 	
 	protected JLabel labelUsuario; 
-	protected JLabel labelTemp; 
+	protected timerTag labelTemp; 
 	protected int tiempoRestante;
 	protected boolean stopTimer;
 	private userTag userTag;
@@ -44,7 +44,8 @@ public class userInfo extends JPanel{
 		
 		
 		
-		labelTemp = new JLabel("100");
+		labelTemp = new timerTag();
+		
 		labelTemp.setForeground(Color.white);
 		
 		
@@ -67,12 +68,14 @@ public class userInfo extends JPanel{
 
 
 	public void setTemp(int restante) {
-		this.labelTemp.setText(restante+"");
+		this.labelTemp.setTime(restante+"");
 		this.stopTimer = true;
 		this.tiempoRestante = restante;
+		labelTemp.setON(false);
 	}
 	
 	public void startTemp() {
+		labelTemp.setON(true);
 		stopTimer = false;
 	    Timer timer = new Timer(1000, new ActionListener() { // Temporizador
 	        @Override
@@ -85,7 +88,7 @@ public class userInfo extends JPanel{
 
 	            // Cambia el tiempo en labelTemp
 	            tiempoRestante--;
-	            labelTemp.setText(String.valueOf(tiempoRestante));
+	            labelTemp.setTime(String.valueOf(tiempoRestante));
 
 	            // Si el tiempo llega a 0, el temporizador para
 	            if (tiempoRestante == 0) {

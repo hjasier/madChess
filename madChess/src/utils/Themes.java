@@ -9,7 +9,7 @@ public class Themes {
 	}
 	
 	public enum piezasThemes {
-		THEME1, THEME2, THEME3, THEME4, THEME5
+		P1, P2, P3, P4, P5
 	}
 	
 	

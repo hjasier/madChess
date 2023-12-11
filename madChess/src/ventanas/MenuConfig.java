@@ -23,6 +23,7 @@ import librerias.IconFontSwing;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
+import utils.Themes.piezasThemes;
 import utils.Themes.tableroThemes;
 
 import java.awt.Color;
@@ -131,10 +132,20 @@ public class MenuConfig extends JPanel{
         pieza1Ft.setBounds(Escalador.escalar(263), Escalador.escalar(104), (int)(Escalador.escalar(75)*escala), (int) (Escalador.escalar(75)*escala));
         
         
+        // Pieza2
+        ImageIcon pieza2Img = new ImageIcon(getClass().getResource("../srcmedia/bbP2.png"));
+        Image imgReescaladaPieza2 = pieza2Img.getImage().getScaledInstance((int) (Escalador.escalar(75) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
+        JLabel pieza2Ft = new JLabel();
+        pieza2Ft.setIcon(new ImageIcon(imgReescaladaPieza2));
+        pieza2Ft.setBounds(Escalador.escalar(363), Escalador.escalar(110), (int)(Escalador.escalar(75)*escala), (int) (Escalador.escalar(75)*escala));
+        
+        
+        
         panelPiezas.add(labelsFtPiezas);
         panelPiezas.add(labelPiezas);
         panelPiezas.add(pieza1Ft);
-        
+        panelPiezas.add(pieza2Ft);
+        	
         
         
         
@@ -214,7 +225,35 @@ public class MenuConfig extends JPanel{
         
         
         
+        setearPieza(pieza1Ft,null);
+        setearPieza(pieza2Ft,piezasThemes.P2);
         
+        
+	}
+
+	private void setearPieza(JLabel pieza1Ft, piezasThemes theme1) {
+		pieza1Ft.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				pieza1Ft.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// Elimina el borde de los demás elementos
+				Component[] components = pieza1Ft.getParent().getComponents();
+				for (Component component : components) {
+					if (component instanceof JLabel && !component.equals(pieza1Ft)) {
+						((JLabel) component).setBorder(null);
+					}
+				}
+
+				pieza1Ft.setBorder(BorderFactory.createLineBorder(new Color(255, 229, 0), 5));
+				Session.getCurrentUser().setPreferedPiezaTheme(theme1);
+				Session.getVentana().getPanelJuego().getTablero().reloadPiezasImagen();
+			}
+		});
+		
 	}
 
 	private void setearTablero(JLabel label, tableroThemes theme) {

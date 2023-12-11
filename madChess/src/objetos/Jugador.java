@@ -6,6 +6,7 @@ import java.util.Date;
 
 import Sockets.ClientPOST;
 import piezas.Rey;
+import utils.Themes.piezasThemes;
 import utils.Themes.tableroThemes;
 
 public class Jugador implements Serializable{
@@ -21,6 +22,7 @@ public class Jugador implements Serializable{
 	private Rey rey;
 	private tableroThemes preferedTheme;
 	private Color playColor;
+	private piezasThemes preferedPiezaTheme;
 	
 
 
@@ -36,7 +38,7 @@ public class Jugador implements Serializable{
 		this.rank = rank;
 		this.username = username;
 		this.img_route = img_route;
-		this.preferedTheme = tableroThemes.valueOf(preferedTheme);
+		//this.preferedTheme = tableroThemes.valueOf(preferedTheme);
 	}
 
 	public Jugador(String string) {
@@ -123,7 +125,13 @@ public class Jugador implements Serializable{
 		this.preferedTheme = preferedTheme;
 	}
 
+	public void setPreferedPiezaTheme(piezasThemes preferedPiezaTheme) {
+		this.preferedPiezaTheme = preferedPiezaTheme;
+	}
 
+	public piezasThemes getPreferedPiezaTheme() {
+		return preferedPiezaTheme;
+	}
 
 	
 	

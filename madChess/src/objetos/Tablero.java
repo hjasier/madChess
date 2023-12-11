@@ -438,5 +438,14 @@ public class Tablero extends JPanel{
 		}
 	}
 
+
+	public void reloadPiezasImagen() {
+		for (Casilla casilla : casillas) {
+			if (casilla.getPieza() != null) {
+				casilla.getPieza().reloadImg();
+			}
+		}
+	}
+
 	
 }

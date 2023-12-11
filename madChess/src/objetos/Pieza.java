@@ -9,6 +9,7 @@ import java.util.Iterator;
 import javax.swing.ImageIcon;
 
 import utils.Session;
+import utils.Themes.piezasThemes;
 
 public class Pieza implements Serializable {
 
@@ -44,7 +45,13 @@ public class Pieza implements Serializable {
 
 	public void setColor() {
 		char isWhiteChar = isWhite ? 'w':'b';
-		this.img = new ImageIcon(getClass().getResource("../srcmedia/" + isWhiteChar+nombre + ".png"));
+		piezasThemes piezaTheme = Session.getCurrentUser().getPreferedPiezaTheme();
+		String piezaThemeName = "";
+		if (piezaTheme != null) {
+			piezaThemeName = piezaTheme.name();
+		}
+		
+		this.img = new ImageIcon(getClass().getResource("../srcmedia/" + isWhiteChar+nombre+piezaThemeName+ ".png"));
 	
 	}
 	
@@ -114,6 +121,18 @@ public class Pieza implements Serializable {
         }
         return null; // Si no se encuentra la pieza, se devuelve null
     }
+
+
+
+	public void reloadImg() {
+		char isWhiteChar = isWhite ? 'w':'b';
+		piezasThemes piezaTheme = Session.getCurrentUser().getPreferedPiezaTheme();
+		String piezaThemeName = "";
+		if (piezaTheme != null) {
+			piezaThemeName = piezaTheme.name();
+		}
+		this.img = new ImageIcon(getClass().getResource("../srcmedia/" + isWhiteChar+nombre+piezaThemeName+ ".png"));
+	}
 
 
 
