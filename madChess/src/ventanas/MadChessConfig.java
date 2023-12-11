@@ -112,12 +112,19 @@ public class MadChessConfig extends JPanel {
         for (int i = 0; i < numImages; i++) {
             String imageName = imageNames[i];
 
-            ImageIcon icon = new ImageIcon(getClass().getResource("../srcmedia/" + imageName + ".png"));
-            Image image = icon.getImage();
-            Image newImage = image.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-            ImageIcon newIcon = new ImageIcon(newImage);
+            ImageIcon originalIcon = new ImageIcon(getClass().getResource("../srcmedia/" + imageName + ".png"));
+            Image originalImage = originalIcon.getImage();
 
-            JLabel label = new JLabel(newIcon);
+            // Reducir el tamaño de la imagen a 70x70
+            Image scaledImage = originalImage.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+
+            // Crear un nuevo ImageIcon con la imagen escalada
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+            ImageIcon defaultIcon = new ImageIcon(adjustImageOpacity(scaledIcon.getImage(), 0.2));
+            ImageIcon illuminatedIcon = new ImageIcon(adjustImageOpacity(scaledIcon.getImage(), 1.0));
+
+            JLabel label = new JLabel(defaultIcon);
             label.setHorizontalAlignment(SwingConstants.CENTER);
             label.setBorder(BorderFactory.createLineBorder(Configuracion.BACKGROUND));
             label.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -125,29 +132,18 @@ public class MadChessConfig extends JPanel {
             label.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                	
                     if (selectedItems.contains(imageName)) {
                         // Deselecciona el elemento
                         selectedItems.remove(imageName);
-                        Image currentImage = newIcon.getImage();
-                        Image newImage = adjustImageOpacity(currentImage, 1);
-                        ImageIcon adjustedIcon = new ImageIcon(newImage);
-                        label.setIcon(adjustedIcon);
+                        label.setIcon(defaultIcon);
                     } else if (selectedItems.size() < 3) {
                         // Selecciona el elemento solo si no ha alcanzado el límite de 3
                         selectedItems.add(imageName);
-
-                        // Ajusta la opacidad
-                        Image currentImage = newIcon.getImage();
-                        Image newImage = adjustImageOpacity(currentImage, 0.2);
-                        ImageIcon adjustedIcon = new ImageIcon(newImage);
-                        label.setIcon(adjustedIcon);
+                        label.setIcon(illuminatedIcon);
                     }
                     System.out.println(selectedItems);
                 }
             });
-            
-            
 
             panel.add(label);
         }
