@@ -68,7 +68,6 @@ public class Boosts {
 	    }
 	    
 	    public static void boostControl() {
-	        curBoost = "CONTROL";
 	        InfoMsg.alert(Infos.CONTROLINFO);
 	        Pieza pieza = getPiezaAleatoria();
 	        Control boostControl = new Control(pieza, Session.getPartida().getCurPlayer());
@@ -205,8 +204,9 @@ class MalPresagio extends Boost{
 		
 		if(cont==0) {
 			InfoMsg.alert("Han pasado veinte turnos, "+ player.getNombre() + " gana");
-		}else if (cont < 0){return;
-		}else if(cont == 10 || cont == 5) {
+		}
+		else if (cont < 0){return;}
+		else if(cont == 10 || cont == 5) {
 			Session.getPartida().printMovimientoFormateado("En " + cont + " "+Infos.FINPARTIDACONTADOR);
 		}
 		
@@ -236,7 +236,7 @@ class Bomba extends Boost {
         	Session.getPartida().printMovimientoFormateado(Infos.BOOM);
 			Session.getPartida().getTablero().initAnimacionExplosion(curCasilla);
         	
-        }else if (cont < 0){return;}    
+        }  
         else {
         	Session.getPartida().printMovimientoFormateado(Infos.CONTADOREXPLOSION + cont);
         }
@@ -265,18 +265,12 @@ class Control extends Boost{
 			Session.getPartida().printMovimientoFormateado("Han pasado 4 turnos, "+ player.getNombre() + " pierde el control");
 			pieza.setAlterColor();
 			pieza.getCasillaParent().repaint();
-		}else if (cont < 0){return;}    
-        
-		
-		
+		}   
 	}  
 	   
 }      
 
 class Boost {
 	protected int cont;
-
-	public void check() {}
-	
-	
+	public void check(){}
 }

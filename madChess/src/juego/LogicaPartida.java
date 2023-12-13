@@ -30,9 +30,12 @@ import utils.Infos;
 import utils.Session;
 import ventanas.Juego;
 
+/*
+ * VAMOS A USAR ESTA CLASE LÓGICAPARTIDA COMO UN OBJETO TABLERO PARA NO TENER QUE USAR LA CLASE TABLERO QUE TIENE FRONTEND
+ */
+
 public class LogicaPartida {
 	private Boolean DEBUG_MODE = Configuracion.DEBUG_MODE; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
-
 	protected ArrayList<Casilla> casillas;
 	protected ArrayList<Casilla> casillasDiponibles;
 	protected HashMap<String,Pieza> piezas = new HashMap<String,Pieza>();
@@ -139,10 +142,6 @@ public class LogicaPartida {
 	private void initPlayers() {
 		int initTime = 600;
 
-		if (jugadores.isEmpty()) {
-			jugadores.add(new Jugador("Potzon"));       
-			jugadores.add(new Jugador("erGiova"));		
-		}
 		
 		if (Configuracion.BOT_DEBUG) {
 			jugadores.remove(1);

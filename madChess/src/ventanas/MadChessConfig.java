@@ -8,6 +8,7 @@ import componentes.navBar;
 import juego.LogicaPartida;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
+import objetos.Jugador;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
@@ -25,6 +26,12 @@ public class MadChessConfig extends JPanel {
     private ArrayList<String> selectedBoosts = new ArrayList<>();
 
     protected RButton volverBtn = new RButton("Volver");
+    
+    private ArrayList<Jugador>  players;
+    private Jugador  curPlayer;
+    private JPanel altersPanel;
+    private JPanel boostsPanel;
+    private BButton botonListo;
 
     public MadChessConfig() {
 
@@ -63,7 +70,7 @@ public class MadChessConfig extends JPanel {
         
         
         addTextPanel(centerPanel, gbc, "Selecciona tus 3 alters:");
-        JPanel altersPanel = createImagePanel(6, 1, 6,alterImgsWhite,selectedAlters);
+        altersPanel = createImagePanel(alterImgsWhite.length, 1, alterImgsWhite.length,alterImgsWhite,selectedAlters);
         gbc.gridy++;
         addCenteredComponent(centerPanel, gbc, altersPanel);
 
@@ -72,9 +79,9 @@ public class MadChessConfig extends JPanel {
         gbc.gridx = 0;
 
         // Panel para seleccionar 3 boosts
-        String[] boostImgs = {"bomba","hielo","calavera","control"};
+        String[] boostImgs = {"bomba","hielo","presagio","control","mina"};
         addTextPanel(centerPanel, gbc, "Selecciona tus 3 boosts:");
-        JPanel boostsPanel = createImagePanel(4, 1, 4,boostImgs,selectedBoosts);
+        boostsPanel = createImagePanel(boostImgs.length, 1, boostImgs.length,boostImgs,selectedBoosts);
         gbc.gridy++;
         addCenteredComponent(centerPanel, gbc, boostsPanel);
 
@@ -82,7 +89,7 @@ public class MadChessConfig extends JPanel {
         gbc.gridy++;
         gbc.gridx = 0;
 
-        BButton botonListo = new BButton("Listo");
+        botonListo = new BButton("Listo");
         botonListo.setPreferredSize(Escalador.newDimension(100, 40));
         gbc.gridy++;
         addCenteredComponent(centerPanel, gbc, botonListo);
@@ -97,14 +104,59 @@ public class MadChessConfig extends JPanel {
 
             public void actionPerformed(ActionEvent e) {
             	VentanaPrincipal ventana = Session.getVentana();
-            	ventana.getCardLayout().show(ventana.getPanelPrincipal(), "JUEGO");
-        		new LogicaPartida();
+            	
+            	if (players.indexOf(curPlayer) == players.size()-1) {
+            		//Si es el ultimo jugador
+            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), "JUEGO");
+            		new LogicaPartida();
+            	}
+            	else {
+            		curPlayer = players.get(players.indexOf(curPlayer)+1);
+            		resetSelections();
+            		
+            		
+            		
+            		
+            	}
+            		
+        		
             	
             }
+
+			
         });
     }
 
-    private JPanel createImagePanel(int numImages, int rows, int cols, String[] imageNames, ArrayList<String> selectedItems) {
+    
+    
+    protected void resetSelections() {
+		selectedAlters.clear();
+        selectedBoosts.clear();
+        resetOpacity(altersPanel);
+        resetOpacity(boostsPanel);
+        
+        if (players.indexOf(curPlayer) == players.size()-1) {            			
+			botonListo.setText("Empezar");
+		}
+		else {
+			botonListo.setText("Siguiente");
+		}
+        
+		
+	}
+    
+    private void resetOpacity(JPanel panel) {
+        Component[] components = panel.getComponents();
+        for (Component component : components) {
+            if (component instanceof JLabel) {
+                JLabel label = (JLabel) component;
+                ImageIcon defaultIcon = (ImageIcon) label.getIcon();
+                label.setIcon(new ImageIcon(adjustImageOpacity(defaultIcon.getImage(), 0.2)));
+            }
+        }
+    }
+
+	private JPanel createImagePanel(int numImages, int rows, int cols, String[] imageNames, ArrayList<String> selectedItems) {
         JPanel panel = new JPanel(new GridLayout(rows, cols, 10, 10));
         panel.setBackground(Configuracion.BACKGROUND);
         panel.setBorder(null);
@@ -174,4 +226,16 @@ public class MadChessConfig extends JPanel {
         centeredPanel.add(component);
         panel.add(centeredPanel, gbc);
     }
+
+	public void setPlayers(ArrayList<Jugador> players) {
+		this.players = players;
+		curPlayer = players.get(0);
+		resetSelections();
+		}
+
+    
+
+    
+    
+    
 }

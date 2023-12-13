@@ -118,12 +118,22 @@ public class ConfPLocal extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	VentanaPrincipal ventana = Session.getVentana();
             	
+				if (datos.getJugadores().isEmpty()) {
+//					JOptionPane.showMessageDialog(ventana, "No hay jugadores en la partida");
+//					return;
+					datos.setJugador(new Jugador("Potzon[DEBUG]"));
+					datos.setJugador(new Jugador("erGiova[DEBUG]"));
+					
+				}
+            	
+            	
             	if (!datos.getTipoPartida().equals("madChess")) {
             		
             		ventana.getCardLayout().show(ventana.getPanelPrincipal(), "JUEGO");
             		new LogicaPartida();
             	}
             	else {
+            		ventana.getPanelMadChessConfig().setPlayers(datos.getJugadores());
             		ventana.getCardLayout().show(ventana.getPanelPrincipal(), "CONFMADCHESS");
             	}
             }

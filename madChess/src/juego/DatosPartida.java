@@ -3,6 +3,7 @@ package juego;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 import Sockets.ClienteHandler;
@@ -19,6 +20,7 @@ public class DatosPartida implements Serializable{
 	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
 	protected ArrayList<Movimiento> movimientos;
 	protected Boolean isTerminada = false;
+	
 
 	
 	

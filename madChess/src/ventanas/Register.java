@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 import objetos.Jugador;
-import sqlite.GestionBdOLD;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;

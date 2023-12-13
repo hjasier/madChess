@@ -3,8 +3,11 @@ package componentes;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 
+import juego.Boosts;
+import utils.Audio;
 import utils.Configuracion;
 import utils.Escalador;
+import utils.Session;
 
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -78,5 +81,37 @@ public class boostItem extends JPanel{
 			
 			
 		});
+		
+		
+		usarButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				activarBoost(nombre);
+			}
+		});
 	}
+	
+	private void activarBoost(String boost) {
+		switch ((String) boost) {
+			case "Mal Presagio":
+				Boosts.boostMalPresagio();
+			    break;
+			case "Hielo":
+				Boosts.boostHielo();
+				break;
+			case "Bomba":
+				Boosts.boostBomba();
+				break;
+			case "Control":
+				Boosts.boostControl();
+			    break;
+			case "Explosión":
+				//DEBUG 
+	        	System.out.println("DEBUGEANDO ANIMACIÓN");
+	            Session.getPartida().getTablero().initAnimacionExplosion(Session.getPartida().getCasilla(0,(char)'A'));
+	            Audio.play("explosion.wav");
+				break;
+		}
+		
+    }
 }

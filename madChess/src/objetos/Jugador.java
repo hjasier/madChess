@@ -3,6 +3,7 @@ package objetos;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 
 import Sockets.ClientPOST;
 import piezas.Rey;
@@ -11,18 +12,25 @@ import utils.Themes.tableroThemes;
 
 public class Jugador implements Serializable{
 	
+	//Cosas del juegador
+	private Boolean isWhite = false; 
+	private int tiempoRestante; //tiempo restante del jugador en segundos
+	private Rey rey; //la pieza rey del jugador
+	protected int[] boosts; //los boosts que tiene el jugador si es madChess
+	private Color playColor; //color del usuario en movimeintos, chat etc..
+	private Date initTime; //cuando ha empezado el movimiento
+	
+	private Usuario usuario;
+	
+	
+	//Cosas a mover a clase usuario
+	private tableroThemes preferedTheme;
+	private piezasThemes preferedPiezaTheme;
 	private int userId;
 	private int rank;
 	private String username;
-	private String passw;
 	private String img_route;
-	private Boolean isWhite = false;
-	private int tiempoRestante;
-	private Date initTime; 
-	private Rey rey;
-	private tableroThemes preferedTheme;
-	private Color playColor;
-	private piezasThemes preferedPiezaTheme;
+	
 	
 
 
@@ -30,7 +38,6 @@ public class Jugador implements Serializable{
 		super();
 		this.userId = _id;
 		this.username = username;
-		this.passw = passw;
 	}
 	
 	public Jugador(String username , int rank, String img_route, String preferedTheme) {
@@ -62,7 +69,16 @@ public class Jugador implements Serializable{
 	}
 
 
+	public Rey getRey() {
+		return rey;
+	}
 
+
+
+	public void setRey(Rey rey) {
+		this.rey = rey;
+	}
+	
 	public Date getInitTime() {
 		return initTime;
 	}
@@ -75,17 +91,6 @@ public class Jugador implements Serializable{
 
 
 
-	public Rey getRey() {
-		return rey;
-	}
-
-
-
-	public void setRey(Rey rey) {
-		this.rey = rey;
-	}
-
-
 
 	public void setIsWhite(Boolean isWhite) {
 		this.isWhite = isWhite;
@@ -96,12 +101,6 @@ public class Jugador implements Serializable{
 	public Boolean getIsWhite() {
 		return isWhite;
 	}
-
-
-	public Boolean checkPassword(String passwd) {
-		return this.passw.equals(passwd);
-	}
-	
 	
 
 	public Color getPlayColor() {
@@ -131,6 +130,14 @@ public class Jugador implements Serializable{
 
 	public piezasThemes getPreferedPiezaTheme() {
 		return preferedPiezaTheme;
+	}
+
+	public int[] getBoosts() {
+		return boosts;
+	}
+
+	public void setBoosts(int[] boosts) {
+		this.boosts = boosts;
 	}
 
 	
