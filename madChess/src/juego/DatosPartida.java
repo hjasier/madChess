@@ -17,6 +17,7 @@ public class DatosPartida implements Serializable{
 	protected Date fechaFin;
 	protected String gameId;
 	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
+	protected ArrayList<Jugador> ganadores = new ArrayList<Jugador>(); // arraylist de el ganador o los ganadores dependiendo la cantidad de la modalidad
 	protected ArrayList<Movimiento> movimientos;
 	protected Boolean isTerminada = false;
 

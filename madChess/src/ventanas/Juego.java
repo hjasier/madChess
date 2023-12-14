@@ -215,16 +215,16 @@ public class Juego extends JPanel {
 
 	    
 	    //panel puntuaciones
-	    labelRank1 = new JLabel();
-	    labelRank2 = new JLabel();
-        
-        String usuario1 = "nombreUsuario1";
-        String usuario2 = "nombreUsuario2";
-        String modo = "modoJuego";
-        int puntuacionUsuario1 = GestorPuntuaciones.getPuntuacionModo(usuario1, modo);
-        int puntuacionUsuario2 = GestorPuntuaciones.getPuntuacionModo(usuario2, modo);
-        labelRank1.setText("" + puntuacionUsuario1);
-        labelRank2.setText("" + puntuacionUsuario2);
+//	    labelRank1 = new JLabel();
+//	    labelRank2 = new JLabel();
+//        
+//        String usuario1 = "nombreUsuario1";
+//        String usuario2 = "nombreUsuario2";
+//        String modo = "modoJuego";
+//        int puntuacionUsuario1 = GestorPuntuaciones.getPuntuacionModo(usuario1, modo);
+//        int puntuacionUsuario2 = GestorPuntuaciones.getPuntuacionModo(usuario2, modo);
+//        labelRank1.setText("" + puntuacionUsuario1);
+//        labelRank2.setText("" + puntuacionUsuario2);
 	    
 	    // panel controles, movimiento y chat
 	    

@@ -19,8 +19,9 @@ public class GestionBd {
 	                + "    username VARCHAR(255) NOT NULL,\n"
 	                + "    passw TEXT NOT NULL,\n"
 	                + "    img_route TEXT NOT NULL,\n"
-	                + "    rank_clasic INTEGER NOT NULL, \n" 
+	                + "    rank_classic INTEGER NOT NULL, \n" 
 	                + "    rank_mad INTEGER NOT NULL, \n"
+	                + "    preffered_theme TEXT NOT NULL,\n"
 	                + "    PRIMARY KEY(username(100))"	
 	                + ");";
 
@@ -94,7 +95,7 @@ public class GestionBd {
 
 	                if (verificarContraseña(passw, storedPassword)) {
 	                    // La contraseña es correcta, crear una instancia de Jugador
-	                    Jugador jugador = new Jugador(rs.getString("username"),rs.getInt("ranking"),rs.getString("img_route"),null);
+	                    Jugador jugador = new Jugador(rs.getString("username"),rs.getInt("rank_classic"),rs.getInt("rank_mad"),rs.getString("img_route"),rs.getString("preffered_theme"));
 	                    Session.getVentana().loginReturn(jugador);
 	                    
 	                    return true;
@@ -122,12 +123,13 @@ public class GestionBd {
 		 	String img_route = "/default.png";
 		 	int rank_classic = 0;
 		 	int rank_mad = 0;
+		 	String preffered_theme = "THEME1";
 		 	
 		    if (existeUsuario(username)) {
 		       return "Error, El usuario ya existe";
 		    }
 		  
-		    String sql = "INSERT INTO Usuario(username, passw, img_route , rank_clasic, rank_mad ) VALUES(?,?,?,?,?)";
+		    String sql = "INSERT INTO Usuario(username, passw, img_route , rank_classic, rank_mad, preffered_theme ) VALUES(?,?,?,?,?,?)";
 
 	        try (Connection conn = ConexionBd.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -136,6 +138,7 @@ public class GestionBd {
 	            pstmt.setString(3, img_route);
 	            pstmt.setInt(4, rank_classic);
 	            pstmt.setInt(5, rank_mad);
+	            pstmt.setString(6 ,preffered_theme);
 	            
 	            pstmt.executeUpdate();
 	            return "Usuario insertado correctamente.";
@@ -242,9 +245,9 @@ public class GestionBd {
 	 }
 	 
 	 
-	 public static void modificarUsuario(String username, String passw, String img_route, int rank_classic, int rank_mad) {
+	 public static void modificarUsuario(String username, String passw, String img_route, int rank_classic, int rank_mad, String preffered_theme) {
 		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank_classic = ?, rank_mad = ? WHERE username = ?";
+			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank_classic = ?, rank_mad = ?, preffered_theme = ? WHERE username = ?";
 			 
 			 try (Connection conn = ConexionBd.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -253,6 +256,7 @@ public class GestionBd {
 		            pstmt.setString(3, img_route);
 		            pstmt.setInt(4, rank_classic);
 		            pstmt.setInt(5, rank_mad);
+		            pstmt.setString(6, preffered_theme);
 		            
 		            pstmt.executeUpdate();
 		            System.out.println("Usuario modificado correctamente.");
@@ -291,7 +295,7 @@ public class GestionBd {
 	             PreparedStatement pstmt = conn.prepareStatement(sql);
 	             ResultSet rs = pstmt.executeQuery()) {
 	            while (rs.next()) {
-	                System.out.println("Username: " + rs.getString("username") + "\tRank: " + rs.getInt("rank_classic") + "\tRank Mad Chess: " + rs.getInt("rank_mad"));
+	                System.out.println("Username: " + rs.getString("username") + "\tRank Classic: " + rs.getInt("rank_classic") + "\tRank Mad Chess: " + rs.getInt("rank_mad") + rs.getString("prefered_theme"));
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();

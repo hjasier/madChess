@@ -12,7 +12,8 @@ import utils.Themes.tableroThemes;
 public class Jugador implements Serializable{
 	
 	private int userId;
-	private int rank;
+	private int rankClassic;
+	private int rankMad;
 	private String username;
 	private String passw;
 	private String img_route;
@@ -33,16 +34,25 @@ public class Jugador implements Serializable{
 		this.passw = passw;
 	}
 	
-	public Jugador(String username , int rank, String img_route, String preferedTheme) {
+	public Jugador(String username , int rankClassic, int rankMad, String img_route, String preferedTheme) {
 		super();
-		this.rank = rank;
+		this.rankClassic = rankClassic;
+		this.rankMad = rankMad;
 		this.username = username;
 		this.img_route = img_route;
-		//this.preferedTheme = tableroThemes.valueOf(preferedTheme);
+		this.preferedTheme = tableroThemes.valueOf(preferedTheme);
 	}
 
 	public Jugador(String string) {
 		this.username = string;
+	}
+	
+	public int getRankClassic() {
+		return rankClassic;
+	}
+	
+	public int getRankMad() {
+		return rankMad;
 	}
 
 
