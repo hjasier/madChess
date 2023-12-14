@@ -35,19 +35,22 @@ public class Jugador implements Serializable{
 	
 
 
+	
+
 	public Jugador(int _id, String username, String passw) {
 		super();
 		this.userId = _id;
 		this.username = username;
 	}
 	
-	public Jugador(String username , int rankClassic, int rankMad, String img_route, String preferedTheme) {
+	public Jugador(String username , int rankClassic, int rankMad, String img_route, String preferedTheme, String PreferedPiezaTheme) {
 		super();
 		this.rankClassic = rankClassic;
 		this.rankMad = rankMad;
 		this.username = username;
 		this.img_route = img_route;
 		this.preferedTheme = tableroThemes.valueOf(preferedTheme);
+		this.preferedPiezaTheme = piezasThemes.valueOf(PreferedPiezaTheme);
 	}
 
 	public Jugador(String string) {
@@ -125,6 +128,13 @@ public class Jugador implements Serializable{
 		return this.username;
 	}
 
+	public String getImg_route() {
+		return img_route;
+	}
+
+	public void setImg_route(String img_route) {
+		this.img_route = img_route;
+	}
 
 	public tableroThemes getPreferedTheme() {
 		return preferedTheme;

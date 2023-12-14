@@ -10,17 +10,17 @@ public class Usuario {
 	private String img_route;
 	
 	private int rank_madChess;
-	private int rank_clasic;
+	private int rank_classic;
 	
 	private tableroThemes preferedTheme;
 	private piezasThemes preferedPiezaTheme;
 	
-	public Usuario(String username, String img_route, int rank_madChess, int rank_clasic, String preferedTheme,String preferedPiezaTheme) {
+	public Usuario(String username, String img_route, int rank_madChess, int rank_classic, String preferedTheme,String preferedPiezaTheme) {
 		super();
 		this.username = username;
 		this.img_route = img_route;
 		this.rank_madChess = rank_madChess;
-		this.rank_clasic = rank_clasic;
+		this.rank_classic = rank_classic;
 		this.preferedTheme = tableroThemes.valueOf(preferedTheme);
 		this.preferedPiezaTheme = piezasThemes.valueOf(preferedPiezaTheme);
 	}
@@ -51,12 +51,12 @@ public class Usuario {
 		this.rank_madChess = rank_madChess;
 	}
 
-	public int getRank_clasic() {
-		return rank_clasic;
+	public int getRank_classic() {
+		return rank_classic;
 	}
 
-	public void setRank_clasic(int rank_clasic) {
-		this.rank_clasic = rank_clasic;
+	public void setRank_classic(int rank_clasic) {
+		this.rank_classic = rank_clasic;
 	}
 
 	public tableroThemes getPreferedTheme() {

@@ -21,7 +21,8 @@ public class GestionBd {
 	                + "    img_route TEXT NOT NULL,\n"
 	                + "    rank_classic INTEGER NOT NULL, \n" 
 	                + "    rank_mad INTEGER NOT NULL, \n"
-	                + "    preffered_theme TEXT NOT NULL,\n"
+	                + "    prefered_theme TEXT NOT NULL,\n"
+	                + "    preferedPiezaTheme TEXT NOT NULL,\n"
 	                + "    PRIMARY KEY(username(100))"	
 	                + ");";
 
@@ -95,7 +96,7 @@ public class GestionBd {
 
 	                if (verificarContraseña(passw, storedPassword)) {
 	                    // La contraseña es correcta, crear una instancia de Jugador
-	                    Jugador jugador = new Jugador(rs.getString("username"),rs.getInt("rank_classic"),rs.getInt("rank_mad"),rs.getString("img_route"),rs.getString("preffered_theme"));
+	                    Jugador jugador = new Jugador(rs.getString("username"),rs.getInt("rank_classic"),rs.getInt("rank_mad"),rs.getString("img_route"),rs.getString("prefered_theme"),rs.getString("preferedPiezaTheme"));
 	                    Session.getVentana().loginReturn(jugador);
 	                    
 	                    return true;
@@ -129,7 +130,7 @@ public class GestionBd {
 		       return "Error, El usuario ya existe";
 		    }
 		  
-		    String sql = "INSERT INTO Usuario(username, passw, img_route , rank_classic, rank_mad, preffered_theme ) VALUES(?,?,?,?,?,?)";
+		    String sql = "INSERT INTO Usuario(username, passw, img_route , rank_classic, rank_mad, prefered_theme , preferedPiezaTheme) VALUES(?,?,?,?,?,?)";
 
 	        try (Connection conn = ConexionBd.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -245,9 +246,9 @@ public class GestionBd {
 	 }
 	 
 	 
-	 public static void modificarUsuario(String username, String passw, String img_route, int rank_classic, int rank_mad, String preffered_theme) {
+	 public static void modificarUsuario(String username, String passw, String img_route, int rank_classic, int rank_mad, String prefered_theme, String preferedPiezaTheme) {
 		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank_classic = ?, rank_mad = ?, preffered_theme = ? WHERE username = ?";
+			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank_classic = ?, rank_mad = ?, prefered_theme = ?, preferedPiezaTheme, WHERE username = ?";
 			 
 			 try (Connection conn = ConexionBd.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -256,7 +257,8 @@ public class GestionBd {
 		            pstmt.setString(3, img_route);
 		            pstmt.setInt(4, rank_classic);
 		            pstmt.setInt(5, rank_mad);
-		            pstmt.setString(6, preffered_theme);
+		            pstmt.setString(6, prefered_theme);
+		            pstmt.setString(7, preferedPiezaTheme);
 		            
 		            pstmt.executeUpdate();
 		            System.out.println("Usuario modificado correctamente.");
@@ -265,6 +267,26 @@ public class GestionBd {
 				}
 		 } else {
 			 System.out.println("No se puede modificar un usuario inexistente");
+		 }
+	 }
+	 
+	 public static void modificarContraseña(String username, String passw) {
+		 if(existeUsuario(username)) {
+			 String sql = "UPDATE Usuario SET username = ? , passw = ?, WHERE username = ?";
+			 
+			 try (Connection conn = ConexionBd.obtenerConexion();
+		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		            pstmt.setString(1, username);
+		            pstmt.setString(2, passw);
+
+		            
+		            pstmt.executeUpdate();
+		            System.out.println("Contraseña modificada correctamente.");
+		        } catch (Exception e) {
+					e.printStackTrace();
+				}
+		 } else {
+			 System.out.println("No se puede modificar una contraseña de un usuario inexistente");
 		 }
 	 }
 	 
