@@ -217,11 +217,11 @@ public class MenuConfig extends JPanel{
         
         //CLICKS
         
-        setearTablero(tablero1Ft,tableroThemes.THEME1);
-        setearTablero(tablero2Ft,tableroThemes.THEME2);
-        setearTablero(tablero3Ft,tableroThemes.THEME3);
-        setearTablero(tablero4Ft,tableroThemes.THEME4);
-        setearTablero(tablero5Ft,tableroThemes.THEME5);
+        setearTablero(tablero1Ft,tableroThemes.MADCHESS);
+        setearTablero(tablero2Ft,tableroThemes.CLASSIC);
+        setearTablero(tablero3Ft,tableroThemes.WOOD);
+        setearTablero(tablero4Ft,tableroThemes.ALTER);
+        setearTablero(tablero5Ft,tableroThemes.CHECKERS);
         
         
         

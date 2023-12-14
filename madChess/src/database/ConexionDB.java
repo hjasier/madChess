@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import madChess.Keys;
 
-public class ConexionBd {
+public class ConexionDB {
 
     // Método para obtener una conexión a la base de datos
     public static Connection obtenerConexion() throws SQLException {

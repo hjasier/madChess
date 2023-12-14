@@ -24,7 +24,7 @@ import componentes.BButton;
 import componentes.BTextField;
 import componentes.RButton;
 import componentes.navBar;
-import database.GestionBd;
+import database.GestionDB;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
@@ -152,7 +152,7 @@ public class CambiarContraseña extends JPanel {
 				
 				
 				cambiarbtn.setEnabled(false);
-				boolean modificarContraseña = GestionBd.modificarContraseña(username, passw);
+				boolean modificarContraseña = GestionDB.modificarContraseña(username, passw);
 				if (modificarContraseña) {
 					VentanaPrincipal ventanaPrincip = Session.getVentana();
 					ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), redirect);

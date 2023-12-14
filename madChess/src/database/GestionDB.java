@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import objetos.Jugador;
 import utils.Session;
 
-public class GestionBd {
+public class GestionDB {
 
 
    
@@ -21,15 +21,15 @@ public class GestionBd {
 	                + "    img_route TEXT NOT NULL,\n"
 	                + "    rank_classic INTEGER NOT NULL, \n" 
 	                + "    rank_mad INTEGER NOT NULL, \n"
-	                + "    prefered_theme TEXT NOT NULL,\n"
-	                + "    preferedPiezaTheme TEXT NOT NULL,\n"
+	                + "    tablero_theme TEXT NOT NULL,\n"
+	                + "    pieza_theme TEXT NOT NULL,\n"
 	                + "    PRIMARY KEY(username(100))"	
 	                + ");";
 
 	        
+	       
 	        
-	        
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionDB.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.executeUpdate();
 	        } catch (SQLException e) {
@@ -48,7 +48,7 @@ public class GestionBd {
                 + ");";
         
         
-        try (Connection conn = ConexionBd.obtenerConexion();
+        try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class GestionBd {
                 + ");";
         
         
-        try (Connection conn = ConexionBd.obtenerConexion();
+        try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -85,7 +85,7 @@ public class GestionBd {
 	public static boolean iniciarSesion(String username, String passw) {
 	    String sql = "SELECT * FROM Usuario WHERE username = ?";
 
-	    try (Connection conn = ConexionBd.obtenerConexion();
+	    try (Connection conn = ConexionDB.obtenerConexion();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 	        pstmt.setString(1, username);
@@ -96,7 +96,7 @@ public class GestionBd {
 
 	                if (verificarContraseña(passw, storedPassword)) {
 	                    // La contraseña es correcta, crear una instancia de Jugador
-	                    Jugador jugador = new Jugador(rs.getString("username"),rs.getInt("rank_classic"),rs.getInt("rank_mad"),rs.getString("img_route"),rs.getString("prefered_theme"),rs.getString("preferedPiezaTheme"));
+	                    Jugador jugador = new Jugador(rs.getString("username"),rs.getInt("rank_classic"),rs.getInt("rank_mad"),rs.getString("img_route"),rs.getString("tablero_theme"),rs.getString("pieza_theme"));
 	                    Session.getVentana().loginReturn(jugador);
 	                    
 	                    return true;
@@ -124,16 +124,16 @@ public class GestionBd {
 		 	String img_route = "/default.png";
 		 	int rank_classic = 0;
 		 	int rank_mad = 0;
-		 	String tablero_theme = "THEME1";
-		 	String Pieza_Theme = "";
+		 	String tablero_theme = "MADCHESS";
+		 	String pieza_theme = "DF";
 		 	
 		    if (existeUsuario(username)) {
 		       return "Error, El usuario ya existe";
 		    }
 		  
-		    String sql = "INSERT INTO Usuario(username, passw, img_route , rank_classic, rank_mad, tablero_theme , Pieza_Theme) VALUES(?,?,?,?,?,?,?)";
+		    String sql = "INSERT INTO Usuario(username, passw, img_route , rank_classic, rank_mad, tablero_theme , pieza_theme) VALUES(?,?,?,?,?,?,?)";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionDB.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.setString(1, username);
 	            pstmt.setString(2, passw);
@@ -141,7 +141,7 @@ public class GestionBd {
 	            pstmt.setInt(4, rank_classic);
 	            pstmt.setInt(5, rank_mad);
 	            pstmt.setString(6 ,tablero_theme);
-	            pstmt.setString(7 ,Pieza_Theme);
+	            pstmt.setString(7 ,pieza_theme);
 	            
 	            pstmt.executeUpdate();
 	            return "Usuario insertado correctamente.";
@@ -159,7 +159,7 @@ public class GestionBd {
 		        String sql2 = "INSERT INTO PartidaUsuario(gameId, username, gainedRank) VALUES(?,?,?)";
 		        
 		        
-		        try (Connection conn = ConexionBd.obtenerConexion();
+		        try (Connection conn = ConexionDB.obtenerConexion();
 		             PreparedStatement pstmt = conn.prepareStatement(sql1)) {
 		            pstmt.setString(1, gameId);
 		            pstmt.setString(2, fechaIni);
@@ -178,7 +178,7 @@ public class GestionBd {
 		        	//rank
 		        	int rank = 0;
 		        	
-		        	try (Connection conn = ConexionBd.obtenerConexion();
+		        	try (Connection conn = ConexionDB.obtenerConexion();
 				             PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 				            pstmt.setString(1, gameId);
 				            pstmt.setString(2, username);
@@ -213,7 +213,7 @@ public class GestionBd {
 		 if(existeUsuario(username)) {
 			 String sql = "DELETE FROM Usuario WHERE username = ? ";
 			 
-			 try (Connection conn = ConexionBd.obtenerConexion();
+			 try (Connection conn = ConexionDB.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				 
 				 	pstmt.setString(1, username);
@@ -233,7 +233,7 @@ public class GestionBd {
 		 if(existeUsuario(gameId)) {
 			 String sql = "DELETE FROM Partida WHERE gameId = ? ";
 			 
-			 try (Connection conn = ConexionBd.obtenerConexion();
+			 try (Connection conn = ConexionDB.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            
 				 pstmt.setString(1, gameId);
@@ -252,7 +252,7 @@ public class GestionBd {
 		 if(existeUsuario(username)) {
 			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank_classic = ?, rank_mad = ?, tablero_theme = ?, Pieza_Theme, WHERE username = ?";
 			 
-			 try (Connection conn = ConexionBd.obtenerConexion();
+			 try (Connection conn = ConexionDB.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            pstmt.setString(1, username);
 		            pstmt.setString(2, passw);
@@ -276,7 +276,7 @@ public class GestionBd {
 		 if(existeUsuario(username)) {
 			 String sql = "UPDATE Usuario SET username = ? , passw = ?, WHERE username = ?";
 			 
-			 try (Connection conn = ConexionBd.obtenerConexion();
+			 try (Connection conn = ConexionDB.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            pstmt.setString(1, username);
 		            pstmt.setString(2, passw);
@@ -298,7 +298,7 @@ public class GestionBd {
 		 if(existeUsuario(gameId)) {
 			 String sql = "UPDATE Partida SET gameId = ? , fechaIni = ?, FechaFin = ? WHERE username = ?";
 			 
-			 try (Connection conn = ConexionBd.obtenerConexion();
+			 try (Connection conn = ConexionDB.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            pstmt.setString(1, gameId);
 		            pstmt.setString(2, fechaIni);
@@ -317,11 +317,11 @@ public class GestionBd {
 	    public static void mostrarUsuarios() {
 	        String sql = "SELECT * FROM Usuario";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionDB.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql);
 	             ResultSet rs = pstmt.executeQuery()) {
 	            while (rs.next()) {
-	                System.out.println("Username: " + rs.getString("username") + "\tRank Classic: " + rs.getInt("rank_classic") + "\tRank Mad Chess: " + rs.getInt("rank_mad") + rs.getString("prefered_theme"));
+	                System.out.println("Username: " + rs.getString("username") + "\tRank Classic: " + rs.getInt("rank_classic") + "\tRank Mad Chess: " + rs.getInt("rank_mad") + rs.getString("tablero_theme"));
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
@@ -333,7 +333,7 @@ public class GestionBd {
 		public static boolean existeUsuario(String username) {
 	        String sql = "SELECT * FROM Usuario WHERE username = ?";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionDB.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.setString(1, username);
 	            ResultSet rs = pstmt.executeQuery();
@@ -347,7 +347,7 @@ public class GestionBd {
 		public static boolean existePartida(String gameId) {
 	        String sql = "SELECT * FROM Partida WHERE gameId = ?";
 
-	        try (Connection conn = ConexionBd.obtenerConexion();
+	        try (Connection conn = ConexionDB.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	            pstmt.setString(1, gameId);
 	            ResultSet rs = pstmt.executeQuery();

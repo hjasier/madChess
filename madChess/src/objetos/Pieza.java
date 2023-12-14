@@ -51,7 +51,7 @@ public class Pieza implements Serializable {
 			piezaThemeName = piezaTheme.name();
 		}
 		
-		this.img = new ImageIcon(getClass().getResource("../srcmedia/" + isWhiteChar+nombre+piezaThemeName+ ".png"));
+		this.img = new ImageIcon(getClass().getResource("../srcmedia/piezas/" + isWhiteChar+nombre+piezaThemeName+ ".png"));
 	
 	}
 	
@@ -131,7 +131,7 @@ public class Pieza implements Serializable {
 		if (piezaTheme != null) {
 			piezaThemeName = piezaTheme.name();
 		}
-		this.img = new ImageIcon(getClass().getResource("../srcmedia/" + isWhiteChar+nombre+piezaThemeName+ ".png"));
+		this.img = new ImageIcon(getClass().getResource("../srcmedia/piezas/" + isWhiteChar+nombre+piezaThemeName+ ".png"));
 	}
 
 

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import objetos.Jugador;
 import utils.Configuracion;
 import utils.Escalador;
+import utils.Session;
 
 public class userTag extends JPanel{
 	
@@ -59,6 +60,7 @@ public class userTag extends JPanel{
 	public void setUser(Jugador jugador) {
 		
 		userLabel.setText(jugador.getNombre());
+
 	}
     
     
