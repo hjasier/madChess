@@ -124,13 +124,14 @@ public class GestionBd {
 		 	String img_route = "/default.png";
 		 	int rank_classic = 0;
 		 	int rank_mad = 0;
-		 	String preffered_theme = "THEME1";
+		 	String tablero_theme = "THEME1";
+		 	String Pieza_Theme = "";
 		 	
 		    if (existeUsuario(username)) {
 		       return "Error, El usuario ya existe";
 		    }
 		  
-		    String sql = "INSERT INTO Usuario(username, passw, img_route , rank_classic, rank_mad, prefered_theme , preferedPiezaTheme) VALUES(?,?,?,?,?,?)";
+		    String sql = "INSERT INTO Usuario(username, passw, img_route , rank_classic, rank_mad, tablero_theme , Pieza_Theme) VALUES(?,?,?,?,?,?,?)";
 
 	        try (Connection conn = ConexionBd.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -139,7 +140,8 @@ public class GestionBd {
 	            pstmt.setString(3, img_route);
 	            pstmt.setInt(4, rank_classic);
 	            pstmt.setInt(5, rank_mad);
-	            pstmt.setString(6 ,preffered_theme);
+	            pstmt.setString(6 ,tablero_theme);
+	            pstmt.setString(7 ,Pieza_Theme);
 	            
 	            pstmt.executeUpdate();
 	            return "Usuario insertado correctamente.";
@@ -246,9 +248,9 @@ public class GestionBd {
 	 }
 	 
 	 
-	 public static void modificarUsuario(String username, String passw, String img_route, int rank_classic, int rank_mad, String prefered_theme, String preferedPiezaTheme) {
+	 public static void modificarUsuario(String username, String passw, String img_route, int rank_classic, int rank_mad, String tablero_theme, String Pieza_Theme) {
 		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank_classic = ?, rank_mad = ?, prefered_theme = ?, preferedPiezaTheme, WHERE username = ?";
+			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank_classic = ?, rank_mad = ?, tablero_theme = ?, Pieza_Theme, WHERE username = ?";
 			 
 			 try (Connection conn = ConexionBd.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -257,8 +259,8 @@ public class GestionBd {
 		            pstmt.setString(3, img_route);
 		            pstmt.setInt(4, rank_classic);
 		            pstmt.setInt(5, rank_mad);
-		            pstmt.setString(6, prefered_theme);
-		            pstmt.setString(7, preferedPiezaTheme);
+		            pstmt.setString(6, tablero_theme);
+		            pstmt.setString(7, Pieza_Theme);
 		            
 		            pstmt.executeUpdate();
 		            System.out.println("Usuario modificado correctamente.");
