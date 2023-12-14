@@ -42,7 +42,7 @@ public class Jugador implements Serializable{
 		this.userId = _id;
 		this.username = username;
 	}
-	
+	//con prefered pieza theme
 	public Jugador(String username , int rankClassic, int rankMad, String img_route, String preferedTheme, String PreferedPiezaTheme) {
 		super();
 		this.rankClassic = rankClassic;
@@ -51,6 +51,16 @@ public class Jugador implements Serializable{
 		this.img_route = img_route;
 		this.preferedTheme = tableroThemes.valueOf(preferedTheme);
 		this.preferedPiezaTheme = piezasThemes.valueOf(PreferedPiezaTheme);
+	}
+	//sin prefered pieza theme
+	public Jugador(String username , int rankClassic, int rankMad, String img_route, String preferedTheme) {
+		super();
+		this.rankClassic = rankClassic;
+		this.rankMad = rankMad;
+		this.username = username;
+		this.img_route = img_route;
+		this.preferedTheme = tableroThemes.valueOf(preferedTheme);
+
 	}
 
 	public Jugador(String string) {
