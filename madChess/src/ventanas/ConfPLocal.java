@@ -54,7 +54,7 @@ public class ConfPLocal extends JPanel {
         
 
         JLabel labelModoJuego = new JLabel("Modo de juego:");
-        MComboBox<String> comboModoJuego = new MComboBox<>(new String[]{"Clásico", "madChess"});
+        JComboBox<String> comboModoJuego = new JComboBox<>(new String[]{"Clásico", "madChess"});
         comboModoJuego.setMaximumSize(new Dimension(Escalador.escalar(150), Escalador.escalar(35)));
 
         JLabel labelJugador1 = new JLabel("Jugador 1:");

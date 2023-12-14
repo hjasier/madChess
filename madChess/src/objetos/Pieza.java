@@ -46,7 +46,7 @@ public class Pieza implements Serializable {
 	public void setColor() {
 		char isWhiteChar = isWhite ? 'w':'b';
 		piezasThemes piezaTheme = Session.getCurrentUser().getPreferedPiezaTheme();
-		String piezaThemeName = "";
+		String piezaThemeName = "DF";
 		if (piezaTheme != null) {
 			piezaThemeName = piezaTheme.name();
 		}

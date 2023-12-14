@@ -28,7 +28,7 @@ public class RButton extends JButton {
         setBorderPainted(false);
         setContentAreaFilled(false);
         setFocusPainted(false);
-        
+        setForeground(new Color(17,17,17));
         
         
         Dimension buttonSize = new Dimension(Escalador.escalar(90), Escalador.escalar(25));

@@ -1,9 +1,11 @@
 package ventanas;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -13,10 +15,14 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import com.formdev.flatlaf.FlatDarkLaf;
 
 import Sockets.Servidor;
 import juego.DatosPartida;
@@ -34,8 +40,6 @@ public class VentanaPrincipal extends JFrame{
     CardLayout cardLayout = new CardLayout();
    
     Login panelLogin = new Login(this);
-    
-    //MenuInicio  panelMenuInicio = new MenuInicio();
     
     ConfPLocal panelConfLocal = new ConfPLocal();
     
@@ -55,6 +59,10 @@ public class VentanaPrincipal extends JFrame{
     
     CambiarContraseña cambiarContraseña = new CambiarContraseña();
     
+    ImageIcon logo = new ImageIcon(getClass().getResource("../srcmedia/applogo.png"));
+
+    // Obtener la imagen desde el ImageIcon
+   
     
 	public VentanaPrincipal() {
 		
@@ -63,6 +71,10 @@ public class VentanaPrincipal extends JFrame{
 		this.setSize(Escalador.escalar(1000),Escalador.escalar(800));
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Image imagen = logo.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+		this.setIconImage(imagen);;
+		
+		
 		
 		//this.setUndecorated(true); //para que no se vea el borde de la ventana
 

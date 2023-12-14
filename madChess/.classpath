@@ -22,5 +22,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/srcmedia/flatlaf-3.2.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

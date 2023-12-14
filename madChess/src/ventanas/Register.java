@@ -39,13 +39,11 @@ public class Register extends JPanel {
     protected JLabel loginLabel = new JLabel("¿Ya tienes una cuenta? Inicia sesión aquí");
     protected JLabel labelTitulo = new JLabel("Regístrate para crear una cuenta");
 
-    private HashMap<String, Jugador> users = new HashMap<>();
     protected String redirect = "MENUINICIO";
 
     public Register() {
         this.setLayout(new BorderLayout());
 
-        cargarUsuarios("users.dat");
 
         opciones = new JPanel();
 
@@ -132,30 +130,6 @@ public class Register extends JPanel {
         
     }
 
-    public void guardarUsuarios(String filePath) {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
-            outputStream.writeObject(users);
-            System.out.println("Fichero de usuarios actualizado " + filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void cargarUsuarios(String filePath) {
-        HashMap<String, Jugador> hashMap = new HashMap<>();
 
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
-            Object obj = inputStream.readObject();
-            if (obj instanceof HashMap) {
-                hashMap = (HashMap<String, Jugador>) obj;
-                System.out.println("Fichero de usuarios cargado --> " + filePath);
-            } else {
-                System.out.println("Error al cargar el fichero de usuarios temporales");
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("No se han cargado los usuarios");
-        }
-
-        users = hashMap;
-    }
 }

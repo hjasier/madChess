@@ -34,6 +34,7 @@ public class BButton extends JButton {
         setBorderPainted(false);
         setContentAreaFilled(false);
         setFocusPainted(false);
+        setForeground(new Color(17,17,17));
         
         
         setMargin(new Insets(Escalador.escalar(5), 0, 0, 0));

@@ -10,6 +10,8 @@ import java.io.IOException;
 
 import javax.swing.UIManager;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import objetos.Jugador;
 import utils.Audio;
 import utils.Configuracion;
@@ -22,6 +24,7 @@ public class main {
 	public static void main(String[] args) {
 		loadScreenConf();
 		setDefaultFont();
+		setLookAndFeel();
 		VentanaPrincipal v1 = new VentanaPrincipal();
 		
 		Audio.play("notify.wav"); //temp
@@ -60,6 +63,14 @@ public class main {
     	System.setProperty("sun.java2d.uiScale", "1");
 		Escalador.setScreenSize();
 	}
+    
+    private static void setLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

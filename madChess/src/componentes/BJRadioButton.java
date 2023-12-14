@@ -15,6 +15,7 @@ public class BJRadioButton extends JRadioButton {
         setPreferredSize(new Dimension(150, 40)); // Tamaño del botón
         setHorizontalTextPosition(SwingConstants.CENTER);
         setVerticalTextPosition(SwingConstants.BOTTOM);
+        setForeground(new Color(17,17,17));
     }
 
     private static class ModernRadioButtonUI extends BasicRadioButtonUI {
