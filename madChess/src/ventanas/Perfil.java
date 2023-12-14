@@ -212,7 +212,7 @@ public class Perfil extends JPanel{
   		
   		
   		// Boton Cambiar contraseña
-  		BButton contraCambiar = new BButton("Cambiar Contraseña");
+  		JButton contraCambiar = new JButton("Cambiar Contraseña");
   		contraCambiar.setBounds(new Rectangle(Escalador.escalar(406), Escalador.escalar(505), Escalador.escalar(183), Escalador.escalar(47)));
   		panel.add(contraCambiar);
   		

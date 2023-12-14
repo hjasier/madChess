@@ -8,6 +8,7 @@ import java.awt.FontFormatException;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import javax.swing.JTextPane;
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -68,6 +69,7 @@ public class main {
     private static void setLookAndFeel() {
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
+
         } catch (Exception e) {
             e.printStackTrace();
         }

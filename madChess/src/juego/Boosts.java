@@ -1,14 +1,19 @@
 package juego;
 
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import componentes.InfoMsg;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
 import objetos.Tablero;
+import utils.Escalador;
 import utils.Infos;
 import utils.Session;
 import ventanas.Juego;
@@ -51,24 +56,28 @@ public class Boosts {
 		
 	    public static void boostHielo() {
 	        curBoost = "HIELO";
-	    	InfoMsg.alert(Infos.HIELOINFO);
+	    	alert(Infos.HIELOINFO, "Boost Hielo", "hielo");
 	    }
-	    
-	    public static void boostMalPresagio() {
+
+		
+
+
+
+		public static void boostMalPresagio() {
 		    curBoost = "PRESAGIO";
-		    InfoMsg.alert(Infos.PRESAGIOINFO);
+		    alert(Infos.PRESAGIOINFO, "Boost Presagio", "presagio");
 		    checkBoosts(null, Session.getPartida().getCurPlayer());
 			
 		}
 	    
 	    public static void boostBomba() {
 	        curBoost = "BOMBA";
-	        InfoMsg.alert(Infos.BOMBAINFO);
+	        alert(Infos.BOMBAINFO, "Boost BomberMan", "bomba");
 	        
 	    }
 	    
 	    public static void boostControl() {
-	        InfoMsg.alert(Infos.CONTROLINFO);
+	        alert(Infos.CONTROLINFO, "Boost Control", "control");
 	        Pieza pieza = getPiezaAleatoria();
 	        Control boostControl = new Control(pieza, Session.getPartida().getCurPlayer());
 			curBoost = null;
@@ -78,6 +87,23 @@ public class Boosts {
 	        
 	    }
 	    
+	    
+	    
+	    private static ImageIcon getIcono(String string) {
+	    	ImageIcon iconoImg = new ImageIcon(Boosts.class.getResource("../srcmedia/"+string+".png"));
+	        Image imagenEscalada = iconoImg.getImage().getScaledInstance((int) (Escalador.escalar(35)), (int) (Escalador.escalar(35)), Image.SCALE_SMOOTH);
+			ImageIcon icono = new ImageIcon(imagenEscalada);
+			return icono;
+		}
+	    
+	    private static void alert(String infoMsg, String titulo, String iconoName) {
+	    	ImageIcon icono = getIcono(iconoName);
+			JOptionPane.showMessageDialog(null, infoMsg, titulo, JOptionPane.INFORMATION_MESSAGE,icono);
+		}
+	    
+	    private static void alert(String infoMsg, String titulo) {
+			JOptionPane.showMessageDialog(null, infoMsg, titulo, JOptionPane.INFORMATION_MESSAGE);
+		}
 	    
 			
 	    
