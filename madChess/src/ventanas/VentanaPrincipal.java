@@ -53,6 +53,8 @@ public class VentanaPrincipal extends JFrame{
     
     MenuConfig panelMenuConfig = new MenuConfig();
     
+    CambiarContraseña cambiarContraseña = new CambiarContraseña();
+    
     
 	public VentanaPrincipal() {
 		
@@ -81,7 +83,7 @@ public class VentanaPrincipal extends JFrame{
 		panelPrincipal.add(panelListaPartidas, "LISTAPARTIDAS");
 		panelPrincipal.add(panelPerfil, "PERFILUSUARIO");
 		panelPrincipal.add(panelMenuConfig, "CONFIGMENU");
-		
+		panelPrincipal.add(cambiarContraseña, "CAMBIARCONTRASEÑA");
 		
 		
         
@@ -141,9 +143,16 @@ public class VentanaPrincipal extends JFrame{
         
         
         
-        
+        // Cambiar contraseña
        
-
+       cambiarContraseña.volverBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelPrincipal, "PERFILUSUARIO");
+				
+			}
+		});
         
         
         // CONF LOCAL

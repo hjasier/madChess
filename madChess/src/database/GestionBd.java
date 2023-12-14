@@ -270,7 +270,7 @@ public class GestionBd {
 		 }
 	 }
 	 
-	 public static void modificarContraseña(String username, String passw) {
+	 public static boolean  modificarContraseña(String username, String passw) {
 		 if(existeUsuario(username)) {
 			 String sql = "UPDATE Usuario SET username = ? , passw = ?, WHERE username = ?";
 			 
@@ -282,12 +282,14 @@ public class GestionBd {
 		            
 		            pstmt.executeUpdate();
 		            System.out.println("Contraseña modificada correctamente.");
+		            return true;
 		        } catch (Exception e) {
 					e.printStackTrace();
 				}
 		 } else {
 			 System.out.println("No se puede modificar una contraseña de un usuario inexistente");
 		 }
+		return false;
 	 }
 	 
 	 public static void modificarPartida(String gameId, String fechaIni, String FechaFin) {

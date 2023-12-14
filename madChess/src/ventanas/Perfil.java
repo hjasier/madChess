@@ -268,7 +268,13 @@ public class Perfil extends JPanel{
             }
         });
   		
-  		
+        contraCambiar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	VentanaPrincipal ventanaPrincipal = Session.getVentana();    
+                ventanaPrincipal.getCardLayout().show(ventanaPrincipal.getPanelPrincipal(), "CAMBIARCONTRASEÑA");
+            }
+        });
   		
 	}
 
