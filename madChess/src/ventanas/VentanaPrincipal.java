@@ -28,6 +28,7 @@ import Sockets.Servidor;
 import juego.DatosPartida;
 import juego.LogicaPartida;
 import objetos.Jugador;
+import objetos.Usuario;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
@@ -252,21 +253,25 @@ public class VentanaPrincipal extends JFrame{
 
 	
 
-	public void loginReturn(Jugador logedUser) {
+	public void loginReturn(Usuario logedUser) {
 		String redirect = panelLogin.getRedirect();
 		
+		//En confonline el tipo "jugador" se gestiona en el servidor
 		if (redirect=="CONFONLINE") {
 			panelConfOnline.setUser1(logedUser);
 		}
+		
+		
 		else if (redirect=="CONFLOCAL") {
-			if (!Session.getDatosPartida().getJugadores().contains(logedUser)) {	
-				panelConfLocal.setUser(logedUser);
-			}
-			else {
-				alert("Ese usuario ya esta en la partida");
-				return;
-				
-			}
+//			if (!Session.getDatosPartida().getJugadores().contains(logedUser)) {	
+//				panelConfLocal.setUser(logedUser);
+//			}
+//			else {
+//				alert("Ese usuario ya esta en la partida");
+//				return;
+//				
+//			}
+			panelConfLocal.setUser(logedUser);
 		}
 		else if (redirect=="MENUINICIO") {
 			Session.setCurrentUser(logedUser);

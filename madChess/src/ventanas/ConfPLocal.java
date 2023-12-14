@@ -6,6 +6,7 @@ import juego.LogicaPartida;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
+import objetos.Usuario;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
@@ -121,8 +122,8 @@ public class ConfPLocal extends JPanel {
 				if (datos.getJugadores().isEmpty()) {
 //					JOptionPane.showMessageDialog(ventana, "No hay jugadores en la partida");
 //					return;
-					datos.setJugador(new Jugador("Potzon[DEBUG]"));
-					datos.setJugador(new Jugador("erGiova[DEBUG]"));
+					datos.setJugador(new Usuario("userDebug1"));
+					datos.setJugador(new Usuario("userDebug2"));
 					
 				}
             	
@@ -184,13 +185,13 @@ public class ConfPLocal extends JPanel {
 	}
 
 
-	public void setUser(Jugador logedUser) {
+	public void setUser(Usuario logedUser) {
 		if (datos.getJugadores().isEmpty()) {
-			botonUser1.setText(logedUser.getNombre());
+			botonUser1.setText(logedUser.getUsername());
 			botonUser1.setEnabled(false);
 		}
 		else {
-			botonUser2.setText(logedUser.getNombre());
+			botonUser2.setText(logedUser.getUsername());
 			botonUser2.setEnabled(false);
 		}
 		datos.setJugador(logedUser);

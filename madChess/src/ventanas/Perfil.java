@@ -279,6 +279,6 @@ public class Perfil extends JPanel{
 	}
 
 	public void reloadData() {
-		nombre.setText(Session.getCurrentUser().getNombre());
+		nombre.setText(Session.getCurrentUser().getUsername());
 	} 
 }

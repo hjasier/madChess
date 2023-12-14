@@ -12,6 +12,7 @@ import java.util.Set;
 
 import juego.DatosPartida;
 import objetos.Jugador;
+import objetos.Usuario;
 import objetos.Movimiento;
 
 public class ClienteHandler implements Runnable {
@@ -20,7 +21,7 @@ public class ClienteHandler implements Runnable {
     private ObjectOutputStream output;
     //private List<ClienteHandler> clientes;
     private HashMap<String, DatosPartida> partidas;
-    private Jugador user;
+    private Usuario user;
 	private DatosPartida curPartida;
 	private HashMap<String, ArrayList<ClienteHandler>> clientes;
 
@@ -63,7 +64,7 @@ public class ClienteHandler implements Runnable {
 					
     			    case "postUser":
     			        Object user = input.readObject();
-    			        this.user = (Jugador) user;
+    			        this.user = (Usuario) user;
     			        break;
     			        
     			    case "hostNewGame":
@@ -262,7 +263,7 @@ public class ClienteHandler implements Runnable {
     }
     
     
-    public Jugador getUser() {
+    public Usuario getUser() {
 		return user;
 	}
     

@@ -51,7 +51,7 @@ public class ClientGET implements Runnable {
                 	case "chatMsg":
                 		Jugador author = (Jugador) serverIn.readObject();
                 		String msg = (String) serverIn.readObject();
-                		Session.getVentana().getPanelJuego().addChatMsg(author.getNombre(),msg);
+                		Session.getVentana().getPanelJuego().addChatMsg(author.getUsuario().getUsername(),msg);
                 		break;
                 	case "nuevoMov":
                 		Movimiento movimiento = (Movimiento) serverIn.readObject();

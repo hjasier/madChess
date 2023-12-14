@@ -18,6 +18,7 @@ import objetos.Jugador;
 import objetos.Movimiento;
 import objetos.Pieza;
 import objetos.Tablero;
+import objetos.Usuario;
 import piezas.Alfil;
 import piezas.Caballo;
 import piezas.Peon;
@@ -119,7 +120,7 @@ public class LogicaPartida {
         ventana.initWindow();
         
 
-        addInfo(Infos.NAMESEP+" "+curPlayer.getNombre()+" empieza la partida con blancas "+Infos.NAMESEP, new Color(236,212,146), true,false);
+        addInfo(Infos.NAMESEP+" "+curPlayer.getUsuario().getUsername()+" empieza la partida con blancas "+Infos.NAMESEP, new Color(236,212,146), true,false);
         addInfo(Infos.PIEZAS, new Color(236,212,146), true,false);
         printMovimiento();
 		
@@ -145,7 +146,7 @@ public class LogicaPartida {
 		
 		if (Configuracion.BOT_DEBUG) {
 			jugadores.remove(1);
-			Jugador botplayer = new Jugador("BOT");
+			Jugador botplayer = new Jugador(new Usuario("BOT"));
 			jugadores.add(botplayer);
 			bot = new Bot(botplayer);
 		}
@@ -506,7 +507,7 @@ public class LogicaPartida {
 			tablero.setCurPlayer(jugadores.get(newIndex));
 			curPlayer = jugadores.get(newIndex);
 			
-			if (curPlayer.getNombre().equals("BOT")) {
+			if (curPlayer.getUsuario().getUsername().equals("BOT")) {
 			    Thread botThread = new Thread(new Runnable() {
 			        @Override
 			        public void run() {bot.calculaNuevoMovimiento(casillas);}
@@ -764,7 +765,7 @@ public class LogicaPartida {
 		
 		
 		addInfo(info,Color.white,false,true);
-		addInfo(Infos.NAMESEP+curPlayer.getNombre()+Infos.NAMESEP+" ",curPlayer.getPlayColor(),false,true);
+		addInfo(Infos.NAMESEP+curPlayer.getUsuario().getUsername()+Infos.NAMESEP+" ",curPlayer.getPlayColor(),false,true);
 		
 		printMovimiento();
 		

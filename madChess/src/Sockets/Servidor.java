@@ -8,6 +8,7 @@ import java.util.List;
 
 import juego.DatosPartida;
 import objetos.Jugador;
+import objetos.Usuario;
 import utils.Configuracion;
 import utils.Session;
 import ventanas.ConfPOnline;
@@ -53,7 +54,7 @@ public class Servidor {
 
 	public static void main(String[] args) {
         Servidor servidor = new Servidor();
-        Session.setCurrentUser(new Jugador("SERVER"));
+        Session.setCurrentUser(new Usuario("SERVER"));
         servidor.iniciar();
     }
 

@@ -9,6 +9,7 @@ import java.util.Random;
 import Sockets.ClienteHandler;
 import objetos.Jugador;
 import objetos.Movimiento;
+import objetos.Usuario;
 
 public class DatosPartida implements Serializable{
 
@@ -83,8 +84,8 @@ public class DatosPartida implements Serializable{
 		return jugadores;
 	}
 	
-	public void setJugador(Jugador jugador) {
-		this.jugadores.add(jugador);
+	public void setJugador(Usuario logedUser) {
+		this.jugadores.add(new Jugador(logedUser));
 	}
 	
 	

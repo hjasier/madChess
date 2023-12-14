@@ -43,18 +43,10 @@ public class CambiarContraseña extends JPanel {
 	protected BButton cambiarbtn = new BButton("Cambiar Contraseña");
 	protected JLabel labelTitulo = new JLabel("Selecciona una nueva contraseña");
 	protected JLabel errorLabel = new JLabel("Contraseña o usuario incorrectos");
-	
-	private HashMap<String, Jugador> users = new HashMap<String, Jugador>();
 	protected String redirect = "PERFILUSUARIO";
 	
 	public CambiarContraseña () {
 		this.setLayout(new BorderLayout());
-		
-		//cargarUsuarios("users.dat");
-		
-		if (Configuracion.LOGIN_DEBUG) {
-			 Session.setCurrentUser(users.get("hjasier"));
-	      }
 		
 		
 		opciones = new JPanel();
@@ -138,18 +130,14 @@ public class CambiarContraseña extends JPanel {
 		
 		
 		
+		
 
 		cambiarbtn.addActionListener(new ActionListener() {
 			
-			
-			
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String username = Session.getCurrentUser().getNombre(); //FIXME : Igual hay que cambiar esto cuando los jugadores y los usuarios esten separados
+				String username = Session.getCurrentUser().getUsername(); 
 				String passw = inputContra.getText(); 
-				
-				
 				
 				cambiarbtn.setEnabled(false);
 				boolean modificarContraseña = GestionDB.modificarContraseña(username, passw);
@@ -182,7 +170,7 @@ public class CambiarContraseña extends JPanel {
 	
 	
 	private void resetToDefault() {
-		redirect = "MENUINICIO";
+		redirect = "PERFILUSUARIO";
 		inputNombre.setText("");
 		inputContra.setText("");
 		errorLabel.setVisible(false);
@@ -190,80 +178,10 @@ public class CambiarContraseña extends JPanel {
 	}
 	
 	
-	
-//	public void loginReturn(String redirect,Jugador logedUser) {
-//		VentanaPrincipal ventanaPrincip = Session.getVentana();
-//		
-//		if (redirect=="CONFONLINE") {
-//			ventanaPrincip.getPanelConfOnline().setUser1(logedUser);
-//		}
-//		else if (redirect=="CONFLOCAL") {
-//			if (!Session.getDatosPartida().getJugadores().contains(logedUser)) {	
-//				ventanaPrincip.getPanelConfLocal().setUser(logedUser);
-//			}
-//			else {
-//				JOptionPane.showMessageDialog(null, "Ese usuario ya esta en la partida", "Info", JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//		}
-//		else if (redirect=="MENUINICIO") {
-//			Session.setCurrentUser(logedUser);
-//			ventanaPrincip.getPanelMenuInicio().setLoged(true);
-//		}
-//		
-//		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), redirect);
-//	}
-	
-	
-	
-	
-
-//    public void guardarUsuarios(String filePath) {
-//        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
-//            outputStream.writeObject(users);
-//            System.out.println("Fichero de usuarios actualizado " + filePath);
-//            JOptionPane.showMessageDialog(null, "Fichero Actualizado", "Error de autenticación", JOptionPane.INFORMATION_MESSAGE);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void cargarUsuarios(String filePath) {
-//        HashMap<String, Jugador> hashMap = new HashMap<>();
-//
-//        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath))) {
-//            Object obj = inputStream.readObject();
-//            if (obj instanceof HashMap) {
-//                hashMap = (HashMap<String, Jugador>) obj;
-//                System.out.println("Fichero de usuarios cargado --> " + filePath);
-//            } else {
-//                System.out.println("Error al cargar el fichero de usuarios temporales");
-//            }
-//        } catch (IOException | ClassNotFoundException e) {
-//        	System.out.println("No se han cargado los usuarios");
-//        }
-//
-//        users = hashMap;
-//    }
 
 
 
 
-
-
-
-
-	public void setRedirect(String string) {
-		this.redirect = string;
-	}
-
-
-	public String getRedirect() {
-		return redirect;
-	}
-
-	
 	
 }
 	

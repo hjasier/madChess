@@ -27,6 +27,20 @@ public class Usuario {
 
 	
 	
+	public Usuario(String userdebugname) {
+		this.username = userdebugname;
+		this.img_route = "../srcmedia/userIcon.png";
+		this.rank_madChess = 0;
+		this.rank_classic = 0;
+		this.preferedTheme = tableroThemes.CLASSIC;
+		this.preferedPiezaTheme = piezasThemes.DF;
+		
+	}
+	
+	
+
+
+
 	public String getUsername() {
 		return username;
 	}

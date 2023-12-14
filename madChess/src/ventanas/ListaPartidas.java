@@ -135,7 +135,7 @@ public class ListaPartidas extends JPanel {
     	
     	listaPanel.add(Box.createRigidArea(new Dimension(0, 30)));
         for (String gameID : games.keySet()) {  
-            JPanel partidaPanel = createPartidaPanel(gameID, games.get(gameID).getJugadores().get(0).getNombre());
+            JPanel partidaPanel = createPartidaPanel(gameID, games.get(gameID).getJugadores().get(0).getUsuario().getUsername());
             listaPanel.add(partidaPanel);
             listaPanel.add(Box.createRigidArea(Escalador.newDimension(0, 10)));
         }

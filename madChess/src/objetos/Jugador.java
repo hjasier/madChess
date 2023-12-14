@@ -23,69 +23,11 @@ public class Jugador implements Serializable{
 	private Usuario usuario;
 	
 	
-	//Cosas a mover a clase usuario
-	private tableroThemes preferedTheme;
-	private piezasThemes preferedPiezaTheme;
-	private int userId;
-	private int rankClassic;
-	private int rankMad;
-	private String username;
-	private String img_route;
-	
-	
 
-
-	
-
-	public Jugador(int _id, String username, String passw) {
-		super();
-		this.userId = _id;
-		this.username = username;
-	}
-	//con prefered pieza theme
-	public Jugador(String username , int rankClassic, int rankMad, String img_route, String preferedTheme, String preferedPiezaTheme) {
-		super();
-		this.rankClassic = rankClassic;
-		this.rankMad = rankMad;
-		this.username = username;
-		this.img_route = img_route;
-		this.preferedTheme = tableroThemes.valueOf(preferedTheme);
-		this.preferedPiezaTheme = piezasThemes.valueOf(preferedPiezaTheme);
-	}
-	//sin prefered pieza theme
-	public Jugador(String username , int rankClassic, int rankMad, String img_route, String preferedTheme) {
-		super();
-		this.rankClassic = rankClassic;
-		this.rankMad = rankMad;
-		this.username = username;
-		this.img_route = img_route;
-		this.preferedTheme = tableroThemes.valueOf(preferedTheme);
-
-	}
-
-	public Jugador(String string) {
-		this.username = string;
+	public Jugador(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
-	public int getRankClassic() {
-		return rankClassic;
-	}
-	
-	public int getRankMad() {
-		return rankMad;
-	}
-
-
-	public void setRankClassic(int rankClassic) {
-		this.rankClassic = rankClassic;
-	}
-	public void setRankMad(int rankMad) {
-		this.rankMad = rankMad;
-	}
-	public int getUserId() {
-		return userId;
-	}
-
 
 	public int getTiempoRestante() {
 		return tiempoRestante;
@@ -140,33 +82,7 @@ public class Jugador implements Serializable{
 		this.playColor = playColor;
 	}
 
-	public String getNombre() {
-		return this.username;
-	}
-
-	public String getImg_route() {
-		return img_route;
-	}
-
-	public void setImg_route(String img_route) {
-		this.img_route = img_route;
-	}
-
-	public tableroThemes getPreferedTheme() {
-		return preferedTheme;
-	}
-
-	public void setPreferedTheme(tableroThemes preferedTheme) {
-		this.preferedTheme = preferedTheme;
-	}
-
-	public void setPreferedPiezaTheme(piezasThemes preferedPiezaTheme) {
-		this.preferedPiezaTheme = preferedPiezaTheme;
-	}
-
-	public piezasThemes getPreferedPiezaTheme() {
-		return preferedPiezaTheme;
-	}
+	
 
 	public int[] getBoosts() {
 		return boosts;
@@ -174,6 +90,14 @@ public class Jugador implements Serializable{
 
 	public void setBoosts(int[] boosts) {
 		this.boosts = boosts;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	

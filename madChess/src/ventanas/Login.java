@@ -43,12 +43,12 @@ public class Login extends JPanel {
 	protected JLabel registerLabel = new JLabel("¿No tienes cuenta? Registrate aquí");
 	protected JLabel labelTitulo = new JLabel("Inicia sesión para continuar");
 	protected JLabel errorLabel = new JLabel("Contraseña o usuario incorrectos");
-	
+
 	protected String redirect = "MENUINICIO";
 	
 	public Login (VentanaPrincipal ventanaPrincipal) {
 		this.setLayout(new BorderLayout());
-		
+
 		
 		opciones = new JPanel();
 
@@ -148,8 +148,7 @@ public class Login extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String username = inputNombre.getText();
 				String passw = inputContra.getText(); //FIXME : las passwords no se gettean así
-				
-				
+
 				
 				loginBtn.setEnabled(false);
 				boolean loginSucces = GestionDB.iniciarSesion(username, passw);
@@ -190,9 +189,6 @@ public class Login extends JPanel {
 	}
 	
 	
-
-
-
 
 
 

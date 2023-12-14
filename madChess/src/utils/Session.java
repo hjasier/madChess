@@ -8,10 +8,11 @@ import Sockets.ClientPOST;
 import juego.DatosPartida;
 import juego.LogicaPartida;
 import objetos.Jugador;
+import objetos.Usuario;
 import ventanas.VentanaPrincipal;
 
 public class Session {
-    private static Jugador currentUser;
+    private static Usuario currentUser;
     private static ClientCnx clientCnx;
     private static ClientPOST ctsConnection;
     private static ClientGET stcConnection;
@@ -24,7 +25,7 @@ public class Session {
 		return ctsConnection;
 	}
 
-	public static void setCurrentUser(Jugador user) {
+	public static void setCurrentUser(Usuario user) {
         currentUser = user;
     }
 
@@ -36,7 +37,7 @@ public class Session {
 		return ventana;
 	}
 
-	public static Jugador getCurrentUser() {
+	public static Usuario getCurrentUser() {
         return currentUser;
     }
     
