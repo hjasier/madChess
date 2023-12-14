@@ -76,6 +76,12 @@ public class Jugador implements Serializable{
 	}
 
 
+	public void setRankClassic(int rankClassic) {
+		this.rankClassic = rankClassic;
+	}
+	public void setRankMad(int rankMad) {
+		this.rankMad = rankMad;
+	}
 	public int getUserId() {
 		return userId;
 	}
