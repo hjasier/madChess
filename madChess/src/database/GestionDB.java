@@ -7,8 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import objetos.Jugador;
 import utils.Session;
+import objetos.Jugador;
+import objetos.Usuario;
 
 public class GestionDB {
 
@@ -96,8 +97,9 @@ public class GestionDB {
 
 	                if (verificarContraseña(passw, storedPassword)) {
 	                    // La contraseña es correcta, crear una instancia de Jugador
-	                    Jugador jugador = new Jugador(rs.getString("username"),rs.getInt("rank_classic"),rs.getInt("rank_mad"),rs.getString("img_route"),rs.getString("tablero_theme"),rs.getString("pieza_theme"));
-	                    Session.getVentana().loginReturn(jugador);
+	                
+	                    Usuario user = new Usuario(rs.getString("username"),rs.getString("img_route"),rs.getInt("rank_classic"),rs.getInt("rank_mad"),rs.getString("tablero_theme"),rs.getString("pieza_theme"));
+	                    Session.getVentana().loginReturn(user);
 	                    
 	                    return true;
 	                } else {
@@ -174,7 +176,7 @@ public class GestionDB {
 		        }
 		        
 		        for (Jugador jugador : Session.getDatosPartida().getJugadores()) {
-		        	String username  =jugador.getNombre(); 
+		        	String username  =jugador.getUsuario().getUsername(); 
 		        	//rank
 		        	int rank = 0;
 		        	

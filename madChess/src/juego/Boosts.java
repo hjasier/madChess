@@ -203,7 +203,7 @@ class MalPresagio extends Boost{
 		
 		
 		if(cont==0) {
-			InfoMsg.alert("Han pasado veinte turnos, "+ player.getNombre() + " gana");
+			InfoMsg.alert("Han pasado veinte turnos, "+ player.getUsuario().getUsername() + " gana");
 		}
 		else if (cont < 0){return;}
 		else if(cont == 10 || cont == 5) {
@@ -262,7 +262,7 @@ class Control extends Boost{
 		cont--;
 		
 		if(cont==0) {
-			Session.getPartida().printMovimientoFormateado("Han pasado 4 turnos, "+ player.getNombre() + " pierde el control");
+			Session.getPartida().printMovimientoFormateado("Han pasado 4 turnos, "+ player.getUsuario().getUsername() + " pierde el control");
 			pieza.setAlterColor();
 			pieza.getCasillaParent().repaint();
 		}   

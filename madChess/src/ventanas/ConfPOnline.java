@@ -15,6 +15,7 @@ import juego.LogicaPartida;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
+import objetos.Usuario;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
@@ -212,7 +213,7 @@ public class ConfPOnline extends JPanel {
 
             public void actionPerformed(ActionEvent e) {
             	ArrayList<Jugador> jugadores = Session.getDatosPartida().getJugadores();
-            	if (jugadores.size()>1&&jugadores.get(0).getNombre().equals(Session.getCurrentUser().getNombre())) {
+            	if (jugadores.size()>1&&jugadores.get(0).getUsuario().getUsername().equals(Session.getCurrentUser().getUsername())) {
             	try {
 					Session.getCtsConnection().postInitGame();
 				} catch (IOException e1) {
@@ -246,12 +247,13 @@ public class ConfPOnline extends JPanel {
     }
 
 
-	public void setUser1(Jugador user) {
-		user1Btn.setText(user.getNombre());
+	public void setUser1(Usuario user) {
+		user1Btn.setText(user.getUsername());
 		user1Btn.setEnabled(false);
 	}
-	public void setUser2(Jugador user) {
-		user2Btn.setText(user.getNombre());
+	
+	public void setUser2(Usuario user) {
+		user2Btn.setText(user.getUsername());
 	}
 	
 
@@ -265,9 +267,9 @@ public class ConfPOnline extends JPanel {
 		this.datosPartida = curDatosPartida;
 		
 		labelCodigoValor.setText(curDatosPartida.getGameId());
-		setUser1(curDatosPartida.getJugadores().get(0));
+		setUser1(curDatosPartida.getJugadores().get(0).getUsuario());
 		try {
-			setUser2(curDatosPartida.getJugadores().get(1));
+			setUser2(curDatosPartida.getJugadores().get(1).getUsuario());
 		} catch (Exception e) {}
 		
 		

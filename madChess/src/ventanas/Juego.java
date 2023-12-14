@@ -494,7 +494,7 @@ public class Juego extends JPanel {
         } 
         
         else {
-            areaChat.append("<"+Session.getCurrentUser().getNombre()+"> "+ " "+ texto + "\n");
+            areaChat.append("『"+Session.getCurrentUser().getUsername()+"』 "+ " "+ texto + "\n");
             postMsg(texto);
         }
         

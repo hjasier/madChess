@@ -59,7 +59,7 @@ public class userTag extends JPanel{
 
 	public void setUser(Jugador jugador) {
 		
-		userLabel.setText(jugador.getNombre());
+		userLabel.setText(jugador.getUsuario().getUsername());
 
 	}
     

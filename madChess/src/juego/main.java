@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.UIManager;
 
 import objetos.Jugador;
+import objetos.Usuario;
 import utils.Audio;
 import utils.Configuracion;
 import utils.Escalador;
@@ -27,7 +28,7 @@ public class main {
 		Audio.play("notify.wav"); //temp
 		
 		if (Configuracion.LOGIN_DEBUG) {
-			Session.setCurrentUser(new Jugador("jugadorDebug"));
+			Session.setCurrentUser(new Usuario("jugadorDebug"));
 		}
 	}
 	
