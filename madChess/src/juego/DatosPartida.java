@@ -3,6 +3,7 @@ package juego;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 import Sockets.ClienteHandler;
@@ -20,6 +21,7 @@ public class DatosPartida implements Serializable{
 	protected ArrayList<Jugador> ganadores = new ArrayList<Jugador>(); // arraylist de el ganador o los ganadores dependiendo la cantidad de la modalidad
 	protected ArrayList<Movimiento> movimientos;
 	protected Boolean isTerminada = false;
+	
 
 	
 	

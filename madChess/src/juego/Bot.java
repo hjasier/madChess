@@ -41,9 +41,12 @@ public class Bot {
 	}
 	
 	public void calculaNuevoMovimiento(ArrayList<Casilla> estadoActual) {
-		minimax(estadoActual, true, 3);
+		minimax(estadoActual, true, 3,new int[2]);
 		System.out.println(posibilidadesPuntuadas);
 		int[] mejorMovimiento = posibilidadesPuntuadas.get(Collections.max(posibilidadesPuntuadas.keySet()));
+		
+		System.out.println("La mejor puntuacion es --> "+Collections.max(posibilidadesPuntuadas.keySet()));
+		
 		ejecutarMovimiento(mejorMovimiento);
 		posibilidadesPuntuadas.clear();
 		System.out.println(posibilidadesPuntuadas);
@@ -58,29 +61,36 @@ public class Bot {
 		partida.moverPiezaTablero(casillaSalida, casillaLlegada);
 	}
 
-	private int minimax(ArrayList<Casilla> estadoActual, boolean turnoIsBot, int depth) {
+	private int minimax(ArrayList<Casilla> estadoActual, boolean turnoIsBot, int depth,int[] movimiento) {
 	    if (checkFinPartida(estadoActual) || depth == 0) {
 	    	int evalu = Evaluador.evaluarTablero(estadoActual);
 	    	test +=1;
-	    	System.out.println("Evaluando tablero --> "+evalu+"  "+test);
+	    	//System.out.println("Evaluando tablero --> "+evalu+"  "+test);
 	        return evalu;
 	    }
 
+	    
+	    
 	    if (turnoIsBot) {
 	        int maxEval = Integer.MIN_VALUE; //-infinito
 
 	        for (Pieza pieza : calcularPiezasJugador(estadoActual, turnoIsBot)) {
 	        	ArrayList<Casilla> casillasD = casillasDisponiblesPieza(pieza,estadoActual);
 	            for (Casilla movimientoPosible :casillasD) {
-	            	
+	            	if (movimiento[0]==0&&movimiento[1]==0) {
+	            		movimiento[0]=tablero.indexOf(pieza.getCasillaParent());
+	            		movimiento[1]=tablero.indexOf(movimientoPosible);
+	            		
+	            		System.out.println(movimiento);
+		        	}
 	                ArrayList<Casilla> nuevoEstado = crearNuevoEstado(estadoActual, pieza.getCasillaParent(), movimientoPosible);
-	                int eval = minimax(nuevoEstado, false, depth - 1);
-	                System.out.println("Evaluando movimiento de pieza aliada --> "+eval);
+	                int eval = minimax(nuevoEstado, false, depth - 1,movimiento);
+	                //System.out.println("Evaluando movimiento de pieza aliada --> "+eval);
 	                maxEval = Math.max(maxEval, eval);
 	                
 					if (depth - 1 == 0) {
-						System.out.println("Guardando movimeinto " + eval);//Solo va a guardar uno de cada es decir si dos movs tienen la misma puntuacion solo guardara el último
-						int[] movimiento = {tablero.indexOf(pieza.getCasillaParent()),estadoActual.indexOf(movimientoPosible)};
+						//System.out.println("Guardando movimeinto " + eval);//Solo va a guardar uno de cada es decir si dos movs tienen la misma puntuacion solo guardara el último
+						
 						posibilidadesPuntuadas.put(eval, movimiento);
 					}
 	            }
@@ -93,7 +103,7 @@ public class Bot {
 	        for (Pieza pieza : calcularPiezasJugador(estadoActual, turnoIsBot)) {
 	            for (Casilla movimientoPosible : casillasDisponiblesPieza(pieza,estadoActual)) {
 	                ArrayList<Casilla> nuevoEstado = crearNuevoEstado(estadoActual, pieza.getCasillaParent(), movimientoPosible);
-	                int eval = minimax(nuevoEstado, true, depth - 1);
+	                int eval = minimax(nuevoEstado, true, depth - 1,movimiento);
 	                System.out.println("Evaluando movimiento de pieza enemiga --> "+eval);
 	                minEval = Math.min(minEval, eval);
 	            }
@@ -171,23 +181,41 @@ public class Bot {
 
 	
 	
-
-
-
-
-	private void moverPiezaSimulada(ArrayList<Casilla>  estadoPasado , ArrayList<Casilla> simulacion,Casilla prevCasilla, Casilla newCasilla) {
-		Pieza piezaSeMueve = prevCasilla.getPieza();
-		int indexPrevCasilla = estadoPasado.indexOf(prevCasilla);
-		int indexNewCasilla = estadoPasado.indexOf(newCasilla);
-		
-		Casilla prevCasillaSimulada = simulacion.get(indexPrevCasilla);
-		Casilla newCasilalSimulada = simulacion.get(indexNewCasilla);
-		prevCasillaSimulada.setPieza(null);
-		newCasilalSimulada.setPieza(piezaSeMueve);
+	private Casilla getCasillaEnSim(Casilla casillaABuscar, ArrayList<Casilla> simulacion) {
+		for (Casilla casilla : simulacion) {
+			if (casillaABuscar.getColumna()==(casilla.getColumna())&&casillaABuscar.getFila()==(casilla.getFila())) {
+				return casilla;
+			}
+		}
+		System.out.println("No se ha encontrado la casilla en la simulacion");
+		return null;
 		
 	}
 
 
+
+//	private void moverPiezaSimulada(ArrayList<Casilla>  estadoPasado , ArrayList<Casilla> simulacion,Casilla prevCasilla, Casilla newCasilla) {
+//		Pieza piezaSeMueve = prevCasilla.getPieza();
+//		int indexPrevCasilla = estadoPasado.indexOf(prevCasilla);
+//		int indexNewCasilla = estadoPasado.indexOf(newCasilla);
+//		
+//		System.out.println("Index de la casillla nueva-->"+indexNewCasilla);
+//	
+//		Casilla prevCasillaSimulada = simulacion.get(indexPrevCasilla);
+//		Casilla newCasilalSimulada = simulacion.get(indexNewCasilla);
+//		prevCasillaSimulada.setPieza(null);
+//		newCasilalSimulada.setPieza(piezaSeMueve);
+//		
+//	}
+
+	private void moverPiezaSimulada(ArrayList<Casilla>  estadoPasado , ArrayList<Casilla> simulacion,Casilla prevCasilla, Casilla newCasilla) {
+		
+		
+		Casilla prevCasillaSimulada = getCasillaEnSim(prevCasilla, simulacion);
+		Casilla newCasilalSimulada = getCasillaEnSim(newCasilla, simulacion);
+		prevCasillaSimulada.setPieza(null);
+		newCasilalSimulada.setPieza(prevCasilla.getPieza());
+	}
 
 
 

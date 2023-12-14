@@ -1,4 +1,4 @@
-package puntuacion;
+package juego;
 
 
 import java.util.HashMap;
@@ -6,11 +6,11 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-public class GestorPuntuaciones {
+public class Puntuador {
 	// mapa( usuario , mapa(modo , puntuacion))
     private static Map<String, Map<String, Integer>> mapaUsuarios;
 
-    public GestorPuntuaciones() {
+    public Puntuador() {
         this.mapaUsuarios = new HashMap<>();
     }
 

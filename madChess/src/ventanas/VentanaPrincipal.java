@@ -300,6 +300,11 @@ public class VentanaPrincipal extends JFrame{
 		cardLayout.show(panelPrincipal, string);
 	}
 
+	public MadChessConfig getPanelMadChessConfig() {
+		return panelMadChessConfig;
+	}
+
+
 
 	
 

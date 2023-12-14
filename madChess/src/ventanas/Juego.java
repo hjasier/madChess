@@ -59,7 +59,6 @@ import componentes.userInfo;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.*;
-import puntuacion.GestorPuntuaciones;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
@@ -106,10 +105,6 @@ public class Juego extends JPanel {
 	protected JPanel panelCardL = new JPanel();
 	protected PanelBoost panelBoost = new PanelBoost();
 	protected StyledDocument styledAreaMovimientos;
-	
-	
-	protected JLabel labelRank1;
-	protected JLabel labelRank2;
 	
 	protected MScrollPane scrollChat;
 	
