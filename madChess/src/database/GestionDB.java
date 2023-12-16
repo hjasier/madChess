@@ -123,7 +123,7 @@ public class GestionDB {
 
 	 public static String insertarUsuario(String username, String passw) {
 		    
-		 	String img_route = "/default.png";
+		 	String img_route = "https://media.madchess.online/media/test.png";
 		 	int rank_classic = 0;
 		 	int rank_mad = 0;
 		 	String tablero_theme = "MADCHESS";
@@ -274,27 +274,27 @@ public class GestionDB {
 		 }
 	 }
 	 
-	 public static boolean  modificarContraseña(String username, String passw) {
-		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , passw = ?, WHERE username = ?";
-			 
-			 try (Connection conn = ConexionDB.obtenerConexion();
-		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		            pstmt.setString(1, username);
-		            pstmt.setString(2, passw);
+	 public static boolean modificarContraseña(String username, String newPassw) {
+		    if (existeUsuario(username)) {
+		        String sql = "UPDATE Usuario SET passw = ? WHERE username = ?";
+		        
+		        try (Connection conn = ConexionDB.obtenerConexion();
+		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		            pstmt.setString(1, newPassw);
+		            pstmt.setString(2, username);
 
-		            
 		            pstmt.executeUpdate();
 		            System.out.println("Contraseña modificada correctamente.");
 		            return true;
 		        } catch (Exception e) {
-					e.printStackTrace();
-				}
-		 } else {
-			 System.out.println("No se puede modificar una contraseña de un usuario inexistente");
-		 }
-		return false;
-	 }
+		            e.printStackTrace();
+		        }
+		    } else {
+		        System.out.println("No se puede modificar la contraseña de un usuario inexistente.");
+		    }
+		    return false;
+		}
+
 	 
 	 public static void modificarPartida(String gameId, String fechaIni, String FechaFin) {
 		 if(existeUsuario(gameId)) {
@@ -360,5 +360,25 @@ public class GestionDB {
 	        }
 	    }
 		
-		
+		public static String obtenerContraseña(String username) {
+		    String sql = "SELECT passw FROM Usuario WHERE username = ?";
+		    String password = null;
+
+		    try (Connection conn = ConexionDB.obtenerConexion();
+		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+		        pstmt.setString(1, username);
+
+		        try (ResultSet rs = pstmt.executeQuery()) {
+		            if (rs.next()) {
+		                password = rs.getString("passw");
+		            } else {
+		                System.out.println("Usuario no encontrado");
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return password;
+		}
 }
