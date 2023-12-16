@@ -359,9 +359,8 @@ public class GestionDB {
 	        }
 	    }
 		
-		public static String obtenerContraseña(String username) {
-		    String sql = "SELECT passw FROM Usuario WHERE username = ?";
-		    String password = null;
+		public static boolean obtenerContraseña(String username, String passw) {
+			String sql = "SELECT * FROM Usuario WHERE username = ?";
 
 		    try (Connection conn = ConexionDB.obtenerConexion();
 		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -370,7 +369,14 @@ public class GestionDB {
 
 		        try (ResultSet rs = pstmt.executeQuery()) {
 		            if (rs.next()) {
-		                password = rs.getString("passw");
+		                String storedPassword = rs.getString("passw");
+
+		                if (verificarContraseña(passw, storedPassword)) {
+		                    // La contraseña es correcta, devuleve true
+		                    return true;
+		                } else {
+//		                    System.out.println("Contraseña cambiada correctamente");
+		                }
 		            } else {
 		                System.out.println("Usuario no encontrado");
 		            }
@@ -378,6 +384,6 @@ public class GestionDB {
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		    }
-		    return password;
+		    return false;
 		}
 }

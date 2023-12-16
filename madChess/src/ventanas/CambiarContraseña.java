@@ -156,7 +156,8 @@ public class CambiarContraseña extends JPanel {
 				if(inputContra1.getText().equals(inputContra2.getText())) {
 					errorLabel.setVisible(false);
 					errorLabel2.setVisible(false);
-					if(!inputContra2.getText().equals(GestionDB.obtenerContraseña(username))) {
+					boolean contraseñaIgualaAntigua = GestionDB.obtenerContraseña(username, passw);
+					if(!contraseñaIgualaAntigua) {
 						boolean modificarContraseña = GestionDB.modificarContraseña(username, passw);
 							if (modificarContraseña) {
 								VentanaPrincipal ventanaPrincip = Session.getVentana();
