@@ -12,6 +12,7 @@ import objetos.Jugador;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
+import utils.utils;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -151,7 +152,7 @@ public class MadChessConfig extends JPanel {
             if (component instanceof JLabel) {
                 JLabel label = (JLabel) component;
                 ImageIcon defaultIcon = (ImageIcon) label.getIcon();
-                label.setIcon(new ImageIcon(adjustImageOpacity(defaultIcon.getImage(), 0.2)));
+                label.setIcon(new ImageIcon(utils.adjustImageOpacity(defaultIcon.getImage(), 0.2)));
             }
         }
     }
@@ -173,8 +174,8 @@ public class MadChessConfig extends JPanel {
             // Crear un nuevo ImageIcon con la imagen escalada
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-            ImageIcon defaultIcon = new ImageIcon(adjustImageOpacity(scaledIcon.getImage(), 0.2));
-            ImageIcon illuminatedIcon = new ImageIcon(adjustImageOpacity(scaledIcon.getImage(), 1.0));
+            ImageIcon defaultIcon = new ImageIcon(utils.adjustImageOpacity(scaledIcon.getImage(), 0.2));
+            ImageIcon illuminatedIcon = new ImageIcon(utils.adjustImageOpacity(scaledIcon.getImage(), 1.0));
 
             JLabel label = new JLabel(defaultIcon);
             label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -204,15 +205,7 @@ public class MadChessConfig extends JPanel {
     }
 
     
-    private Image adjustImageOpacity(Image image, double opacity) {
-        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bufferedImage.createGraphics();
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) opacity));
-        g2d.drawImage(image, 0, 0, null);
-        g2d.dispose();
-        return bufferedImage;
-    }
-    
+
     
     private void addTextPanel(JPanel panel, GridBagConstraints gbc, String text) {
         JLabel label = new JLabel(text);

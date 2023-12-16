@@ -2,9 +2,13 @@ package utils;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.net.URI;
 
 public class Configuracion {
 	
+	
+	//MEDIA 
+	public static final String UPLOAD_URL = "https://media.madchess.online";
 	
 	//SOCKETS
 	
@@ -28,5 +32,6 @@ public class Configuracion {
 	public static final boolean DEBUG_MODE = true;
 	public static final boolean LOGIN_DEBUG = true;
 	public static final boolean BOT_DEBUG = false;
+	
 
 }

@@ -27,6 +27,7 @@ public class main {
 		loadScreenConf();
 		setDefaultFont();
 		setLookAndFeel();
+		//System.setProperty("javax.net.debug", "ssl");
 		VentanaPrincipal v1 = new VentanaPrincipal();
 		
 		Audio.play("notify.wav"); //temp

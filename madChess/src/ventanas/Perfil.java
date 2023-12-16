@@ -5,10 +5,13 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -16,25 +19,37 @@ import javax.swing.border.Border;
 import componentes.BLabel;
 import componentes.BButton;
 import componentes.RButton;
+import componentes.SLabel;
 import componentes.navBar;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
+import utils.utils;
+
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 public class Perfil extends JPanel{
 	protected RButton backBtn = new RButton("Volver");
 	protected navBar navBar;
 	protected BLabel nombre = new BLabel();
+	private SLabel valormadchess1;
+	private SLabel valorClasico1;
+	private SLabel valormadchess2;
+	private SLabel valorClasico2;
+	private JLabel fotoPerfil;
 	
 	
 	public Perfil() {
@@ -67,15 +82,18 @@ public class Perfil extends JPanel{
   		
   		JPanel ftyNombrePanel = new JPanel();
   		ftyNombrePanel.setBackground(Configuracion.BACKGROUND);
-  		ftyNombrePanel.setBounds(Escalador.newBounds(78, 35, 858, 160));
+  		ftyNombrePanel.setBounds(Escalador.newBounds(10, 35, 858, 160));
   		ftyNombrePanel.setLayout(null);
   		
+  		
+
+                
   		// Foto perfil FIXME: hay que hacer que salga la doto del usuario logeado
-  		ImageIcon fotoPerfilft = new ImageIcon(getClass().getResource("../srcmedia/bbb.jpg"));
-  		Image imgEscaladafotoPerfil = fotoPerfilft.getImage().getScaledInstance((int) (Escalador.escalar(150) * escala), (int) (Escalador.escalar(150) * escala), Image.SCALE_SMOOTH);
-  		JLabel fotoPerfil = new JLabel();
+  		
+  		
+  		fotoPerfil = new JLabel();
   		fotoPerfil.setBounds(Escalador.escalar(245), Escalador.escalar(10), Escalador.escalar(140), Escalador.escalar(140));
-  		fotoPerfil.setIcon(new ImageIcon(imgEscaladafotoPerfil));
+  		
   		nombre.setForeground(new Color(255, 255, 255));
   		
   		// Nombre perfil  
@@ -92,7 +110,7 @@ public class Perfil extends JPanel{
   		//-----------------Rango y Rankings-----------------
         JPanel singlePanel = new JPanel();
         singlePanel.setBackground(Configuracion.BACKGROUND);
-        singlePanel.setBounds(Escalador.escalar(107), Escalador.escalar(205), Escalador.escalar(829), Escalador.escalar(184));
+        singlePanel.setBounds(Escalador.escalar(95), Escalador.escalar(205), Escalador.escalar(829), Escalador.escalar(184));
 
         // PanelRankingRango
         ImageIcon PanelRankingRangoft = new ImageIcon(getClass().getResource("../srcmedia/PanelRankingRango.png"));
@@ -103,10 +121,10 @@ public class Perfil extends JPanel{
         
   		// Rangopng
   		ImageIcon Rangopngft = new ImageIcon(getClass().getResource("../srcmedia/Rangopng.png"));
-  		Image imgEscaladaRangopngft = Rangopngft.getImage().getScaledInstance((int) (Escalador.escalar(149) * escala), (int) (Escalador.escalar(37) * escala), Image.SCALE_SMOOTH);
+  		Image imgEscaladaRangopngft = Rangopngft.getImage().getScaledInstance((int) (Escalador.escalar(149)*0.7 * escala), (int) (Escalador.escalar(37)*0.7 * escala), Image.SCALE_SMOOTH);
   		JLabel Rangopng = new JLabel();
   		Rangopng.setIcon(new ImageIcon(imgEscaladaRangopngft));
-  		Rangopng.setBounds(Escalador.escalar(157), Escalador.escalar(-15), Escalador.escalar(183), Escalador.escalar(73));
+  		Rangopng.setBounds(Escalador.escalar(157), Escalador.escalar(-5), Escalador.escalar(183), Escalador.escalar(73));
         
   		// Clasico1
         ImageIcon Clasico1ft = new ImageIcon(getClass().getResource("../srcmedia/Clasico.png"));
@@ -124,9 +142,9 @@ public class Perfil extends JPanel{
   		
         // Ranking
         ImageIcon Rankingft = new ImageIcon(getClass().getResource("../srcmedia/Ranking.png"));
-        Image imgEscaladaSingleLabel = Rankingft.getImage().getScaledInstance((int) (Escalador.escalar(188) * escala), (int) (Escalador.escalar(37) * escala), Image.SCALE_SMOOTH);
+        Image imgEscaladaSingleLabel = Rankingft.getImage().getScaledInstance((int) (Escalador.escalar(188)*0.7 * escala), (int) (Escalador.escalar(37)*0.7 * escala), Image.SCALE_SMOOTH);
         JLabel Ranking = new JLabel();
-  		Ranking.setBounds(Escalador.escalar(488), Escalador.escalar(-15), Escalador.escalar(215), Escalador.escalar(73));
+  		Ranking.setBounds(Escalador.escalar(488), Escalador.escalar(-5), Escalador.escalar(215), Escalador.escalar(73));
   		Ranking.setIcon(new ImageIcon(imgEscaladaSingleLabel));
         
   		// Clasico2
@@ -144,22 +162,22 @@ public class Perfil extends JPanel{
         madChess2.setBounds(Escalador.escalar(555), Escalador.escalar(77), Escalador.escalar(192), Escalador.escalar(133));
         
         //rango valor Clasico1
-        BLabel valorClasico1 = new BLabel("230");
+        valorClasico1 = new SLabel("230");
         valorClasico1.setForeground(new Color(255, 255, 255));
         valorClasico1.setBounds(Escalador.escalar(128), Escalador.escalar(77), Escalador.escalar(81), Escalador.escalar(36));
-  		
+        
         //rango valor madchess1
-        BLabel valormadchess1 = new BLabel("230");
+        valormadchess1 = new SLabel("230");
         valormadchess1.setForeground(new Color(255, 255, 255));
         valormadchess1.setBounds(Escalador.escalar(288), Escalador.escalar(77), Escalador.escalar(81), Escalador.escalar(36));
         
        //ranking valor Clasico2
-        BLabel valorClasico2 = new BLabel("#2");
+        valorClasico2 = new SLabel("#2");
         valorClasico2.setForeground(new Color(255, 255, 255));
         valorClasico2.setBounds(Escalador.escalar(458), Escalador.escalar(77), Escalador.escalar(81), Escalador.escalar(36));
   		
         //ranking valor madchess2
-        BLabel valormadchess2 = new BLabel("#40");
+        valormadchess2 = new SLabel("#40");
         valormadchess2.setForeground(new Color(255, 255, 255));
         valormadchess2.setBounds(Escalador.escalar(618), Escalador.escalar(77), Escalador.escalar(81), Escalador.escalar(36));
         
@@ -275,10 +293,66 @@ public class Perfil extends JPanel{
                 ventanaPrincipal.getCardLayout().show(ventanaPrincipal.getPanelPrincipal(), "CAMBIARCONTRASEÑA");
             }
         });
+        
+		fotoPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				Image curImg = ((ImageIcon) fotoPerfil.getIcon()).getImage();
+				Image imgHover = utils.adjustImageOpacity(curImg, 0.3);
+				fotoPerfil.setIcon(new ImageIcon(imgHover));
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
+				
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				BufferedImage imagenRedonda = utils.getRoundImg(Session.getCurrentUser().getImg_route(),Escalador.escalar(85));
+				fotoPerfil.setIcon(new ImageIcon(imagenRedonda));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Seleccionar Foto");
+
+                // Mostrar el explorador de archivos y esperar a que el usuario elija un archivo
+                int userSelection = fileChooser.showOpenDialog(Perfil.this);
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    // Obtener el archivo seleccionado
+                    File selectedFile = fileChooser.getSelectedFile();
+                    // Aquí puedes manejar el archivo seleccionado (por ejemplo, mostrar la ruta)
+                    try {
+						utils.uploadFile(selectedFile.getAbsolutePath());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                }
+			}
+			
+		});
   		
 	}
 
 	public void reloadData() {
 		nombre.setText(Session.getCurrentUser().getUsername());
+		valormadchess1.setText(Session.getCurrentUser().getRank_madChess()+"");
+		valorClasico1.setText(Session.getCurrentUser().getRank_classic()+"");
+		valormadchess2.setText(Session.getCurrentUser().getRank_madChess()+"");
+		valorClasico2.setText(Session.getCurrentUser().getRank_classic()+"");
+		
+        Thread cargaImg = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                	BufferedImage imagenRedonda = utils.getRoundImg(Session.getCurrentUser().getImg_route(),Escalador.escalar(85));
+            		fotoPerfil.setIcon(new ImageIcon(imagenRedonda));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        cargaImg.start();
+		
 	} 
 }
