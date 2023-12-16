@@ -34,7 +34,9 @@ import librerias.IconFontSwing;
 import objetos.Jugador;
 import utils.Configuracion;
 import utils.Escalador;
+import utils.Infos;
 import utils.Session;
+import utils.utils;
 
 public class CambiarContraseña extends JPanel {
 
@@ -148,10 +150,7 @@ public class CambiarContraseña extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String username = Session.getCurrentUser().getUsername(); 
 				String passw = inputContra2.getText(); 
-				ImageIcon iconoImg = new ImageIcon(Boosts.class.getResource("../srcmedia/ok.png"));
-				Image imagenEscalada = iconoImg.getImage().getScaledInstance((int) (Escalador.escalar(35)), (int) (Escalador.escalar(35)), Image.SCALE_SMOOTH);
-				ImageIcon icono = new ImageIcon(imagenEscalada);
-				
+
 				cambiarbtn.setEnabled(false);
 				
 				if(inputContra1.getText().equals(inputContra2.getText())) {
@@ -163,10 +162,11 @@ public class CambiarContraseña extends JPanel {
 								VentanaPrincipal ventanaPrincip = Session.getVentana();
 								ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), redirect);
 								resetToDefault();
-								JOptionPane.showMessageDialog(null, "Contraseña cambiada correctamente", "Éxito",JOptionPane.INFORMATION_MESSAGE,icono);
-			
+								
+								utils.alert(Infos.ContraseyaCambiada, "","ok");
 							}
 							else {
+								
 								cambiarbtn.setEnabled(true);
 								
 							}

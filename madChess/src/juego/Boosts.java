@@ -16,6 +16,7 @@ import objetos.Tablero;
 import utils.Escalador;
 import utils.Infos;
 import utils.Session;
+import utils.utils;
 import ventanas.Juego;
 
 public class Boosts {
@@ -56,7 +57,7 @@ public class Boosts {
 		
 	    public static void boostHielo() {
 	        curBoost = "HIELO";
-	    	alert(Infos.HIELOINFO, "Boost Hielo", "hielo");
+	    	utils.alert(Infos.HIELOINFO, "Boost Hielo", "hielo");
 	    }
 
 		
@@ -65,19 +66,19 @@ public class Boosts {
 
 		public static void boostMalPresagio() {
 		    curBoost = "PRESAGIO";
-		    alert(Infos.PRESAGIOINFO, "Boost Presagio", "presagio");
+		    utils.alert(Infos.PRESAGIOINFO, "Boost Presagio", "presagio");
 		    checkBoosts(null, Session.getPartida().getCurPlayer());
 			
 		}
 	    
 	    public static void boostBomba() {
 	        curBoost = "BOMBA";
-	        alert(Infos.BOMBAINFO, "Boost BomberMan", "bomba");
+	        utils.alert(Infos.BOMBAINFO, "Boost BomberMan", "bomba");
 	        
 	    }
 	    
 	    public static void boostControl() {
-	        alert(Infos.CONTROLINFO, "Boost Control", "control");
+	    	utils.alert(Infos.CONTROLINFO, "Boost Control", "control");
 	        Pieza pieza = getPiezaAleatoria();
 	        Control boostControl = new Control(pieza, Session.getPartida().getCurPlayer());
 			curBoost = null;
@@ -89,22 +90,8 @@ public class Boosts {
 	    
 	    
 	    
-	    private static ImageIcon getIcono(String string) {
-	    	ImageIcon iconoImg = new ImageIcon(Boosts.class.getResource("../srcmedia/"+string+".png"));
-	        Image imagenEscalada = iconoImg.getImage().getScaledInstance((int) (Escalador.escalar(35)), (int) (Escalador.escalar(35)), Image.SCALE_SMOOTH);
-			ImageIcon icono = new ImageIcon(imagenEscalada);
-			return icono;
-		}
-	    
-	    private static void alert(String infoMsg, String titulo, String iconoName) {
-	    	ImageIcon icono = getIcono(iconoName);
-			JOptionPane.showMessageDialog(null, infoMsg, titulo, JOptionPane.INFORMATION_MESSAGE,icono);
-		}
-	    
-	    private static void alert(String infoMsg, String titulo) {
-			JOptionPane.showMessageDialog(null, infoMsg, titulo, JOptionPane.INFORMATION_MESSAGE);
-		}
-	    
+
+
 			
 	    
 	    public static void setBloqueoCasillasAdyacentes(Casilla casilla,Boolean estado) {
@@ -130,8 +117,6 @@ public class Boosts {
 	    
 	    
 	    public static void explotacionBomba(Casilla casilla) {
-	    	
-	    	
 	        int fila = casilla.getFila();
 	        char columna = casilla.getColumna();
 	        

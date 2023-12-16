@@ -284,7 +284,6 @@ public class GestionDB {
 		            pstmt.setString(2, username);
 
 		            pstmt.executeUpdate();
-		            System.out.println("Contraseña modificada correctamente.");
 		            return true;
 		        } catch (Exception e) {
 		            e.printStackTrace();

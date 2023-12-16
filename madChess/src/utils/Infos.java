@@ -37,6 +37,9 @@ public class Infos {
 		public static final String BOOM = "💥💥BOOOOOM!!!💥💥";
 		public static final String CONTADOREXPLOSION = "Explosión en: ";
 		
+		//
+		public static final String ContraseyaCambiada = "Contraseña actualizada";
+		
 	    
 	    
 }

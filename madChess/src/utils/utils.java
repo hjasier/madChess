@@ -36,6 +36,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPut;
@@ -47,11 +49,33 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 
+import juego.Boosts;
+
 
 
 
 public class utils {
 
+	
+	
+    public static void alert(String infoMsg, String titulo, String iconoName) {
+    	ImageIcon icono = getIcono(iconoName);
+		JOptionPane.showMessageDialog(null, infoMsg, titulo, JOptionPane.INFORMATION_MESSAGE,icono);
+	}
+    
+    public static void alert(String infoMsg, String titulo) {
+		JOptionPane.showMessageDialog(null, infoMsg, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
+    
+    
+    public static ImageIcon getIcono(String string) {
+    	ImageIcon iconoImg = new ImageIcon(Boosts.class.getResource("../srcmedia/"+string+".png"));
+        Image imagenEscalada = iconoImg.getImage().getScaledInstance((int) (Escalador.escalar(35)), (int) (Escalador.escalar(35)), Image.SCALE_SMOOTH);
+		ImageIcon icono = new ImageIcon(imagenEscalada);
+		return icono;
+	}
+    
+    
     public static Image adjustImageOpacity(Image image, double opacity) {
         BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufferedImage.createGraphics();
