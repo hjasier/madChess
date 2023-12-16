@@ -7,8 +7,8 @@ import java.net.URI;
 public class Configuracion {
 	
 	
-	//MEDIA 
-	public static final String UPLOAD_URL = "https://media.madchess.online";
+	//CDN 
+	public static final String UPLOAD_URL = "https://media.madchess.online/";
 	
 	//SOCKETS
 	

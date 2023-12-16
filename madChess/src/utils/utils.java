@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -108,47 +109,26 @@ public class utils {
 
 
 
-    public static void uploadFile(String filePath) throws IOException {
-    	String apiUrl = "https://media.madchess.online/";
-    	String uploadUrl = "http://localhost:8001/";
-    	
-        URL url = new URL(apiUrl);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        // Configurar la conexión para la solicitud PUT
-        connection.setRequestMethod("PUT");
-        connection.setDoOutput(true);
-
-        // Crear un flujo de salida para enviar el archivo
-        try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-             FileInputStream fileInputStream = new FileInputStream(filePath)) {
-
-            // Leer el archivo y escribirlo en la conexión
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-
-            // Obtener la respuesta del servidor (opcional)
-            int responseCode = connection.getResponseCode();
-            System.out.println("Server response code: " + responseCode);
-        } finally {
-            // Cerrar la conexión
-            connection.disconnect();
-        }
-    }
-
-    public static void main(String[] args) {
-    	String absolutePath = "D:/Asier/Descargas/test.png";
-        String fileToUpload = "D:\\Asier\\Descargas\\test.png";
-        
+    public static void uploadFile(File selectedFile) {
+    	HttpClient client = HttpClient.newHttpClient();
         try {
-            uploadFile(fileToUpload);
-        } catch (IOException e) {
+            String fileName = selectedFile.getName();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(Configuracion.UPLOAD_URL + fileName))
+                .PUT(HttpRequest.BodyPublishers.ofFile(selectedFile.toPath()))
+                .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
+
+
 
 	
 	

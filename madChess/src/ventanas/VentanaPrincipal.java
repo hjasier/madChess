@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -73,8 +74,7 @@ public class VentanaPrincipal extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Image imagen = logo.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-		this.setIconImage(imagen);;
-		
+		this.setIconImage(imagen);
 		
 		
 		//this.setUndecorated(true); //para que no se vea el borde de la ventana

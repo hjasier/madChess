@@ -320,12 +320,9 @@ public class Perfil extends JPanel{
                     // Obtener el archivo seleccionado
                     File selectedFile = fileChooser.getSelectedFile();
                     // Aquí puedes manejar el archivo seleccionado (por ejemplo, mostrar la ruta)
-                    try {
-						utils.uploadFile(selectedFile.getAbsolutePath());
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+                    
+					utils.uploadFile(selectedFile);
+					
                 }
 			}
 			
