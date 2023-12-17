@@ -145,7 +145,7 @@ public class CambiarContraseña extends JPanel {
 				String passw = inputContra2.getText(); 
 
 				cambiarbtn.setEnabled(false);
-				
+
 				boolean cambiada = true;
 
 				if (inputContra1.getText().equals(inputContra2.getText())) {
@@ -172,8 +172,8 @@ public class CambiarContraseña extends JPanel {
 				    cambiarbtn.setEnabled(true);
 				    errorLabel.setVisible(true);
 				    errorLabel.setText(Infos.ContraseyaNoCoincide);
-				}
-				
+
+			}
 			}
 			
 		});

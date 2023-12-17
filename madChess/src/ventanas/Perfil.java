@@ -79,6 +79,9 @@ public class Perfil extends JPanel{
 
   		
   		//-----------------Foto y Nombre perfil-----------------
+  		JPanel arribaftyNombre = new JPanel();
+  		arribaftyNombre.setLayout(new BorderLayout());
+  		arribaftyNombre.setBounds(Escalador.newBounds(35, 35, 858, 160));
   		
   		JPanel ftyNombrePanel = new JPanel();
   		ftyNombrePanel.setBackground(Configuracion.BACKGROUND);
@@ -104,6 +107,8 @@ public class Perfil extends JPanel{
   		
   		ftyNombrePanel.add(nombre);
   		ftyNombrePanel.add(fotoPerfil);
+  		arribaftyNombre.add(ftyNombrePanel, BorderLayout.CENTER);
+  		
   		//-----------------FIN Foto y Nombre perfil----------------- 		
   		
   		
@@ -211,7 +216,7 @@ public class Perfil extends JPanel{
   		panel.add(singlePanel);
   		
   		
-  		panel.add(ftyNombrePanel);
+  		panel.add(arribaftyNombre);
   		panel.add(Botones);
   		
   		
