@@ -27,7 +27,7 @@ import componentes.BButton;
 import componentes.BTextField;
 import componentes.RButton;
 import componentes.navBar;
-import database.GestionDB;
+import database.GestorDB;
 import juego.Boosts;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
@@ -48,8 +48,7 @@ public class CambiarContraseña extends JPanel {
 	protected BTextField inputContra2 = new BTextField("Repite la Contraseña",true);
 	protected BButton cambiarbtn = new BButton("Cambiar Contraseña");
 	protected JLabel labelTitulo = new JLabel("Selecciona una nueva contraseña");
-	protected JLabel errorLabel = new JLabel("Contraseñas no coinciden");
-	protected JLabel errorLabel2 = new JLabel("Contraseña coincide con la original");
+	protected JLabel errorLabel = new JLabel();
 	protected String redirect = "PERFILUSUARIO";
 	
 	public CambiarContraseña () {
@@ -92,9 +91,7 @@ public class CambiarContraseña extends JPanel {
 		
 		labelTitulo.setForeground(new Color(236,236,236));
 		errorLabel.setForeground(new Color(250,42,42));
-		errorLabel2.setForeground(new Color(250,42,42));
-			
-		
+
 		labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		inputContra1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		inputContra2.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -104,9 +101,6 @@ public class CambiarContraseña extends JPanel {
 
 		errorLabel.setVisible(false);
 		
-		errorLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		errorLabel2.setVisible(false);
 		
 		opciones.add(Box.createRigidArea(Escalador.newDimension(0, 100))); 
 		
@@ -122,7 +116,6 @@ public class CambiarContraseña extends JPanel {
         
         opciones.add(Box.createRigidArea(Escalador.newDimension(0, 20))); // Espacio entre los botones
         opciones.add(errorLabel);
-        opciones.add(errorLabel2);
         
 		this.add(navBarContainer, BorderLayout.NORTH);	
 		this.add(opciones, BorderLayout.CENTER);
@@ -153,33 +146,34 @@ public class CambiarContraseña extends JPanel {
 
 				cambiarbtn.setEnabled(false);
 				
-				if(inputContra1.getText().equals(inputContra2.getText())) {
-					errorLabel.setVisible(false);
-					errorLabel2.setVisible(false);
-					if(!inputContra2.getText().equals(GestionDB.obtenerContraseña(username))) {
-						boolean modificarContraseña = GestionDB.modificarContraseña(username, passw);
-							if (modificarContraseña) {
-								VentanaPrincipal ventanaPrincip = Session.getVentana();
-								ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), redirect);
-								resetToDefault();
-								
-								utils.alert(Infos.ContraseyaCambiada, "","ok");
-							}
-							else {
-								
-								cambiarbtn.setEnabled(true);
-								
-							}
-						}else{
-							cambiarbtn.setEnabled(true);
-							errorLabel.setVisible(false);
-							errorLabel2.setVisible(true);
-						}
-				}else {
-				errorLabel2.setVisible(false);
-				cambiarbtn.setEnabled(true);
-				errorLabel.setVisible(true);
+				boolean cambiada = true;
+
+				if (inputContra1.getText().equals(inputContra2.getText())) {
+				    boolean modificarContraseña = false;
+				
+				    if (cambiada) {
+				        errorLabel.setVisible(false);
+				        modificarContraseña = GestorDB.modificarContraseña(username, passw);
+				    } else {
+				        errorLabel.setVisible(true);
+				        errorLabel.setText(Infos.ContraseyaNocambiada);
+				    }
+				
+				    if (modificarContraseña) {
+				        VentanaPrincipal ventanaPrincip = Session.getVentana();
+				        ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), redirect);
+				        resetToDefault();
+				        utils.alert(Infos.ContraseyaCambiada, "", "ok");
+				    } else {
+				        cambiarbtn.setEnabled(true);
+				    }
+				} 
+				else {
+				    cambiarbtn.setEnabled(true);
+				    errorLabel.setVisible(true);
+				    errorLabel.setText(Infos.ContraseyaNoCoincide);
 				}
+				
 			}
 			
 		});

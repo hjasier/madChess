@@ -11,7 +11,7 @@ import utils.Session;
 import objetos.Jugador;
 import objetos.Usuario;
 
-public class GestionDB {
+public class GestorDB {
 
 
    
@@ -82,31 +82,31 @@ public class GestionDB {
 
 	
 	
-		
 	public static boolean iniciarSesion(String username, String passw) {
-	    String sql = "SELECT * FROM Usuario WHERE username = ?";
+	    String sql = "SELECT * FROM Usuario WHERE username = ? AND passw = ?";
 
 	    try (Connection conn = ConexionDB.obtenerConexion();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 	        pstmt.setString(1, username);
+	        pstmt.setString(2, passw);
 
 	        try (ResultSet rs = pstmt.executeQuery()) {
 	            if (rs.next()) {
-	                String storedPassword = rs.getString("passw");
+	                // El usuario con la contraseña proporcionada existe
+	                Usuario user = new Usuario(
+	                        rs.getString("username"),
+	                        rs.getString("img_route"),
+	                        rs.getInt("rank_classic"),
+	                        rs.getInt("rank_mad"),
+	                        rs.getString("tablero_theme"),
+	                        rs.getString("pieza_theme"));
 
-	                if (verificarContraseña(passw, storedPassword)) {
-	                    // La contraseña es correcta, crear una instancia de Jugador
-	                
-	                    Usuario user = new Usuario(rs.getString("username"),rs.getString("img_route"),rs.getInt("rank_classic"),rs.getInt("rank_mad"),rs.getString("tablero_theme"),rs.getString("pieza_theme"));
-	                    Session.getVentana().loginReturn(user);
-	                    
-	                    return true;
-	                } else {
-	                    System.out.println("Contraseña incorrecta");
-	                }
+	                Session.getVentana().loginReturn(user);
+
+	                return true;
 	            } else {
-	                System.out.println("Usuario no encontrado");
+	                System.out.println("Usuario o contraseña incorrectos");
 	            }
 	        }
 	    } catch (SQLException e) {
@@ -116,10 +116,7 @@ public class GestionDB {
 	}
 
     
-    private static boolean verificarContraseña(String ingresada, String almacenada) {
-    	//Aqui se desencriptaría y se combrobaría..
-        return ingresada.equals(almacenada);  
-    }
+
 
 	 public static String insertarUsuario(String username, String passw) {
 		    
@@ -250,19 +247,20 @@ public class GestionDB {
 	 }
 	 
 	 
-	 public static void modificarUsuario(String username, String passw, String img_route, int rank_classic, int rank_mad, String tablero_theme, String Pieza_Theme) {
+	 public static void modificarUsuario(String username, String img_route, int rank_classic, int rank_mad, String tablero_theme, String Pieza_Theme) {
 		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , passw = ?, img_route = ?, rank_classic = ?, rank_mad = ?, tablero_theme = ?, Pieza_Theme, WHERE username = ?";
+			 String sql = "UPDATE Usuario SET username = ? , img_route = ?, rank_classic = ?, rank_mad = ?, tablero_theme = ?, pieza_Theme = ? WHERE username = ?";
 			 
 			 try (Connection conn = ConexionDB.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		            pstmt.setString(1, username);
-		            pstmt.setString(2, passw);
-		            pstmt.setString(3, img_route);
-		            pstmt.setInt(4, rank_classic);
-		            pstmt.setInt(5, rank_mad);
-		            pstmt.setString(6, tablero_theme);
-		            pstmt.setString(7, Pieza_Theme);
+		            pstmt.setString(2, img_route);
+		            pstmt.setInt(3, rank_classic);
+		            pstmt.setInt(4, rank_mad);
+		            pstmt.setString(5, tablero_theme);
+		            pstmt.setString(6, Pieza_Theme);
+		            pstmt.setString(7, username);
+
 		            
 		            pstmt.executeUpdate();
 		            System.out.println("Usuario modificado correctamente.");
@@ -273,6 +271,25 @@ public class GestionDB {
 			 System.out.println("No se puede modificar un usuario inexistente");
 		 }
 	 }
+	 
+	 public static void modificarImagenUsuario(String username, String img_route) {
+		    if (existeUsuario(username)) {
+		        String sql = "UPDATE Usuario SET img_route = ? WHERE username = ?";
+
+		        try (Connection conn = ConexionDB.obtenerConexion();
+		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		            pstmt.setString(1, img_route);
+		            pstmt.setString(2, username);
+
+		            pstmt.executeUpdate();
+		            System.out.println("Imagen de usuario modificada correctamente.");
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    } else {
+		        System.out.println("No se puede modificar la imagen de un usuario inexistente");
+		    }
+		}
 	 
 	 public static boolean modificarContraseña(String username, String newPassw) {
 		    if (existeUsuario(username)) {
@@ -359,25 +376,4 @@ public class GestionDB {
 	        }
 	    }
 		
-		public static String obtenerContraseña(String username) {
-		    String sql = "SELECT passw FROM Usuario WHERE username = ?";
-		    String password = null;
-
-		    try (Connection conn = ConexionDB.obtenerConexion();
-		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-		        pstmt.setString(1, username);
-
-		        try (ResultSet rs = pstmt.executeQuery()) {
-		            if (rs.next()) {
-		                password = rs.getString("passw");
-		            } else {
-		                System.out.println("Usuario no encontrado");
-		            }
-		        }
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-		    return password;
-		}
 }

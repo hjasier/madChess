@@ -9,6 +9,7 @@ public class Configuracion {
 	
 	//CDN 
 	public static final String UPLOAD_URL = "https://media.madchess.online/";
+	public static final String UPLOAD_DIR = "media/";
 	
 	//SOCKETS
 	
@@ -32,6 +33,8 @@ public class Configuracion {
 	public static final boolean DEBUG_MODE = true;
 	public static final boolean LOGIN_DEBUG = true;
 	public static final boolean BOT_DEBUG = false;
+
+	
 	
 
 }

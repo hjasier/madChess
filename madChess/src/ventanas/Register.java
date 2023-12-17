@@ -16,7 +16,7 @@ import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
 import componentes.*;
-import database.GestionDB;
+import database.GestorDB;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 
@@ -111,7 +111,7 @@ public class Register extends JPanel {
 //                users.put(username, new Jugador(newUserId, username, passw));
 //                guardarUsuarios("users.dat");
 //                JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
-                String returndata = GestionDB.insertarUsuario(username, passw);
+                String returndata = GestorDB.insertarUsuario(username, passw);
                 
                 JOptionPane.showMessageDialog(null, returndata, "Información", JOptionPane.INFORMATION_MESSAGE);
             }

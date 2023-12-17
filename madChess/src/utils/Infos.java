@@ -39,8 +39,11 @@ public class Infos {
 		
 		//
 		public static final String ContraseyaCambiada = "Contraseña actualizada";
+		public static final String ContraseyaNoCoincide= "Contraseñas no coinciden";
+		public static final String ContraseyaNocambiada = "Contraseña coincide con la original";
 		
 	    
+		
 	    
 }
 

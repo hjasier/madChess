@@ -49,7 +49,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 
+import database.GestorDB;
 import juego.Boosts;
+import objetos.Usuario;
 
 
 
@@ -136,15 +138,24 @@ public class utils {
     public static void uploadFile(File selectedFile) {
     	HttpClient client = HttpClient.newHttpClient();
         try {
-            String fileName = selectedFile.getName();
-
+        	//puede que en el futuro lo cambiemos a un string aleatorio en vez del nombre del usuario
+            String fileName = Session.getCurrentUser().getUsername() + selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));
+            
+            
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(Configuracion.UPLOAD_URL + fileName))
                 .PUT(HttpRequest.BodyPublishers.ofFile(selectedFile.toPath()))
                 .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response);
+            
+			if (response.statusCode() == 201) {
+				Usuario curUser = Session.getCurrentUser();
+				curUser.setImg_route(Configuracion.UPLOAD_URL +Configuracion.UPLOAD_DIR+ fileName);
+				GestorDB.modificarImagenUsuario(curUser.getUsername(),Configuracion.UPLOAD_URL+ Configuracion.UPLOAD_DIR + fileName);
+			} else {
+				System.out.println("Error al subir el archivo");
+			}
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException | InterruptedException e) {

@@ -19,7 +19,7 @@ import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
 import componentes.*;
-import database.GestionDB;
+import database.GestorDB;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 
@@ -151,7 +151,7 @@ public class Login extends JPanel {
 
 				
 				loginBtn.setEnabled(false);
-				boolean loginSucces = GestionDB.iniciarSesion(username, passw);
+				boolean loginSucces = GestorDB.iniciarSesion(username, passw);
 				if (loginSucces) {
 					VentanaPrincipal ventanaPrincip = Session.getVentana();
 					ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), redirect);
