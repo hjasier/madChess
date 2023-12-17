@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.Panel;
@@ -79,7 +80,7 @@ public class Juego extends JPanel {
 	protected JPanel panelDatosChat;
 	protected JLabel configBtn;
 	protected JLabel backBtn;
-	protected MButton postMsgBtn;
+	protected JButton postMsgBtn;
 	
 	
 	protected JPanel panelMensaje;
@@ -241,7 +242,7 @@ public class Juego extends JPanel {
 	    
 
 
-	    postMsgBtn = new MButton("Enviar");
+	    postMsgBtn = new JButton("Enviar");
 	    
 	    panelChat.add(labelChat, BorderLayout.NORTH);
 	    
@@ -274,14 +275,21 @@ public class Juego extends JPanel {
 	    panelLabels.setLayout(new BoxLayout(panelLabels, BoxLayout.X_AXIS));
 	    
 	    labelChat = new JLabel();
-	    labelChat.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelChat.png")));
 	    
+	    
+	    Image imgChatResc = new ImageIcon(getClass().getResource("../srcmedia/labelChatR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        
+	    labelChat.setIcon(new ImageIcon(imgChatResc));
+	    
+
 	    
 	    labelChat.setFont(labelChat.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
 	    labelChat.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	    
 	    labelBoost = new JLabel();
-	    labelBoost.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelBoost.png")));
+	    Image imgBoostResc = new ImageIcon(getClass().getResource("../srcmedia/labelBoostsR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
+	    labelBoost.setIcon(new ImageIcon(imgBoostResc));
+        
 	    
 	    
 	    labelBoost.setFont(labelBoost.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
@@ -298,16 +306,17 @@ public class Juego extends JPanel {
 	    // panel movimiento de las piezas
 	    
 	    labelMovimientos = new JLabel();
-	    labelMovimientos.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelMovimeintos.png")));
-	    
-	    
-	    labelMovimientos.setFont(labelMovimientos.getFont().deriveFont(Font.BOLD, Escalador.escalar(12)));
+	  
+	    ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/labelMovimientosR.png"));
+	    Image imagenEscalada = imgFoto.getImage().getScaledInstance(Escalador.escalar(110), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        
+	    labelMovimientos.setIcon(new ImageIcon(imagenEscalada));
 
 	    areaMovimientos = new JTextPane();
 	    areaMovimientos.setContentType("text/html");
 
 
-	    areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, Escalador.escalar(14))); 
+	    //areaMovimientos.setFont(new Font("Monospaced", Font.PLAIN, Escalador.escalar(14))); 
 	    areaMovimientos.setEditable(false);
 	    styledAreaMovimientos = areaMovimientos.getStyledDocument();
 
@@ -453,8 +462,16 @@ public class Juego extends JPanel {
         	public void mouseClicked(MouseEvent e) {
         		
         		cardLayout.show(panelCardL,"CHAT");
-        		labelBoost.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelBoost.png")));
-        		labelChat.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelChatSelected.png")));
+        		
+        		Image imgChatResc = new ImageIcon(getClass().getResource("../srcmedia/labelChatSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        		Image imgBoostResc = new ImageIcon(getClass().getResource("../srcmedia/labelBoostsR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
+                
+        		
+        		
+        		labelBoost.setIcon(new ImageIcon(imgBoostResc));
+        		labelChat.setIcon(new ImageIcon(imgChatResc));
+        		
+        		
         	    
         	}
         	
@@ -467,8 +484,13 @@ public class Juego extends JPanel {
         		
         		cardLayout.show(panelCardL,"BOOST");
         		
-        		labelBoost.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelBoostSelected.png")));
-        		labelChat.setIcon(new ImageIcon(getClass().getResource("../srcmedia/labelChat.png")));
+        		Image imgChatResc = new ImageIcon(getClass().getResource("../srcmedia/labelChatR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        		Image imgBoostResc = new ImageIcon(getClass().getResource("../srcmedia/labelBoostsSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
+                
+        		
+        		
+        		labelBoost.setIcon(new ImageIcon(imgBoostResc));
+        		labelChat.setIcon(new ImageIcon(imgChatResc));
         	}
         });
         

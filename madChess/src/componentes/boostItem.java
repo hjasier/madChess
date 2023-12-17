@@ -45,7 +45,7 @@ public class boostItem extends JPanel{
 		
 		
 		BButton usarButton = new BButton("Usar");
-		usarButton.setBounds(new Rectangle(215, 20, 72, 35));
+		usarButton.setBounds(Escalador.newBounds(209, 20, 72, 35));
 		
 		panel.add(usarButton);
 		ImageIcon iconoImg = new ImageIcon(getClass().getResource("../srcmedia/"+icono+".png"));
@@ -53,7 +53,7 @@ public class boostItem extends JPanel{
 		
 		JLabel lblNewLabel_1_1 = new JLabel("1/1");
 		lblNewLabel_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1.setBounds(new Rectangle(334, 0, 28, 80));
+		lblNewLabel_1_1.setBounds(Escalador.newBounds(321, 0, 28, 80));
 		
 		panel.add(lblNewLabel_1_1);
 		
