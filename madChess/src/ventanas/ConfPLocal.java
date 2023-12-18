@@ -3,6 +3,7 @@ package ventanas;
 import componentes.*;
 import juego.DatosPartida;
 import juego.LogicaPartida;
+import juego.partidaTipo;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
@@ -105,8 +106,16 @@ public class ConfPLocal extends JPanel {
         comboModoJuego.addActionListener(new ActionListener() {
         	@Override
             public void actionPerformed(ActionEvent e) {
-                String modoDeJuego = comboModoJuego.getSelectedItem().toString();
-                datos.setTipoPartida(modoDeJuego);
+                String tipoPartida = comboModoJuego.getSelectedItem().toString();
+                partidaTipo tipo;
+                if (tipoPartida.equals("madChess")) {
+                	tipo = partidaTipo.MADCHESS;
+                }
+                else {
+                	tipo = partidaTipo.CLASICA;
+                }
+                
+                datos.setTipoPartida(tipo);
             }
 		});
 
@@ -128,7 +137,7 @@ public class ConfPLocal extends JPanel {
 				}
             	
             	
-            	if (!datos.getTipoPartida().equals("madChess")) {
+            	if (!(datos.getTipoPartida()==partidaTipo.MADCHESS)) {
             		
             		ventana.getCardLayout().show(ventana.getPanelPrincipal(), "JUEGO");
             		new LogicaPartida();

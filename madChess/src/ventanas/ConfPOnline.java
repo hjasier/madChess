@@ -12,6 +12,7 @@ import Sockets.ClientHandler;
 import Sockets.Servidor;
 import juego.DatosPartida;
 import juego.LogicaPartida;
+import juego.partidaTipo;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.Jugador;
@@ -198,8 +199,17 @@ public class ConfPOnline extends JPanel {
         comboModoJuego.addActionListener(new ActionListener() {
         	@Override
             public void actionPerformed(ActionEvent e) {
-                String modoDeJuego = comboModoJuego.getSelectedItem().toString();
-                Session.getDatosPartida().setTipoPartida(modoDeJuego);
+                String tipoPartida = comboModoJuego.getSelectedItem().toString();
+                partidaTipo tipo;
+                if (tipoPartida.equals("madChess")) {
+                	tipo = partidaTipo.MADCHESS;
+                }
+                else {
+                	tipo = partidaTipo.CLASICA;
+                }
+              
+                
+                Session.getDatosPartida().setTipoPartida(tipo);
                 try {
 					Session.getCtsConnection().postDatosPartida();
 				} catch (IOException e1) {

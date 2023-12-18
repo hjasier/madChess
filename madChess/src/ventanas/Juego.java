@@ -57,6 +57,8 @@ import javax.swing.text.html.HTMLEditorKit;
 import componentes.*;
 import componentes.MScrollPane;
 import componentes.userInfo;
+import juego.modoJuego;
+import juego.partidaTipo;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import objetos.*;
@@ -186,10 +188,10 @@ public class Juego extends JPanel {
 		
 	    
 	    Icon backIcon = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, Escalador.escalar(20), Color.white);
-	    Icon backIconHover = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, Escalador.escalar(20), Color.red);
+	    Icon backIconHover = IconFontSwing.buildIcon(FontAwesome.CHEVRON_CIRCLE_LEFT, Escalador.escalar(20), Configuracion.HOVER);
 	    
 	    Icon configIcon = IconFontSwing.buildIcon(FontAwesome.COG, Escalador.escalar(20), Color.white);
-	    Icon configIconHover = IconFontSwing.buildIcon(FontAwesome.COG, Escalador.escalar(20), Color.red);
+	    Icon configIconHover = IconFontSwing.buildIcon(FontAwesome.COG, Escalador.escalar(20), Configuracion.HOVER);
 	    
 	    
 		backBtn = new JLabel(backIcon);
@@ -575,10 +577,10 @@ public class Juego extends JPanel {
 		if (Configuracion.DEBUG_MODE) {return;}
 		
 		
-		String modoDeJuego = Session.getDatosPartida().getModoDeJuego();
-		String tipoPartida = Session.getDatosPartida().getTipoPartida();
+		modoJuego modoDeJuego = Session.getDatosPartida().getModoDeJuego();
+		partidaTipo tipoPartida = Session.getDatosPartida().getTipoPartida();
 		
-		if (modoDeJuego.equals("local")) { //LOCAL
+		if (modoDeJuego == modoJuego.LOCAL) { //LOCAL
 			panelLabels.remove(labelChat);
 			labelBoost.setForeground(Color.white);
 			labelChat.setForeground(Color.gray);
@@ -590,7 +592,7 @@ public class Juego extends JPanel {
 			cardLayout.show(panelCardL,"CHAT");
 		}
 		
-		if (tipoPartida.equals("madChess")) { //CLÁSICO
+		if (tipoPartida == partidaTipo.CLASICA) { //CLÁSICO
 			cardLayout.show(panelCardL,"BOOST");
 		}
 		else {
@@ -599,7 +601,7 @@ public class Juego extends JPanel {
 			cardLayout.show(panelCardL,"CHAT");
 		}
 		
-		if (!tipoPartida.equals("madChess")&&modoDeJuego.equals("local")) { 
+		if (tipoPartida==partidaTipo.CLASICA && modoDeJuego == modoJuego.LOCAL) { 
 			panelControles.remove(panelAbajo);
 			panelControles.setLayout(new GridLayout(1,1));
 		}

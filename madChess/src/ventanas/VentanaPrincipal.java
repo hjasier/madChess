@@ -205,12 +205,17 @@ public class VentanaPrincipal extends JFrame{
         // JUEGO
         
         panelJuego.backBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent  e) {
-				
-				cardLayout.show(panelPrincipal, "MENUINICIO");
-			}
-		});
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres salir, se terminará la partida con victoria para el oponente?", "Confirmar derrota", JOptionPane.YES_NO_OPTION);
+                
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    cardLayout.show(panelPrincipal, "MENUINICIO");
+                    //TODO: hacer que se termine la partida con derrota para el jugador
+                } else {
+                }
+            }
+        });
       
         
         

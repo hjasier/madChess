@@ -13,7 +13,7 @@ public class Configuracion {
 	
 	//SOCKETS
 	
-	public static final String VERSION = "V1.9"; 
+	public static final String VERSION = "V2.1"; 
 	public static final int PUERTO = 6968; 
 	
 	//public static final String HOST = "madchess.tabernagogorra.eu"; 
@@ -24,6 +24,7 @@ public class Configuracion {
 	//STYLE
 	
 	public static final Color BACKGROUND = new Color(28,28,28);
+	public static final Color HOVER = new Color(255,87,50);
 	public static final Font DEFAULTFONT = new Font("Dialog", Font.PLAIN, 12);
 	public static Font CUSTOMFONT;
 	
@@ -33,6 +34,7 @@ public class Configuracion {
 	public static final boolean DEBUG_MODE = true;
 	public static final boolean LOGIN_DEBUG = true;
 	public static final boolean BOT_DEBUG = false;
+	public static final boolean DB_DEBUG = true;
 
 	
 	

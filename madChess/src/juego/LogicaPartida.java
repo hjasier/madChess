@@ -30,6 +30,7 @@ import utils.Escalador;
 import utils.Infos;
 import utils.Session;
 import ventanas.Juego;
+import database.GestorDB;
 
 /*
  * VAMOS A USAR ESTA CLASE LÓGICAPARTIDA COMO UN OBJETO TABLERO PARA NO TENER QUE USAR LA CLASE TABLERO QUE TIENE FRONTEND
@@ -282,8 +283,13 @@ public class LogicaPartida {
 
 
 	private void initEventosPosMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida, Pieza pieza) {
+		newInfoMov(prevCasilla,curCasilla,piezaComida,pieza);
 		
-		guardarMovimiento(prevCasilla,curCasilla,piezaComida,pieza);//Guardamos el movimiento y imprimimos
+		new Thread(() -> {
+	        guardarMovimiento(prevCasilla, curCasilla, piezaComida, pieza);
+	    }).start();
+		
+		
    		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
    		checkFinPartida();
    		Boosts.updateBoost();
@@ -365,7 +371,7 @@ public class LogicaPartida {
 
 	
 	protected void resetMouseSocket() {
-		if (datosPartida.getModoDeJuego().equals("online")) {
+		if (datosPartida.isOnline()) {
 			try {
 				Session.getCtsConnection().postResetDragg();} 
 			catch (IOException e1) {
@@ -502,7 +508,7 @@ public class LogicaPartida {
 	private void setNextPlayer() {
 		pararTemporizador();
 		
-		if (datosPartida.getModoDeJuego().equals("local")) {
+		if (!datosPartida.isOnline()) {
 			int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
 			tablero.setCurPlayer(jugadores.get(newIndex));
 			curPlayer = jugadores.get(newIndex);
@@ -756,9 +762,28 @@ public class LogicaPartida {
 
 	private void guardarMovimiento(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida, Pieza pieza) {
 		
-		Movimiento movimiento = new Movimiento(prevCasilla,curCasilla,piezaComida,pieza);
+		Movimiento movimiento = new Movimiento(curPlayer,prevCasilla,curCasilla,pieza,piezaComida);
 		
-		//Aquí guardaríamos el movimiento en la base de datos, con su user etc para las analíticas
+		
+		
+		
+		if (datosPartida.isOnline()) { //FIXME: ESTO NO DEBERÍA ESTAR AQUI
+			try {
+				Session.getCtsConnection().postPiezaMov(movimiento);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			datosPartida.addMovimiento(movimiento);
+		}
+
+
+		
+	}
+	
+	private void newInfoMov(Casilla prevCasilla, Casilla curCasilla, Pieza piezaComida, Pieza pieza) {
 		String extra = (piezaComida==null) ? " ":" "+Infos.KILL;
 		
 		String info = (prevCasilla.getPos()+" "+Infos.MOVE+" "+curCasilla.getPos()+extra);
@@ -768,30 +793,25 @@ public class LogicaPartida {
 		addInfo(Infos.NAMESEP+curPlayer.getUsuario().getUsername()+Infos.NAMESEP+" ",curPlayer.getPlayColor(),false,true);
 		
 		printMovimiento();
-		
-		if (datosPartida.getModoDeJuego().equals("online")) { //FIXME: ESTO NO DEBERÍA ESTAR AQUI
-			try {
-				Session.getCtsConnection().postPiezaMov(movimiento);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-
-		
 	}
 	
 	private void initPartidaAcabada() {
-		//parar temporizador de ambos jugadores
+		
 		addInfo(Infos.PARTIDA_TERMINADA,Color.yellow,true,true);
 		printMovimiento();
 		
-		pararTemporizador();
+		pararTemporizador();//parar temporizador del último jugador
 		
 		datosPartida.setIsTerminada(true);
 		for (Casilla casilla : casillas) {
 			casilla.setDisabled(true);
+		}
+		
+		//TODO: desabilitar los botones de madChess tmb
+		
+		if (Configuracion.DB_DEBUG) {
+			//Guardar datos de la partida en la db
+			GestorDB.insertarPartida(datosPartida);
 		}
 	}
 
@@ -846,7 +866,7 @@ public class LogicaPartida {
 		if(checkReyIsAlive()) {
 			initPartidaAcabada();
 			InfoMsg.alert(Infos.PARTIDA_TERMINADA_ALERT);
-			//guardarPartidaDB();
+			
 		}
 	}
 	
@@ -963,16 +983,16 @@ public class LogicaPartida {
 		//System.out.println(Session.getDatosPartida().getJugadores().get(0));
 		
 		
-		
-		if (Session.getDatosPartida().getModoDeJuego().equals("online")&&Session.getDatosPartida().getJugadores().get(0).equals(Session.getCurrentUser())) {
-			
-			try {
-				Session.getCtsConnection().postCasillas(casillas);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		//creo q esto ya no tiene ningun sentido
+//		if (datosPartida.isOnline()&&Session.getDatosPartida().getJugadores().get(0).equals(Session.getCurrentUser())) {
+//			
+//			try {
+//				Session.getCtsConnection().postCasillas(casillas);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 

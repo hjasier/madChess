@@ -10,6 +10,8 @@ import componentes.RButton;
 import componentes.navBar;
 import componentes.navBar;
 import juego.DatosPartida;
+import juego.modoJuego;
+import juego.partidaTipo;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import utils.Configuracion;
@@ -84,7 +86,7 @@ public class MenuInicioOLD extends JPanel {
 
             public void actionPerformed(ActionEvent e) {
             	VentanaPrincipal ventanaPrincip = Session.getVentana();
-            	DatosPartida datos = new DatosPartida("local");
+            	DatosPartida datos = new DatosPartida(modoJuego.LOCAL);
             	Session.setDatosPartida(datos);
             	ventanaPrincip.getPanelConfLocal().setDatosPartida(datos);
             	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "CONFLOCAL");

@@ -1,9 +1,11 @@
 package objetos;
 
+import java.io.Serializable;
+
 import utils.Themes.piezasThemes;
 import utils.Themes.tableroThemes;
 
-public class Usuario {
+public class Usuario implements Serializable{
 
 	
 	private String username;

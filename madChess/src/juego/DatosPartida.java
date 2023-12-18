@@ -13,21 +13,21 @@ import objetos.Usuario;
 
 public class DatosPartida implements Serializable{
 
-	protected String modoDeJuego;//Online o local
-	protected String tipoPartida = "Clásico"; //Normal o madChess
+	protected modoJuego modoDeJuego;//Online o local
+	protected partidaTipo tipoPartida = partidaTipo.CLASICA; //Normal o madChess
 	protected Date fechaIni;
 	protected Date fechaFin;
 	protected String gameId;
 	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
 	protected ArrayList<Jugador> ganadores = new ArrayList<Jugador>(); // arraylist de el ganador o los ganadores dependiendo la cantidad de la modalidad
-	protected ArrayList<Movimiento> movimientos;
+	protected ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 	protected Boolean isTerminada = false;
 	
 
 	
 	
 	
-	public DatosPartida(String modoDeJuego) {
+	public DatosPartida(modoJuego modoDeJuego) {
 		super();
 		this.modoDeJuego = modoDeJuego;
 		setFechaIni();
@@ -36,17 +36,28 @@ public class DatosPartida implements Serializable{
 	}
 	
 	
+	
+	public void addMovimiento(Movimiento movimiento) {
+		if (movimiento != null) {
+			movimientos.add(movimiento);
+		}
+		else {
+			System.out.println("ERROR AL GUARDAR EL MOVIMIENTO");
+		}
+		
+		System.out.println(movimientos.size());
+	}
 
-	public void setModoDeJuego(String modoDeJuego) {
+	public void setModoDeJuego(modoJuego modoDeJuego) {
 		this.modoDeJuego = modoDeJuego;
 	}
 	
-	public String getModoDeJuego() {
+	public modoJuego getModoDeJuego() {
 		return modoDeJuego;
 	}
 
 	public boolean isOnline() {
-		return modoDeJuego.equals("online");
+		return modoDeJuego == modoJuego.ONLINE;
 	}
 	
 	public String getGameId() {
@@ -68,13 +79,50 @@ public class DatosPartida implements Serializable{
 	}
 
 	
-	public String getTipoPartida() {
+	
+	public Date getFechaIni() {
+		return fechaIni;
+	}
+
+
+
+	public void setFechaIni(Date fechaIni) {
+		this.fechaIni = fechaIni;
+	}
+
+
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+
+
+	public ArrayList<Jugador> getGanadores() {
+		return ganadores;
+	}
+
+
+
+	public ArrayList<Movimiento> getMovimientos() {
+		return movimientos;
+	}
+
+
+
+	public partidaTipo getTipoPartida() {
 		return tipoPartida;
 	}
 
 
 
-	public void setTipoPartida(String tipoPartida) {
+	public void setTipoPartida(partidaTipo tipoPartida) {
 		this.tipoPartida = tipoPartida;
 	}
 
@@ -103,6 +151,7 @@ public class DatosPartida implements Serializable{
 
 
 	private void setGameId() {
+		//TODO: que compruebe en la db que no se ha usado ya ese código y en caso contrario que se vuelva a llamar
     	if (this.gameId!=null) {return;}
         StringBuilder gameID = new StringBuilder();
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

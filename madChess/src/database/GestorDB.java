@@ -1,5 +1,8 @@
 package database;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,79 +10,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import juego.DatosPartida;
 import utils.Session;
 import objetos.Jugador;
+import objetos.Movimiento;
 import objetos.Usuario;
 
 public class GestorDB {
-
-
-   
-	public static void crearTablaUsuario() {
-	        String sql = "CREATE TABLE IF NOT EXISTS Usuario (\n"
-	                + "    username VARCHAR(255) NOT NULL,\n"
-	                + "    passw TEXT NOT NULL,\n"
-	                + "    img_route TEXT NOT NULL,\n"
-	                + "    rank_classic INTEGER NOT NULL, \n" 
-	                + "    rank_mad INTEGER NOT NULL, \n"
-	                + "    tablero_theme TEXT NOT NULL,\n"
-	                + "    pieza_theme TEXT NOT NULL,\n"
-	                + "    PRIMARY KEY(username(100))"	
-	                + ");";
-
-	        
-	       
-	        
-	        try (Connection conn = ConexionDB.obtenerConexion();
-	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	            pstmt.executeUpdate();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	
-	public static void crearTablaPartida() {
-        String sql = "CREATE TABLE IF NOT EXISTS Partida (\n"
-        		+ "    gameId VARCHAR(255) NOT NULL,\n" 
-                + "    FechaIni TEXT NOT NULL,\n"
-                + "    FechaFin TEXT NOT NULL,\n"
-                + "    modo TEXT ,\n"
-                + "    movimiento LONGBLOB NOT NULL, \n"
-                + "    PRIMARY KEY(gameId(100))"
-                + ");";
-        
-        
-        try (Connection conn = ConexionDB.obtenerConexion();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 	
 	
-
 	
-	public static void crearTablaPartidaUsuario() {
-        String sql = "CREATE TABLE IF NOT EXISTS PartidaUsuario (\n"
-        		+ "    gameId VARCHAR(255) NOT NULL,\n" 
-        		+ "    username VARCHAR(255) INT NOT NULL,\n" 
-        		+ "    gainedRank INT NOT NULL,\n" 
-        		+ "    PRIMARY KEY(gameId(100))"
-        		+ "    FOREIGN KEY (gameId) REFERENCES Partida(gameId)"
-        		+ "    FOREIGN KEY (username) REFERENCES Usuario(username)"
-                + ");";
-        
-        
-        try (Connection conn = ConexionDB.obtenerConexion();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	//--------------------------------------------------------
+	//Para crear tablas las creais en el workbench, aquí no
+	//--------------------------------------------------------
 	
-
 	
 	
 	public static boolean iniciarSesion(String username, String passw) {
@@ -151,63 +95,156 @@ public class GestorDB {
 		}
 	 
 	 
-	 public static void insertarPartida(String gameId, String fechaIni, String FechaFin, String modo, byte[] movimiento, String username1, String username2, int rank1, int rank2) {
-		    // Verificar si el usuario ya existe antes de insertar
-		    if (!existePartida(gameId)) {
-		        String sql1 = "INSERT INTO Partida(gameId, fechaIni, FechaFin, modo ) VALUES(?,?,?,?)";
-		        String sql2 = "INSERT INTO PartidaUsuario(gameId, username, gainedRank) VALUES(?,?,?)";
-		        
-		        
+	    public static void insertarPartida(DatosPartida datosPartida) {
+	        String sql = "INSERT INTO Partida (gameId, modoDeJuego, tipoPartida, fechaIni, fechaFin, movsraw) VALUES (?, ?, ?, ?, ?, ?)";
+
+	        try (Connection conn = ConexionDB.obtenerConexion(); 
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        	
+	        	System.out.println(datosPartida.getTipoPartida());
+	            pstmt.setString(1, datosPartida.getGameId());
+	            pstmt.setString(2, datosPartida.getModoDeJuego().toString());
+	            pstmt.setString(3, datosPartida.getTipoPartida().toString());
+	            pstmt.setObject(4, datosPartida.getFechaIni());
+	            pstmt.setObject(5, datosPartida.getFechaFin());
+	            
+	            // Serializar la lista de movimientos
+	            byte[] movimientosSerializados = serializarMovimientos(datosPartida.getMovimientos());
+	            pstmt.setBytes(6, movimientosSerializados);
+	            
+	            pstmt.executeUpdate();
+	            
+	            insertarRelacionesJugadores(conn, datosPartida.getGameId(), datosPartida.getJugadores());
+	            insertarRelacionesGanadores(conn, datosPartida.getGameId(), datosPartida.getGanadores());
+	            
+	            
+	            
+
+	        } catch (SQLException | IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    private static byte[] serializarMovimientos(ArrayList<Movimiento> movimientos) throws IOException {
+	        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	             ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+
+	            oos.writeObject(movimientos);
+	            return bos.toByteArray();
+
+	        }
+	    }
+	    
+	    private static void insertarRelacionesJugadores(Connection conn, String gameId, ArrayList<Jugador> jugadores) throws SQLException {
+	        String sql = "INSERT INTO PartidaJugador (partidaId, username) VALUES (?, ?)";
+	        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            for (Jugador jugador : jugadores) {
+	                pstmt.setString(1, gameId);
+	                pstmt.setString(2, jugador.getUsuario().getUsername());
+	                pstmt.executeUpdate();
+	            }
+	        }
+	    }
+
+	    private static void insertarRelacionesGanadores(Connection conn, String gameId, ArrayList<Jugador> ganadores) throws SQLException {
+	        String sql = "INSERT INTO PartidaGanador (partidaId, username) VALUES (?, ?)";
+	        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            for (Jugador ganador : ganadores) {
+	                pstmt.setString(1, gameId);
+	                pstmt.setString(2, ganador.getUsuario().getUsername());
+	                pstmt.executeUpdate();
+	            }
+	        }
+	    }
+	 
+	    
+	    
+	    
+	    public static void modificarImagenUsuario(String username, String img_route) {
+		    if (existeUsuario(username)) {
+		        String sql = "UPDATE Usuario SET img_route = ? WHERE username = ?";
+
 		        try (Connection conn = ConexionDB.obtenerConexion();
-		             PreparedStatement pstmt = conn.prepareStatement(sql1)) {
-		            pstmt.setString(1, gameId);
-		            pstmt.setString(2, fechaIni);
-		            pstmt.setString(3, FechaFin);
-		            pstmt.setString(4, modo);
-		            pstmt.setBytes(5, movimiento);
-		            
+		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		            pstmt.setString(1, img_route);
+		            pstmt.setString(2, username);
+
 		            pstmt.executeUpdate();
-		            System.out.println("Partida insertada correctamente.");
-		        } catch (SQLException e) {
+		            System.out.println("Imagen de usuario modificada correctamente.");
+		        } catch (Exception e) {
 		            e.printStackTrace();
 		        }
-		        
-		        for (Jugador jugador : Session.getDatosPartida().getJugadores()) {
-		        	String username  =jugador.getUsuario().getUsername(); 
-		        	//rank
-		        	int rank = 0;
-		        	
-		        	try (Connection conn = ConexionDB.obtenerConexion();
-				             PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-				            pstmt.setString(1, gameId);
-				            pstmt.setString(2, username);
-				            pstmt.setInt(3, rank);
- 
-				            pstmt.executeUpdate();
-				            System.out.println("Partida insertada correctamente.");
-				        } catch (SQLException e) {
-				            e.printStackTrace();
-				        }
-				}
 		    } else {
-		        System.out.println("La partida ya existe. No se puede insertar.");
+		        System.out.println("No se puede modificar la imagen de un usuario inexistente");
 		    }
-		    
 		}
+	    
+	    public static boolean modificarContraseña(String username, String newPassw) {
+		    if (existeUsuario(username)) {
+		        String sql = "UPDATE Usuario SET passw = ? WHERE username = ?";
+		        
+		        try (Connection conn = ConexionDB.obtenerConexion();
+		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		            pstmt.setString(1, newPassw);
+		            pstmt.setString(2, username);
+
+		            pstmt.executeUpdate();
+		            return true;
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    } else {
+		        System.out.println("No se puede modificar la contraseña de un usuario inexistente.");
+		    }
+		    return false;
+		}
+
+
+		public static boolean existeUsuario(String username) {
+	        String sql = "SELECT * FROM Usuario WHERE username = ?";
+
+	        try (Connection conn = ConexionDB.obtenerConexion();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, username);
+	            ResultSet rs = pstmt.executeQuery();
+	            return rs.next();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	    
+	    
+	    
+		public static boolean existePartida(String gameId) {
+	        String sql = "SELECT * FROM Partida WHERE gameId = ?";
+
+	        try (Connection conn = ConexionDB.obtenerConexion();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, gameId);
+	            ResultSet rs = pstmt.executeQuery();
+	            return rs.next();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 //demas metodos
-	
+
 	 public static void eliminarUsuario(String username) {
 		 if(existeUsuario(username)) {
 			 String sql = "DELETE FROM Usuario WHERE username = ? ";
@@ -272,108 +309,10 @@ public class GestorDB {
 		 }
 	 }
 	 
-	 public static void modificarImagenUsuario(String username, String img_route) {
-		    if (existeUsuario(username)) {
-		        String sql = "UPDATE Usuario SET img_route = ? WHERE username = ?";
-
-		        try (Connection conn = ConexionDB.obtenerConexion();
-		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		            pstmt.setString(1, img_route);
-		            pstmt.setString(2, username);
-
-		            pstmt.executeUpdate();
-		            System.out.println("Imagen de usuario modificada correctamente.");
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-		    } else {
-		        System.out.println("No se puede modificar la imagen de un usuario inexistente");
-		    }
-		}
 	 
-	 public static boolean modificarContraseña(String username, String newPassw) {
-		    if (existeUsuario(username)) {
-		        String sql = "UPDATE Usuario SET passw = ? WHERE username = ?";
-		        
-		        try (Connection conn = ConexionDB.obtenerConexion();
-		             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		            pstmt.setString(1, newPassw);
-		            pstmt.setString(2, username);
-
-		            pstmt.executeUpdate();
-		            return true;
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-		    } else {
-		        System.out.println("No se puede modificar la contraseña de un usuario inexistente.");
-		    }
-		    return false;
-		}
-
 	 
-	 public static void modificarPartida(String gameId, String fechaIni, String FechaFin) {
-		 if(existeUsuario(gameId)) {
-			 String sql = "UPDATE Partida SET gameId = ? , fechaIni = ?, FechaFin = ? WHERE username = ?";
-			 
-			 try (Connection conn = ConexionDB.obtenerConexion();
-		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		            pstmt.setString(1, gameId);
-		            pstmt.setString(2, fechaIni);
-		            pstmt.setString(3, FechaFin);
-		            
-		            pstmt.executeUpdate();
-		            System.out.println("Partida modificada correctamente.");
-		        } catch (Exception e) {
-					e.printStackTrace();
-				}
-		 } else {
-			 System.out.println("No se puede modificar una partida inexistente");
-		 }
-	 }
-
-	    public static void mostrarUsuarios() {
-	        String sql = "SELECT * FROM Usuario";
-
-	        try (Connection conn = ConexionDB.obtenerConexion();
-	             PreparedStatement pstmt = conn.prepareStatement(sql);
-	             ResultSet rs = pstmt.executeQuery()) {
-	            while (rs.next()) {
-	                System.out.println("Username: " + rs.getString("username") + "\tRank Classic: " + rs.getInt("rank_classic") + "\tRank Mad Chess: " + rs.getInt("rank_mad") + rs.getString("tablero_theme"));
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	    
-
-	   
-		public static boolean existeUsuario(String username) {
-	        String sql = "SELECT * FROM Usuario WHERE username = ?";
-
-	        try (Connection conn = ConexionDB.obtenerConexion();
-	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	            pstmt.setString(1, username);
-	            ResultSet rs = pstmt.executeQuery();
-	            return rs.next();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            return false;
-	        }
-	    }
+	 
 		
-		public static boolean existePartida(String gameId) {
-	        String sql = "SELECT * FROM Partida WHERE gameId = ?";
-
-	        try (Connection conn = ConexionDB.obtenerConexion();
-	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	            pstmt.setString(1, gameId);
-	            ResultSet rs = pstmt.executeQuery();
-	            return rs.next();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            return false;
-	        }
-	    }
+		
 		
 }

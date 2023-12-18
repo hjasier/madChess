@@ -1,29 +1,23 @@
 package juego;
 
 
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
 import componentes.InfoMsg;
+import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
-import objetos.Tablero;
-import utils.Escalador;
 import utils.Infos;
 import utils.Session;
 import utils.utils;
-import ventanas.Juego;
 
 public class Boosts {
 		
 		protected static String curBoost;
-		public static ArrayList<Boost> boostActivos = new ArrayList<>();
-		public static ArrayList<Boost> boostInactivos = new ArrayList<>();
+		protected static ArrayList<Boost> boostActivos = new ArrayList<>();
+		protected static ArrayList<Boost> boostInactivos = new ArrayList<>();
 
 		public static void checkBoosts(Casilla casilla, Jugador curPlayer) {
 			
@@ -172,6 +166,17 @@ public class Boosts {
 			boostInactivos.add(boost);
 			boostActivos.remove(boost);
 		}
+
+
+
+		public static ArrayList<Boost> getBoostActivos() {
+			return boostActivos;
+		}
+		public static ArrayList<Boost> getBoostInactivos() {
+			return boostInactivos;
+		}
+		
+		
 	
 }
 
@@ -281,7 +286,4 @@ class Control extends Boost{
 	   
 }      
 
-class Boost {
-	protected int cont;
-	public void check(){}
-}
+

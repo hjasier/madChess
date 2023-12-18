@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import juego.DatosPartida;
+import juego.modoJuego;
 import objetos.Jugador;
 import objetos.Usuario;
 import objetos.Movimiento;
@@ -68,7 +69,7 @@ public class ClientHandler implements Runnable {
     			        break;
     			        
     			    case "hostNewGame":
-    			    	DatosPartida datosPartida = new DatosPartida("online");
+    			    	DatosPartida datosPartida = new DatosPartida(modoJuego.ONLINE);
     			    	datosPartida.setJugador(this.user);
     			    	
     			    	checkDatosPartida(datosPartida);
