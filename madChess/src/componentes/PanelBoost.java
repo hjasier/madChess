@@ -52,7 +52,7 @@ public class PanelBoost extends JPanel {
         
         JLabel iconoLabel = new JLabel();
         
-        ImageIcon iconoImg = new ImageIcon(getClass().getResource("../srcmedia/infoIcon.png"));
+        ImageIcon iconoImg = new ImageIcon(getClass().getResource("/srcmedia/infoIcon.png"));
         Image iconoImgEscalada = iconoImg.getImage().getScaledInstance((int) (Escalador.escalar(15)), (int) (Escalador.escalar(15)), Image.SCALE_SMOOTH);
 		
         iconoLabel.setIcon(new ImageIcon(iconoImgEscalada));

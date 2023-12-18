@@ -277,7 +277,7 @@ public class Juego extends JPanel {
 	    labelChat = new JLabel();
 	    
 	    
-	    Image imgChatResc = new ImageIcon(getClass().getResource("../srcmedia/labelChatR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
+	    Image imgChatResc = new ImageIcon(getClass().getResource("/srcmedia/labelChatR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
         
 	    labelChat.setIcon(new ImageIcon(imgChatResc));
 	    
@@ -287,7 +287,7 @@ public class Juego extends JPanel {
 	    labelChat.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	    
 	    labelBoost = new JLabel();
-	    Image imgBoostResc = new ImageIcon(getClass().getResource("../srcmedia/labelBoostsR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
+	    Image imgBoostResc = new ImageIcon(getClass().getResource("/srcmedia/labelBoostsR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
 	    labelBoost.setIcon(new ImageIcon(imgBoostResc));
         
 	    
@@ -307,7 +307,7 @@ public class Juego extends JPanel {
 	    
 	    labelMovimientos = new JLabel();
 	  
-	    ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/labelMovimientosR.png"));
+	    ImageIcon imgFoto = new ImageIcon(getClass().getResource("/srcmedia/labelMovimientosR.png"));
 	    Image imagenEscalada = imgFoto.getImage().getScaledInstance(Escalador.escalar(110), Escalador.escalar(33), Image.SCALE_SMOOTH);
         
 	    labelMovimientos.setIcon(new ImageIcon(imagenEscalada));
@@ -463,8 +463,8 @@ public class Juego extends JPanel {
         		
         		cardLayout.show(panelCardL,"CHAT");
         		
-        		Image imgChatResc = new ImageIcon(getClass().getResource("../srcmedia/labelChatSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
-        		Image imgBoostResc = new ImageIcon(getClass().getResource("../srcmedia/labelBoostsR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        		Image imgChatResc = new ImageIcon(getClass().getResource("/srcmedia/labelChatSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        		Image imgBoostResc = new ImageIcon(getClass().getResource("/srcmedia/labelBoostsR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
                 
         		
         		
@@ -484,8 +484,8 @@ public class Juego extends JPanel {
         		
         		cardLayout.show(panelCardL,"BOOST");
         		
-        		Image imgChatResc = new ImageIcon(getClass().getResource("../srcmedia/labelChatR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
-        		Image imgBoostResc = new ImageIcon(getClass().getResource("../srcmedia/labelBoostsSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        		Image imgChatResc = new ImageIcon(getClass().getResource("/srcmedia/labelChatR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        		Image imgBoostResc = new ImageIcon(getClass().getResource("/srcmedia/labelBoostsSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
                 
         		
         		

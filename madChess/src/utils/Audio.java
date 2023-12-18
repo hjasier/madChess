@@ -17,7 +17,7 @@ public class Audio {
  
 	public static void play(String nombre) {
 	    Thread thread = new Thread(() -> {
-	        String ruta = Session.getVentana().getClass().getResource("../srcmedia/" + nombre).getFile();
+	        String ruta = Session.getVentana().getClass().getResource("/srcmedia/" + nombre).getFile();
 	        final File file = new File(ruta);
 
 	        try (final AudioInputStream in = getAudioInputStream(file)) {

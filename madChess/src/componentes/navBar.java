@@ -18,7 +18,7 @@ public class navBar extends JPanel{
 	private Color colorFondo = Configuracion.BACKGROUND;
 	protected JPanel panelBtn = new JPanel();
 	protected JPanel panelLogo = new JPanel();
-	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo430x155.png"));
+	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("/srcmedia/logo430x155.png"));
     protected JLabel foto = new JLabel();
 	
     public navBar() {
@@ -65,7 +65,7 @@ public class navBar extends JPanel{
    		
    		JLabel linea = new JLabel();
    		
-   		ImageIcon imgLinea = new ImageIcon(getClass().getResource("../srcmedia/líneaNavBar.png"));
+   		ImageIcon imgLinea = new ImageIcon(getClass().getResource("/srcmedia/líneaNavBar.png"));
    		Image imagenEscaladaLinea = imgLinea.getImage().getScaledInstance(Escalador.escalar(1000), Escalador.escalar(225), Image.SCALE_SMOOTH);
    		imgLinea = new ImageIcon(imagenEscaladaLinea);
    		linea.setIcon(imgLinea);
@@ -75,7 +75,7 @@ public class navBar extends JPanel{
    		//UserIcon
    		
    		JLabel userIcon = new JLabel();
-   		ImageIcon imgUserIcon = new ImageIcon(getClass().getResource("../srcmedia/userIcon.png"));
+   		ImageIcon imgUserIcon = new ImageIcon(getClass().getResource("/srcmedia/userIcon.png"));
    		Image imagenEscaladaUserIcon = imgUserIcon.getImage().getScaledInstance(Escalador.escalar(100), Escalador.escalar(100), Image.SCALE_SMOOTH);
    		imgUserIcon = new ImageIcon(imagenEscaladaUserIcon);
    		userIcon.setIcon(imgUserIcon);

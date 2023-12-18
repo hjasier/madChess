@@ -15,7 +15,7 @@ import objetos.Jugador;
 import objetos.Usuario;
 import objetos.Movimiento;
 
-public class ClienteHandler implements Runnable {
+public class ClientHandler implements Runnable {
     private Socket socket;
     private ObjectInputStream input;
     private ObjectOutputStream output;
@@ -23,9 +23,9 @@ public class ClienteHandler implements Runnable {
     private HashMap<String, DatosPartida> partidas;
     private Usuario user;
 	private DatosPartida curPartida;
-	private HashMap<String, ArrayList<ClienteHandler>> clientes;
+	private HashMap<String, ArrayList<ClientHandler>> clientes;
 
-    public ClienteHandler(Socket socket, HashMap<String, DatosPartida> partidas, HashMap<String, ArrayList<ClienteHandler>> clientes) {
+    public ClientHandler(Socket socket, HashMap<String, DatosPartida> partidas, HashMap<String, ArrayList<ClientHandler>> clientes) {
         this.socket = socket;
         this.partidas = partidas;
         this.clientes = clientes;
@@ -177,7 +177,7 @@ public class ClienteHandler implements Runnable {
 
 	private void reenviar2Datos(String preDato,Object dato) {
     	if (curPartida==null) {return;}
-    	for (ClienteHandler cliente: clientes.get(curPartida.getGameId())) {
+    	for (ClientHandler cliente: clientes.get(curPartida.getGameId())) {
 			ObjectOutputStream clientOutput = cliente.getOutput();
 			if (clientOutput!=output) {  // Al cliente actual no, solo al resto
 				try {
@@ -196,7 +196,7 @@ public class ClienteHandler implements Runnable {
 	}
 	private void reenviar3Datos(String preDato,Object dato,Object dato2) {
     	if (curPartida==null) {return;}
-    	for (ClienteHandler cliente: clientes.get(curPartida.getGameId())) {
+    	for (ClientHandler cliente: clientes.get(curPartida.getGameId())) {
 			ObjectOutputStream clientOutput = cliente.getOutput();
 			if (clientOutput!=output) {  // Al cliente actual no, solo al resto
 				try {
@@ -218,7 +218,7 @@ public class ClienteHandler implements Runnable {
 
     private void reenviarObjetoRaw(Object objRecibido) {
     	if (curPartida==null) {return;}
-    	for (ClienteHandler cliente: clientes.get(curPartida.getGameId())) {
+    	for (ClientHandler cliente: clientes.get(curPartida.getGameId())) {
 			ObjectOutputStream clientOutput = cliente.getOutput();
 			if (clientOutput!=output) {  // Al cliente actual no, solo al resto
 				try {
@@ -238,7 +238,7 @@ public class ClienteHandler implements Runnable {
 		if (!partidas.containsKey(datos.getGameId())) {
 			partidas.put(datos.getGameId(), datos);
 			
-			ArrayList<ClienteHandler> clientesPartida = new ArrayList<ClienteHandler>();
+			ArrayList<ClientHandler> clientesPartida = new ArrayList<ClientHandler>();
 			clientesPartida.add(this);
 			
 			clientes.put(datos.getGameId(), clientesPartida);

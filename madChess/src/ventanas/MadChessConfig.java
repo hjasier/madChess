@@ -165,7 +165,7 @@ public class MadChessConfig extends JPanel {
         for (int i = 0; i < numImages; i++) {
             String imageName = imageNames[i];
             
-            ImageIcon originalIcon = new ImageIcon(getClass().getResource("../srcmedia/" + imageName + ".png"));
+            ImageIcon originalIcon = new ImageIcon(getClass().getResource("/srcmedia/" + imageName + ".png"));
             Image originalImage = originalIcon.getImage();
 
             // Reducir el tamaño de la imagen a 70x70

@@ -18,7 +18,7 @@ public class navBarOLD extends JPanel{
 	private Color colorFondo = Configuracion.BACKGROUND;
 	protected JPanel panelBtn = new JPanel();
 	protected JPanel panelLogo = new JPanel();
-	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("../srcmedia/logo430x155.png"));
+	protected ImageIcon imgFoto = new ImageIcon(getClass().getResource("/srcmedia/logo430x155.png"));
     protected JLabel foto = new JLabel();
 	
     public navBarOLD() {

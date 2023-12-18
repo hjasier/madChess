@@ -159,9 +159,9 @@ public class Casilla extends JPanel implements Serializable {
         if (isHielo ||(pieza!=null&& pieza.isBomberman)) {
             String src;
 			if (!isHielo) {
-                src = "../srcmedia/bomba.png";
+                src = "/srcmedia/bomba.png";
             } else {
-            	src = "../srcmedia/hielo.png";
+            	src = "/srcmedia/hielo.png";
             }
 
             Image nuevaImagen = new ImageIcon(getClass().getResource(src)).getImage();

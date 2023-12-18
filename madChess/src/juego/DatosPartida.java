@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
-import Sockets.ClienteHandler;
+import Sockets.ClientHandler;
 import objetos.Jugador;
 import objetos.Movimiento;
 import objetos.Usuario;

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import Sockets.ClienteHandler;
+import Sockets.ClientHandler;
 import Sockets.Servidor;
 import juego.DatosPartida;
 import juego.LogicaPartida;

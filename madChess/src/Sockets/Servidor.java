@@ -15,7 +15,7 @@ import ventanas.ConfPOnline;
 
 public class Servidor {
     private ServerSocket serverSocket;
-    private HashMap<String, ArrayList<ClienteHandler>> clientes = new HashMap<String, ArrayList<ClienteHandler>> ();
+    private HashMap<String, ArrayList<ClientHandler>> clientes = new HashMap<String, ArrayList<ClientHandler>> ();
     private HashMap<String, DatosPartida> partidas = new HashMap<String, DatosPartida>();
     
     private int PUERTO = 6968;
@@ -38,7 +38,7 @@ public class Servidor {
                 System.out.println("Cliente conectado --> " + clienteSocket);
 
                 
-                ClienteHandler clienteHandler = new ClienteHandler(clienteSocket,partidas, clientes);
+                ClientHandler clienteHandler = new ClientHandler(clienteSocket,partidas, clientes);
                 
 
                 Thread clienteThread = new Thread(clienteHandler);

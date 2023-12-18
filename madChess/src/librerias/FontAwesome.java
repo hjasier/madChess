@@ -722,7 +722,7 @@ public enum FontAwesome implements IconCode {
 
       @Override
       public InputStream getFontInputStream() {
-        return FontAwesome.class.getResourceAsStream("../srcmedia/fontawesome-webfont.ttf");
+        return FontAwesome.class.getResourceAsStream("/srcmedia/fontawesome-webfont.ttf");
       }
     };
   }

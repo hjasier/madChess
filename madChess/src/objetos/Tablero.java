@@ -330,7 +330,7 @@ public class Tablero extends JPanel{
     	//AUDIO 
     	Audio.play("explosion.wav");
     	
-        ImageIcon explosionIcon = new ImageIcon(getClass().getResource("../srcmedia/explosión.gif"));
+        ImageIcon explosionIcon = new ImageIcon(getClass().getResource("/srcmedia/explosión.gif"));
         animacion.setIcon(explosionIcon);
         animacion.setSize(explosionIcon.getIconWidth(), explosionIcon.getIconHeight());
         animacion.setVisible(true);
@@ -377,7 +377,7 @@ public class Tablero extends JPanel{
 		sizeFactor = Escalador.escalarF((float) sizeFactor);
 		
 		JLabel animacion = new JLabel();
-        ImageIcon animacionImg = new ImageIcon(getClass().getResource("../srcmedia/"+source+".gif"));
+        ImageIcon animacionImg = new ImageIcon(getClass().getResource("/srcmedia/"+source+".gif"));
         
         animacion.setIcon(animacionImg);
         animacion.setSize((int) (animacionImg.getIconWidth()*sizeFactor),(int) (animacionImg.getIconHeight()*sizeFactor));
@@ -413,7 +413,7 @@ public class Tablero extends JPanel{
 	}
 	
 	public int getDuracionGif(String source) throws IOException {
-        File archivoGIF = new File(getClass().getResource("../srcmedia/" + source + ".gif").getFile());
+        File archivoGIF = new File(getClass().getResource("/srcmedia/" + source + ".gif").getFile());
 
         ImageInputStream imageInputStream = ImageIO.createImageInputStream(archivoGIF);
         Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(imageInputStream);

@@ -64,12 +64,12 @@ public class MenuConfig extends JPanel{
 
        
         //Labels
-        ImageIcon labelsImg = new ImageIcon(getClass().getResource("../srcmedia/tablerosLabels.png"));
+        ImageIcon labelsImg = new ImageIcon(getClass().getResource("/srcmedia/tablerosLabels.png"));
         Image imgLabelsR = labelsImg.getImage().getScaledInstance((int) (Escalador.escalar(956) * escala), (int) (Escalador.escalar(36) * escala), Image.SCALE_SMOOTH);
 
         
         //Label tablero
-        ImageIcon tableroImg = new ImageIcon(getClass().getResource("../srcmedia/labelTablero.png"));
+        ImageIcon tableroImg = new ImageIcon(getClass().getResource("/srcmedia/labelTablero.png"));
         Image imgTableroR = tableroImg.getImage().getScaledInstance((int) (Escalador.escalar(177) * escala), (int) (Escalador.escalar(51) * escala), Image.SCALE_SMOOTH);
         
         
@@ -77,25 +77,25 @@ public class MenuConfig extends JPanel{
         
         
         // Tablero1
-        ImageIcon tablero1Img = new ImageIcon(getClass().getResource("../srcmedia/tablero1.png"));
+        ImageIcon tablero1Img = new ImageIcon(getClass().getResource("/srcmedia/tablero1.png"));
         Image imgReescaladatablero1 = tablero1Img.getImage().getScaledInstance((int) (Escalador.escalar(150) * escala), (int) (Escalador.escalar(150) * escala), Image.SCALE_SMOOTH);
 
         
         // Tablero2
-        ImageIcon tablero2Img = new ImageIcon(getClass().getResource("../srcmedia/tablero2.png"));
+        ImageIcon tablero2Img = new ImageIcon(getClass().getResource("/srcmedia/tablero2.png"));
         Image imgReescaladatablero2 = tablero2Img.getImage().getScaledInstance((int) (Escalador.escalar(150) * escala), (int) (Escalador.escalar(150) * escala), Image.SCALE_SMOOTH);
         
         
         // Tablero3
-        ImageIcon tablero3Img = new ImageIcon(getClass().getResource("../srcmedia/tablero3.png"));
+        ImageIcon tablero3Img = new ImageIcon(getClass().getResource("/srcmedia/tablero3.png"));
         Image imgReescaladatablero3 = tablero3Img.getImage().getScaledInstance((int) (Escalador.escalar(150) * escala), (int) (Escalador.escalar(150) * escala), Image.SCALE_SMOOTH);
         
         // Tablero4
-        ImageIcon tablero4Img = new ImageIcon(getClass().getResource("../srcmedia/tablero4.png"));
+        ImageIcon tablero4Img = new ImageIcon(getClass().getResource("/srcmedia/tablero4.png"));
         Image imgReescaladatablero4 = tablero4Img.getImage().getScaledInstance((int) (Escalador.escalar(150) * escala), (int) (Escalador.escalar(150) * escala), Image.SCALE_SMOOTH);
         
         // Tablero5
-        ImageIcon tablero5Img = new ImageIcon(getClass().getResource("../srcmedia/tablero5.png"));
+        ImageIcon tablero5Img = new ImageIcon(getClass().getResource("/srcmedia/tablero5.png"));
         Image imgReescaladatablero5 = tablero5Img.getImage().getScaledInstance((int) (Escalador.escalar(150) * escala), (int) (Escalador.escalar(150) * escala), Image.SCALE_SMOOTH);
         
         
@@ -109,14 +109,14 @@ public class MenuConfig extends JPanel{
         panelPiezas.setLayout(null);
         
         //Labels
-        ImageIcon labelsImgPiezas = new ImageIcon(getClass().getResource("../srcmedia/bb.png"));
+        ImageIcon labelsImgPiezas = new ImageIcon(getClass().getResource("/srcmedia/bb.png"));
         Image imgLabelsPiezas = labelsImgPiezas.getImage().getScaledInstance((int) (Escalador.escalar(956) * escala), (int) (Escalador.escalar(36) * escala), Image.SCALE_SMOOTH);
         JLabel labelsFtPiezas = new JLabel();
         labelsFtPiezas.setIcon(new ImageIcon(imgLabelsPiezas));
         labelsFtPiezas.setBounds(Escalador.escalar(32), Escalador.escalar(211), (int) (Escalador.escalar(956)*escala), (int) (Escalador.escalar(36)*escala));
         
         //Label piezas
-        ImageIcon piezasImg = new ImageIcon(getClass().getResource("../srcmedia/labelPiezas.png"));
+        ImageIcon piezasImg = new ImageIcon(getClass().getResource("/srcmedia/labelPiezas.png"));
         Image imgPiezas = piezasImg.getImage().getScaledInstance((int) (Escalador.escalar(177) * escala), (int) (Escalador.escalar(51) * escala), Image.SCALE_SMOOTH);
         JLabel labelPiezas = new JLabel();
         labelPiezas.setIcon(new ImageIcon(imgPiezas));
@@ -125,7 +125,7 @@ public class MenuConfig extends JPanel{
         
         
         // Pieza1
-        ImageIcon pieza1Img = new ImageIcon(getClass().getResource("../srcmedia/wn.png"));
+        ImageIcon pieza1Img = new ImageIcon(getClass().getResource("/srcmedia/wn.png"));
         Image imgReescaladaPieza1 = pieza1Img.getImage().getScaledInstance((int) (Escalador.escalar(75) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
         JLabel pieza1Ft = new JLabel();
         pieza1Ft.setIcon(new ImageIcon(imgReescaladaPieza1));
@@ -133,7 +133,7 @@ public class MenuConfig extends JPanel{
         
         
         // Pieza2
-        ImageIcon pieza2Img = new ImageIcon(getClass().getResource("../srcmedia/bbP2.png"));
+        ImageIcon pieza2Img = new ImageIcon(getClass().getResource("/srcmedia/bbP2.png"));
         Image imgReescaladaPieza2 = pieza2Img.getImage().getScaledInstance((int) (Escalador.escalar(75) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
         JLabel pieza2Ft = new JLabel();
         pieza2Ft.setIcon(new ImageIcon(imgReescaladaPieza2));

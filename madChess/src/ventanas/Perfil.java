@@ -118,49 +118,49 @@ public class Perfil extends JPanel{
         singlePanel.setBounds(Escalador.escalar(95), Escalador.escalar(205), Escalador.escalar(829), Escalador.escalar(184));
 
         // PanelRankingRango
-        ImageIcon PanelRankingRangoft = new ImageIcon(getClass().getResource("../srcmedia/PanelRankingRango.png"));
+        ImageIcon PanelRankingRangoft = new ImageIcon(getClass().getResource("/srcmedia/PanelRankingRango.png"));
         Image imagenEscalada = PanelRankingRangoft.getImage().getScaledInstance((int) (Escalador.escalar(978) * escala), (int) (Escalador.escalar(252) * escala), Image.SCALE_SMOOTH);
         JLabel PanelRankingRango = new JLabel();
   		PanelRankingRango.setBounds(Escalador.escalar(52), Escalador.escalar(-45), Escalador.escalar(967), Escalador.escalar(270));
   		PanelRankingRango.setIcon(new ImageIcon(imagenEscalada));
         
   		// Rangopng
-  		ImageIcon Rangopngft = new ImageIcon(getClass().getResource("../srcmedia/Rangopng.png"));
+  		ImageIcon Rangopngft = new ImageIcon(getClass().getResource("/srcmedia/Rangopng.png"));
   		Image imgEscaladaRangopngft = Rangopngft.getImage().getScaledInstance((int) (Escalador.escalar(149)*0.7 * escala), (int) (Escalador.escalar(37)*0.7 * escala), Image.SCALE_SMOOTH);
   		JLabel Rangopng = new JLabel();
   		Rangopng.setIcon(new ImageIcon(imgEscaladaRangopngft));
   		Rangopng.setBounds(Escalador.escalar(157), Escalador.escalar(-5), Escalador.escalar(183), Escalador.escalar(73));
         
   		// Clasico1
-        ImageIcon Clasico1ft = new ImageIcon(getClass().getResource("../srcmedia/Clasico.png"));
+        ImageIcon Clasico1ft = new ImageIcon(getClass().getResource("/srcmedia/Clasico.png"));
         Image imgEscaladaClasico1ft = Clasico1ft.getImage().getScaledInstance((int) (Escalador.escalar(224) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
         JLabel Clasico1 = new JLabel();
         Clasico1.setIcon(new ImageIcon(imgEscaladaClasico1ft));
         Clasico1.setBounds(Escalador.escalar(69), Escalador.escalar(65), Escalador.escalar(257), Escalador.escalar(157));
         
         // madChess1
-        ImageIcon madChess1ft = new ImageIcon(getClass().getResource("../srcmedia/madChess.png"));
+        ImageIcon madChess1ft = new ImageIcon(getClass().getResource("/srcmedia/madChess.png"));
         Image imgEscaladamadChess1ft = madChess1ft.getImage().getScaledInstance((int) (Escalador.escalar(224) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
         JLabel madChess1 = new JLabel();
         madChess1.setIcon(new ImageIcon(imgEscaladamadChess1ft));
         madChess1.setBounds(Escalador.escalar(229), Escalador.escalar(77), Escalador.escalar(192), Escalador.escalar(133));
   		
         // Ranking
-        ImageIcon Rankingft = new ImageIcon(getClass().getResource("../srcmedia/Ranking.png"));
+        ImageIcon Rankingft = new ImageIcon(getClass().getResource("/srcmedia/Ranking.png"));
         Image imgEscaladaSingleLabel = Rankingft.getImage().getScaledInstance((int) (Escalador.escalar(188)*0.7 * escala), (int) (Escalador.escalar(37)*0.7 * escala), Image.SCALE_SMOOTH);
         JLabel Ranking = new JLabel();
   		Ranking.setBounds(Escalador.escalar(488), Escalador.escalar(-5), Escalador.escalar(215), Escalador.escalar(73));
   		Ranking.setIcon(new ImageIcon(imgEscaladaSingleLabel));
         
   		// Clasico2
-        ImageIcon Clasico2ft = new ImageIcon(getClass().getResource("../srcmedia/Clasico.png"));
+        ImageIcon Clasico2ft = new ImageIcon(getClass().getResource("/srcmedia/Clasico.png"));
         Image imgEscaladaClasico2ft = Clasico2ft.getImage().getScaledInstance((int) (Escalador.escalar(224) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
         JLabel Clasico2 = new JLabel();
         Clasico2.setIcon(new ImageIcon(imgEscaladaClasico2ft));
         Clasico2.setBounds(Escalador.escalar(401), Escalador.escalar(65), Escalador.escalar(257), Escalador.escalar(157));
         
         // madChess2
-        ImageIcon madChess2ft = new ImageIcon(getClass().getResource("../srcmedia/madChess.png"));
+        ImageIcon madChess2ft = new ImageIcon(getClass().getResource("/srcmedia/madChess.png"));
         Image imgEscaladamadChess2ft = madChess2ft.getImage().getScaledInstance((int) (Escalador.escalar(224) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
         JLabel madChess2 = new JLabel();
         madChess2.setIcon(new ImageIcon(imgEscaladamadChess2ft));

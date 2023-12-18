@@ -71,7 +71,7 @@ public class utils {
     
     
     public static ImageIcon getIcono(String string) {
-    	ImageIcon iconoImg = new ImageIcon(Boosts.class.getResource("../srcmedia/"+string+".png"));
+    	ImageIcon iconoImg = new ImageIcon(Boosts.class.getResource("/srcmedia/"+string+".png"));
         Image imagenEscalada = iconoImg.getImage().getScaledInstance((int) (Escalador.escalar(35)), (int) (Escalador.escalar(35)), Image.SCALE_SMOOTH);
 		ImageIcon icono = new ImageIcon(imagenEscalada);
 		return icono;

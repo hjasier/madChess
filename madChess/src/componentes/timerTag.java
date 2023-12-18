@@ -31,7 +31,7 @@ public class timerTag extends JPanel{
 	    
 	    
 	    // timerTagBg
-	    ImageIcon userTagBgft = new ImageIcon(getClass().getResource("../srcmedia/timerTag.png"));
+	    ImageIcon userTagBgft = new ImageIcon(getClass().getResource("/srcmedia/timerTag.png"));
 	    Image imagenEscalada = userTagBgft.getImage().getScaledInstance((int) (Escalador.escalar(146) * escala), (int) (Escalador.escalar(49) * escala), Image.SCALE_SMOOTH);
 	    
 	    userTagBg.setIcon(new ImageIcon(imagenEscalada));
@@ -40,7 +40,7 @@ public class timerTag extends JPanel{
 	    
 	    
 	    // fotoGif
-	    ImageIcon userFoto = new ImageIcon(getClass().getResource("../srcmedia/relojGifInv.png"));
+	    ImageIcon userFoto = new ImageIcon(getClass().getResource("/srcmedia/relojGifInv.png"));
 	    Image imgEscaladaUser = userFoto.getImage().getScaledInstance((int) (Escalador.escalar(30) * escala), (int) (Escalador.escalar(30) * escala), Image.SCALE_SMOOTH);
 	    
 	    userFotoLabel.setIcon(new ImageIcon(imgEscaladaUser));
@@ -70,14 +70,14 @@ public class timerTag extends JPanel{
 		ImageIcon userTagBgft;
 		ImageIcon userFoto;
 		if (isOn) {
-			userTagBgft = new ImageIcon(getClass().getResource("../srcmedia/timerTagON.png"));
-			userFoto = new ImageIcon(getClass().getResource("../srcmedia/relojGifInv.gif"));
+			userTagBgft = new ImageIcon(getClass().getResource("/srcmedia/timerTagON.png"));
+			userFoto = new ImageIcon(getClass().getResource("/srcmedia/relojGifInv.gif"));
 		}
 		else {
-			userTagBgft = new ImageIcon(getClass().getResource("../srcmedia/timerTag.png"));
-			userFoto = new ImageIcon(getClass().getResource("../srcmedia/relojGifInv.png"));
+			userTagBgft = new ImageIcon(getClass().getResource("/srcmedia/timerTag.png"));
+			userFoto = new ImageIcon(getClass().getResource("/srcmedia/relojGifInv.png"));
 		}
-		userFoto = new ImageIcon(getClass().getResource("../srcmedia/relojGifInv.png")); // el gif no va ns pk
+		userFoto = new ImageIcon(getClass().getResource("/srcmedia/relojGifInv.png")); // el gif no va ns pk
 		Image imagenEscalada = userTagBgft.getImage().getScaledInstance((int) (Escalador.escalar(146) * escala), (int) (Escalador.escalar(49) * escala), Image.SCALE_SMOOTH);
 	    userTagBg.setIcon(new ImageIcon(imagenEscalada));
 	    

@@ -61,7 +61,7 @@ public class VentanaPrincipal extends JFrame{
     
     CambiarContraseña cambiarContraseña = new CambiarContraseña();
     
-    ImageIcon logo = new ImageIcon(getClass().getResource("../srcmedia/applogo.png"));
+    ImageIcon logo = new ImageIcon(getClass().getResource("/srcmedia/appLogo.png"));
 
     // Obtener la imagen desde el ImageIcon
    

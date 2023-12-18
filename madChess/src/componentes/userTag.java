@@ -2,6 +2,7 @@ package componentes;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,11 +12,13 @@ import objetos.Jugador;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
+import utils.utils;
 
 public class userTag extends JPanel{
 	
 	double escala = 0.85;
-	JLabel userLabel = new JLabel("user");
+	private JLabel userLabel = new JLabel("user");
+	private JLabel userFotoLabel = new JLabel();
 	
 	public userTag() {
 	   
@@ -27,7 +30,7 @@ public class userTag extends JPanel{
 	    
 	    
 	    // userTagBg
-	    ImageIcon userTagBgft = new ImageIcon(getClass().getResource("../srcmedia/userTagBg.png"));
+	    ImageIcon userTagBgft = new ImageIcon(getClass().getResource("/srcmedia/userTagBg.png"));
 	    Image imagenEscalada = userTagBgft.getImage().getScaledInstance((int) (Escalador.escalar(237) * escala), (int) (Escalador.escalar(49) * escala), Image.SCALE_SMOOTH);
 	    JLabel userTagBg = new JLabel();
 	    userTagBg.setIcon(new ImageIcon(imagenEscalada));
@@ -36,11 +39,11 @@ public class userTag extends JPanel{
 	    
 	    
 	    // userFoto
-	    ImageIcon userFoto = new ImageIcon(getClass().getResource("../srcmedia/userIcon.png"));
+	    ImageIcon userFoto = new ImageIcon(getClass().getResource("/srcmedia/userIcon.png"));
 	    Image imgEscaladaUser = userFoto.getImage().getScaledInstance((int) (Escalador.escalar(30) * escala), (int) (Escalador.escalar(30) * escala), Image.SCALE_SMOOTH);
-	    JLabel userFotoLabel = new JLabel();
+	    
 	    userFotoLabel.setIcon(new ImageIcon(imgEscaladaUser));
-	    userFotoLabel.setBounds((int) (Escalador.escalar(14)*escala), (int) (Escalador.escalar(7)*escala), (int) (Escalador.escalar(30)*escala), (int) (Escalador.escalar(30)*escala));
+	    userFotoLabel.setBounds((int) (Escalador.escalar(14)*escala), (int) (Escalador.escalar(6)*escala), (int) (Escalador.escalar(30)*escala), (int) (Escalador.escalar(30)*escala));
 
 	    
 	    //userLabel
@@ -58,9 +61,22 @@ public class userTag extends JPanel{
 	}
 
 	public void setUser(Jugador jugador) {
-		
 		userLabel.setText(jugador.getUsuario().getUsername());
-
+		
+		
+		Thread cargaImg = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                	BufferedImage img = utils.getRoundImg(jugador.getUsuario().getImg_route(), (int) (Escalador.escalar(30)* escala));	
+            		userFotoLabel.setIcon(new ImageIcon(img));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+		
+		cargaImg.start();
 	}
     
     

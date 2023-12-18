@@ -13,7 +13,7 @@ public class Configuracion {
 	
 	//SOCKETS
 	
-	public static final String VERSION = "V1.8"; 
+	public static final String VERSION = "V1.9"; 
 	public static final int PUERTO = 6968; 
 	
 	//public static final String HOST = "madchess.tabernagogorra.eu"; 

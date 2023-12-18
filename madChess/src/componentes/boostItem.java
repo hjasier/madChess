@@ -48,7 +48,8 @@ public class boostItem extends JPanel{
 		usarButton.setBounds(Escalador.newBounds(209, 20, 72, 35));
 		
 		panel.add(usarButton);
-		ImageIcon iconoImg = new ImageIcon(getClass().getResource("../srcmedia/"+icono+".png"));
+
+		ImageIcon iconoImg = new ImageIcon(getClass().getResource("/srcmedia/"+icono+".png"));
         Image imagenEscalada = iconoImg.getImage().getScaledInstance((int) (Escalador.escalar(35)), (int) (Escalador.escalar(35)), Image.SCALE_SMOOTH);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("1/1");

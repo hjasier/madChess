@@ -79,14 +79,14 @@ public class MenuInicio extends JPanel {
         singlePanel.setBounds(Escalador.escalar(82), Escalador.escalar(64), Escalador.escalar(310), Escalador.escalar(260));
 
         // SinglePLayerBack
-        ImageIcon singleplayerft = new ImageIcon(getClass().getResource("../srcmedia/singleplayer.png"));
+        ImageIcon singleplayerft = new ImageIcon(getClass().getResource("/srcmedia/singleplayer.png"));
         Image imagenEscalada = singleplayerft.getImage().getScaledInstance((int) (Escalador.escalar(443) * escala), (int) (Escalador.escalar(362) * escala), Image.SCALE_SMOOTH);
         JLabel singleplayerBack = new JLabel();
         singleplayerBack.setIcon(new ImageIcon(imagenEscalada));
         singleplayerBack.setBounds(0, Escalador.escalar(5), Escalador.escalar(310), Escalador.escalar(253));
 
         // SinglePlayerLabel
-        ImageIcon singleplayerLabel = new ImageIcon(getClass().getResource("../srcmedia/singleplayerLabel.png"));
+        ImageIcon singleplayerLabel = new ImageIcon(getClass().getResource("/srcmedia/singleplayerLabel.png"));
         Image imgEscaladaSingleLabel = singleplayerLabel.getImage().getScaledInstance((int) (Escalador.escalar(369) * escala), (int) (Escalador.escalar(236) * escala), Image.SCALE_SMOOTH);
         JLabel singlePlayerLabel = new JLabel();
         singlePlayerLabel.setIcon(new ImageIcon(imgEscaladaSingleLabel));
@@ -112,14 +112,14 @@ public class MenuInicio extends JPanel {
 
 
         // Partidas ONline Back
-        ImageIcon partidasOnlineFt = new ImageIcon(getClass().getResource("../srcmedia/partidasonline.png"));
+        ImageIcon partidasOnlineFt = new ImageIcon(getClass().getResource("/srcmedia/partidasonline.png"));
         Image imgPOEscalada = partidasOnlineFt.getImage().getScaledInstance((int) (Escalador.escalar(443) * escala), (int) (Escalador.escalar(293) * escala), Image.SCALE_SMOOTH);
         JLabel partidasonlineBack = new JLabel();
         partidasonlineBack.setIcon(new ImageIcon(imgPOEscalada));
         partidasonlineBack.setBounds(0, 0, (int) (Escalador.escalar(443) * escala), (int) (Escalador.escalar(293) * escala));
 
         // Partidas Online Label
-        ImageIcon partidasOnlineLabel = new ImageIcon(getClass().getResource("../srcmedia/partidasonlineLabel.png"));
+        ImageIcon partidasOnlineLabel = new ImageIcon(getClass().getResource("/srcmedia/partidasonlineLabel.png"));
         Image imgPartidaOnlineLabel = partidasOnlineLabel.getImage().getScaledInstance((int) (Escalador.escalar(360) * escala), (int) (Escalador.escalar(201) * escala), Image.SCALE_SMOOTH);
         JLabel partidaOnlineLabel = new JLabel();
         partidaOnlineLabel.setIcon(new ImageIcon(imgPartidaOnlineLabel));
@@ -152,28 +152,28 @@ public class MenuInicio extends JPanel {
         multiPanel.setBounds(Escalador.escalar(501), Escalador.escalar(64), Escalador.escalar(407), Escalador.escalar(263));
 
         // MultiplayerBack
-        ImageIcon multiplayer = new ImageIcon(getClass().getResource("../srcmedia/multiplayer.png"));
+        ImageIcon multiplayer = new ImageIcon(getClass().getResource("/srcmedia/multiplayer.png"));
         Image imgEscaladaMulti = multiplayer.getImage().getScaledInstance((int) (Escalador.escalar(568) * escala), (int) (Escalador.escalar(362) * escala), Image.SCALE_SMOOTH);
         JLabel multiplayerBack = new JLabel();
         multiplayerBack.setBounds(Escalador.escalar(5), Escalador.escalar(5), Escalador.escalar(397), Escalador.escalar(253));
         multiplayerBack.setIcon(new ImageIcon(imgEscaladaMulti));
 
         // MultiplayerLabel 1
-        ImageIcon multiplayerLabel = new ImageIcon(getClass().getResource("../srcmedia/multiplayerLabel1.png"));
+        ImageIcon multiplayerLabel = new ImageIcon(getClass().getResource("/srcmedia/multiplayerLabel1.png"));
         Image imgEscaladaMultiLabel = multiplayerLabel.getImage().getScaledInstance((int) (Escalador.escalar(162) * escala), (int) (Escalador.escalar(215) * escala), Image.SCALE_SMOOTH);
         JLabel multiplayerLabelBack = new JLabel();
         multiplayerLabelBack.setIcon(new ImageIcon(imgEscaladaMultiLabel));
         multiplayerLabelBack.setBounds(Escalador.escalar(25), Escalador.escalar(84), Escalador.escalar(113), Escalador.escalar(150));
 
         // MultiplayerLabel 2
-        ImageIcon multiplayerLabel2 = new ImageIcon(getClass().getResource("../srcmedia/multiplayerLabel2.png"));
+        ImageIcon multiplayerLabel2 = new ImageIcon(getClass().getResource("/srcmedia/multiplayerLabel2.png"));
         Image imgEscaladaMultiLabel2 = multiplayerLabel2.getImage().getScaledInstance((int) (Escalador.escalar(162) * escala), (int) (Escalador.escalar(215) * escala), Image.SCALE_SMOOTH);
         JLabel multiplayerLabelBack2 = new JLabel();
         multiplayerLabelBack2.setIcon(new ImageIcon(imgEscaladaMultiLabel2));
         multiplayerLabelBack2.setBounds(Escalador.escalar(147), Escalador.escalar(84), Escalador.escalar(113), Escalador.escalar(150));
 
         // MultiplayerLabel 3
-        ImageIcon multiplayerLabel3 = new ImageIcon(getClass().getResource("../srcmedia/multiplayerLabel3.png"));
+        ImageIcon multiplayerLabel3 = new ImageIcon(getClass().getResource("/srcmedia/multiplayerLabel3.png"));
         Image imgEscaladaMultiLabel3 = multiplayerLabel3.getImage().getScaledInstance((int) (Escalador.escalar(162) * escala), (int) (Escalador.escalar(215) * escala), Image.SCALE_SMOOTH);
         JLabel multiplayerLabelBack3 = new JLabel();
         multiplayerLabelBack3.setIcon(new ImageIcon(imgEscaladaMultiLabel3));
@@ -196,28 +196,28 @@ public class MenuInicio extends JPanel {
         localPanel.setBounds(Escalador.escalar(501), Escalador.escalar(362), Escalador.escalar(419), Escalador.escalar(219));
 
         // LocalPlayBack
-        ImageIcon localplay = new ImageIcon(getClass().getResource("../srcmedia/localplay.png"));
+        ImageIcon localplay = new ImageIcon(getClass().getResource("/srcmedia/localplay.png"));
         Image imgEscaladaLocal = localplay.getImage().getScaledInstance((int) (Escalador.escalar(568) * escala), (int) (Escalador.escalar(293) * escala), Image.SCALE_SMOOTH);
         JLabel localBack = new JLabel();
         localBack.setIcon(new ImageIcon(imgEscaladaLocal));
         localBack.setBounds(Escalador.escalar(10), Escalador.escalar(10), (int) (Escalador.escalar(568) * escala), (int) (Escalador.escalar(293) * escala));
 
         // LocalPlayLabel 1
-        ImageIcon localplayLabel = new ImageIcon(getClass().getResource("../srcmedia/localplayLabel1.png"));
+        ImageIcon localplayLabel = new ImageIcon(getClass().getResource("/srcmedia/localplayLabel1.png"));
         Image imgEscaladaLocalLabel = localplayLabel.getImage().getScaledInstance((int) (Escalador.escalar(154) * escala), (int) (Escalador.escalar(174) * escala), Image.SCALE_SMOOTH);
         JLabel localplayLabelBack = new JLabel();
         localplayLabelBack.setIcon(new ImageIcon(imgEscaladaLocalLabel));
         localplayLabelBack.setBounds(Escalador.escalar(43), Escalador.escalar(78), (int) (Escalador.escalar(154) * escala), (int) (Escalador.escalar(174) * escala));
 
         // LocalPlayLabel 2
-        ImageIcon localplayLabel2 = new ImageIcon(getClass().getResource("../srcmedia/localplayLabel2.png"));
+        ImageIcon localplayLabel2 = new ImageIcon(getClass().getResource("/srcmedia/localplayLabel2.png"));
         Image imgEscaladaLocalLabel2 = localplayLabel2.getImage().getScaledInstance((int) (Escalador.escalar(154) * escala), (int) (Escalador.escalar(174) * escala), Image.SCALE_SMOOTH);
         JLabel localplayLabelBack2 = new JLabel();
         localplayLabelBack2.setIcon(new ImageIcon(imgEscaladaLocalLabel2));
         localplayLabelBack2.setBounds(Escalador.escalar(160), Escalador.escalar(78), (int) (Escalador.escalar(154) * escala), (int) (Escalador.escalar(174) * escala));
 
         // LocalPlayLabel 3
-        ImageIcon localplayLabel3 = new ImageIcon(getClass().getResource("../srcmedia/localplayLabel3.png"));
+        ImageIcon localplayLabel3 = new ImageIcon(getClass().getResource("/srcmedia/localplayLabel3.png"));
         Image imgEscaladaLocalLabel3 = localplayLabel3.getImage().getScaledInstance((int) (Escalador.escalar(154) * escala), (int) (Escalador.escalar(174) * escala), Image.SCALE_SMOOTH);
         JLabel localplayLabelBack3 = new JLabel();
         localplayLabelBack3.setIcon(new ImageIcon(imgEscaladaLocalLabel3));
@@ -248,17 +248,17 @@ public class MenuInicio extends JPanel {
         
         
       //-----------------Hovers-----------------
-        agregarHoverEffect(multiplayerLabelBack, escala, "../srcmedia/multiplayerLabel1.png");
-        agregarHoverEffect(multiplayerLabelBack2, escala, "../srcmedia/multiplayerLabel2.png");
-        agregarHoverEffect(multiplayerLabelBack3, escala, "../srcmedia/multiplayerLabel3.png");
+        agregarHoverEffect(multiplayerLabelBack, escala, "/srcmedia/multiplayerLabel1.png");
+        agregarHoverEffect(multiplayerLabelBack2, escala, "/srcmedia/multiplayerLabel2.png");
+        agregarHoverEffect(multiplayerLabelBack3, escala, "/srcmedia/multiplayerLabel3.png");
         
-        agregarHoverEffect(localplayLabelBack, escala, "../srcmedia/localplayLabel1.png");
-        agregarHoverEffect(localplayLabelBack2, escala, "../srcmedia/localplayLabel2.png");
-        agregarHoverEffect(localplayLabelBack3, escala, "../srcmedia/localplayLabel3.png");
+        agregarHoverEffect(localplayLabelBack, escala, "/srcmedia/localplayLabel1.png");
+        agregarHoverEffect(localplayLabelBack2, escala, "/srcmedia/localplayLabel2.png");
+        agregarHoverEffect(localplayLabelBack3, escala, "/srcmedia/localplayLabel3.png");
         
-        agregarHoverEffect(singlePlayerLabel, escala, "../srcmedia/singleplayerLabel.png");
+        agregarHoverEffect(singlePlayerLabel, escala, "/srcmedia/singleplayerLabel.png");
         
-        agregarHoverEffect(partidaOnlineLabel, escala, "../srcmedia/partidasonlineLabel.png");
+        agregarHoverEffect(partidaOnlineLabel, escala, "/srcmedia/partidasonlineLabel.png");
         //-----------------FIN Hovers-----------------
 
         
