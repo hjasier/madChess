@@ -220,7 +220,7 @@ public class Tablero extends JPanel{
     
     
 
-	protected Casilla getCasilla(int fila ,char columna) {
+	public Casilla getCasilla(int fila ,char columna) {
     	for (Casilla casilla : casillas) {
     		if (columna == casilla.getColumna() && fila == casilla.getFila()) {
     			return casilla;

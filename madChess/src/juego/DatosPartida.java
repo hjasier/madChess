@@ -199,5 +199,10 @@ public class DatosPartida implements Serializable{
             return (ArrayList<Movimiento>) ois.readObject();
         }
     }
+	
+	public void setGameId(String gameId) {
+        this.isReplay = true;
+        this.gameId = gameId;
+    }
 
 }

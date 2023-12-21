@@ -11,7 +11,13 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JScrollPane;
+
+import juego.VAR;
+
 import java.awt.Color;
 
 public class varController extends JPanel{
@@ -21,9 +27,9 @@ public class varController extends JPanel{
 		setLayout(null);
 		
 		
-		JButton btnNewButton = new JButton("Avanzar");
-		btnNewButton.setBounds(Escalador.newBounds(155, 10, 159, 21));
-		add(btnNewButton);
+		JButton btnAvanzar = new JButton("Avanzar");
+		btnAvanzar.setBounds(Escalador.newBounds(155, 10, 159, 21));
+		add(btnAvanzar);
 		
 		JButton btnRetroceder = new JButton("Retroceder");
 		btnRetroceder.setBounds(Escalador.newBounds(29, 10, 127, 21));
@@ -51,6 +57,25 @@ public class varController extends JPanel{
 			nPanel.add(new movimientoItem());
             movimientos.add(nPanel);
         }
+		
+		
+		btnAvanzar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VAR.avanzarMov();
+				
+			}
+		});
+		
+		btnRetroceder.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VAR.retrodecerMov();
+				
+			}
+		});
 		
 		
 		

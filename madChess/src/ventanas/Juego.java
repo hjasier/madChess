@@ -638,20 +638,11 @@ public class Juego extends JPanel {
     
     
 	public void setInterfaz() {
-		
+		if (Configuracion.DEBUG_MODE) {return;}
 		
 		modoJuego modoDeJuego = Session.getDatosPartida().getModoDeJuego();
 		partidaTipo tipoPartida = Session.getDatosPartida().getTipoPartida();
 		
-		if (Session.getDatosPartida().isReplay()) {
-		
-			cardLayout.show(panelCardL,"VAR");
-			panelLabels.remove(labelBoost);
-			
-			panelLabels.add(labelVAR);
-			
-			return;
-		}
 		
 		if (modoDeJuego == modoJuego.LOCAL) { //LOCAL
 			panelLabels.remove(labelChat);
@@ -678,6 +669,14 @@ public class Juego extends JPanel {
 		
 		
 		
+	}
+	
+	
+	public void modoTempPonerbtns() {
+		cardLayout.show(panelCardL,"VAR");
+		panelLabels.remove(labelBoost);
+		
+		panelLabels.add(labelVAR);
 	}
 
 	public JLabel getBotonVolver() {

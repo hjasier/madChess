@@ -318,7 +318,9 @@ public class GestorDB {
 	    public static List<DatosPartida> getPartidas(String username) {
 	        List<DatosPartida> partidas = new ArrayList<>();
 
-	        String sql = "SELECT P.* FROM Partida P INNER JOIN PartidaJugador PJ ON P.gameId = PJ.partidaId WHERE PJ.username = ?";
+	        //String sql = "SELECT P.* FROM Partida P INNER JOIN PartidaJugador PJ ON P.gameId = PJ.partidaId WHERE PJ.username = ?";
+	        String sql = "SELECT P.*, PJ.username AS jugadorUsername FROM Partida P INNER JOIN PartidaJugador PJ ON P.gameId = PJ.partidaId WHERE PJ.username = ?";
+
 
 	        try (Connection conn = ConexionDB.obtenerConexion();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -330,7 +332,16 @@ public class GestorDB {
 	                    DatosPartida partida = new DatosPartida(modoJuego.valueOf(rs.getString("modoDeJuego")));
 	                    partida.setTipoPartida(partidaTipo.valueOf(rs.getString("tipoPartida")));
 	                    partida.setMovientos(rs.getBytes("movsraw"));
+	                    partida.setGameId(rs.getString("gameId"));
+	                    partida.setFechaFin(rs.getTimestamp("fechaFin"));
+	                    partida.setFechaIni(rs.getTimestamp("fechaIni"));
+	                    ArrayList<Usuario> jugadores = getJugadores(conn,rs.getString("gameId"));
+						for (Usuario user : jugadores) {
+							partida.setJugador(user);
+						}
+	                    System.out.println(jugadores.toString());
 	                    partidas.add(partida);
+	                    
 	                }
 	            }
 
@@ -340,6 +351,63 @@ public class GestorDB {
 
 	        return partidas;
 	    }
+
+
+
+
+	    
+
+	    public static ArrayList<Usuario> getJugadores(Connection conn, String partidaId) {
+	    	ArrayList<Usuario> jugadores = new ArrayList<>();
+	        String sql = "SELECT username FROM PartidaJugador WHERE partidaId = ?";
+	        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, partidaId);
+
+	            try (ResultSet rs = pstmt.executeQuery()) {
+	                while (rs.next()) {
+	                    String jugadorUsername = rs.getString("username");
+
+	                    // Obtener información completa del usuario
+	                    Usuario jugador = getUsuarioInfo(conn, jugadorUsername);
+
+	                    if (jugador != null) {
+	                        jugadores.add(jugador);
+	                    }
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace(); // O maneja la excepción de alguna manera adecuada
+	        }
+
+	        return jugadores;
+	    }
+
+	    private static Usuario getUsuarioInfo(Connection conn, String username) {
+	    	String sql = "SELECT * FROM Usuario WHERE username = ?";
+	        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setString(1, username);
+
+	            try (ResultSet rs = pstmt.executeQuery()) {
+	                if (rs.next()) {
+	                    return new Usuario(
+	                            rs.getString("username"),
+	                            rs.getString("img_route"),
+	                            rs.getInt("rank_classic"),
+	                            rs.getInt("rank_mad"),
+	                            rs.getString("tablero_theme"),
+	                            rs.getString("pieza_theme")
+	                    );
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace(); // O maneja la excepción de alguna manera adecuada
+	        }
+
+	        return null;
+	    }
+
+
+
 	 
 	 
 	 
