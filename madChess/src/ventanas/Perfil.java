@@ -287,7 +287,7 @@ public class Perfil extends JPanel{
             	Session.setCurrentUser(null);
                 VentanaPrincipal ventanaPrincipal = Session.getVentana();             
                 // Cambiar a la pantalla de inicio de sesión (Login)
-                ventanaPrincipal.getCardLayout().show(ventanaPrincipal.getPanelPrincipal(), "LOGIN");
+                ventanaPrincipal.getCardLayout().show(ventanaPrincipal.getPanelPrincipal(), Paneles.LOGIN);
             }
         });
   		
@@ -295,7 +295,7 @@ public class Perfil extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
             	VentanaPrincipal ventanaPrincipal = Session.getVentana();    
-                ventanaPrincipal.getCardLayout().show(ventanaPrincipal.getPanelPrincipal(), "CAMBIARCONTRASEÑA");
+                ventanaPrincipal.getCardLayout().show(ventanaPrincipal.getPanelPrincipal(), Paneles.CAMBIARCONTRASENYA);
             }
         });
         
@@ -331,6 +331,16 @@ public class Perfil extends JPanel{
                 }
 			}
 			
+		});
+		
+		
+		vermisPartidas.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaPrincipal ventanaPrincipal = Session.getVentana();  
+				ventanaPrincipal.getPartidas().cargarPartidas();
+                ventanaPrincipal.getCardLayout().show(ventanaPrincipal.getPanelPrincipal(), Paneles.PARTIDAS);
+			}
 		});
   		
 	}

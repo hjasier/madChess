@@ -139,12 +139,12 @@ public class ConfPLocal extends JPanel {
             	
             	if (!(datos.getTipoPartida()==partidaTipo.MADCHESS)) {
             		
-            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), "JUEGO");
+            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.JUEGO);
             		new LogicaPartida();
             	}
             	else {
             		ventana.getPanelMadChessConfig().setPlayers(datos.getJugadores());
-            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), "CONFMADCHESS");
+            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.CONFMADCHESS);
             	}
             }
         });
@@ -156,8 +156,8 @@ public class ConfPLocal extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VentanaPrincipal ventana = Session.getVentana();
-				ventana.getPanelLogin().setRedirect("CONFLOCAL");
-				ventana.getCardLayout().show(ventana.getPanelPrincipal(), "LOGIN");
+				ventana.getPanelLogin().setRedirect(Paneles.CONFLOCAL);
+				ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.LOGIN);
 				
 			}
 		});
@@ -166,8 +166,8 @@ public class ConfPLocal extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VentanaPrincipal ventana = Session.getVentana();
-				ventana.getPanelLogin().setRedirect("CONFLOCAL");
-				ventana.getCardLayout().show(ventana.getPanelPrincipal(), "LOGIN");
+				ventana.getPanelLogin().setRedirect(Paneles.CONFLOCAL);
+				ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.LOGIN);
 			}
 		});
         

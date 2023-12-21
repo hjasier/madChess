@@ -179,7 +179,7 @@ public class ListaPartidas extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			  try {
 				Session.getCtsConnection().joinGame(codigo);
-				Session.getVentana().getCardLayout().show(Session.getVentana().getPanelPrincipal(), "CONFONLINE");;
+				Session.getVentana().getCardLayout().show(Session.getVentana().getPanelPrincipal(), Paneles.CONFONLINE);;
 				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block

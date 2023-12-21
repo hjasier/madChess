@@ -39,7 +39,7 @@ public class Register extends JPanel {
     protected JLabel loginLabel = new JLabel("¿Ya tienes una cuenta? Inicia sesión aquí");
     protected JLabel labelTitulo = new JLabel("Regístrate para crear una cuenta");
 
-    protected String redirect = "MENUINICIO";
+    protected Paneles redirect = Paneles.MENU_INICIO;
 
     public Register() {
         this.setLayout(new BorderLayout());
@@ -123,7 +123,7 @@ public class Register extends JPanel {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						VentanaPrincipal ventanaPrincip = Session.getVentana();
-						ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LOGIN");
+						ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LOGIN);
 					}
 		});
 

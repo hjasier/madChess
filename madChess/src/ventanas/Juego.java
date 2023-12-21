@@ -55,8 +55,7 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
 import componentes.*;
-import componentes.MScrollPane;
-import componentes.userInfo;
+import juego.VAR;
 import juego.modoJuego;
 import juego.partidaTipo;
 import librerias.FontAwesome;
@@ -104,15 +103,22 @@ public class Juego extends JPanel {
 	protected JPanel panelLabels = new JPanel();
 	protected JLabel labelChat = new JLabel();
 	protected JLabel labelBoost = new JLabel();
+	protected JLabel labelVAR = new JLabel();
+	
 	protected JPanel panelAbajo = new JPanel();
 	protected JPanel panelCardL = new JPanel();
 	protected PanelBoost panelBoost = new PanelBoost();
+	private varController panelVAR = new varController();
 	protected StyledDocument styledAreaMovimientos;
 	
 	protected MScrollPane scrollChat;
+	protected JPanel panelRetroceder;
 	
 	
 	CardLayout cardLayout = new CardLayout();
+	private JButton btnRetrocederMov =	new JButton("<-") ;
+	private JButton btnAvanzarMov = new JButton("->") ;
+	
 	
 	public Juego() {
 
@@ -298,6 +304,10 @@ public class Juego extends JPanel {
 	    labelBoost.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	    
 	    
+	    labelVAR = new JLabel();
+	    Image imgLabelBar = new ImageIcon(getClass().getResource("/srcmedia/varTab.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
+	    labelVAR.setIcon(new ImageIcon(imgLabelBar));
+	    
 	    panelLabels.add(labelChat);
 	    panelLabels.add(Box.createRigidArea(new java.awt.Dimension(15,0)));
 	    panelLabels.add(labelBoost);
@@ -329,7 +339,32 @@ public class Juego extends JPanel {
 	    scrollMovimientos = new MScrollPane(areaMovimientos);	
 	    
 	    
-	    panelMovimentos.add(labelMovimientos, BorderLayout.NORTH);
+	    
+	    JLabel labelRetrocederMov = new JLabel();
+	    Image imgRetrocederMov = new ImageIcon(getClass().getResource("/srcmedia/labelBoostsR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
+		labelRetrocederMov.setIcon(new ImageIcon(imgBoostResc));
+	    
+		
+		JPanel movimientosTabs = new JPanel();
+		movimientosTabs.setLayout(null);
+		movimientosTabs.setBackground(Configuracion.BACKGROUND);
+		
+		panelRetroceder = new JPanel();
+		panelRetroceder.setBackground(Configuracion.BACKGROUND);
+		
+		panelRetroceder.add(btnRetrocederMov);
+		panelRetroceder.add(btnAvanzarMov);
+		
+		movimientosTabs.add(labelMovimientos);
+		//movimientosTabs.add(panelRetroceder);
+		
+		labelMovimientos.setBounds(0, Escalador.escalar(0), Escalador.escalar(130), Escalador.escalar(50));
+		panelRetroceder.setBounds(Escalador.escalar(180), Escalador.escalar(0), Escalador.escalar(200), Escalador.escalar(50));
+		
+		movimientosTabs.setPreferredSize(new Dimension(50,50));
+	    
+	    
+	    panelMovimentos.add(movimientosTabs, BorderLayout.NORTH);
 	    
 	    panelMovimentos.add(scrollMovimientos, BorderLayout.CENTER);
 	    
@@ -350,6 +385,8 @@ public class Juego extends JPanel {
 	    panelCardL.setLayout(cardLayout);
 	    panelCardL.add(panelChat, "CHAT");
 	    panelCardL.add(panelBoost, "BOOST");
+	    panelCardL.add(panelVAR, "VAR");
+	    
 	    
 	    panelAbajo.add(panelTabs, BorderLayout.NORTH);
 	    panelAbajo.add(panelCardL, BorderLayout.CENTER);
@@ -434,7 +471,7 @@ public class Juego extends JPanel {
         	
         	@Override
 			public void mouseClicked(MouseEvent e) {
-				Session.getVentana().showPanel("CONFIGMENU");
+				Session.getVentana().showPanel(Paneles.CONFIGMENU);
 			}
 		});
 
@@ -463,17 +500,7 @@ public class Juego extends JPanel {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		
-        		cardLayout.show(panelCardL,"CHAT");
-        		
-        		Image imgChatResc = new ImageIcon(getClass().getResource("/srcmedia/labelChatSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
-        		Image imgBoostResc = new ImageIcon(getClass().getResource("/srcmedia/labelBoostsR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
-                
-        		
-        		
-        		labelBoost.setIcon(new ImageIcon(imgBoostResc));
-        		labelChat.setIcon(new ImageIcon(imgChatResc));
-        		
-        		
+        		clickChat();
         	    
         	}
         	
@@ -484,23 +511,60 @@ public class Juego extends JPanel {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		
-        		cardLayout.show(panelCardL,"BOOST");
-        		
-        		Image imgChatResc = new ImageIcon(getClass().getResource("/srcmedia/labelChatR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
-        		Image imgBoostResc = new ImageIcon(getClass().getResource("/srcmedia/labelBoostsSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
-                
-        		
-        		
-        		labelBoost.setIcon(new ImageIcon(imgBoostResc));
-        		labelChat.setIcon(new ImageIcon(imgChatResc));
+        		clickBoost();
         	}
         });
+        
+        
+        btnRetrocederMov.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		VAR.avanzarMov();
+        	}
+        });
+       
+        
+        btnAvanzarMov.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		VAR.retrodecerMov();
+        	}
+        });
+        
         
         
         
     }
 	
 	
+	protected void clickChat() {
+		cardLayout.show(panelCardL,"CHAT");
+		
+		Image imgChatResc = new ImageIcon(getClass().getResource("/srcmedia/labelChatSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
+		Image imgBoostResc = new ImageIcon(getClass().getResource("/srcmedia/labelBoostsR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        
+		
+		
+		labelBoost.setIcon(new ImageIcon(imgBoostResc));
+		labelChat.setIcon(new ImageIcon(imgChatResc));
+		
+		
+	}
+
+
+	protected void clickBoost() {
+		cardLayout.show(panelCardL,"BOOST");
+		
+		Image imgChatResc = new ImageIcon(getClass().getResource("/srcmedia/labelChatR.png")).getImage().getScaledInstance(Escalador.escalar(68), Escalador.escalar(33), Image.SCALE_SMOOTH);
+		Image imgBoostResc = new ImageIcon(getClass().getResource("/srcmedia/labelBoostsSelectedR.png")).getImage().getScaledInstance(Escalador.escalar(89), Escalador.escalar(33), Image.SCALE_SMOOTH);
+        
+		
+		
+		labelBoost.setIcon(new ImageIcon(imgBoostResc));
+		labelChat.setIcon(new ImageIcon(imgChatResc));
+	}
+
+
 	private void enviarMensaje() { 
         String texto = textfieldChat.getText();        
         if (texto.equals("")) {
@@ -574,31 +638,35 @@ public class Juego extends JPanel {
     
     
 	public void setInterfaz() {
-		if (Configuracion.DEBUG_MODE) {return;}
 		
 		
 		modoJuego modoDeJuego = Session.getDatosPartida().getModoDeJuego();
 		partidaTipo tipoPartida = Session.getDatosPartida().getTipoPartida();
 		
+		if (Session.getDatosPartida().isReplay()) {
+		
+			cardLayout.show(panelCardL,"VAR");
+			panelLabels.remove(labelBoost);
+			
+			panelLabels.add(labelVAR);
+			
+			return;
+		}
+		
 		if (modoDeJuego == modoJuego.LOCAL) { //LOCAL
 			panelLabels.remove(labelChat);
-			labelBoost.setForeground(Color.white);
-			labelChat.setForeground(Color.gray);
-			cardLayout.show(panelCardL,"BOOST");
+			clickBoost();
 		}
 		else { //ONLINE
-			labelChat.setForeground(Color.white);
-			labelBoost.setForeground(Color.gray);
-			cardLayout.show(panelCardL,"CHAT");
+			clickChat();
 		}
 		
 		if (tipoPartida == partidaTipo.CLASICA) { //CLÁSICO
-			cardLayout.show(panelCardL,"BOOST");
+			clickBoost();
 		}
 		else {
 			panelLabels.remove(labelBoost);
-			labelChat.setForeground(Color.white);
-			cardLayout.show(panelCardL,"CHAT");
+			clickChat();
 		}
 		
 		if (tipoPartida==partidaTipo.CLASICA && modoDeJuego == modoJuego.LOCAL) { 

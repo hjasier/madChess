@@ -49,7 +49,7 @@ public class CambiarContraseña extends JPanel {
 	protected BButton cambiarbtn = new BButton("Cambiar Contraseña");
 	protected JLabel labelTitulo = new JLabel("Selecciona una nueva contraseña");
 	protected JLabel errorLabel = new JLabel();
-	protected String redirect = "PERFILUSUARIO";
+	protected Paneles redirect = Paneles.PERFILUSUARIO;
 	
 	public CambiarContraseña () {
 		this.setLayout(new BorderLayout());
@@ -192,7 +192,7 @@ public class CambiarContraseña extends JPanel {
 	
 	
 	private void resetToDefault() {
-		redirect = "PERFILUSUARIO";
+		redirect = Paneles.PERFILUSUARIO;
 		inputContra1.setText("");
 		inputContra2.setText("");
 		errorLabel.setVisible(false);

@@ -9,8 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import juego.DatosPartida;
+import juego.modoJuego;
+import juego.partidaTipo;
 import utils.Session;
 import objetos.Jugador;
 import objetos.Movimiento;
@@ -308,6 +311,35 @@ public class GestorDB {
 			 System.out.println("No se puede modificar un usuario inexistente");
 		 }
 	 }
+
+
+
+
+	    public static List<DatosPartida> getPartidas(String username) {
+	        List<DatosPartida> partidas = new ArrayList<>();
+
+	        String sql = "SELECT P.* FROM Partida P INNER JOIN PartidaJugador PJ ON P.gameId = PJ.partidaId WHERE PJ.username = ?";
+
+	        try (Connection conn = ConexionDB.obtenerConexion();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	            pstmt.setString(1, username);
+
+	            try (ResultSet rs = pstmt.executeQuery()) {
+	                while (rs.next()) {
+	                    DatosPartida partida = new DatosPartida(modoJuego.valueOf(rs.getString("modoDeJuego")));
+	                    partida.setTipoPartida(partidaTipo.valueOf(rs.getString("tipoPartida")));
+	                    partida.setMovientos(rs.getBytes("movsraw"));
+	                    partidas.add(partida);
+	                }
+	            }
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return partidas;
+	    }
 	 
 	 
 	 

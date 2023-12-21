@@ -108,7 +108,7 @@ public class MadChessConfig extends JPanel {
             	
             	if (players.indexOf(curPlayer) == players.size()-1) {
             		//Si es el ultimo jugador
-            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), "JUEGO");
+            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.JUEGO);
             		new LogicaPartida();
             	}
             	else {

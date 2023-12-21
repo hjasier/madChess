@@ -89,7 +89,7 @@ public class MenuInicioOLD extends JPanel {
             	DatosPartida datos = new DatosPartida(modoJuego.LOCAL);
             	Session.setDatosPartida(datos);
             	ventanaPrincip.getPanelConfLocal().setDatosPartida(datos);
-            	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "CONFLOCAL");
+            	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFLOCAL);
             }
         });
         
@@ -108,11 +108,11 @@ public class MenuInicioOLD extends JPanel {
 						e1.printStackTrace();
 					}
                 	
-                	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "CONFONLINE");
+                	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFONLINE);
                     
             	}
             	else {
-            		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LOGIN");
+            		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LOGIN);
             	}   
             }
         });
@@ -131,11 +131,11 @@ public class MenuInicioOLD extends JPanel {
 						e1.printStackTrace();
 					}
 	            	
-	            	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LISTAPARTIDAS");
+	            	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LISTAPARTIDAS);
                     
             	}
             	else {
-            		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "LOGIN");
+            		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LOGIN);
             	}  
             }
         });

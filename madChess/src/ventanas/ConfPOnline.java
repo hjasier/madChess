@@ -245,8 +245,8 @@ public class ConfPOnline extends JPanel {
 					public void actionPerformed(ActionEvent e) {
 						
 						VentanaPrincipal ventanaPrincip = Session.getVentana();
-						ventanaPrincip.getPanelLogin().setRedirect("LOGIN");
-						ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "CONFONLINE");
+						ventanaPrincip.getPanelLogin().setRedirect(Paneles.LOGIN);
+						ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFONLINE);
 					}
 				});
         

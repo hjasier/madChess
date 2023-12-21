@@ -44,7 +44,7 @@ public class Login extends JPanel {
 	protected JLabel labelTitulo = new JLabel("Inicia sesión para continuar");
 	protected JLabel errorLabel = new JLabel("Contraseña o usuario incorrectos");
 
-	protected String redirect = "MENUINICIO";
+	protected Paneles redirect = Paneles.MENU_INICIO;
 	
 	public Login (VentanaPrincipal ventanaPrincipal) {
 		this.setLayout(new BorderLayout());
@@ -134,7 +134,7 @@ public class Login extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				VentanaPrincipal ventanaPrincip = Session.getVentana();
-				ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), "REGISTER");
+				ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.REGISTER);
 			}
 		});
 		
@@ -181,7 +181,7 @@ public class Login extends JPanel {
 	
 	
 	private void resetToDefault() {
-		redirect = "MENUINICIO";
+		redirect = Paneles.MENU_INICIO;
 		inputNombre.setText("");
 		inputContra.setText("");
 		errorLabel.setVisible(false);
@@ -192,12 +192,12 @@ public class Login extends JPanel {
 
 
 
-	public void setRedirect(String string) {
-		this.redirect = string;
+	public void setRedirect(Paneles menuInicio) {
+		this.redirect = menuInicio;
 	}
 
 
-	public String getRedirect() {
+	public Paneles getRedirect() {
 		return redirect;
 	}
 

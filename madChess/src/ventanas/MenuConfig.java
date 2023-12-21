@@ -49,7 +49,7 @@ public class MenuConfig extends JPanel{
       
   		
 		volverBtn.addActionListener(e -> {
-			Session.getVentana().showPanel("JUEGO");
+			Session.getVentana().showPanel(Paneles.JUEGO);
 		});
   		//--------------------- NAVBAR-------------------------------------------	   
         

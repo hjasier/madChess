@@ -33,7 +33,7 @@ public class main {
 		Audio.play("notify.wav"); //temp
 		
 		if (Configuracion.LOGIN_DEBUG) {
-			Session.setCurrentUser(new Usuario("jugadorDebug"));
+			Session.setCurrentUser(new Usuario("userDebug1"));
 		}
 	}
 	

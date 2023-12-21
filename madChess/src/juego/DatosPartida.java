@@ -1,7 +1,11 @@
 package juego;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
@@ -22,6 +26,7 @@ public class DatosPartida implements Serializable{
 	protected ArrayList<Jugador> ganadores = new ArrayList<Jugador>(); // arraylist de el ganador o los ganadores dependiendo la cantidad de la modalidad
 	protected ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 	protected Boolean isTerminada = false;
+	private boolean isReplay = false;
 	
 
 	
@@ -166,6 +171,33 @@ public class DatosPartida implements Serializable{
         
         this.gameId = gameID.toString();
     }
+
+
+
+	public boolean isReplay() {
+		return isReplay ;
+	}
+
+
+
+	public void setMovientos(byte[] bs) {
+		try {
+			movimientos = deserializarMovimientos(bs);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
+	private static ArrayList<Movimiento> deserializarMovimientos(byte[] serializedData) throws IOException, ClassNotFoundException {
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(serializedData);
+             ObjectInputStream ois = new ObjectInputStream(bis)) {
+
+            return (ArrayList<Movimiento>) ois.readObject();
+        }
+    }
 
 }

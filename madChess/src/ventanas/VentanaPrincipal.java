@@ -26,6 +26,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import Sockets.Servidor;
+import componentes.EnumCardLayout;
 import juego.DatosPartida;
 import juego.LogicaPartida;
 import objetos.Jugador;
@@ -39,7 +40,7 @@ public class VentanaPrincipal extends JFrame{
 	
 	
 	Juego panelJuego = new Juego();
-    CardLayout cardLayout = new CardLayout();
+    EnumCardLayout cardLayout = new EnumCardLayout();
    
     Login panelLogin = new Login(this);
     
@@ -63,6 +64,9 @@ public class VentanaPrincipal extends JFrame{
     
     ImageIcon logo = new ImageIcon(getClass().getResource("/srcmedia/appLogo.png"));
 
+    PartidasJugadas partidas = new PartidasJugadas();
+
+    
     // Obtener la imagen desde el ImageIcon
    
     
@@ -76,39 +80,41 @@ public class VentanaPrincipal extends JFrame{
 		Image imagen = logo.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		this.setIconImage(imagen);
 		
-		
-		//this.setUndecorated(true); //para que no se vea el borde de la ventana
 
 		panelPrincipal.setLayout(cardLayout);
 		
 		//panelPrincipal.add(panelMenuConfig, "DEBUG");
 		
 		
-		panelPrincipal.add(panelMenuInicio, "MENUINICIO");
-        panelPrincipal.add(panelJuego, "JUEGO");
-        panelPrincipal.add(panelLogin, "LOGIN");
-        panelPrincipal.add(panelRegister, "REGISTER");
-        panelPrincipal.add(panelConfLocal, "CONFLOCAL");  
-        panelPrincipal.add(panelConfOnline, "CONFONLINE");
-        panelPrincipal.add(panelMadChessConfig, "CONFMADCHESS");
+		panelPrincipal.add(panelMenuInicio, Paneles.MENU_INICIO.name());
+		panelPrincipal.add(panelJuego, Paneles.JUEGO.name());
+		panelPrincipal.add(panelLogin, Paneles.LOGIN.name());
+        panelPrincipal.add(panelRegister, Paneles.REGISTER.name());
+        panelPrincipal.add(panelConfLocal, Paneles.CONFLOCAL.name());  
+        panelPrincipal.add(panelConfOnline, Paneles.CONFONLINE.name());
+        panelPrincipal.add(panelMadChessConfig, Paneles.CONFMADCHESS.name());
         
         
-		panelPrincipal.add(panelListaPartidas, "LISTAPARTIDAS");
-		panelPrincipal.add(panelPerfil, "PERFILUSUARIO");
-		panelPrincipal.add(panelMenuConfig, "CONFIGMENU");
-		panelPrincipal.add(cambiarContraseña, "CAMBIARCONTRASEÑA");
+		panelPrincipal.add(panelListaPartidas, Paneles.LISTAPARTIDAS.name());
+		panelPrincipal.add(panelPerfil, Paneles.PERFILUSUARIO.name());
+		panelPrincipal.add(panelMenuConfig, Paneles.CONFIGMENU.name());
+		panelPrincipal.add(cambiarContraseña, Paneles.CAMBIARCONTRASENYA.name());
+		
+		panelPrincipal.add(partidas, Paneles.PARTIDAS.name());
+
+
 		
 		
         
         panelMenuInicio.loginBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if (Session.getCurrentUser()==null) {
-                	panelLogin.setRedirect("MENUINICIO");
-                    cardLayout.show(panelPrincipal, "LOGIN");
+                	panelLogin.setRedirect(Paneles.MENU_INICIO);
+                    cardLayout.show(panelPrincipal, Paneles.LOGIN);
             	}
             	else {
             		panelPerfil.reloadData();
-            		cardLayout.show(panelPrincipal, "PERFILUSUARIO");
+            		cardLayout.show(panelPrincipal, Paneles.PERFILUSUARIO);
             	}
 
             }
@@ -135,7 +141,7 @@ public class VentanaPrincipal extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelPrincipal, "MENUINICIO");
+				cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);
 				
 			}
 		});
@@ -148,7 +154,7 @@ public class VentanaPrincipal extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			cardLayout.show(panelPrincipal, "MENUINICIO");
+			cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);
 			
 		}
 	});
@@ -162,7 +168,7 @@ public class VentanaPrincipal extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelPrincipal, "PERFILUSUARIO");
+				cardLayout.show(panelPrincipal, Paneles.PERFILUSUARIO);
 				
 			}
 		});
@@ -174,7 +180,7 @@ public class VentanaPrincipal extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelPrincipal, "MENUINICIO");
+				cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);
 				
 			}
 		});
@@ -187,7 +193,7 @@ public class VentanaPrincipal extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelPrincipal, "MENUINICIO");
+				cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);
 				
 			}
 		});
@@ -197,7 +203,7 @@ public class VentanaPrincipal extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent  e) {
 				
-				cardLayout.show(panelPrincipal, "LOGIN");
+				cardLayout.show(panelPrincipal, Paneles.LOGIN);
 			}
 		});
         
@@ -210,7 +216,7 @@ public class VentanaPrincipal extends JFrame{
                 int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres salir, se terminará la partida con victoria para el oponente?", "Confirmar derrota", JOptionPane.YES_NO_OPTION);
                 
                 if (respuesta == JOptionPane.YES_OPTION) {
-                    cardLayout.show(panelPrincipal, "MENUINICIO");
+                    cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);
                     //TODO: hacer que se termine la partida con derrota para el jugador
                 } else {
                 }
@@ -224,7 +230,7 @@ public class VentanaPrincipal extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent  e) {
 				
-				cardLayout.show(panelPrincipal, "MENUINICIO");
+				cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);
 			}
 		});
         
@@ -234,7 +240,7 @@ public class VentanaPrincipal extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent  e) {
 				
-				cardLayout.show(panelPrincipal, "MENUINICIO");
+				cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);
 			}
 		});
         
@@ -251,7 +257,7 @@ public class VentanaPrincipal extends JFrame{
 	}
 
 	public void initGame() {
-		cardLayout.show(panelPrincipal, "JUEGO");
+		cardLayout.show(panelPrincipal, Paneles.JUEGO);
         new LogicaPartida();
 		
 	}
@@ -259,15 +265,15 @@ public class VentanaPrincipal extends JFrame{
 	
 
 	public void loginReturn(Usuario logedUser) {
-		String redirect = panelLogin.getRedirect();
+		Paneles redirect = panelLogin.getRedirect();
 		
 		//En confonline el tipo "jugador" se gestiona en el servidor
-		if (redirect=="CONFONLINE") {
+		if (redirect==Paneles.CONFONLINE) {
 			panelConfOnline.setUser1(logedUser);
 		}
 		
 		
-		else if (redirect=="CONFLOCAL") {
+		else if (redirect==Paneles.CONFLOCAL) {
 //			if (!Session.getDatosPartida().getJugadores().contains(logedUser)) {	
 //				panelConfLocal.setUser(logedUser);
 //			}
@@ -278,7 +284,7 @@ public class VentanaPrincipal extends JFrame{
 //			}
 			panelConfLocal.setUser(logedUser);
 		}
-		else if (redirect=="MENUINICIO") {
+		else if (redirect==Paneles.MENU_INICIO) {
 			Session.setCurrentUser(logedUser);
 			panelMenuInicio.setLoged(true);
 		}
@@ -319,7 +325,7 @@ public class VentanaPrincipal extends JFrame{
 		return panelListaPartidas;
 	}
 
-	public CardLayout getCardLayout() {
+	public EnumCardLayout getCardLayout() {
 		return cardLayout;
 	}
 
@@ -327,12 +333,16 @@ public class VentanaPrincipal extends JFrame{
 		return panelPrincipal;
 	}
 
-	public void showPanel(String string) {
-		cardLayout.show(panelPrincipal, string);
+	public void showPanel(Paneles panel) {
+		cardLayout.show(panelPrincipal, panel);
 	}
 
 	public MadChessConfig getPanelMadChessConfig() {
 		return panelMadChessConfig;
+	}
+
+	public PartidasJugadas getPartidas() {
+		return partidas;
 	}
 
 
