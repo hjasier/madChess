@@ -33,7 +33,24 @@ public class MadChessConfig extends JPanel {
     private JPanel altersPanel;
     private JPanel boostsPanel;
     private BButton botonListo;
+    
+    class ImageLabel extends JLabel {
+        private String imageName;
 
+        public ImageLabel(String imageName, ImageIcon defaultIcon) {
+            super(defaultIcon);
+            this.imageName = imageName;
+            setHorizontalAlignment(SwingConstants.CENTER);
+            setBorder(BorderFactory.createLineBorder(Configuracion.BACKGROUND));
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+        }
+
+        public String getImageName() {
+            return imageName;
+        }
+    }
+    
+    
     public MadChessConfig() {
 
        		
@@ -131,10 +148,11 @@ public class MadChessConfig extends JPanel {
     
     
     protected void resetSelections() {
+        resetOpacity(altersPanel, selectedAlters);
+        resetOpacity(boostsPanel, selectedBoosts);
 		selectedAlters.clear();
         selectedBoosts.clear();
-        resetOpacity(altersPanel);
-        resetOpacity(boostsPanel);
+       
         
         if (players.indexOf(curPlayer) == players.size()-1) {            			
 			botonListo.setText("Empezar");
@@ -146,18 +164,23 @@ public class MadChessConfig extends JPanel {
 		
 	}
     
-    private void resetOpacity(JPanel panel) {
+    private void resetOpacity(JPanel panel, ArrayList<String> selected) {
         Component[] components = panel.getComponents();
         for (Component component : components) {
-            if (component instanceof JLabel) {
-                JLabel label = (JLabel) component;
+            if (component instanceof ImageLabel) {
+                ImageLabel label = (ImageLabel) component;
                 ImageIcon defaultIcon = (ImageIcon) label.getIcon();
-                label.setIcon(new ImageIcon(utils.adjustImageOpacity(defaultIcon.getImage(), 0.2)));
+                
+                // Verificar si la imagen está seleccionada
+                String imageName = label.getImageName();
+                if (selected.contains(imageName)) {
+                    label.setIcon(new ImageIcon(utils.adjustImageOpacity(defaultIcon.getImage(), 0.2)));
+                }
             }
         }
     }
 
-	private JPanel createImagePanel(int numImages, int rows, int cols, String[] imageNames, ArrayList<String> selectedItems) {
+    private JPanel createImagePanel(int numImages, int rows, int cols, String[] imageNames, ArrayList<String> selectedItems) {
         JPanel panel = new JPanel(new GridLayout(rows, cols, 10, 10));
         panel.setBackground(Configuracion.BACKGROUND);
         panel.setBorder(null);
@@ -177,10 +200,7 @@ public class MadChessConfig extends JPanel {
             ImageIcon defaultIcon = new ImageIcon(utils.adjustImageOpacity(scaledIcon.getImage(), 0.2));
             ImageIcon illuminatedIcon = new ImageIcon(utils.adjustImageOpacity(scaledIcon.getImage(), 1.0));
 
-            JLabel label = new JLabel(defaultIcon);
-            label.setHorizontalAlignment(SwingConstants.CENTER);
-            label.setBorder(BorderFactory.createLineBorder(Configuracion.BACKGROUND));
-            label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            ImageLabel label = new ImageLabel(imageName, defaultIcon);
 
             label.addMouseListener(new MouseAdapter() {
                 @Override
