@@ -32,6 +32,8 @@ public class Boosts {
 		            return new MalPresagio(curPlayer);
 		        case BOMBA:
 		            return new Bomba(casilla.getPieza(), casilla);
+		        case MINA:
+				    return new Mina(casilla);
 		        default:
 		            return null;
 		    }
@@ -94,6 +96,11 @@ public class Boosts {
 	        
 	    }
 	    
+	    
+	    public static void boostMina() {
+	        curBoost = BOOSTS.MINA;
+	    	utils.alert(Infos.MINAINFO, "Boost Mina", "mina");
+	    }
 	    
 	    
 
@@ -332,5 +339,31 @@ class Control extends Boost{
 	}  
 	   
 }      
+
+
+class Mina extends Boost {
+
+	protected Casilla casilla;
+    public Mina(Casilla casilla) {
+    	this.casilla = casilla;
+    }
+
+    
+    
+    @Override
+    public void check() {
+        if (casilla.getPieza() != null) {
+        	casilla.setPieza(null);
+        	
+        	Session.getPartida().printMovimientoFormateado(Infos.BOOM);
+        	Session.getPartida().getTablero().initAnimacionExplosion(casilla);
+		}
+    }
+    
+    @Override
+   	public void config() {
+    //casilla.setBomb(true);
+   	}
+}
 
 

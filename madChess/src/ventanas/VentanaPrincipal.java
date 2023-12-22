@@ -66,7 +66,6 @@ public class VentanaPrincipal extends JFrame{
 
     PartidasJugadas partidas = new PartidasJugadas();
     
-    Juego2 juego2 = new Juego2();
     
     // Obtener la imagen desde el ImageIcon
    

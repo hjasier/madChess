@@ -106,6 +106,9 @@ public class boostItem extends JPanel{
 			case "Control":
 				Boosts.boostControl();
 			    break;
+			case "Mina":
+				Boosts.boostMina();
+			    break;
 			case "Explosión":
 				//DEBUG 
 	        	System.out.println("DEBUGEANDO ANIMACIÓN");

@@ -28,9 +28,10 @@ public class PanelBoost extends JPanel {
         panelElementos.setBackground(colorFondo);
 
         boostItem boostMalPresagio = new boostItem(descripcionLabel,"Mal Presagio","Ganas en 20 movimientos","presagio");
-        boostItem boostHielo = new boostItem(descripcionLabel,"Hielo","Conjelas un area 3x3","hielo");
+        boostItem boostHielo = new boostItem(descripcionLabel,"Hielo","Congelas un area 3x3","hielo");
         boostItem boostBomba = new boostItem(descripcionLabel,"Bomba","Bomba en pieza","bomba");
         boostItem boostControl = new boostItem(descripcionLabel,"Control","Controlas una pieza enemiga","control");
+        boostItem boostMina = new boostItem(descripcionLabel,"Mina","Bomba en casilla","mina");
         boostItem debug = new boostItem(descripcionLabel,"Explosión","Explosión","bomba");
         
         
@@ -38,6 +39,7 @@ public class PanelBoost extends JPanel {
         panelElementos.add(boostHielo);
         panelElementos.add(boostBomba);
         panelElementos.add(boostControl);
+        panelElementos.add(boostMina);
         panelElementos.add(debug);
         
 
