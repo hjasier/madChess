@@ -1,5 +1,8 @@
 package juego;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -56,10 +59,16 @@ public class LogicaPartida {
 	
 	protected Color secondaryColor = new Color(236,212,146);
 	
+	protected JPanel promocionPanel = new JPanel();
+	protected JButton promReina = new JButton("Reina");
+	protected JButton promAlfil = new JButton("Alfil");
+	protected JButton promCaballo = new JButton("Caballo");
+	protected JButton promTorre = new JButton("Torre");
 	
 	
 	
 	public LogicaPartida() {
+		promocionPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		Session.setPartida(this);
 		
 		this.ventana = Session.getVentana().getPanelJuego();
@@ -249,13 +258,65 @@ public class LogicaPartida {
 
 	private void ejecutarPromocion(Casilla curCasilla) {
 		tablero.initPromocion(curCasilla);
+		//crearPanelRojo();
 		addInfo(Infos.PROMOCION,secondaryColor,false,false);
 	}
 
+//	private void crearPanelRojo() {
+//	    JPanel panelRojo = new JPanel();
+//	    panelRojo.setPreferredSize(new Dimension(10000000, 100));
+//	    panelRojo.setBackground(Color.RED);
+//	    
+//	    // Agregar el panel a algún contenedor existente, por ejemplo, al tablero o a la ventana
+//	    // Por ejemplo, si el tablero es el contenedor:
+//	    ventana.add(panelRojo);
+//	    
+//	    // También es necesario refrescar el contenedor para que se muestre el nuevo panel
+//	    ventana.revalidate();
+//	    ventana.repaint();
+//	}
 
-
-	
-	
+//	private void initPromocion(Casilla promCasilla) { //En principio no son alter
+//		// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
+//		tablero.add(promocionPanel);
+//		promocionPanel.setPreferredSize(new Dimension(Escalador.escalar(200),Escalador.escalar(200)));
+//		promocionPanel.setVisible(true);
+//		tablero.repaint();
+//		System.out.println("promicon activda");
+//	    ActionListener promocionActionListener = new ActionListener() {
+//	        @Override
+//	        public void actionPerformed(ActionEvent e) {
+//	            Object source = e.getSource();
+//	            
+//	            System.out.println("promicon medio");
+//	            
+//	            if (source == promReina) {
+//	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite(),false));
+//	            } else if (source == promAlfil) {
+//	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite(),false));
+//	            } else if (source == promCaballo) {
+//	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite(),false));
+//	            } else if (source == promTorre) {
+//	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite(),false));
+//	            }
+//
+//	            promocionPanel.setVisible(false);
+//	            
+//	            // Eliminar el ActionListener para que no se ejecute nuevamente
+//	            promReina.removeActionListener(this);
+//	            promAlfil.removeActionListener(this);
+//	            promCaballo.removeActionListener(this);
+//	            promTorre.removeActionListener(this);
+//	        }
+//	    };
+//
+//	    promReina.addActionListener(promocionActionListener);
+//	    promAlfil.addActionListener(promocionActionListener);
+//	    promCaballo.addActionListener(promocionActionListener);
+//	    promTorre.addActionListener(promocionActionListener);
+//	    System.out.println("promicon final");
+//	}
+//	
 	
 	
 	private void resetAgarrarPieza(Casilla prevCasilla, ArrayList<Casilla> casillasDisp) {

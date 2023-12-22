@@ -80,6 +80,19 @@ public class Tablero extends JPanel{
     	
     	animacion.setVisible(false);
     	
+
+        promocionPanel = new JPanel();
+        promocionPanel.setLayout(new GridLayout(4,1));
+        promocionPanel.add(promReina);
+        promocionPanel.add(promAlfil);
+        promocionPanel.add(promCaballo);
+        promocionPanel.add(promTorre);
+        
+        promocionPanel.setVisible(false);
+        
+        this.add(promocionPanel);
+        
+        
     	
         this.add(tableroDiv);
         this.add(casillasDiv);
@@ -87,15 +100,6 @@ public class Tablero extends JPanel{
         
   
         
-        promocionPanel = new JPanel();
-        promocionPanel.setLayout(new GridLayout(4,1));
-        promocionPanel.add(promReina);
-        promocionPanel.add(promAlfil);
-        promocionPanel.add(promCaballo);
-        promocionPanel.add(promTorre);
-        promocionPanel.setVisible(false);
-        
-        tableroDiv.add(promocionPanel);
         
     	/*
     	 * CREACIÓN DEL TABLERO
@@ -255,8 +259,13 @@ public class Tablero extends JPanel{
 
 	public void initPromocion(Casilla promCasilla) { //En principio no son alter
 		// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
+		promocionPanel.setPreferredSize(new Dimension(Escalador.escalar(50),Escalador.escalar(100)));
+        if(!promCasilla.getPieza().getIsWhite()) 
+        {promocionPanel.setBounds(getPosCasillaTablero(promCasilla).x,getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
+        }else {promocionPanel.setBounds(getPosCasillaTablero(promCasilla).x,getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
+        }
 		promocionPanel.setVisible(true);
-		repaint();
+		
 		
 	    ActionListener promocionActionListener = new ActionListener() {
 	        @Override
@@ -287,6 +296,8 @@ public class Tablero extends JPanel{
 	    promAlfil.addActionListener(promocionActionListener);
 	    promCaballo.addActionListener(promocionActionListener);
 	    promTorre.addActionListener(promocionActionListener);
+	    
+	    this.repaint();
 	}
 
 	public void setCurPlayer(Jugador jugador) {
