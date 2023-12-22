@@ -1,19 +1,15 @@
 package juego;
 
-
-import java.util.HashMap;
-
-
-import java.util.Map;
-
+import java.util.Date;
 import objetos.Jugador;
 
 public class Puntuador {
 
+	private static final int CORTA_DURACION = 60000;
+    private static final int BONUS = 5;
 
 
-
-    public void agregarPartida(Jugador usuario1, Jugador usuario2, String modo, Resultado resultado) {
+    public void agregarPartida(Jugador usuario1, Jugador usuario2, String modo, Resultado resultado, DatosPartida partida) {
 
         int puntuacionUser1 = getPuntuacionModo(usuario1, modo);
         int puntuacionUser2 = getPuntuacionModo(usuario2, modo);
@@ -22,23 +18,45 @@ public class Puntuador {
         int newPuntuacionUser1 = 0;
         int newPuntuacionUser2 = 0;
 
-        if (puntuacionUser1 > puntuacionUser2) {
-        	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? 35 : (resultado == Resultado.EMPATE) ? 15 : -50;
-            newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? 50 : (resultado == Resultado.EMPATE) ? 20 : -35;
-        } else {
-        	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? 50 : (resultado == Resultado.EMPATE) ? 20 : -35;
-            newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? 35 : (resultado == Resultado.EMPATE) ? 15 : -50;
-        }
+        
+        Date inicio = partida.getFechaIni();
+        Date fin = partida.getFechaFin(); 
 
+        long duracion = fin.getTime() - inicio.getTime();
+        
+        if (duracion < CORTA_DURACION) {
+        	//victoria veloz
+            if (puntuacionUser1 > puntuacionUser2 + 75) { 
+            	//jugador 1 es mucho mejor + rapido
+            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (15 + BONUS) : (resultado == Resultado.EMPATE) ? -5  : (-30 - BONUS);
+                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (30 + BONUS) : (resultado == Resultado.EMPATE) ? 5  : (-15 - BONUS);
+            } else if (puntuacionUser2 > puntuacionUser1 + 75) {
+            	//jugador 2 es mejor + rapido
+            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (30 + BONUS) : (resultado == Resultado.EMPATE) ? 5  : (-15 - BONUS);
+                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (15 + BONUS) : (resultado == Resultado.EMPATE) ? -5  : (-30 - BONUS);
+            } else { //la diferencia entre ellos no es notable
+            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (20 + BONUS) : (resultado == Resultado.EMPATE) ? 0  : (-20);
+                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (20 + BONUS) : (resultado == Resultado.EMPATE) ? 0  : (-20);
+            }
+            
+        } else {
+        	if (puntuacionUser1 > puntuacionUser2 + 75) { 
+            	//jugador 1 es mucho mejor + rapido
+            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (15) : (resultado == Resultado.EMPATE) ? -5  : (-30);
+                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (30) : (resultado == Resultado.EMPATE) ? 5  : (-15);
+            } else if (puntuacionUser2 > puntuacionUser1 + 75) {
+            	//jugador 2 es mejor + rapido
+            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (30) : (resultado == Resultado.EMPATE) ? 5  : (-15);
+                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (15) : (resultado == Resultado.EMPATE) ? -5  : (-30);
+            } else { //la diferencia entre ellos no es notable
+            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (20) : (resultado == Resultado.EMPATE) ? 0  : (-20);
+                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (20) : (resultado == Resultado.EMPATE) ? 0  : (-20);
+            }
+        }
+        
         
         actualizarPuntuacion(usuario1, modo, newPuntuacionUser1);
         actualizarPuntuacion(usuario2, modo, newPuntuacionUser2);
-
-//         empatar contra un jugador con elo mayor deberia ser bueno y empatar contra uno con elo mas bajo malo
-//         ganar a un jugador con mas elo k tu deberia dar mas puntos y perder contra uno con elo menor quitar mas
-//         ganar rapido deberia dar un bonus fijo
-//         los puntos ganados o perdidos no deberian ser fijos deberian variar dependiendo de la diferencia entre ellos, 
-//         no seria justo si la diferencia es mininima
 
     }
 
