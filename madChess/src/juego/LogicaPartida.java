@@ -78,6 +78,16 @@ public class LogicaPartida {
 		casillas = tablero.getCasillas();
 		resetearVentana();
 		
+		promocionPanel = new JPanel();
+		promocionPanel.setLayout(new GridLayout(4,1));
+		promocionPanel.add(promReina);
+		promocionPanel.add(promAlfil);
+		promocionPanel.add(promCaballo);
+		promocionPanel.add(promTorre);	        
+		promocionPanel.setVisible(false);
+	        
+		this.ventana.getTablero().tableroDiv.add(promocionPanel);
+	        
 		
 		
         tablero.tableroDiv.addMouseListener(new MouseAdapter() {
@@ -257,66 +267,63 @@ public class LogicaPartida {
 
 
 	private void ejecutarPromocion(Casilla curCasilla) {
-		tablero.initPromocion(curCasilla);
-		//crearPanelRojo();
+		initPromocion(curCasilla);
 		addInfo(Infos.PROMOCION,secondaryColor,false,false);
 	}
 
-//	private void crearPanelRojo() {
-//	    JPanel panelRojo = new JPanel();
-//	    panelRojo.setPreferredSize(new Dimension(10000000, 100));
-//	    panelRojo.setBackground(Color.RED);
-//	    
-//	    // Agregar el panel a algún contenedor existente, por ejemplo, al tablero o a la ventana
-//	    // Por ejemplo, si el tablero es el contenedor:
-//	    ventana.add(panelRojo);
-//	    
-//	    // También es necesario refrescar el contenedor para que se muestre el nuevo panel
-//	    ventana.revalidate();
-//	    ventana.repaint();
-//	}
 
-//	private void initPromocion(Casilla promCasilla) { //En principio no son alter
-//		// FIXME : Para la versión final la pieza se tiene que promocionar en Partida no en Tablero
-//		tablero.add(promocionPanel);
-//		promocionPanel.setPreferredSize(new Dimension(Escalador.escalar(200),Escalador.escalar(200)));
-//		promocionPanel.setVisible(true);
-//		tablero.repaint();
-//		System.out.println("promicon activda");
-//	    ActionListener promocionActionListener = new ActionListener() {
-//	        @Override
-//	        public void actionPerformed(ActionEvent e) {
-//	            Object source = e.getSource();
-//	            
-//	            System.out.println("promicon medio");
-//	            
-//	            if (source == promReina) {
-//	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite(),false));
-//	            } else if (source == promAlfil) {
-//	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite(),false));
-//	            } else if (source == promCaballo) {
-//	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite(),false));
-//	            } else if (source == promTorre) {
-//	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite(),false));
-//	            }
-//
-//	            promocionPanel.setVisible(false);
-//	            
-//	            // Eliminar el ActionListener para que no se ejecute nuevamente
-//	            promReina.removeActionListener(this);
-//	            promAlfil.removeActionListener(this);
-//	            promCaballo.removeActionListener(this);
-//	            promTorre.removeActionListener(this);
-//	        }
-//	    };
-//
-//	    promReina.addActionListener(promocionActionListener);
-//	    promAlfil.addActionListener(promocionActionListener);
-//	    promCaballo.addActionListener(promocionActionListener);
-//	    promTorre.addActionListener(promocionActionListener);
-//	    System.out.println("promicon final");
-//	}
-//	
+	private void initPromocion(Casilla promCasilla) { //En principio no son alter
+		promocionPanel.setPreferredSize(new Dimension(Escalador.escalar(50),Escalador.escalar(100)));
+		if(promCasilla.getPieza() == null) {
+			//System.out.println("estoy en nulos");
+			if(promCasilla.getFila()==0) 
+			{promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
+	        }else if (promCasilla.getFila()==7) 
+	        {promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
+	        }
+		}else {
+			//System.out.println("Estoy en normal");
+	        if(!promCasilla.getPieza().getIsWhite()) 
+	        {promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
+	        }else if (promCasilla.getPieza().getIsWhite())
+	        {promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
+	        }
+        }
+		promocionPanel.setVisible(true);
+		
+		
+	    ActionListener promocionActionListener = new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            Object source = e.getSource();
+	            
+	            if (source == promReina) {
+	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite(),false));
+	            } else if (source == promAlfil) {
+	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite(),false));
+	            } else if (source == promCaballo) {
+	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite(),false));
+	            } else if (source == promTorre) {
+	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite(),false));
+	            }
+
+	            promocionPanel.setVisible(false);
+	            
+	            // Eliminar el ActionListener para que no se ejecute nuevamente
+	            promReina.removeActionListener(this);
+	            promAlfil.removeActionListener(this);
+	            promCaballo.removeActionListener(this);
+	            promTorre.removeActionListener(this);
+	        }
+	    };
+
+	    promReina.addActionListener(promocionActionListener);
+	    promAlfil.addActionListener(promocionActionListener);
+	    promCaballo.addActionListener(promocionActionListener);
+	    promTorre.addActionListener(promocionActionListener);
+	    
+	    this.tablero.repaint();
+	}
 	
 	
 	private void resetAgarrarPieza(Casilla prevCasilla, ArrayList<Casilla> casillasDisp) {
