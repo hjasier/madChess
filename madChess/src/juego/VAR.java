@@ -1,6 +1,7 @@
 package juego;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import objetos.Casilla;
 import objetos.Movimiento;
@@ -13,21 +14,27 @@ import piezas.Reina;
 import piezas.Rey;
 import piezas.Torre;
 import utils.Session;
+import utils.utils;
 
 public class VAR {
 	
 	private static DatosPartida datosPartida;
 	private static Tablero tablero = Session.getVentana().getPanelJuego().getTablero();
 	private static int curMov;
-	
+	private static HashMap<Movimiento,Pieza> piezasComidas = new HashMap<Movimiento,Pieza>();
 	
 	public static void avanzarMov() {
+		if (curMov == datosPartida.getMovimientos().size()-1) {
+			utils.alert("Fin de la partida", "No hay más movimientos");
+			return;
+		}
+		
 		Movimiento newMov = datosPartida.getMovimientos().get(curMov+1);
 		Casilla casillaOrigen = tablero.getCasilla(newMov.getCasillaSalida().getFila(),newMov.getCasillaSalida().getColumna());
 		Casilla casillaDestino = tablero.getCasilla(newMov.getCasillaLlegada().getFila(),newMov.getCasillaLlegada().getColumna());
 		
 		Pieza piezaMovida = casillaOrigen.getPieza();
-		Pieza piezaComida = casillaDestino.getPieza();// de alguna manera hay que guardarla para luego poder volverla a poner al retroceder
+		piezasComidas.put(newMov, casillaDestino.getPieza());
 		
 		casillaOrigen.setPieza(null);
 		casillaDestino.setPieza(piezaMovida);
@@ -37,7 +44,23 @@ public class VAR {
 	}
 
 	public static void retrodecerMov() {
-		// TODO Auto-generated method stub
+		if (curMov == -1) {
+			utils.alert("Inicio de la partida", "No hay más movimientos");
+			return;
+		}
+		
+		Movimiento newMov = datosPartida.getMovimientos().get(curMov);
+		Casilla casillaOrigen = tablero.getCasilla(newMov.getCasillaSalida().getFila(),newMov.getCasillaSalida().getColumna());
+		Casilla casillaDestino = tablero.getCasilla(newMov.getCasillaLlegada().getFila(),newMov.getCasillaLlegada().getColumna());
+		
+		
+		Pieza piezaMovida = casillaDestino.getPieza();
+		Pieza piezaComida = piezasComidas.get(newMov);// de alguna manera hay que guardarla para luego poder volverla a poner al retroceder
+		
+		casillaOrigen.setPieza(piezaMovida);
+		casillaDestino.setPieza(piezaComida);
+		
+		curMov--;
 		
 	}
 	
@@ -45,13 +68,42 @@ public class VAR {
 	
 	
 	public static void runInitialConfig() {
-		curMov = 0;
+		curMov = -1;
 		regenerarTablero();
 		Session.getVentana().getPanelJuego().modoTempPonerbtns();
+		Session.getVentana().getPanelJuego().getPanelVAR().loadMovs(datosPartida.getMovimientos());
 	}
+	
+	
+	
+	
+
+	
+	
+	
+
+	public DatosPartida getDatosPartida() {
+		return datosPartida;
+	}
+
+	public static void setDatosPartida(DatosPartida datos) {
+		datosPartida = datos;
+		runInitialConfig();
+		
+		
+	}
+	
+
+
 	
 	public static void regenerarTablero() { //esto es temp , luego ya se verá como se cambia
 		ArrayList<Casilla> casillas = tablero.getCasillas();
+		for (Casilla casilla:casillas) {
+			casilla.setPieza(null);
+			casilla.setDisabled(false);
+		}
+		Session.getVentana().getPanelJuego().resetTextAreas();
+		
 		Rey reyBlack = new Rey(false,false);
 		Rey reyWhite = new Rey(true,false);
 		
@@ -81,22 +133,21 @@ public class VAR {
 		casillas.get(62).setPieza(new Caballo(true,false));
 		casillas.get(63).setPieza(new Torre(true,false));
     }
-	
-	
-	
-	
 
-	public DatosPartida getDatosPartida() {
-		return datosPartida;
-	}
-
-	public static void setDatosPartida(DatosPartida datos) {
-		datosPartida = datos;
-		runInitialConfig();
-		
-		
-	}
 	
+	public static void irAMovimiento(int indx) {
+		if (indx > curMov) {
+			for (int i = curMov; i < indx; i++) {
+				avanzarMov();
+			} 
+        }
+		else if (indx < curMov) {
+			for (int i = curMov; i > indx; i--) {
+				retrodecerMov();
+			}
+		}
+		
+	}
 	
 
 }

@@ -9,6 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import juego.VAR;
+import objetos.Movimiento;
 import utils.Escalador;
 import utils.Session;
 import ventanas.Paneles;
@@ -17,7 +19,7 @@ import ventanas.VentanaPrincipal;
 import javax.swing.JButton;
 
 public class movimientoItem extends JPanel{
-	public movimientoItem() {
+	public movimientoItem(Movimiento movimiento, int indx) {
 		
 		setPreferredSize(Escalador.newDimension(210, 45));
 		setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -37,9 +39,16 @@ public class movimientoItem extends JPanel{
 	    bg.setIcon(new ImageIcon(imgEscalada));
 	    
 		this.add(bg);
+		String label;
+		if (indx ==-1) {
+			label = "Inicio";
+		}
+		else {
+			label = movimiento.getCasillaSalida().getFila() + " " + movimiento.getCasillaSalida().getColumna() + " -> " + movimiento.getCasillaLlegada().getFila() + " " + movimiento.getCasillaLlegada().getColumna();
+		}
+		JLabel lblNewLabel = new JLabel(label);
 		
-		JLabel lblNewLabel = new JLabel("H1 --> C5");
-		lblNewLabel.setBounds(Escalador.newBounds(10, 10, 102, 17));
+		lblNewLabel.setBounds(Escalador.newBounds(10, 10, 102, 21));
 		add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("IR");
@@ -50,9 +59,10 @@ public class movimientoItem extends JPanel{
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaPrincipal ventana = Session.getVentana();
-				ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.JUEGO);
+				VAR.irAMovimiento(indx);
 			}
 		});
 	}
+
+	
 }
