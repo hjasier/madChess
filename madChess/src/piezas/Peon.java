@@ -30,8 +30,14 @@ public class Peon extends Pieza implements PiezaMustHave{
         		{-1, 0}, /**Peon**/
         		{-1, 1}
         };
-        if (!pMoved||isAlter) {
-            movimientos[1][0] = -2; // Cambia el movimiento de una casilla a dos casillas
+        if (!pMoved || isAlter) {
+            // Verificar si la casilla delante del peón está ocupada por una pieza contraria
+            Casilla casillaUnaAdelante = casillas.get((fila + (this.getIsWhite() ? -1 : 1)) * 8 + (columna - 'A'));
+            if (casillaUnaAdelante.getPieza() != null && casillaUnaAdelante.getPieza().getIsWhite() != this.getIsWhite()) {
+                movimientos[1][0] = -1; // Si hay una pieza adelante, solo se permite el movimiento de una casilla
+            } else {
+                movimientos[1][0] = -2; // Si no hay pieza adelante, se permite el movimiento de dos casillas
+            }
         }
         
 
