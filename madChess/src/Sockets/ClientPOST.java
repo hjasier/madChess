@@ -9,8 +9,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import juego.DatosPartida;
+import objetos.Boost;
 import objetos.Casilla;
 import objetos.Movimiento;
+import utils.Configuracion;
 import utils.Session;
 
 public class ClientPOST {
@@ -63,22 +65,26 @@ public class ClientPOST {
 	}
 	
     public void postMouseDragged(MouseEvent e,Casilla casilla) throws IOException {
-        long currentTime = System.currentTimeMillis();
-        if (!piezaSent) {
-        	serverOut.writeObject("setDraggPieza");
-            serverOut.writeObject(casilla);
-            piezaSent = true;
-        }
-        if (currentTime - lastMouseDraggedTime >= 10) {
-            serverOut.writeObject("mouseDragged");
-            serverOut.writeObject(e.getX() + ";" + e.getY());
-            lastMouseDraggedTime = currentTime;
-        } else {}
+    	if (Configuracion.MLTPLY_PIEZA_DRAG) {
+    		long currentTime = System.currentTimeMillis();
+            if (!piezaSent) {
+            	serverOut.writeObject("setDraggPieza");
+                serverOut.writeObject(casilla);
+                piezaSent = true;
+            }
+            if (currentTime - lastMouseDraggedTime >= 10) {
+                serverOut.writeObject("mouseDragged");
+                serverOut.writeObject(e.getX() + ";" + e.getY());
+                lastMouseDraggedTime = currentTime;
+            } else {}	
+    	}
     }
     
 	public void postResetDragg() throws IOException {
+		if (Configuracion.MLTPLY_PIEZA_DRAG) {
 		serverOut.writeObject("resetDragg");
 		piezaSent = false;
+		}
 	}
     
 	public void postCasillas(ArrayList<Casilla> casillas) throws IOException {
@@ -98,6 +104,14 @@ public class ClientPOST {
 		serverOut.writeObject("reloadDatosPartida");
 		serverOut.writeObject(Session.getDatosPartida());	
 	}
+
+
+	public void postBoost(Boost boost) throws IOException {
+		serverOut.writeObject("postBoost");
+		serverOut.writeObject(boost);	
+	}
+
+
 
 
 	

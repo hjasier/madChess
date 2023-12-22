@@ -126,8 +126,8 @@ public class LogicaPartida {
         ventana.initWindow();
         
 
-        addInfo(Infos.NAMESEP+" "+curPlayer.getUsuario().getUsername()+" empieza la partida con blancas "+Infos.NAMESEP, new Color(236,212,146), true,false);
-        addInfo(Infos.PIEZAS, new Color(236,212,146), true,false);
+        //addInfo(Infos.NAMESEP+" "+curPlayer.getUsuario().getUsername()+" empieza la partida con blancas "+Infos.NAMESEP, new Color(236,212,146), true,false);
+        addInfo(Infos.PIEZAS+" 🐸", new Color(236,212,146), true,false);
         printMovimiento();
 		
         
@@ -253,63 +253,12 @@ public class LogicaPartida {
 
 
 	private void ejecutarPromocion(Casilla curCasilla) {
-		initPromocion(curCasilla);
+		tablero.initPromocion(curCasilla);
 		addInfo(Infos.PROMOCION,secondaryColor,false,false);
 	}
 
 
-	private void initPromocion(Casilla promCasilla) { //En principio no son alter
-		tablero.promocionPanel.setPreferredSize(new Dimension(Escalador.escalar(50),Escalador.escalar(100)));
-		if(promCasilla.getPieza() == null) {
-			//System.out.println("estoy en nulos");
-			if(promCasilla.getFila()==0) 
-			{tablero.promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
-	        }else if (promCasilla.getFila()==7) 
-	        {tablero.promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
-	        }
-		}else {
-			//System.out.println("Estoy en normal");
-	        if(!promCasilla.getPieza().getIsWhite()) 
-	        {tablero.promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
-	        }else if (promCasilla.getPieza().getIsWhite())
-	        {tablero.promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
-	        }
-        }
-		tablero.promocionPanel.setVisible(true);
-		
-		
-	    ActionListener promocionActionListener = new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            Object source = e.getSource();
-	            
-	            if (source == tablero.promReina) {
-	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite(),false));
-	            } else if (source == tablero.promAlfil) {
-	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite(),false));
-	            } else if (source == tablero.promCaballo) {
-	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite(),false));
-	            } else if (source == tablero.promTorre) {
-	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite(),false));
-	            }
 
-	            tablero.promocionPanel.setVisible(false);
-	            
-	            // Eliminar el ActionListener para que no se ejecute nuevamente
-	            tablero.promReina.removeActionListener(this);
-	            tablero.promAlfil.removeActionListener(this);
-	            tablero.promCaballo.removeActionListener(this);
-	            tablero.promTorre.removeActionListener(this);
-	        }
-	    };
-
-	    tablero.promReina.addActionListener(promocionActionListener);
-	    tablero.promAlfil.addActionListener(promocionActionListener);
-	    tablero.promCaballo.addActionListener(promocionActionListener);
-	    tablero.promTorre.addActionListener(promocionActionListener);
-	    
-	    this.tablero.repaint();
-	}
 	
 	
 	private void resetAgarrarPieza(Casilla prevCasilla, ArrayList<Casilla> casillasDisp) {
@@ -1095,7 +1044,7 @@ public class LogicaPartida {
 	private void addInfo(String text, Color color, boolean bold, boolean post) {
 	    StringBuilder styledText = new StringBuilder("<html>");
 	    String fontName = "Arial";
-	    int fontSize = Escalador.escalar(4);
+	    int fontSize = Escalador.escalar(5);
 	    if (bold) {
 	        styledText.append("<b>");
 	    }

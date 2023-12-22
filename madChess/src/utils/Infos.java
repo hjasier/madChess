@@ -25,7 +25,7 @@ public class Infos {
 		public static final String ALFIL = "♗";
 		public static final String CABALLO = "♘";
 		public static final String PEON = "♙";
-		public static final String PIEZAS = "♜♟♞♝♛♚♔♕♗♘♙♖";
+		public static final String PIEZAS = "♜♟️♞♝♛♚♔♕♗♘♙♖";
 		
 		
 		//BOOSTS

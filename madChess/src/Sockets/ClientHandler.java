@@ -12,6 +12,7 @@ import java.util.Set;
 
 import juego.DatosPartida;
 import juego.modoJuego;
+import objetos.Boost;
 import objetos.Jugador;
 import objetos.Usuario;
 import objetos.Movimiento;
@@ -140,6 +141,10 @@ public class ClientHandler implements Runnable {
 						reenviar2Datos("reloadDatosPartida",newDatos);
 					    break;
                 		
+					case "postBoost":
+						Object boost = input.readObject();
+						reenviar2Datos("postBoost", boost);
+						break;
     			    
 				}
     				

@@ -1,6 +1,9 @@
 package objetos;
 
-public class Boost {
+import java.io.Serializable;
+
+public class Boost implements Serializable{
 		protected int cont;
 		public void check(){}
+		public void config() {}
 }

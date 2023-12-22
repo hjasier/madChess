@@ -20,6 +20,7 @@ public class Configuracion {
 	public static final String HOST = "localhost"; 
 	
 	
+	public static final boolean MLTPLY_PIEZA_DRAG = false;
 	
 	//STYLE
 	

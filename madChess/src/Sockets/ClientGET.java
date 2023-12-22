@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import juego.Boosts;
 import juego.DatosPartida;
 import juego.LogicaPartida;
+import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Movimiento;
 import objetos.Tablero;
+import utils.Configuracion;
 import utils.Session;
 
 
@@ -74,17 +77,26 @@ public class ClientGET implements Runnable {
                 		break;
 
                 	case "setDraggPieza":
-                		Casilla casilla = (Casilla) serverIn.readObject();
-                		Session.getPartida().setDragPieza(casilla);
+                		if (Configuracion.MLTPLY_PIEZA_DRAG) {
+                			Casilla casilla = (Casilla) serverIn.readObject();
+                    		Session.getPartida().setDragPieza(casilla);
+                		}
                 		break;
                 	case "resetDragg":
-                		Session.getPartida().getTablero().resetDraggPieza();
+                		if (Configuracion.MLTPLY_PIEZA_DRAG) {
+                			Session.getPartida().getTablero().resetDraggPieza();
+                		}
                 		break;
                 	
                 	case "reloadDatosPartida":
 						DatosPartida newDatos = (DatosPartida) serverIn.readObject();
 						System.out.println("Recibido reload data");
 						break;
+						
+                	case "postBoost":
+                		Boost boost = (Boost) serverIn.readObject();
+                		Boosts.getStcBoost(boost);
+                		break;
                 }
             }
                 

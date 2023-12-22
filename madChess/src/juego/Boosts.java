@@ -1,6 +1,7 @@
 package juego;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,44 +14,55 @@ import utils.Infos;
 import utils.Session;
 import utils.utils;
 
+
 public class Boosts {
 		
-		protected static String curBoost;
+		protected static BOOSTS curBoost;
 		protected static ArrayList<Boost> boostActivos = new ArrayList<>();
 		protected static ArrayList<Boost> boostInactivos = new ArrayList<>();
+		
+		public enum BOOSTS {HIELO, PRESAGIO , BOMBA, CONTROL, MINA};
+		
+		
+		private static Boost createBoost(BOOSTS boostType, Casilla casilla, Jugador curPlayer) {
+		    switch (boostType) {
+		        case HIELO:
+		            return new Hielo(casilla);
+		        case PRESAGIO:
+		            return new MalPresagio(curPlayer);
+		        case BOMBA:
+		            return new Bomba(casilla.getPieza(), casilla);
+		        default:
+		            return null;
+		    }
+		}
+		
 
+		
+		
+		
 		public static void checkBoosts(Casilla casilla, Jugador curPlayer) {
-			
-			if (curBoost == null) {return;}
-			switch(curBoost) {
-				case "HIELO":
-					//casilla.setDebugClr(Color.blue);
-					Hielo boostHielo = new Hielo(casilla);
-					setBloqueoCasillasAdyacentes(casilla,true);
-					curBoost = null;
-					boostActivos.add(boostHielo);
-					break;
-				case "PRESAGIO":
-					MalPresagio boostMalPresagio = new MalPresagio(curPlayer);
-					curBoost = null;
-					boostActivos.add(boostMalPresagio);
-					break;
-				case "BOMBA":
-				    Bomba boostBomba = new Bomba(casilla.getPieza(), casilla);
-				    curBoost = null;
-				    casilla.getPieza().setIsBomberman(true);
-				    boostActivos.add(boostBomba);
-				    break;
-				
-			}
-			
-				
+		    if (curBoost == null) {
+		        return;
+		    }
+
+		    Boost boost = createBoost(curBoost, casilla, curPlayer);
+		    if (boost != null) {
+		        boost.config();
+		        boostActivos.add(boost);
+		        postBoostTS(boost);
+		    }
+
+		    curBoost = null;
 		}
 		
 		
-		
-	    public static void boostHielo() {
-	        curBoost = "HIELO";
+
+
+
+
+		public static void boostHielo() {
+	        curBoost = BOOSTS.HIELO;
 	    	utils.alert(Infos.HIELOINFO, "Boost Hielo", "hielo");
 	    }
 
@@ -59,14 +71,14 @@ public class Boosts {
 
 
 		public static void boostMalPresagio() {
-		    curBoost = "PRESAGIO";
+		    curBoost = BOOSTS.PRESAGIO;
 		    utils.alert(Infos.PRESAGIOINFO, "Boost Presagio", "presagio");
 		    checkBoosts(null, Session.getPartida().getCurPlayer());
 			
 		}
 	    
 	    public static void boostBomba() {
-	        curBoost = "BOMBA";
+	        curBoost = BOOSTS.BOMBA;
 	        utils.alert(Infos.BOMBAINFO, "Boost BomberMan", "bomba");
 	        
 	    }
@@ -110,7 +122,7 @@ public class Boosts {
 	     }
 	    
 	    
-	    public static void explotacionBomba(Casilla casilla) {
+	    public static void explotarBomba(Casilla casilla) {
 	        int fila = casilla.getFila();
 	        char columna = casilla.getColumna();
 	        
@@ -151,6 +163,25 @@ public class Boosts {
 	    	return pieza;
 	    }
 	    
+	    
+	    
+	    
+	    
+		
+	    private static void postBoostTS(Boost boost) {
+	    	if (Session.getDatosPartida().getModoDeJuego() == modoJuego.ONLINE) {
+			try {
+				Session.getCtsConnection().postBoost(boost);
+			} catch (IOException e) {
+				e.printStackTrace();
+				}
+			}
+		}
+	    
+		public static void getStcBoost(Boost boost) {
+			boost.config();
+	        boostActivos.add(boost);
+        }
 	
 	
 	    public static void updateBoost() {
@@ -194,9 +225,13 @@ class Hielo extends Boost{
 		cont--;
 		if(cont==0) {
 			Boosts.setBloqueoCasillasAdyacentes(casillaCentral, false);
-//			Boosts.boostActivos.remove((Boost)this);
-			
 		}
+	}
+	
+	@Override
+	public void config() {
+		Casilla casilla = Session.getPartida().getTablero().getCasilla(casillaCentral);
+		Boosts.setBloqueoCasillasAdyacentes(casilla, true);
 	}
 	
 }
@@ -225,18 +260,24 @@ class MalPresagio extends Boost{
 		else if(cont == 10 || cont == 5) {
 			Session.getPartida().printMovimientoFormateado("En " + cont + " "+Infos.FINPARTIDACONTADOR);
 		}
-		
-		
 	}  
+	
+	
+	
+	
 	   
 }      
         
 class Bomba extends Boost {
 
 	protected Pieza piezaBomba;
-    public Bomba(Pieza pieza,Casilla casillaCentral) {
+	protected Casilla casillaInicial;
+	
+    public Bomba(Pieza pieza,Casilla casillaInicial) {
         cont = 5; // Duración de la cuenta regresiva antes de la explosión
         this.piezaBomba = pieza;
+        this.casillaInicial = casillaInicial;
+        
     }
 
     
@@ -247,7 +288,7 @@ class Bomba extends Boost {
         if (cont == 0) {
         	Casilla curCasilla = piezaBomba.getCasillaParent();
         	System.out.println(curCasilla.getPos());
-        	Boosts.explotacionBomba(curCasilla);
+        	Boosts.explotarBomba(curCasilla);
         	
         	Session.getPartida().printMovimientoFormateado(Infos.BOOM);
 			Session.getPartida().getTablero().initAnimacionExplosion(curCasilla);
@@ -257,6 +298,12 @@ class Bomba extends Boost {
         	Session.getPartida().printMovimientoFormateado(Infos.CONTADOREXPLOSION + cont);
         }
     }
+    
+    @Override
+	public void config() {
+    	Pieza pieza = Session.getPartida().getTablero().getCasilla(casillaInicial).getPieza();
+    	pieza.setIsBomberman(true);
+	}
 
     
 }

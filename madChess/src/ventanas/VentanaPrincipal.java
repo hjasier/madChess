@@ -65,7 +65,8 @@ public class VentanaPrincipal extends JFrame{
     ImageIcon logo = new ImageIcon(getClass().getResource("/srcmedia/appLogo.png"));
 
     PartidasJugadas partidas = new PartidasJugadas();
-
+    
+    Juego2 juego2 = new Juego2();
     
     // Obtener la imagen desde el ImageIcon
    

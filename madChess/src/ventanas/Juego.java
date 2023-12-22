@@ -361,7 +361,7 @@ public class Juego extends JPanel {
 		labelMovimientos.setBounds(0, Escalador.escalar(0), Escalador.escalar(130), Escalador.escalar(50));
 		panelRetroceder.setBounds(Escalador.escalar(180), Escalador.escalar(0), Escalador.escalar(200), Escalador.escalar(50));
 		
-		movimientosTabs.setPreferredSize(new Dimension(50,50));
+		movimientosTabs.setPreferredSize(new Dimension(Escalador.escalar(290),Escalador.escalar(50)));
 	    
 	    
 	    panelMovimentos.add(movimientosTabs, BorderLayout.NORTH);
@@ -653,11 +653,10 @@ public class Juego extends JPanel {
 		}
 		
 		if (tipoPartida == partidaTipo.CLASICA) { //CLÁSICO
-			clickBoost();
+			panelLabels.remove(labelBoost);
 		}
 		else {
-			panelLabels.remove(labelBoost);
-			clickChat();
+			clickBoost();
 		}
 		
 		if (tipoPartida==partidaTipo.CLASICA && modoDeJuego == modoJuego.LOCAL) { 

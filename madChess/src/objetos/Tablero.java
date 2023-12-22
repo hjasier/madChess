@@ -231,7 +231,20 @@ public class Tablero extends JPanel{
     		}
     	}
 		return null;
-    	
+    }
+	
+	public Casilla getCasilla(Casilla cas) {
+		if (casillas.contains(cas)) {return cas;}
+		
+		char columna = cas.getColumna();
+		int fila = cas.getFila();
+		
+    	for (Casilla casilla : casillas) {
+    		if (columna == casilla.getColumna() && fila == casilla.getFila()) {
+    			return casilla;
+    		}
+    	}
+		return null;
     }
     
 	private char posicionToAlfabeto(int columna) {
@@ -414,6 +427,58 @@ public class Tablero extends JPanel{
 				casilla.getPieza().reloadImg();
 			}
 		}
+	}
+
+
+	public void initPromocion(Casilla promCasilla) { //En principio no son alter
+		promocionPanel.setPreferredSize(new Dimension(Escalador.escalar(50),Escalador.escalar(100)));
+		if(promCasilla.getPieza() == null) {
+			if(promCasilla.getFila()==0) 
+			{promocionPanel.setBounds(getPosCasillaTablero(promCasilla).x,getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
+	        }else if (promCasilla.getFila()==7) 
+	        {promocionPanel.setBounds(getPosCasillaTablero(promCasilla).x,getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
+	        }
+		}else {
+	        if(!promCasilla.getPieza().getIsWhite()) 
+	        {promocionPanel.setBounds(getPosCasillaTablero(promCasilla).x,getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
+	        }else if (promCasilla.getPieza().getIsWhite())
+	        {promocionPanel.setBounds(getPosCasillaTablero(promCasilla).x,getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
+	        }
+        }
+		promocionPanel.setVisible(true);
+		
+		
+	    ActionListener promocionActionListener = new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            Object source = e.getSource();
+	            
+	            if (source == promReina) {
+	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite(),false));
+	            } else if (source == promAlfil) {
+	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite(),false));
+	            } else if (source == promCaballo) {
+	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite(),false));
+	            } else if (source == promTorre) {
+	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite(),false));
+	            }
+
+	            promocionPanel.setVisible(false);
+	            
+	            // Eliminar el ActionListener para que no se ejecute nuevamente
+	            promReina.removeActionListener(this);
+	            promAlfil.removeActionListener(this);
+	            promCaballo.removeActionListener(this);
+	            promTorre.removeActionListener(this);
+	        }
+	    };
+
+	    promReina.addActionListener(promocionActionListener);
+	    promAlfil.addActionListener(promocionActionListener);
+	    promCaballo.addActionListener(promocionActionListener);
+	    promTorre.addActionListener(promocionActionListener);
+	    
+	    repaint();
 	}
 
 	
