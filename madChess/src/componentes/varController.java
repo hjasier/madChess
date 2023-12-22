@@ -13,14 +13,18 @@ import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 
 import juego.VAR;
+import objetos.Movimiento;
 
 import java.awt.Color;
 
 public class varController extends JPanel{
+	
+	JPanel movimientos = new JPanel();
 	
 	public varController() {
 
@@ -39,7 +43,7 @@ public class varController extends JPanel{
 		btnReanudarPartida.setBounds(Escalador.newBounds(29, 41, 285, 21));
 		add(btnReanudarPartida);
 		
-		JPanel movimientos = new JPanel();
+		
 		
 		JScrollPane scrollPane = new JScrollPane(movimientos);
 		scrollPane.setBounds(Escalador.newBounds(35, 85, 279, 176));
@@ -47,16 +51,10 @@ public class varController extends JPanel{
 		
 		
 		movimientos.setLayout(new BoxLayout(movimientos, BoxLayout.Y_AXIS));
-		movimientos.setBackground(Color.red);
 		
 		add(scrollPane);
 		
-		for (int i = 0; i < 12; i++) {
-			JPanel nPanel = new JPanel();
-			nPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-			nPanel.add(new movimientoItem());
-            movimientos.add(nPanel);
-        }
+		
 		
 		
 		btnAvanzar.addActionListener(new ActionListener() {
@@ -78,6 +76,22 @@ public class varController extends JPanel{
 		});
 		
 		
+		
+	}
+
+	public void loadMovs(ArrayList<Movimiento> arrayList) {
+		JPanel panelSalida = new JPanel();
+		panelSalida.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panelSalida.add(new movimientoItem(null,-1));
+		movimientos.add(panelSalida);
+		
+		
+		for (Movimiento movimiento : arrayList) {
+			JPanel nPanel = new JPanel();
+			nPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+			nPanel.add(new movimientoItem(movimiento,arrayList.indexOf(movimiento)));
+			movimientos.add(nPanel);
+		}
 		
 	}
 }

@@ -712,6 +712,14 @@ public class Juego extends JPanel {
 	}
 
 
+	public varController getPanelVAR() {
+		return panelVAR;
+	}
+
+
+	
+
+
 }
 
 
