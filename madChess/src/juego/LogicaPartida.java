@@ -59,16 +59,9 @@ public class LogicaPartida {
 	
 	protected Color secondaryColor = new Color(236,212,146);
 	
-	protected JPanel promocionPanel = new JPanel();
-	protected JButton promReina = new JButton("Reina");
-	protected JButton promAlfil = new JButton("Alfil");
-	protected JButton promCaballo = new JButton("Caballo");
-	protected JButton promTorre = new JButton("Torre");
-	
 	
 	
 	public LogicaPartida() {
-		promocionPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		Session.setPartida(this);
 		
 		this.ventana = Session.getVentana().getPanelJuego();
@@ -78,15 +71,8 @@ public class LogicaPartida {
 		casillas = tablero.getCasillas();
 		resetearVentana();
 		
-		promocionPanel = new JPanel();
-		promocionPanel.setLayout(new GridLayout(4,1));
-		promocionPanel.add(promReina);
-		promocionPanel.add(promAlfil);
-		promocionPanel.add(promCaballo);
-		promocionPanel.add(promTorre);	        
-		promocionPanel.setVisible(false);
 	        
-		this.ventana.getTablero().tableroDiv.add(promocionPanel);
+		this.ventana.getTablero().tableroDiv.add(tablero.promocionPanel);
 	        
 		
 		
@@ -273,23 +259,23 @@ public class LogicaPartida {
 
 
 	private void initPromocion(Casilla promCasilla) { //En principio no son alter
-		promocionPanel.setPreferredSize(new Dimension(Escalador.escalar(50),Escalador.escalar(100)));
+		tablero.promocionPanel.setPreferredSize(new Dimension(Escalador.escalar(50),Escalador.escalar(100)));
 		if(promCasilla.getPieza() == null) {
 			//System.out.println("estoy en nulos");
 			if(promCasilla.getFila()==0) 
-			{promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
+			{tablero.promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
 	        }else if (promCasilla.getFila()==7) 
-	        {promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
+	        {tablero.promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
 	        }
 		}else {
 			//System.out.println("Estoy en normal");
 	        if(!promCasilla.getPieza().getIsWhite()) 
-	        {promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
+	        {tablero.promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y, promCasilla.getWidth(), Escalador.escalar(100));
 	        }else if (promCasilla.getPieza().getIsWhite())
-	        {promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
+	        {tablero.promocionPanel.setBounds(tablero.getPosCasillaTablero(promCasilla).x,tablero.getPosCasillaTablero(promCasilla).y-25, promCasilla.getWidth(), Escalador.escalar(100));
 	        }
         }
-		promocionPanel.setVisible(true);
+		tablero.promocionPanel.setVisible(true);
 		
 		
 	    ActionListener promocionActionListener = new ActionListener() {
@@ -297,30 +283,30 @@ public class LogicaPartida {
 	        public void actionPerformed(ActionEvent e) {
 	            Object source = e.getSource();
 	            
-	            if (source == promReina) {
+	            if (source == tablero.promReina) {
 	                promCasilla.setPieza(new Reina(promCasilla.getPieza().getIsWhite(),false));
-	            } else if (source == promAlfil) {
+	            } else if (source == tablero.promAlfil) {
 	                promCasilla.setPieza(new Alfil(promCasilla.getPieza().getIsWhite(),false));
-	            } else if (source == promCaballo) {
+	            } else if (source == tablero.promCaballo) {
 	                promCasilla.setPieza(new Caballo(promCasilla.getPieza().getIsWhite(),false));
-	            } else if (source == promTorre) {
+	            } else if (source == tablero.promTorre) {
 	                promCasilla.setPieza(new Torre(promCasilla.getPieza().getIsWhite(),false));
 	            }
 
-	            promocionPanel.setVisible(false);
+	            tablero.promocionPanel.setVisible(false);
 	            
 	            // Eliminar el ActionListener para que no se ejecute nuevamente
-	            promReina.removeActionListener(this);
-	            promAlfil.removeActionListener(this);
-	            promCaballo.removeActionListener(this);
-	            promTorre.removeActionListener(this);
+	            tablero.promReina.removeActionListener(this);
+	            tablero.promAlfil.removeActionListener(this);
+	            tablero.promCaballo.removeActionListener(this);
+	            tablero.promTorre.removeActionListener(this);
 	        }
 	    };
 
-	    promReina.addActionListener(promocionActionListener);
-	    promAlfil.addActionListener(promocionActionListener);
-	    promCaballo.addActionListener(promocionActionListener);
-	    promTorre.addActionListener(promocionActionListener);
+	    tablero.promReina.addActionListener(promocionActionListener);
+	    tablero.promAlfil.addActionListener(promocionActionListener);
+	    tablero.promCaballo.addActionListener(promocionActionListener);
+	    tablero.promTorre.addActionListener(promocionActionListener);
 	    
 	    this.tablero.repaint();
 	}

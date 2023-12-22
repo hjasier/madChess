@@ -46,14 +46,14 @@ public class Tablero extends JPanel{
 	public Casilla prevCasilla;
 	public Boolean dragging = false;
 	
-//	private JPanel promocionPanel;
-//	
-//	
-//	private JButton promReina = new JButton("Reina");
-//	private JButton promAlfil = new JButton("Alfil");
-//	private JButton promCaballo = new JButton("Caballo");
-//	private JButton promTorre = new JButton("Torre");
-	private Jugador nowPlaying;
+	public JPanel promocionPanel;
+	
+	
+	public JButton promReina = new JButton("Reina");
+	public JButton promAlfil = new JButton("Alfil");
+	public JButton promCaballo = new JButton("Caballo");
+	public JButton promTorre = new JButton("Torre");
+	public Jugador nowPlaying;
 
 	
     public Tablero() { 
@@ -81,16 +81,16 @@ public class Tablero extends JPanel{
     	animacion.setVisible(false);
     	
 
-//        promocionPanel = new JPanel();
-//        promocionPanel.setLayout(new GridLayout(4,1));
-//        promocionPanel.add(promReina);
-//        promocionPanel.add(promAlfil);
-//        promocionPanel.add(promCaballo);
-//        promocionPanel.add(promTorre);
-//        
-//        promocionPanel.setVisible(false);
-//        
-//        this.add(promocionPanel);
+        promocionPanel = new JPanel();
+        promocionPanel.setLayout(new GridLayout(4,1));
+        promocionPanel.add(promReina);
+        promocionPanel.add(promAlfil);
+        promocionPanel.add(promCaballo);
+        promocionPanel.add(promTorre);
+        
+        promocionPanel.setVisible(false);
+        
+        this.add(promocionPanel);
         
         
     	
