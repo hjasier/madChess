@@ -22,7 +22,10 @@ public class Pieza implements Serializable {
 	protected Boolean pMoved = false;
 	protected Boolean isAlter = false;
 	protected Boolean isBomberman = false;
-	
+	protected Boolean isBoosted = false;
+
+
+
 	public ArrayList<Casilla> getCasillasCome(Casilla curCasilla, ArrayList<Casilla> casillas) {
 
         return null;
@@ -101,6 +104,16 @@ public class Pieza implements Serializable {
 		this.isBomberman = isBomberman;
 	}
 
+	public Boolean getIsBoosted() {
+		return isBoosted;
+	}
+
+
+
+	public void setIsBoosted(Boolean isBoosted) {
+		this.isBoosted = isBoosted;
+	}
+	
 	public void setAlterColor() {
 		this.isWhite = !this.isWhite;
 		setColor();

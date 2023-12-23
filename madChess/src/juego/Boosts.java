@@ -10,6 +10,7 @@ import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
+import piezas.Peon;
 import utils.Infos;
 import utils.Session;
 import utils.utils;
@@ -345,6 +346,9 @@ class Control extends Boost{
 	@Override
 	public void config() {
 		pieza.setAlterColor();
+		if (pieza instanceof Peon) {
+			pieza.setIsBoosted(true);
+		}
 		casillaInicial = pieza.getCasillaParent();
 		casillaInicial.repaint();
 	}

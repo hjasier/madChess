@@ -853,7 +853,7 @@ public class LogicaPartida {
 	protected boolean checkPromotion(Pieza curPieza, Casilla curCasilla) {
 		return (curPieza instanceof Peon)&&
 				(curPieza.getIsWhite()&& curCasilla.getFila() == 0||
-				(!curPieza.getIsWhite())&& curCasilla.getFila() == 7);	
+				(!curPieza.getIsWhite())&& curCasilla.getFila() == 7)&&(!curPieza.getIsBoosted());	
 	}
 	
 	private boolean checkJaqueMoveValid(Casilla prevCasilla,Casilla newCasilla) {
