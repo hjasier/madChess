@@ -36,6 +36,9 @@ public class Infos {
 		public static final String FINPARTIDACONTADOR = "turnos acabará la partida ⚠️";
 		public static final String BOOM = "💥💥BOOOOOM!!!💥💥";
 		public static final String CONTADOREXPLOSION = "Explosión en: ";
+		public static final String MINAINFO = "Selecciona la casilla en la que colocar una mina explosiva";
+		
+		
 		
 		//
 		public static final String ContraseyaCambiada = "Contraseña actualizada";
