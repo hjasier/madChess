@@ -377,7 +377,6 @@ class Mina extends Boost {
     
     @Override
    	public void config() {
-    //casilla.setBomb(true);
    	}
 }
 
