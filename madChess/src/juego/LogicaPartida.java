@@ -366,8 +366,9 @@ public class LogicaPartida {
 		casillaSalida = getCasilla(casillaSalida.getFila(), casillaSalida.getColumna());
 		casillaLlegada = getCasilla(casillaLlegada.getFila(), casillaLlegada.getColumna());
 		
-		casillaLlegada.setPieza(casillaSalida.getPieza());
-		casillaSalida.setPieza(null);	
+		
+		moverPiezaTablero(casillaSalida, casillaLlegada);
+		
 		
 		
 	}
@@ -402,7 +403,7 @@ public class LogicaPartida {
 		ArrayList<Casilla> casillasSimulacion = getCasillasSimulacion(casillas);//Crea una copia del arraylist casillas
 		Casilla casillaRey = getCasillaPieza(curPlayer.getRey());
 		for (Casilla casilla:casillas) {
-			Pieza pieza = casilla.getPieza();//Geteamos la pieza
+			Pieza pieza = casilla.getPieza();
 			if (pieza!=null&&pieza.getIsWhite()==curPlayer.getIsWhite()&&!(pieza instanceof Rey)) {
 				
 				ArrayList<Casilla> casillasDispPieza = pieza.getCasillasDisponibles(casilla, casillas);//Todos las casillas a las que se podría mover antes de la restricción

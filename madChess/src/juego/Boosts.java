@@ -48,15 +48,20 @@ public class Boosts {
 
 		    Boost boost = createBoost(curBoost, casilla, curPlayer);
 		    if (boost != null) {
-		        boost.config();
-		        boostActivos.add(boost);
-		        postBoostTS(boost);
+		        initBoost(boost);
 		    }
 
 		    curBoost = null;
 		}
 		
 		
+
+		private static void initBoost(Boost boost) {
+			boost.config();
+	        boostActivos.add(boost);
+	        postBoostTS(boost);
+		}
+
 
 
 
@@ -83,15 +88,12 @@ public class Boosts {
 	        
 	    }
 	    
+	    
 	    public static void boostControl() {
 	    	utils.alert(Infos.CONTROLINFO, "Boost Control", "control");
 	        Pieza pieza = getPiezaAleatoria();
 	        Control boostControl = new Control(pieza, Session.getPartida().getCurPlayer());
-			curBoost = null;
-			pieza.setAlterColor();
-			pieza.getCasillaParent().repaint();
-			boostActivos.add(boostControl);
-	        
+	        initBoost(boostControl);
 	    }
 	    
 	    
@@ -312,6 +314,8 @@ class Control extends Boost{
 	
 	protected Jugador player;
 	protected Pieza pieza;
+	protected Casilla casillaInicial;
+	
 	public Control(Pieza pieza, Jugador player){
 		cont = 4;
 		this.pieza = pieza;
@@ -330,6 +334,13 @@ class Control extends Boost{
 			pieza.getCasillaParent().repaint();
 		}   
 	}  
+	
+	@Override
+	public void config() {
+		pieza.setAlterColor();
+		casillaInicial = pieza.getCasillaParent();
+		casillaInicial.repaint();
+	}
 	   
 }      
 
