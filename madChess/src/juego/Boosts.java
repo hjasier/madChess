@@ -377,6 +377,7 @@ class Mina extends Boost {
     
     @Override
    	public void config() {
+    	casilla.setIsMina(true);
    	}
 }
 

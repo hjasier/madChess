@@ -35,6 +35,8 @@ public class Casilla extends JPanel implements Serializable {
     protected boolean iluminada = false;
     protected boolean isDisponible = false;
     protected boolean isHielo = false;
+    protected boolean isMina = false;
+    protected boolean isAlerted = false;
     protected boolean isBlack = false;
     protected boolean disabled = false;
 
@@ -224,6 +226,54 @@ public class Casilla extends JPanel implements Serializable {
 		repaint();
 	}
 
+	public Boolean getIsMina() {
+		return isMina;
+	}
+	
+	public void setIsMina(Boolean isMina) {
+	    this.isMina = isMina;
+	    if (isMina && !isAlerted) {
+	        Thread colorChangeThread = new Thread(() -> {
+	            try {
+	                SwingUtilities.invokeLater(() -> {
+	                    this.color = new Color(Math.min(color.getRed() + 100, 255), Math.min(color.getGreen() - 50, 255), color.getBlue());
+	                    repaint();
+	                });
+	                
+	                Thread.sleep(700);
+	                
+	                SwingUtilities.invokeLater(() -> {
+	                    this.color = initColor;
+	                    repaint();
+	                });
+	                
+	                Thread.sleep(700);
+	                
+	                SwingUtilities.invokeLater(() -> {
+	                	this.color = new Color(Math.min(color.getRed() + 100, 255), Math.min(color.getGreen() - 50, 255), color.getBlue());
+	                    repaint();
+	                });
+	                
+	                Thread.sleep(700);
+	                
+	                SwingUtilities.invokeLater(() -> {
+	                    this.color = initColor;
+	                    repaint();
+	                });
+	            } catch (InterruptedException e) {
+	                e.printStackTrace();
+	            }
+	        });
+
+	        colorChangeThread.start();
+
+	        isAlerted = true;
+	    } else {
+	        this.color = initColor;
+	        repaint();
+	    }
+	}
+	
 
 	public void setDisabled(boolean b) {
 		this.disabled = b;
@@ -249,6 +299,7 @@ public class Casilla extends JPanel implements Serializable {
 		this.initColor = color;
 		setDisabled(disabled);
 		setIsHielo(isHielo);
+		setIsMina(isMina);
 		
 		
 	}
