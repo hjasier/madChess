@@ -231,47 +231,50 @@ public class Casilla extends JPanel implements Serializable {
 	}
 	
 	public void setIsMina(Boolean isMina) {
-	    this.isMina = isMina;
-	    if (isMina && !isAlerted) {
-	        Thread colorChangeThread = new Thread(() -> {
-	            try {
-	                SwingUtilities.invokeLater(() -> {
-	                    this.color = new Color(Math.min(color.getRed() + 100, 255), Math.min(color.getGreen() - 50, 255), color.getBlue());
-	                    repaint();
-	                });
-	                
-	                Thread.sleep(700);
-	                
-	                SwingUtilities.invokeLater(() -> {
-	                    this.color = initColor;
-	                    repaint();
-	                });
-	                
-	                Thread.sleep(700);
-	                
-	                SwingUtilities.invokeLater(() -> {
-	                	this.color = new Color(Math.min(color.getRed() + 100, 255), Math.min(color.getGreen() - 50, 255), color.getBlue());
-	                    repaint();
-	                });
-	                
-	                Thread.sleep(700);
-	                
-	                SwingUtilities.invokeLater(() -> {
-	                    this.color = initColor;
-	                    repaint();
-	                });
-	            } catch (InterruptedException e) {
-	                e.printStackTrace();
-	            }
-	        });
+	    if (this.getPieza() == null) {
+	    	this.isMina = isMina;
+		    if (isMina && !isAlerted) {
+		        Thread colorChangeThread = new Thread(() -> {
+		            try {
+		                SwingUtilities.invokeLater(() -> {
+		                    this.color = new Color(Math.min(color.getRed() + 100, 255), Math.min(color.getGreen() - 50, 255), color.getBlue());
+		                    repaint();
+		                });
+		                
+		                Thread.sleep(700);
+		                
+		                SwingUtilities.invokeLater(() -> {
+		                    this.color = initColor;
+		                    repaint();
+		                });
+		                
+		                Thread.sleep(700);
+		                
+		                SwingUtilities.invokeLater(() -> {
+		                	this.color = new Color(Math.min(color.getRed() + 100, 255), Math.min(color.getGreen() - 50, 255), color.getBlue());
+		                    repaint();
+		                });
+		                
+		                Thread.sleep(700);
+		                
+		                SwingUtilities.invokeLater(() -> {
+		                    this.color = initColor;
+		                    repaint();
+		                });
+		            } catch (InterruptedException e) {
+		                e.printStackTrace();
+		            }
+		        });
 
-	        colorChangeThread.start();
+		        colorChangeThread.start();
 
-	        isAlerted = true;
-	    } else {
-	        this.color = initColor;
-	        repaint();
+		        isAlerted = true;
+		    } else {
+		        this.color = initColor;
+		        repaint();
+		    }
 	    }
+		
 	}
 	
 
