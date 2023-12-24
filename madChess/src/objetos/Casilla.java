@@ -236,6 +236,7 @@ public class Casilla extends JPanel implements Serializable {
 		return isMina;
 	}
 	
+	
 	public void aninarMina() {
 	        Thread colorChangeThread = new Thread(() -> {
 	            try {
@@ -269,8 +270,6 @@ public class Casilla extends JPanel implements Serializable {
 	            }
 	        });
 
-	        colorChangeThread.start();
-	     
 	}
 	
 
