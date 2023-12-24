@@ -1,6 +1,9 @@
 package juego;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import objetos.Jugador;
 
 public class Puntuador {
@@ -8,59 +11,58 @@ public class Puntuador {
 	private static final int CORTA_DURACION = 60000;
     private static final int BONUS = 5;
 
+    
+    public void agregarPartida2(ArrayList<Jugador> listaJugadores, String modo, Resultado resultado, DatosPartida partida) {
 
-    public void agregarPartida(Jugador usuario1, Jugador usuario2, String modo, Resultado resultado, DatosPartida partida) {
+    	 Date inicio = partida.getFechaIni();
+         Date fin = partida.getFechaFin(); 
 
-        int puntuacionUser1 = getPuntuacionModo(usuario1, modo);
-        int puntuacionUser2 = getPuntuacionModo(usuario2, modo);
-        
-          
-        int newPuntuacionUser1 = 0;
-        int newPuntuacionUser2 = 0;
+         long duracion = fin.getTime() - inicio.getTime();
+    	
+    	int[] puntuaciones = new int[listaJugadores.size()];
 
-        
-        Date inicio = partida.getFechaIni();
-        Date fin = partida.getFechaFin(); 
+    	 for (int i = 0; i < listaJugadores.size(); i++) {
+    	        puntuaciones[i] = getPuntuacionModo(listaJugadores.get(i), modo);
+    	    }
 
-        long duracion = fin.getTime() - inicio.getTime();
-        
+
+    	 for (int i = 0; i < listaJugadores.size(); i++) {
+    	        int newPuntuacion = 0;
+
+    	        for (int j = 0; j < listaJugadores.size(); j++) {
+    	            if (i != j) {
+    	                int diffPuntuacion = puntuaciones[i] - puntuaciones[j];
+    	                newPuntuacion += calcularNuevaPuntuacion(duracion, resultado, diffPuntuacion, j);
+    	            }
+    	        }
+
+    	        actualizarPuntuacion(listaJugadores.get(i), modo, newPuntuacion);
+    	  
+    	 }         
+     
+    }
+    
+
+    private int calcularNuevaPuntuacion(long duracion, Resultado resultado, int diffPuntuacion, int numJugador) {
+    	String condicion = "VICTORIA_JUGADOR" + numJugador;
         if (duracion < CORTA_DURACION) {
-        	//victoria veloz
-            if (puntuacionUser1 > puntuacionUser2 + 75) { 
-            	//jugador 1 es mucho mejor + rapido
-            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (15 + BONUS) : (resultado == Resultado.EMPATE) ? -5  : (-30 - BONUS);
-                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (30 + BONUS) : (resultado == Resultado.EMPATE) ? 5  : (-15 - BONUS);
-            } else if (puntuacionUser2 > puntuacionUser1 + 75) {
-            	//jugador 2 es mejor + rapido
-            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (30 + BONUS) : (resultado == Resultado.EMPATE) ? 5  : (-15 - BONUS);
-                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (15 + BONUS) : (resultado == Resultado.EMPATE) ? -5  : (-30 - BONUS);
-            } else { //la diferencia entre ellos no es notable
-            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (20 + BONUS) : (resultado == Resultado.EMPATE) ? 0  : (-20);
-                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (20 + BONUS) : (resultado == Resultado.EMPATE) ? 0  : (-20);
+            if (diffPuntuacion > 75) {
+                return (resultado.equals(condicion) ? (15 + BONUS) : (resultado == Resultado.EMPATE) ? -5 : (-30 - BONUS));
+            } else if (diffPuntuacion < -75) {
+                return (resultado.equals(condicion) ? (30 + BONUS) : (resultado == Resultado.EMPATE) ? 5 : (-15 - BONUS));
+            } else {
+                return (resultado.equals(condicion) ? (20 + BONUS) : (resultado == Resultado.EMPATE) ? 0 : (-20));
             }
-            
         } else {
-        	if (puntuacionUser1 > puntuacionUser2 + 75) { 
-            	//jugador 1 es mucho mejor + rapido
-            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (15) : (resultado == Resultado.EMPATE) ? -5  : (-30);
-                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (30) : (resultado == Resultado.EMPATE) ? 5  : (-15);
-            } else if (puntuacionUser2 > puntuacionUser1 + 75) {
-            	//jugador 2 es mejor + rapido
-            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (30) : (resultado == Resultado.EMPATE) ? 5  : (-15);
-                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (15) : (resultado == Resultado.EMPATE) ? -5  : (-30);
-            } else { //la diferencia entre ellos no es notable
-            	newPuntuacionUser1 = (resultado == Resultado.VICTORIA_JUGADOR1) ? (20) : (resultado == Resultado.EMPATE) ? 0  : (-20);
-                newPuntuacionUser2 = (resultado == Resultado.VICTORIA_JUGADOR2) ? (20) : (resultado == Resultado.EMPATE) ? 0  : (-20);
+            if (diffPuntuacion > 75) {
+                return (resultado.equals(condicion) ? 15 : (resultado == Resultado.EMPATE) ? -5 : (-30));
+            } else if (diffPuntuacion < -75) {
+                return (resultado.equals(condicion) ? 30 : (resultado == Resultado.EMPATE) ? 5 : (-15));
+            } else {
+                return (resultado.equals(condicion) ? 20 : (resultado == Resultado.EMPATE) ? 0 : (-20));
             }
         }
-        
-        
-        actualizarPuntuacion(usuario1, modo, newPuntuacionUser1);
-        actualizarPuntuacion(usuario2, modo, newPuntuacionUser2);
-
     }
-
-    
     
    
     
@@ -99,6 +101,8 @@ public class Puntuador {
     public enum Resultado {
         VICTORIA_JUGADOR1,
         VICTORIA_JUGADOR2,
+        VICTORIA_JUGADOR3,
+        VICTORIA_JUGADOR4,
         EMPATE
 
     }
