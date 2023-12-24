@@ -8,8 +8,7 @@ import objetos.Pieza;
 public class Caballo extends Pieza implements PiezaMustHave {
 	
 	public Caballo(Boolean isWhite, boolean isAlter) {
-		super("n",isWhite);
-		this.isAlter = isAlter;
+		super("n",isWhite,isAlter);
 	}
 
 	

@@ -34,10 +34,11 @@ public class Pieza implements Serializable {
 	
 	
 	
-	public Pieza(String nombre, Boolean isWhite) {
+	public Pieza(String nombre, Boolean isWhite, boolean isAlter) {
 		super();
 		this.nombre = nombre;
 		this.isWhite = isWhite;
+		this.isAlter = isAlter;
 		setColor();
 		}
 
@@ -52,6 +53,9 @@ public class Pieza implements Serializable {
 		String piezaThemeName = "DF";
 		if (piezaTheme != null) {
 			piezaThemeName = piezaTheme.name();
+		}
+		if (isAlter) {
+			piezaThemeName += "ALTER";
 		}
 		
 		this.img = new ImageIcon(getClass().getResource("/srcmedia/piezas/" + isWhiteChar+nombre+piezaThemeName+ ".png"));
@@ -144,7 +148,10 @@ public class Pieza implements Serializable {
 		if (piezaTheme != null) {
 			piezaThemeName = piezaTheme.name();
 		}
-		this.img = new ImageIcon(getClass().getResource("/srcmedia/piezas/" + isWhiteChar+nombre+piezaThemeName+ ".png"));
+		if (isAlter) {
+			piezaThemeName += "ALTER";
+		}
+		this.img = new ImageIcon(getClass().getResource("/srcmedia/piezas/"+ isWhiteChar+nombre+piezaThemeName+ ".png"));
 	}
 
 

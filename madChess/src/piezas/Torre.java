@@ -8,8 +8,7 @@ import piezas.Rey;
 public class Torre extends Pieza implements PiezaMustHave {
 
     public Torre(Boolean isWhite, boolean isAlter) {
-        super("r", isWhite);
-        this.isAlter = isAlter;
+        super("r", isWhite,isAlter);
     }
 
     @Override

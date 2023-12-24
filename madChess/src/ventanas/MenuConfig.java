@@ -110,11 +110,11 @@ public class MenuConfig extends JPanel{
         panelPiezas.setLayout(null);
         
         //Labels
-        ImageIcon labelsImgPiezas = new ImageIcon(getClass().getResource("/srcmedia/bb.png"));
-        Image imgLabelsPiezas = labelsImgPiezas.getImage().getScaledInstance((int) (Escalador.escalar(956) * escala), (int) (Escalador.escalar(36) * escala), Image.SCALE_SMOOTH);
+        ImageIcon labelsImgPiezas = new ImageIcon(getClass().getResource("/srcmedia/piezasLabels.png"));
+        Image imgLabelsPiezas = labelsImgPiezas.getImage().getScaledInstance((int) (Escalador.escalar(498) * escala), (int) (Escalador.escalar(36) * escala), Image.SCALE_SMOOTH);
         JLabel labelsFtPiezas = new JLabel();
         labelsFtPiezas.setIcon(new ImageIcon(imgLabelsPiezas));
-        labelsFtPiezas.setBounds(Escalador.escalar(32), Escalador.escalar(211), (int) (Escalador.escalar(956)*escala), (int) (Escalador.escalar(36)*escala));
+        labelsFtPiezas.setBounds(Escalador.escalar(200), Escalador.escalar(211), (int) (Escalador.escalar(956)*escala), (int) (Escalador.escalar(36)*escala));
         
         //Label piezas
         ImageIcon piezasImg = new ImageIcon(getClass().getResource("/srcmedia/labelPiezas.png"));
@@ -126,7 +126,7 @@ public class MenuConfig extends JPanel{
         
         
         // Pieza1
-        ImageIcon pieza1Img = new ImageIcon(getClass().getResource("/srcmedia/wn.png"));
+        ImageIcon pieza1Img = new ImageIcon(getClass().getResource("/srcmedia/piezas/wn.png"));
         Image imgReescaladaPieza1 = pieza1Img.getImage().getScaledInstance((int) (Escalador.escalar(75) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
         JLabel pieza1Ft = new JLabel();
         pieza1Ft.setIcon(new ImageIcon(imgReescaladaPieza1));
@@ -134,19 +134,28 @@ public class MenuConfig extends JPanel{
         
         
         // Pieza2
-        ImageIcon pieza2Img = new ImageIcon(getClass().getResource("/srcmedia/bbP2.png"));
+        ImageIcon pieza2Img = new ImageIcon(getClass().getResource("/srcmedia/piezas/bbP2.png"));
         Image imgReescaladaPieza2 = pieza2Img.getImage().getScaledInstance((int) (Escalador.escalar(75) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
         JLabel pieza2Ft = new JLabel();
         pieza2Ft.setIcon(new ImageIcon(imgReescaladaPieza2));
         pieza2Ft.setBounds(Escalador.escalar(363), Escalador.escalar(110), (int)(Escalador.escalar(75)*escala), (int) (Escalador.escalar(75)*escala));
         
         
+        // Pieza3
+        ImageIcon pieza3Img = new ImageIcon(getClass().getResource("/srcmedia/piezas/wkGLASS.png"));
+        Image imgReescaladaPieza3 = pieza3Img.getImage().getScaledInstance((int) (Escalador.escalar(75) * escala), (int) (Escalador.escalar(75) * escala), Image.SCALE_SMOOTH);
+        JLabel pieza3Ft = new JLabel();
+        pieza3Ft.setIcon(new ImageIcon(imgReescaladaPieza3));
+        pieza3Ft.setBounds(Escalador.escalar(450), Escalador.escalar(110), (int)(Escalador.escalar(75)*escala), (int) (Escalador.escalar(75)*escala));
+        
+        
         
         panelPiezas.add(labelsFtPiezas);
         panelPiezas.add(labelPiezas);
+        
         panelPiezas.add(pieza1Ft);
         panelPiezas.add(pieza2Ft);
-        	
+        panelPiezas.add(pieza3Ft);
         
         
         
@@ -228,7 +237,7 @@ public class MenuConfig extends JPanel{
         
         setearPieza(pieza1Ft,piezasThemes.DF);
         setearPieza(pieza2Ft,piezasThemes.P2);
-        
+        setearPieza(pieza3Ft,piezasThemes.GLASS);
         
 	}
 

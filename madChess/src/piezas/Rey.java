@@ -12,8 +12,7 @@ public class Rey extends Pieza implements PiezaMustHave{
 
 	
 	public Rey(Boolean isWhite, boolean isAlter) {
-		super("k",isWhite);
-		this.isAlter = isAlter;
+		super("k",isWhite,isAlter);
 	}
 
 	

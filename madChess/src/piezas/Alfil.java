@@ -9,8 +9,7 @@ public class Alfil extends Pieza implements PiezaMustHave {
 	
 	
 	public Alfil(Boolean isWhite, boolean isAlter) {
-		super("b",isWhite);
-		this.isAlter = isAlter;
+		super("b",isWhite,isAlter);
 	}
 	
 

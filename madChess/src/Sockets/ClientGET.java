@@ -14,6 +14,7 @@ import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Movimiento;
 import objetos.Tablero;
+import objetos.Usuario;
 import utils.Configuracion;
 import utils.Session;
 
@@ -52,9 +53,9 @@ public class ClientGET implements Runnable {
                         
                         break;
                 	case "chatMsg":
-                		Jugador author = (Jugador) serverIn.readObject();
+                		Usuario author = (Usuario) serverIn.readObject();
                 		String msg = (String) serverIn.readObject();
-                		Session.getVentana().getPanelJuego().addChatMsg(author.getUsuario().getUsername(),msg);
+                		Session.getVentana().getPanelJuego().addChatMsg(author.getUsername(),msg);
                 		break;
                 	case "nuevoMov":
                 		Movimiento movimiento = (Movimiento) serverIn.readObject();

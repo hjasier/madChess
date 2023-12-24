@@ -8,8 +8,7 @@ import objetos.Pieza;
 public class Reina extends Pieza implements PiezaMustHave {
 
 	public Reina(Boolean isWhite, boolean isAlter) {
-		super("q",isWhite);
-		this.isAlter = isAlter;
+		super("q",isWhite,isAlter);
 	}
 
 	@Override

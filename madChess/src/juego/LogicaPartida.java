@@ -358,19 +358,10 @@ public class LogicaPartida {
 
 
 
-
-
-
 	public void moverPiezaOnline(Casilla casillaSalida,Casilla casillaLlegada) {
-		
 		casillaSalida = getCasilla(casillaSalida.getFila(), casillaSalida.getColumna());
 		casillaLlegada = getCasilla(casillaLlegada.getFila(), casillaLlegada.getColumna());
-		
-		
 		moverPiezaTablero(casillaSalida, casillaLlegada);
-		
-		
-		
 	}
 
 	
@@ -512,20 +503,17 @@ public class LogicaPartida {
 	private void setNextPlayer() {
 		pararTemporizador();
 		
-		if (!datosPartida.isOnline()) {
-			int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
-			tablero.setCurPlayer(jugadores.get(newIndex));
-			curPlayer = jugadores.get(newIndex);
-			
-			if (curPlayer.getUsuario().getUsername().equals("BOT")) {
-			    Thread botThread = new Thread(new Runnable() {
-			        @Override
-			        public void run() {bot.calculaNuevoMovimiento(casillas);}
-			    });
-			    botThread.start();
-			}
-		}
+		int newIndex = (jugadores.indexOf(curPlayer)+1 >= jugadores.size())? 0:jugadores.indexOf(curPlayer)+1;
+		tablero.setCurPlayer(jugadores.get(newIndex));
+		curPlayer = jugadores.get(newIndex);
 		
+		if (curPlayer.getUsuario().getUsername().equals("BOT")) {
+		    Thread botThread = new Thread(new Runnable() {
+		        @Override
+		        public void run() {bot.calculaNuevoMovimiento(casillas);}
+		    });
+		    botThread.start();
+		}
 		
 		
 		iniciarTemporizador();
@@ -983,20 +971,7 @@ public class LogicaPartida {
 		casillas.get(62).setPieza(new Caballo(true,false));
 		casillas.get(63).setPieza(new Torre(true,false));
         
-		//System.out.println(Session.getDatosPartida().getModoDeJuego());
-		//System.out.println(Session.getDatosPartida().getJugadores().get(0));
-		
-		
-		//creo q esto ya no tiene ningun sentido
-//		if (datosPartida.isOnline()&&Session.getDatosPartida().getJugadores().get(0).equals(Session.getCurrentUser())) {
-//			
-//			try {
-//				Session.getCtsConnection().postCasillas(casillas);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+
 	}
 
 

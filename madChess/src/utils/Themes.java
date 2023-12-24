@@ -9,7 +9,7 @@ public class Themes {
 	}
 	
 	public enum piezasThemes {
-		DF, P2, P3, P4, P5
+		DF, P2, GLASS, P4, P5
 	}
 	
 	
