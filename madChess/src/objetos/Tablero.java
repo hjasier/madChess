@@ -494,5 +494,8 @@ public class Tablero extends JPanel{
 	    repaint();
 	}
 
+
+	
+
 	
 }

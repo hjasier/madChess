@@ -2,6 +2,8 @@ package objetos;
 
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -16,7 +18,8 @@ public class Jugador implements Serializable{
 	private Boolean isWhite = false; 
 	private int tiempoRestante; //tiempo restante del jugador en segundos
 	private Rey rey; //la pieza rey del jugador
-	protected int[] boosts; //los boosts que tiene el jugador si es madChess
+	protected ArrayList<Boolean> boosts = new ArrayList<Boolean>(Arrays.asList(false, false, false, false, false, false)); //los boosts que tiene el jugador si es madChess
+	private ArrayList<Boolean> alters = new ArrayList<Boolean>(Arrays.asList(false, false, false, false, false,false)); //los alters que tiene el jugador si es madChess
 	private Color playColor; //color del usuario en movimeintos, chat etc..
 	private Date initTime; //cuando ha empezado el movimiento
 	
@@ -84,12 +87,12 @@ public class Jugador implements Serializable{
 
 	
 
-	public int[] getBoosts() {
+	public ArrayList<Boolean> getBoosts() {
 		return boosts;
 	}
 
-	public void setBoosts(int[] boosts) {
-		this.boosts = boosts;
+	public void setBoosts(ArrayList<Boolean> arrayList) {
+		this.boosts = arrayList;
 	}
 
 	public Usuario getUsuario() {
@@ -100,7 +103,15 @@ public class Jugador implements Serializable{
 		this.usuario = usuario;
 	}
 
-	
+
+	public void setAlters(ArrayList<Boolean> selectedAlters) {
+		this.alters = selectedAlters;
+		
+	}
+
+	public ArrayList<Boolean> getAlters() {
+		return alters;
+	}
 	
 
 }

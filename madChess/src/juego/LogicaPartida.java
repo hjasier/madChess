@@ -124,6 +124,8 @@ public class LogicaPartida {
         initPlayers();
         
         ventana.initWindow();
+        ventana.getPanelBoost().reloadBoosts(curPlayer);
+        
         
 
         //addInfo(Infos.NAMESEP+" "+curPlayer.getUsuario().getUsername()+" empieza la partida con blancas "+Infos.NAMESEP, new Color(236,212,146), true,false);
@@ -297,6 +299,8 @@ public class LogicaPartida {
    		checkFinPartida();
    		Boosts.updateBoost();
    		checkReyInJaque();
+		ventana.getPanelBoost().reloadBoosts(curPlayer);
+		
 		
 	}
 
@@ -530,7 +534,7 @@ public class LogicaPartida {
 		curPlayer.setInitTime(now);
 		
 		
-	    if (jugadores.get(0)==curPlayer) {
+	    if (jugadores.get(0)==curPlayer) {//jugador podría tener referencia al panel y no tener q hacer esto
 	    	ventana.getPanelUsuario2().startTemp();
 	    }
 	    else {
@@ -941,37 +945,42 @@ public class LogicaPartida {
 	}
 	
 
-	protected void cargarPiezasTablero() { //En principio no hay alters
-		reyBlack = new Rey(false,false);
-		reyWhite = new Rey(true,false);
+	protected void cargarPiezasTablero() { 
+		Jugador playerWhite = jugadores.get(0);
+		Jugador playerBlack = jugadores.get(1); // tal vez hay q revisar esto cuando se juegue con más jugadores
 		
-		casillas.get(0).setPieza(new Torre(false,false));
-		casillas.get(1).setPieza(new Caballo(false,false));
-		casillas.get(2).setPieza(new Alfil(false,false));
-		casillas.get(3).setPieza(new Reina(false,false));
+		
+		reyBlack = new Rey(false,playerBlack.getAlters().get(1));
+		reyWhite = new Rey(true,playerWhite.getAlters().get(1));
+		
+		//black
+		casillas.get(0).setPieza(new Torre(false,playerBlack.getAlters().get(5)));
+		casillas.get(1).setPieza(new Caballo(false,playerBlack.getAlters().get(2)));
+		casillas.get(2).setPieza(new Alfil(false,playerBlack.getAlters().get(0)));
+		casillas.get(3).setPieza(new Reina(false,playerBlack.getAlters().get(4)));
 		casillas.get(4).setPieza(reyBlack);
-		casillas.get(5).setPieza(new Alfil(false,false));
-		casillas.get(6).setPieza(new Caballo(false,false));
-		casillas.get(7).setPieza(new Torre(false,false));
-
+		casillas.get(5).setPieza(new Alfil(false,playerBlack.getAlters().get(0)));
+		casillas.get(6).setPieza(new Caballo(false,playerBlack.getAlters().get(2)));
+		casillas.get(7).setPieza(new Torre(false,playerBlack.getAlters().get(5)));
+		//peones black
 		for (int i = 8; i <= 15; i++) {
-			casillas.get(i).setPieza(new Peon(false,false));
-		}
-
-		for (int i = 48; i <= 55; i++) {
-			casillas.get(i).setPieza(new Peon(true,false)); 
+			casillas.get(i).setPieza(new Peon(false,playerBlack.getAlters().get(3)));
 		}
 		
-		casillas.get(56).setPieza(new Torre(true,false));
-		casillas.get(57).setPieza(new Caballo(true,false));
-		casillas.get(58).setPieza(new Alfil(true,false));
-		casillas.get(59).setPieza(new Reina(true, false));
+		
+		//white
+		casillas.get(56).setPieza(new Torre(true,playerWhite.getAlters().get(5)));
+		casillas.get(57).setPieza(new Caballo(true,playerWhite.getAlters().get(2)));
+		casillas.get(58).setPieza(new Alfil(true,playerWhite.getAlters().get(0)));
+		casillas.get(59).setPieza(new Reina(true, playerWhite.getAlters().get(4)));
 		casillas.get(60).setPieza(reyWhite);
-		casillas.get(61).setPieza(new Alfil(true,false));
-		casillas.get(62).setPieza(new Caballo(true,false));
-		casillas.get(63).setPieza(new Torre(true,false));
-        
-
+		casillas.get(61).setPieza(new Alfil(true,playerWhite.getAlters().get(0)));	
+		casillas.get(62).setPieza(new Caballo(true,playerWhite.getAlters().get(2)));
+		casillas.get(63).setPieza(new Torre(true,playerWhite.getAlters().get(5)));
+		
+		for (int i = 48; i <= 55; i++) {
+			casillas.get(i).setPieza(new Peon(true,playerBlack.getAlters().get(3)));
+		}
 	}
 
 

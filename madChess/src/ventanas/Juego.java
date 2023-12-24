@@ -63,6 +63,7 @@ import librerias.IconFontSwing;
 import objetos.*;
 import utils.Configuracion;
 import utils.Escalador;
+import utils.Infos;
 import utils.Session;
 
 
@@ -693,7 +694,7 @@ public class Juego extends JPanel {
 
 
 	public void addChatMsg(String nombre, String msg) {
-		areaChat.append("<"+nombre+"> "+ " "+ msg + "\n");
+		areaChat.append(Infos.SEP+nombre+Infos.SEP2+ " "+ msg + "\n");
 	}
 	
 	public void initWindow() {
@@ -702,6 +703,7 @@ public class Juego extends JPanel {
 
         }
         setInterfaz();
+        
 	}
 
 
@@ -715,6 +717,13 @@ public class Juego extends JPanel {
 		return panelVAR;
 	}
 
+
+	public PanelBoost getPanelBoost() {
+		return panelBoost;
+	}
+
+		
+	
 
 	
 

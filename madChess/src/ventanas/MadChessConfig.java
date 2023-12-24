@@ -21,11 +21,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MadChessConfig extends JPanel {
     private ArrayList<String> selectedAlters = new ArrayList<>();
     private ArrayList<String> selectedBoosts = new ArrayList<>();
-
+    
     protected RButton volverBtn = new RButton("Volver");
     
     private ArrayList<Jugador>  players;
@@ -33,6 +34,11 @@ public class MadChessConfig extends JPanel {
     private JPanel altersPanel;
     private JPanel boostsPanel;
     private BButton botonListo;
+    
+    private String[] alterImgsWhite = {"wbDFALTER", "wkDFALTER", "wnDFALTER", "wpDFALTER", "wqDFALTER", "wrDFALTER"};
+    private String[] boostImgs = {"bomba","hielo","presagio","control","mina"};
+    
+    
     
     class ImageLabel extends JLabel {
         private String imageName;
@@ -52,7 +58,7 @@ public class MadChessConfig extends JPanel {
     
     
     public MadChessConfig() {
-
+    	
        		
 		//--------------------- NAVBAR-------------------------------------------
   		Icon icon = IconFontSwing.buildIcon(FontAwesome.BACKWARD, Escalador.escalarF(15));
@@ -83,12 +89,12 @@ public class MadChessConfig extends JPanel {
         gbc.insets = new Insets(10, 0, 10, 0); // Espaciado entre componentes
 
         // Panel para seleccionar 3 alters
-        String[] alterImgsBlack = {"bb", "bk", "bn", "bp", "bq", "br"};
-        String[] alterImgsWhite = {"wb", "wk", "wn", "wp", "wq", "wr"};
         
+        enum piezasAlter {ALFIL,REY,CABALLO,PEON,REINA,TORRE};
         
+		
         addTextPanel(centerPanel, gbc, "Selecciona tus 3 alters:");
-        altersPanel = createImagePanel(alterImgsWhite.length, 1, alterImgsWhite.length,alterImgsWhite,selectedAlters);
+        altersPanel = createImagePanel(alterImgsWhite.length, 1, alterImgsWhite.length,"/srcmedia/piezas/",alterImgsWhite,selectedAlters);
         gbc.gridy++;
         addCenteredComponent(centerPanel, gbc, altersPanel);
 
@@ -97,9 +103,9 @@ public class MadChessConfig extends JPanel {
         gbc.gridx = 0;
 
         // Panel para seleccionar 3 boosts
-        String[] boostImgs = {"bomba","hielo","presagio","control","mina"};
+        
         addTextPanel(centerPanel, gbc, "Selecciona tus 3 boosts:");
-        boostsPanel = createImagePanel(boostImgs.length, 1, boostImgs.length,boostImgs,selectedBoosts);
+        boostsPanel = createImagePanel(boostImgs.length, 1, boostImgs.length,"/srcmedia/",boostImgs,selectedBoosts);
         gbc.gridy++;
         addCenteredComponent(centerPanel, gbc, boostsPanel);
 
@@ -122,6 +128,9 @@ public class MadChessConfig extends JPanel {
 
             public void actionPerformed(ActionEvent e) {
             	VentanaPrincipal ventana = Session.getVentana();
+            	
+            	curPlayer.setAlters(getSelectedAlters());
+            	curPlayer.setBoosts(getSelectedBoosts());
             	
             	if (players.indexOf(curPlayer) == players.size()-1) {
             		//Si es el ultimo jugador
@@ -180,7 +189,7 @@ public class MadChessConfig extends JPanel {
         }
     }
 
-    private JPanel createImagePanel(int numImages, int rows, int cols, String[] imageNames, ArrayList<String> selectedItems) {
+    private JPanel createImagePanel(int numImages, int rows, int cols,String ruta, String[] imageNames, ArrayList<String> selectedItems) {
         JPanel panel = new JPanel(new GridLayout(rows, cols, 10, 10));
         panel.setBackground(Configuracion.BACKGROUND);
         panel.setBorder(null);
@@ -188,7 +197,7 @@ public class MadChessConfig extends JPanel {
         for (int i = 0; i < numImages; i++) {
             String imageName = imageNames[i];
             
-            ImageIcon originalIcon = new ImageIcon(getClass().getResource("/srcmedia/" + imageName + ".png"));
+            ImageIcon originalIcon = new ImageIcon(getClass().getResource(ruta + imageName + ".png"));
             Image originalImage = originalIcon.getImage();
 
             // Reducir el tamaño de la imagen a 70x70
@@ -225,6 +234,27 @@ public class MadChessConfig extends JPanel {
     }
 
     
+    private ArrayList<Boolean> selectedABool(ArrayList<String> selectedEls,String[] options) {
+    	ArrayList<Boolean> stringABool = new ArrayList<Boolean>(Arrays.asList(false, false, false, false, false, false));
+    	for (int i = 0; i < options.length; i++) {
+			if (selectedEls.contains(options[i])) {
+				stringABool.set(i, true);
+			} else {
+				stringABool.set(i, false);
+			}
+    	}
+    	return stringABool;
+    }
+    
+	public ArrayList<Boolean> getSelectedAlters() {
+		return selectedABool(selectedAlters, alterImgsWhite);
+	}
+	
+	public ArrayList<Boolean> getSelectedBoosts() {
+		return selectedABool(selectedBoosts, boostImgs);
+	}
+	
+	
 
     
     private void addTextPanel(JPanel panel, GridBagConstraints gbc, String text) {

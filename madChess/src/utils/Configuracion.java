@@ -13,7 +13,7 @@ public class Configuracion {
 	
 	//SOCKETS
 	
-	public static final String VERSION = "V2.1"; 
+	public static final String VERSION = "V2.2"; 
 	public static final int PUERTO = 6968; 
 	
 	//public static final String HOST = "madchess.tabernagogorra.eu"; 
@@ -32,7 +32,7 @@ public class Configuracion {
 	
 	//MODOS DEBUG
 	
-	public static final boolean DEBUG_MODE = true;
+	public static final boolean DEBUG_MODE = false;
 	public static final boolean LOGIN_DEBUG = true;
 	public static final boolean BOT_DEBUG = false;
 	public static final boolean DB_DEBUG = false;

@@ -117,7 +117,7 @@ public class ConfPOnline extends JPanel {
 		
 		// Panel para la segunda fila de componentes
 		JLabel labelModoJuego = new JLabel("Modo de juego:");
-		MComboBox<String> comboModoJuego = new MComboBox<>(new String[]{"Clásico", "madChess"});
+		JComboBox<String> comboModoJuego = new JComboBox<>(new String[]{"Clásico", "madChess"});
 		comboModoJuego.setMaximumSize(new Dimension(200, 40));
 		JPanel secondRowPanel = new JPanel();
         secondRowPanel.setLayout(new BoxLayout(secondRowPanel, BoxLayout.X_AXIS));
@@ -174,8 +174,8 @@ public class ConfPOnline extends JPanel {
      // Agregar los paneles al contenedor opcionesenY
         opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(120))));
         opcionesenY.add(opcionesenX);
-        opcionesenY.add(Box.createRigidArea(new Dimension(0,Escalador.escalar(40)))); // Espacio entre filas
-        opcionesenY.add(privacidadRowPanel);
+       // opcionesenY.add(Box.createRigidArea(new Dimension(0,Escalador.escalar(40)))); // Espacio entre filas
+        //opcionesenY.add(privacidadRowPanel);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(10))));
         opcionesenY.add(secondRowPanel);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(20)))); // Espacio entre filas
