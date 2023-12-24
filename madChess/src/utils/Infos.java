@@ -37,6 +37,8 @@ public class Infos {
 		public static final String BOOM = "💥💥BOOOOOM!!!💥💥";
 		public static final String CONTADOREXPLOSION = "Explosión en: ";
 		public static final String MINAINFO = "Selecciona la casilla en la que colocar una mina explosiva";
+		public static final String ERRORBOOST = "Has seleccionado una casilla invalida";
+		public static final String MINACOLOCADA = "⚠️ Se ha colocado una mina ⚠️";
 		
 		
 		
@@ -44,6 +46,8 @@ public class Infos {
 		public static final String ContraseyaCambiada = "Contraseña actualizada";
 		public static final String ContraseyaNoCoincide= "Contraseñas no coinciden";
 		public static final String ContraseyaNocambiada = "Contraseña coincide con la original";
+		
+		
 		
 	    
 		

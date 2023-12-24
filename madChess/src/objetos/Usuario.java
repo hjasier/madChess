@@ -34,7 +34,7 @@ public class Usuario implements Serializable{
 		this.img_route = "https://media.madchess.online/media/test.png";
 		this.rank_madChess = 0;
 		this.rank_classic = 0;
-		this.preferedTheme = tableroThemes.CLASSIC;
+		this.preferedTheme = tableroThemes.MADCHESS;
 		this.preferedPiezaTheme = piezasThemes.DF;
 		
 	}

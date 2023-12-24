@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import componentes.RButton;
 import componentes.navBar;
+import database.GestorDB;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import utils.Configuracion;
@@ -225,7 +226,7 @@ public class MenuConfig extends JPanel{
         
         
         
-        setearPieza(pieza1Ft,null);
+        setearPieza(pieza1Ft,piezasThemes.DF);
         setearPieza(pieza2Ft,piezasThemes.P2);
         
         
@@ -251,6 +252,7 @@ public class MenuConfig extends JPanel{
 				pieza1Ft.setBorder(BorderFactory.createLineBorder(new Color(255, 229, 0), 5));
 				Session.getCurrentUser().setPreferedPiezaTheme(theme1);
 				Session.getVentana().getPanelJuego().getTablero().reloadPiezasImagen();
+				updateUserInfo();
 			}
 		});
 		
@@ -277,9 +279,20 @@ public class MenuConfig extends JPanel{
                 label.setBorder(BorderFactory.createLineBorder(new Color(255,229,0), 5));
                 Session.getCurrentUser().setPreferedTheme(theme);
                 Session.getVentana().getPanelJuego().getTablero().reloadCasillasColor();
+                
+				updateUserInfo();
             }
         });
     }
+
+	protected void updateUserInfo() {
+		new Thread() {
+			@Override
+			public void run() {
+				GestorDB.actualizarPreferencias(Session.getCurrentUser());
+			}
+		}.start();
+	}
 	
 	
 

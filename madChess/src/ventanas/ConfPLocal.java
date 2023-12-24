@@ -138,7 +138,7 @@ public class ConfPLocal extends JPanel {
             	
             	
             	if (!(datos.getTipoPartida()==partidaTipo.MADCHESS)) {
-            		
+            		Session.getVentana().getPanelJuego().getTablero().loadUserPreferences();
             		ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.JUEGO);
             		new LogicaPartida();
             	}

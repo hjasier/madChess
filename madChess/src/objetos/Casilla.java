@@ -95,7 +95,7 @@ public class Casilla extends JPanel implements Serializable {
 				this.color = new Color( color.getRed()+n,color.getGreen()+n,color.getBlue()+n);
 				this.paint(getGraphics());
 			} catch (Exception e) {
-				//Color muy grande
+				this.color = new Color( color.getRed()-n,color.getGreen()-n,color.getBlue()-n);
 			}
 
 		}
@@ -218,7 +218,13 @@ public class Casilla extends JPanel implements Serializable {
 	public void setIsHielo(Boolean isHielo) {
 		this.isHielo = isHielo;
 		if(isHielo) {
-        	this.color = new Color( color.getRed(),color.getGreen(),color.getBlue()+30);
+			tableroThemes userTheme = Session.getCurrentUser().getPreferedTheme();
+			Color[] curThemeColors = Themes.getTableroTheme(userTheme);
+			if (this.isBlack) {
+				this.color = curThemeColors[2];
+			} else {
+				this.color = curThemeColors[3];
+			}
         	
         }else {
         	this.color = initColor;
@@ -230,9 +236,7 @@ public class Casilla extends JPanel implements Serializable {
 		return isMina;
 	}
 	
-	public void setIsMina(Boolean isMina) {
-	    this.isMina = isMina;
-	    if (isMina && !isAlerted) {
+	public void aninarMina() {
 	        Thread colorChangeThread = new Thread(() -> {
 	            try {
 	                SwingUtilities.invokeLater(() -> {
@@ -266,12 +270,7 @@ public class Casilla extends JPanel implements Serializable {
 	        });
 
 	        colorChangeThread.start();
-
-	        isAlerted = true;
-	    } else {
-	        this.color = initColor;
-	        repaint();
-	    }
+	     
 	}
 	
 
@@ -299,11 +298,10 @@ public class Casilla extends JPanel implements Serializable {
 		this.initColor = color;
 		setDisabled(disabled);
 		setIsHielo(isHielo);
-		setIsMina(isMina);
-		
-		
 	}
-	
+
+
+
 	
 	
 

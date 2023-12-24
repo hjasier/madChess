@@ -22,6 +22,8 @@ import utils.Audio;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Session;
+import utils.Themes.piezasThemes;
+import utils.Themes.tableroThemes;
 
 
 
@@ -427,6 +429,17 @@ public class Tablero extends JPanel{
 				casilla.getPieza().reloadImg();
 			}
 		}
+	}
+	
+	
+	public void loadUserPreferences() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				reloadCasillasColor();
+				reloadPiezasImagen();
+			}
+		}).start();
 	}
 
 

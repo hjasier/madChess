@@ -287,23 +287,22 @@ public class GestorDB {
 	 }
 	 
 	 
-	 public static void modificarUsuario(String username, String img_route, int rank_classic, int rank_mad, String tablero_theme, String Pieza_Theme) {
-		 if(existeUsuario(username)) {
-			 String sql = "UPDATE Usuario SET username = ? , img_route = ?, rank_classic = ?, rank_mad = ?, tablero_theme = ?, pieza_Theme = ? WHERE username = ?";
+	 public static void modificarUsuario(Usuario user) {
+		 if(existeUsuario(user.getUsername())) {
+			 String sql = "UPDATE Usuario SET username = ? , img_route = ?, rank_classic = ?, rank_mad = ?, tablero_theme = ?, pieza_theme = ? WHERE username = ?";
 			 
 			 try (Connection conn = ConexionDB.obtenerConexion();
 		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		            pstmt.setString(1, username);
-		            pstmt.setString(2, img_route);
-		            pstmt.setInt(3, rank_classic);
-		            pstmt.setInt(4, rank_mad);
-		            pstmt.setString(5, tablero_theme);
-		            pstmt.setString(6, Pieza_Theme);
-		            pstmt.setString(7, username);
+		            pstmt.setString(1, user.getUsername());
+		            pstmt.setString(2, user.getImg_route());
+		            pstmt.setInt(3, user.getRank_classic());
+		            pstmt.setInt(4, user.getRank_madChess());
+		            pstmt.setString(5, user.getPreferedTheme().name());
+		            pstmt.setString(6, user.getPreferedPiezaTheme().name());
+		            pstmt.setString(7, user.getUsername());
 
 		            
 		            pstmt.executeUpdate();
-		            System.out.println("Usuario modificado correctamente.");
 		        } catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -311,6 +310,22 @@ public class GestorDB {
 			 System.out.println("No se puede modificar un usuario inexistente");
 		 }
 	 }
+	 
+	 
+	 public static void actualizarPreferencias(Usuario currentUser) {
+		    String sql = "UPDATE Usuario SET tablero_theme = ?, pieza_theme = ? WHERE username = ?";
+
+		    try (Connection conn = ConexionDB.obtenerConexion();
+		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		        pstmt.setString(1, currentUser.getPreferedTheme().name());
+		        pstmt.setString(2, currentUser.getPreferedPiezaTheme().name());
+		        pstmt.setString(3, currentUser.getUsername());
+
+		        pstmt.executeUpdate();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		}
 
 
 
@@ -405,6 +420,11 @@ public class GestorDB {
 
 	        return null;
 	    }
+
+
+
+
+		
 
 
 

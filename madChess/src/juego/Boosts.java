@@ -32,9 +32,15 @@ public class Boosts {
 		        case PRESAGIO:
 		            return new MalPresagio(curPlayer);
 		        case BOMBA:
-		            return new Bomba(casilla.getPieza(), casilla);
+		        	if (casilla.getPieza() != null) {
+		        		return new Bomba(casilla.getPieza(), casilla);
+					} 
+		            return null;
 		        case MINA:
-				    return new Mina(casilla);
+					if (casilla.getPieza() == null) {
+						return new Mina(casilla);
+					} 
+					return null;
 		        default:
 		            return null;
 		    }
@@ -53,6 +59,9 @@ public class Boosts {
 		    if (boost != null) {
 		        initBoost(boost);
 		    }
+			else {
+				utils.alert(Infos.ERRORBOOST, "Error al aplicar boost", "errorinfo");
+			}
 
 		    curBoost = null;
 		}
@@ -191,6 +200,7 @@ public class Boosts {
 		public static void getStcBoost(Boost boost) {
 			boost.config();
 	        boostActivos.add(boost);
+	        System.out.println(boostActivos);
         }
 	
 	
@@ -311,8 +321,8 @@ class Bomba extends Boost {
     
     @Override
 	public void config() {
-    	Pieza pieza = Session.getPartida().getTablero().getCasilla(casillaInicial).getPieza();
-    	pieza.setIsBomberman(true);
+    	piezaBomba = Session.getPartida().getTablero().getCasilla(casillaInicial).getPieza();
+    	piezaBomba.setIsBomberman(true);
 	}
 
     
@@ -359,25 +369,30 @@ class Control extends Boost{
 class Mina extends Boost {
 
 	protected Casilla casilla;
+	private boolean explotada;
+	
     public Mina(Casilla casilla) {
     	this.casilla = casilla;
     }
-
-    
     
     @Override
     public void check() {
+    	System.out.println("COMPROBANDO MINA");
         if (casilla.getPieza() != null) {
+        	System.out.println("ACTIVANDO MINA");
+        	if (explotada) {return;}
         	casilla.setPieza(null);
-        	
         	Session.getPartida().printMovimientoFormateado(Infos.BOOM);
         	Session.getPartida().getTablero().initAnimacionExplosion(casilla);
+        	explotada = true;
 		}
     }
     
     @Override
    	public void config() {
-    	casilla.setIsMina(true);
+    	casilla = Session.getPartida().getTablero().getCasilla(casilla);
+    	casilla.aninarMina();
+    	Session.getPartida().printMovimientoFormateado(Infos.MINACOLOCADA);
    	}
 }
 
