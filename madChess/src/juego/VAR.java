@@ -105,7 +105,7 @@ public class VAR {
 			ArrayList<Boost> boosts = movimiento.getBoostActivos();
 			System.out.println("Boosts activos: "+boosts);
 			for (Boost boost : boosts) {
-				if (boost.getCont() >= 0) {
+				if (boost.getCont() < 0) {
 					boost.config();
 					boost.check();
 				}
