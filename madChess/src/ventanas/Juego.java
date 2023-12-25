@@ -124,7 +124,7 @@ public class Juego extends JPanel {
 	public Juego() {
 
 	    // Panel principal con GridBagLayout
-	    this.setLayout(new GridBagLayout());
+	    this.setLayout(new BorderLayout());
 	    GridBagConstraints gbc = new GridBagConstraints();
 
 	    // Paneles
@@ -139,51 +139,30 @@ public class Juego extends JPanel {
 	    panelJuego.setBackground(colorFondo);
 	    panelControles.setBackground(colorFondo);
 
-	    panelContenedor.setLayout(new GridBagLayout());
+	    panelContenedor.setLayout(new BorderLayout());
 	    panelContenedor.setBackground(colorFondo);
 
 	    //Init icons
 	    IconFontSwing.register(FontAwesome.getIconFont());
 	    
-		 //PANEL DERECHA	
-	    gbc.gridx = 0;
-	    gbc.gridy = 0;
-	    gbc.weightx = 1.0;
-	    gbc.weighty = 0; //Si se aumenta el panel de los botones se hace más alto
-	    gbc.fill = GridBagConstraints.HORIZONTAL; // Para que se expanda horizontalmente
 
-	    panelContenedor.add(panelBotones, gbc);
+	    panelContenedor.add(panelBotones, BorderLayout.NORTH);
 
-	    // Agregar panelControles debajo del panel de botones pequeños
-	    gbc.gridx = 0;
-	    gbc.gridy = 1;
-	    gbc.weighty = 0.9; // El espacio restante para panelControles
-	    gbc.fill = GridBagConstraints.BOTH;
 
-	    panelContenedor.add(panelControles, gbc);
+
+	    panelContenedor.add(panelControles, BorderLayout.CENTER);
 	    
 		 
 		 
-		 
-	    // PanelJuego
-	    gbc.gridx = 0;
-	    gbc.gridy = 0;
-	    gbc.weightx = 1.0; //En panel del juego va a ocupar todo lo que pueda
-	    gbc.weighty = 1.0; // Para que ocupen todo lo que puedan en vertical
-	    gbc.fill = GridBagConstraints.BOTH;
-	    this.add(panelJuego, gbc);
 
-	    // PanelControles
-	    gbc.gridx = 1;
-	    gbc.weightx = 0.3; // El espacio que va a ocupar el panelControles
-	    this.add(panelContenedor, gbc);
+	    this.add(panelJuego, BorderLayout.CENTER);
+
+	    this.add(panelContenedor, BorderLayout.EAST);
 
 	    
 	    
 	    // Configura el panelJuego con BoxLayout en la dirección vertical
 	    panelJuego.setLayout(new BoxLayout(panelJuego, BoxLayout.Y_AXIS));
-
-	    // Agrega algunos elementos a panelJuego (por ejemplo, botones o etiquetas)
 
 
 		panelUsuario = new userInfo();
@@ -210,30 +189,11 @@ public class Juego extends JPanel {
 	    
 	    panelBotones.setBackground(colorFondo);
 	    panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 10));
-	    panelBotones.setPreferredSize(new Dimension(100, 50)); 
-	    
 	    
 	    panelBotones.add(backBtn);
 	    panelBotones.add(configBtn);
 	    
 	    
-
-	    
-	    //panel puntuaciones
-//	    labelRank1 = new JLabel();
-//	    labelRank2 = new JLabel();
-//        
-//        String usuario1 = "nombreUsuario1";
-//        String usuario2 = "nombreUsuario2";
-//        String modo = "modoJuego";
-//        int puntuacionUsuario1 = GestorPuntuaciones.getPuntuacionModo(usuario1, modo);
-//        int puntuacionUsuario2 = GestorPuntuaciones.getPuntuacionModo(usuario2, modo);
-//        labelRank1.setText("" + puntuacionUsuario1);
-//        labelRank2.setText("" + puntuacionUsuario2);
-	    
-	    // panel controles, movimiento y chat
-	    
-	    //panel chat
 	    panelMovimentos = new JPanel(new BorderLayout());
 	    
 	    panelChat = new JPanel( new BorderLayout());
@@ -398,8 +358,7 @@ public class Juego extends JPanel {
 	    panelControles.add(panelAbajo);
 
 	    
-	    panelBotones.setPreferredSize(new Dimension(10,33 ));
-	    panelBotones.setMaximumSize(new Dimension(Integer.MAX_VALUE,10));
+	    panelBotones.setPreferredSize(new Dimension(10,50 ));
 	    panelBotones.setBorder(BorderFactory.createEmptyBorder(0,0,0,15));
 
 	    labelMovimientos.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
@@ -422,8 +381,7 @@ public class Juego extends JPanel {
 	    scrollChat.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 	    
 	    
-	    
-//	    panelChat.setBackground(Color.red);
+	   
 	    
         tablero.recalcularTamanyo();
         this.addComponentListener(new ComponentAdapter() {

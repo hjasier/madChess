@@ -72,7 +72,7 @@ public class boostItem extends JPanel{
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				setBackground(new Color(48,48,48));
-				descripcionLabel.setText(nombre);
+				descripcionLabel.setText(descripcion);
 			}
 			
 			@Override
