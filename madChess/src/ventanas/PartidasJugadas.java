@@ -44,7 +44,7 @@ public class PartidasJugadas extends JPanel{
 		JPanel navBarContainer = new JPanel(new FlowLayout());
 		navBarContainer.add(new navBar(volverBtn));
         navBarContainer.setBackground(Configuracion.BACKGROUND);
-      
+        panelElementos.setBackground(Configuracion.BACKGROUND);
   		
   		//--------------------- NAVBAR-------------------------------------------	   
 		
@@ -81,10 +81,21 @@ public class PartidasJugadas extends JPanel{
 	
 	public void cargarPartidas(){
 		new Thread(() -> {
+			
+			
 			System.out.println("Geteando partidas");
+			mostrarCargando();
 			List<DatosPartida> partidas = GestorDB.getPartidas(Session.getCurrentUser().getUsername());
 			System.out.println(partidas);
 			panelElementos.removeAll();
+			if (partidas.size() == 0) {
+				JPanel panelCentrado = new JPanel();
+				panelCentrado.setBackground(Configuracion.BACKGROUND);
+				panelCentrado.setLayout(new FlowLayout(FlowLayout.CENTER));
+				panelCentrado.add(new JLabel("No se han encontrado partidas"));
+				panelElementos.add(panelCentrado);
+			
+			}
 			for (DatosPartida partida : partidas) {
 				JPanel panelCentrado = new JPanel();
 				panelCentrado.setBackground(Configuracion.BACKGROUND);
@@ -98,6 +109,15 @@ public class PartidasJugadas extends JPanel{
 	    }).start();
 		
 		
+	}
+
+	private void mostrarCargando() {
+		panelElementos.removeAll();
+		JPanel panelCentrado = new JPanel();
+		panelCentrado.setBackground(Configuracion.BACKGROUND);
+		panelCentrado.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panelCentrado.add(new JLabel("Cargando partidas..."));
+		panelElementos.add(panelCentrado);
 	}
 	
 	

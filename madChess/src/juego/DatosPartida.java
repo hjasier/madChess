@@ -22,6 +22,7 @@ public class DatosPartida implements Serializable{
 	protected Date fechaIni;
 	protected Date fechaFin;
 	protected String gameId;
+	protected int duracionEstablecida = 600;
 	protected ArrayList<Jugador> jugadores = new ArrayList<Jugador>(); // Es un arraylist por que en el futuro queremos que puedan jugar hasta 4 por turnos etc..
 	protected ArrayList<Jugador> ganadores = new ArrayList<Jugador>(); // arraylist de el ganador o los ganadores dependiendo la cantidad de la modalidad
 	protected ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
@@ -204,5 +205,19 @@ public class DatosPartida implements Serializable{
         this.isReplay = true;
         this.gameId = gameId;
     }
+
+
+
+	public int getDuracionEstablecida() {
+		return duracionEstablecida;
+	}
+
+
+
+	public void setDuracionEstablecida(int duracionEstablecida) {
+		this.duracionEstablecida = duracionEstablecida;
+	}
+	
+	
 
 }

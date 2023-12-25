@@ -3,7 +3,9 @@ package juego;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import objetos.Boost;
 import objetos.Casilla;
+import objetos.Jugador;
 import objetos.Movimiento;
 import objetos.Pieza;
 import objetos.Tablero;
@@ -15,6 +17,7 @@ import piezas.Rey;
 import piezas.Torre;
 import utils.Session;
 import utils.utils;
+import ventanas.Juego;
 
 public class VAR {
 	
@@ -38,10 +41,13 @@ public class VAR {
 		
 		casillaOrigen.setPieza(null);
 		casillaDestino.setPieza(piezaMovida);
-		
+		actualizarDatosVentana(newMov);
+		actualizarBoostsActivos(newMov);
 		curMov++;
 		
 	}
+
+
 
 	public static void retrodecerMov() {
 		if (curMov == -1) {
@@ -59,6 +65,7 @@ public class VAR {
 		
 		casillaOrigen.setPieza(piezaMovida);
 		casillaDestino.setPieza(piezaComida);
+		actualizarDatosVentana(newMov);
 		
 		curMov--;
 		
@@ -70,17 +77,63 @@ public class VAR {
 	public static void runInitialConfig() {
 		curMov = -1;
 		regenerarTablero();
+		setearDatosVentana();
 		Session.getVentana().getPanelJuego().modoTempPonerbtns();
 		Session.getVentana().getPanelJuego().getPanelVAR().loadMovs(datosPartida.getMovimientos());
 	}
 	
 	
+	private static void actualizarDatosVentana(Movimiento newMov) {
+		int i = 0;
+		for (Jugador jugador : datosPartida.getJugadores()) {
+			 Jugador jugadorMov = newMov.getJugador();
+			if (jugador.getUsuario().getUsername()==jugadorMov.getUsuario().getUsername()) {
+				if (i == 0) {
+					Session.getVentana().getPanelJuego().getPanelUsuario().setTemp(jugadorMov.getTiempoRestante());
+				} else {
+					Session.getVentana().getPanelJuego().getPanelUsuario2().setTemp(jugadorMov.getTiempoRestante());
+				}
+			}
+			i++;
+		}
+	}
+	
+
+	private static void actualizarBoostsActivos(Movimiento movimiento) {
+		eliminarBoosts();
+		ArrayList<Boost> boosts = movimiento.getBoostActivos();
+		for (Boost boost : boosts) {
+			if (boost.getCont() < 0) {
+				boost.config();
+				boost.check();
+			}
+		}
+	}
 	
 	
 
-	
-	
-	
+	private static void eliminarBoosts() {
+		for (Casilla casilla : tablero.getCasillas()) {
+			casilla.setIsHielo(false);
+			Pieza pieza = casilla.getPieza();
+			pieza.setIsBomberman(false);
+			
+		}
+		
+	}
+
+
+
+
+
+	private static void setearDatosVentana() {
+		Juego ventana = Session.getVentana().getPanelJuego();
+		ventana.getPanelUsuario().setUsuario(datosPartida.getJugadores().get(0));
+		ventana.getPanelUsuario2().setUsuario(datosPartida.getJugadores().get(1));
+		
+		ventana.getPanelUsuario().setTemp(datosPartida.getDuracionEstablecida());
+		ventana.getPanelUsuario2().setTemp(datosPartida.getDuracionEstablecida());
+	}
 
 	public DatosPartida getDatosPartida() {
 		return datosPartida;

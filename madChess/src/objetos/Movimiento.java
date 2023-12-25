@@ -84,6 +84,18 @@ public class Movimiento implements Serializable{
 	public void setEndTurno(Date endTurno) {
 		this.endTurno = endTurno;
 	}
+
+
+
+	public static ArrayList<Boost> getBoostActivos() {
+		return boostActivos;
+	}
+
+
+
+	public static void setBoostActivos(ArrayList<Boost> boostActivos) {
+		Movimiento.boostActivos = boostActivos;
+	}
 	
 	
 
