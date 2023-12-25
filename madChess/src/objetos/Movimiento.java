@@ -16,7 +16,7 @@ public class Movimiento implements Serializable{
 	protected Pieza piezaComida;
 	private Date initTurno;
 	private Date endTurno;
-	public static ArrayList<Boost> boostActivos;
+	private ArrayList<Boost> boostActivos = new ArrayList<>();
 	
 	
 	
@@ -87,18 +87,18 @@ public class Movimiento implements Serializable{
 
 
 
-	public static ArrayList<Boost> getBoostActivos() {
+	public ArrayList<Boost> getBoostActivos() {
 		return boostActivos;
 	}
 
 
 
-	public static void setBoostActivos(ArrayList<Boost> boostActivos) {
-		Movimiento.boostActivos = boostActivos;
+	public void setBoostActivos(ArrayList<Boost> boostActivos) {
+		this.boostActivos = boostActivos;
 	}
 	
 	
-
+	
 	
 
 	

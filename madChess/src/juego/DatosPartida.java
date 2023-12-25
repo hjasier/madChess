@@ -1,8 +1,10 @@
 package juego;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -183,7 +185,9 @@ public class DatosPartida implements Serializable{
 
 	public void setMovientos(byte[] bs) {
 		try {
+			System.out.println("Longitud del array de bytes: " + bs.length);
 			movimientos = deserializarMovimientos(bs);
+			System.out.println(movimientos);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -193,11 +197,36 @@ public class DatosPartida implements Serializable{
 		}
 	}
 	
-	private static ArrayList<Movimiento> deserializarMovimientos(byte[] serializedData) throws IOException, ClassNotFoundException {
+	public void testSerializar(ArrayList<Movimiento> movimientos) {
+		try {
+			System.out.println(movimientos.size());
+			byte[] movimientosSerializados = serializarMovimientos(movimientos);
+			ArrayList<Movimiento> movimientosDeserializados = deserializarMovimientos(movimientosSerializados);
+			
+			System.out.println(movimientosDeserializados.size());
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	private byte[] serializarMovimientos(ArrayList<Movimiento> movimientos) throws IOException {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+             ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+
+            oos.writeObject(movimientos);
+            return bos.toByteArray();
+
+        }
+    }
+	
+	private ArrayList<Movimiento> deserializarMovimientos(byte[] serializedData) throws IOException, ClassNotFoundException {
         try (ByteArrayInputStream bis = new ByteArrayInputStream(serializedData);
              ObjectInputStream ois = new ObjectInputStream(bis)) {
-
-            return (ArrayList<Movimiento>) ois.readObject();
+        	
+        	ArrayList<Movimiento> movimientos = (ArrayList<Movimiento>) ois.readObject();
+        	
+            return movimientos;
         }
     }
 	

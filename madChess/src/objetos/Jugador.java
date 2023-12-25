@@ -18,7 +18,7 @@ public class Jugador implements Serializable{
 	private Boolean isWhite = false; 
 	private int tiempoRestante; //tiempo restante del jugador en segundos
 	private Rey rey; //la pieza rey del jugador
-	protected ArrayList<Boolean> boosts = new ArrayList<Boolean>(Arrays.asList(false, false, false, false, false, false)); //los boosts que tiene el jugador si es madChess
+	private ArrayList<Boolean> boosts = new ArrayList<Boolean>(Arrays.asList(false, false, false, false, false, false)); //los boosts que tiene el jugador si es madChess
 	private ArrayList<Boolean> alters = new ArrayList<Boolean>(Arrays.asList(false, false, false, false, false,false)); //los alters que tiene el jugador si es madChess
 	private Color playColor; //color del usuario en movimeintos, chat etc..
 	private Date initTime; //cuando ha empezado el movimiento

@@ -48,8 +48,6 @@ public class LogicaPartida {
 	protected Tablero tablero;
 	protected Juego ventana;
 	private Jugador curPlayer; //Jugador actual
-	private Rey reyWhite;
-	private Rey reyBlack;
 	protected ArrayList<Jugador> jugadores;
 	protected Bot bot;
 
@@ -164,8 +162,7 @@ public class LogicaPartida {
 		
 		
 		user1.setIsWhite(true);
-		user1.setRey(reyWhite);
-		user2.setRey(reyBlack);
+		
 		
 		
 		user1.setPlayColor(new Color(255,100,17));
@@ -941,47 +938,11 @@ public class LogicaPartida {
 	protected void resetearVentana() {
 		limpiarTablero();
 		Session.getVentana().getPanelJuego().resetTextAreas();
-		cargarPiezasTablero();
+		tablero.cargarPiezas(jugadores);
 	}
 	
 
-	protected void cargarPiezasTablero() { 
-		Jugador playerWhite = jugadores.get(0);
-		Jugador playerBlack = jugadores.get(1); // tal vez hay q revisar esto cuando se juegue con más jugadores
-		
-		
-		reyBlack = new Rey(false,playerBlack.getAlters().get(1));
-		reyWhite = new Rey(true,playerWhite.getAlters().get(1));
-		
-		//black
-		casillas.get(0).setPieza(new Torre(false,playerBlack.getAlters().get(5)));
-		casillas.get(1).setPieza(new Caballo(false,playerBlack.getAlters().get(2)));
-		casillas.get(2).setPieza(new Alfil(false,playerBlack.getAlters().get(0)));
-		casillas.get(3).setPieza(new Reina(false,playerBlack.getAlters().get(4)));
-		casillas.get(4).setPieza(reyBlack);
-		casillas.get(5).setPieza(new Alfil(false,playerBlack.getAlters().get(0)));
-		casillas.get(6).setPieza(new Caballo(false,playerBlack.getAlters().get(2)));
-		casillas.get(7).setPieza(new Torre(false,playerBlack.getAlters().get(5)));
-		//peones black
-		for (int i = 8; i <= 15; i++) {
-			casillas.get(i).setPieza(new Peon(false,playerBlack.getAlters().get(3)));
-		}
-		
-		
-		//white
-		casillas.get(56).setPieza(new Torre(true,playerWhite.getAlters().get(5)));
-		casillas.get(57).setPieza(new Caballo(true,playerWhite.getAlters().get(2)));
-		casillas.get(58).setPieza(new Alfil(true,playerWhite.getAlters().get(0)));
-		casillas.get(59).setPieza(new Reina(true, playerWhite.getAlters().get(4)));
-		casillas.get(60).setPieza(reyWhite);
-		casillas.get(61).setPieza(new Alfil(true,playerWhite.getAlters().get(0)));	
-		casillas.get(62).setPieza(new Caballo(true,playerWhite.getAlters().get(2)));
-		casillas.get(63).setPieza(new Torre(true,playerWhite.getAlters().get(5)));
-		
-		for (int i = 48; i <= 55; i++) {
-			casillas.get(i).setPieza(new Peon(true,playerBlack.getAlters().get(3)));
-		}
-	}
+	
 
 
 	private void limpiarTablero() {

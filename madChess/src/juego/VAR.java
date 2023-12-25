@@ -61,12 +61,12 @@ public class VAR {
 		
 		
 		Pieza piezaMovida = casillaDestino.getPieza();
-		Pieza piezaComida = piezasComidas.get(newMov);// de alguna manera hay que guardarla para luego poder volverla a poner al retroceder
+		Pieza piezaComida = piezasComidas.get(newMov);
 		
 		casillaOrigen.setPieza(piezaMovida);
 		casillaDestino.setPieza(piezaComida);
 		actualizarDatosVentana(newMov);
-		
+		actualizarBoostsActivos(newMov);
 		curMov--;
 		
 	}
@@ -76,7 +76,7 @@ public class VAR {
 	
 	public static void runInitialConfig() {
 		curMov = -1;
-		regenerarTablero();
+		tablero.cargarPiezas(datosPartida.getJugadores());
 		setearDatosVentana();
 		Session.getVentana().getPanelJuego().modoTempPonerbtns();
 		Session.getVentana().getPanelJuego().getPanelVAR().loadMovs(datosPartida.getMovimientos());
@@ -100,14 +100,18 @@ public class VAR {
 	
 
 	private static void actualizarBoostsActivos(Movimiento movimiento) {
-		eliminarBoosts();
-		ArrayList<Boost> boosts = movimiento.getBoostActivos();
-		for (Boost boost : boosts) {
-			if (boost.getCont() < 0) {
-				boost.config();
-				boost.check();
+		if (datosPartida.getTipoPartida() == partidaTipo.MADCHESS) {
+			eliminarBoosts();
+			ArrayList<Boost> boosts = movimiento.getBoostActivos();
+			System.out.println("Boosts activos: "+boosts);
+			for (Boost boost : boosts) {
+				if (boost.getCont() >= 0) {
+					boost.config();
+					boost.check();
+				}
 			}
 		}
+		
 	}
 	
 	
@@ -116,7 +120,10 @@ public class VAR {
 		for (Casilla casilla : tablero.getCasillas()) {
 			casilla.setIsHielo(false);
 			Pieza pieza = casilla.getPieza();
-			pieza.setIsBomberman(false);
+			if (pieza != null) {
+				pieza.setIsBomberman(false);
+			}
+			
 			
 		}
 		
@@ -149,44 +156,7 @@ public class VAR {
 
 
 	
-	public static void regenerarTablero() { //esto es temp , luego ya se verá como se cambia
-		ArrayList<Casilla> casillas = tablero.getCasillas();
-		for (Casilla casilla:casillas) {
-			casilla.setPieza(null);
-			casilla.setDisabled(false);
-		}
-		Session.getVentana().getPanelJuego().resetTextAreas();
-		
-		Rey reyBlack = new Rey(false,false);
-		Rey reyWhite = new Rey(true,false);
-		
-		casillas.get(0).setPieza(new Torre(false,false));
-		casillas.get(1).setPieza(new Caballo(false,false));
-		casillas.get(2).setPieza(new Alfil(false,false));
-		casillas.get(3).setPieza(new Reina(false,false));
-		casillas.get(4).setPieza(reyBlack);
-		casillas.get(5).setPieza(new Alfil(false,false));
-		casillas.get(6).setPieza(new Caballo(false,false));
-		casillas.get(7).setPieza(new Torre(false,false));
-
-		for (int i = 8; i <= 15; i++) {
-			casillas.get(i).setPieza(new Peon(false,false));
-		}
-
-		for (int i = 48; i <= 55; i++) {
-			casillas.get(i).setPieza(new Peon(true,false)); 
-		}
-		
-		casillas.get(56).setPieza(new Torre(true,false));
-		casillas.get(57).setPieza(new Caballo(true,false));
-		casillas.get(58).setPieza(new Alfil(true,false));
-		casillas.get(59).setPieza(new Reina(true, false));
-		casillas.get(60).setPieza(reyWhite);
-		casillas.get(61).setPieza(new Alfil(true,false));
-		casillas.get(62).setPieza(new Caballo(true,false));
-		casillas.get(63).setPieza(new Torre(true,false));
-    }
-
+	
 	
 	public static void irAMovimiento(int indx) {
 		if (indx > curMov) {

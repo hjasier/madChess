@@ -633,6 +633,7 @@ public class Juego extends JPanel {
 	public void modoTempPonerbtns() {
 		cardLayout.show(panelCardL,"VAR");
 		panelLabels.remove(labelBoost);
+		panelLabels.remove(labelChat);
 		
 		panelLabels.add(labelVAR);
 	}

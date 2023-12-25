@@ -10,6 +10,7 @@ import objetos.Boost;
 import objetos.Casilla;
 import objetos.Jugador;
 import objetos.Pieza;
+import objetos.Tablero;
 import piezas.Peon;
 import utils.Infos;
 import utils.Session;
@@ -132,7 +133,7 @@ public class Boosts {
 	            char nuevaColumna = (char) (columna + dy[i]);
 	            
 	            // Obtener la casilla adyacente si está dentro de los límites del tablero
-	            Casilla adyacente = Session.getPartida().getCasilla(nuevaFila, nuevaColumna);
+	            Casilla adyacente = Session.getVentana().getPanelJuego().getTablero().getCasilla(nuevaFila, nuevaColumna);
 	            if (adyacente != null) {
 	            	//adyacente.setDebugClr(Color.blue);
 	            	adyacente.setIsHielo(estado); 
@@ -227,6 +228,10 @@ public class Boosts {
 			return boostInactivos;
 		}
 		
+		public static Tablero getTablero() {
+			return Session.getVentana().getPanelJuego().getTablero();
+		}
+		
 		
 	
 }
@@ -250,7 +255,7 @@ class Hielo extends Boost{
 	
 	@Override
 	public void config() {
-		Casilla casilla = Session.getPartida().getTablero().getCasilla(casillaCentral);
+		Casilla casilla = Session.getVentana().getPanelJuego().getTablero().getCasilla(casillaCentral);
 		Boosts.setBloqueoCasillasAdyacentes(casilla, true);
 	}
 	
