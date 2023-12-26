@@ -7,13 +7,16 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.border.Border;
 
 import objetos.Jugador;
+import objetos.Pieza;
 import utils.Configuracion;
 import utils.Escalador;
 
@@ -24,6 +27,7 @@ public class userInfo extends JPanel{
 	protected int tiempoRestante;
 	protected boolean stopTimer;
 	private userTag userTag;
+	protected userPuntos userPuntos;
 	
 	public userInfo() {	
 		
@@ -41,6 +45,7 @@ public class userInfo extends JPanel{
 		userTag = new userTag();
 		
 		
+		userPuntos = new userPuntos();
 		
 		
 		
@@ -49,9 +54,10 @@ public class userInfo extends JPanel{
 		labelTemp.setForeground(Color.white);
 		
 		
+
 		this.add(userTag,BorderLayout.WEST);
 		this.add(labelTemp,BorderLayout.EAST);
-
+		this.add(userPuntos,BorderLayout.CENTER);
 	}
 
 
@@ -63,8 +69,11 @@ public class userInfo extends JPanel{
 	public void setUsuario(Jugador jugador) {
 		userTag.setUser(jugador);
 	}
+	
 
-
+	public void setPuntos(Jugador jugador, ArrayList<Pieza> piezasComidas) {
+		userPuntos.setPuntos(jugador, piezasComidas);
+	}
 
 
 	public void setTemp(int restante) {
