@@ -12,6 +12,7 @@ import objetos.Jugador;
 import objetos.Pieza;
 import objetos.Tablero;
 import piezas.Peon;
+import utils.Audio;
 import utils.Infos;
 import utils.Session;
 import utils.utils;
@@ -257,6 +258,7 @@ class Hielo extends Boost{
 	public void config() {
 		Casilla casilla = Session.getVentana().getPanelJuego().getTablero().getCasilla(casillaCentral);
 		Boosts.setBloqueoCasillasAdyacentes(casilla, true);
+		Audio.play("freeze.wav");
 	}
 	
 }

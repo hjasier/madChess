@@ -28,6 +28,7 @@ import piezas.Peon;
 import piezas.Reina;
 import piezas.Rey;
 import piezas.Torre;
+import utils.Audio;
 import utils.Configuracion;
 import utils.Escalador;
 import utils.Infos;
@@ -291,7 +292,11 @@ public class LogicaPartida {
 	        guardarMovimiento(prevCasilla, curCasilla, piezaComida, pieza);
 	    }).start();
 		
-		
+		if(piezaComida == null) {
+			Audio.play("move-self.wav");
+		}else {
+			Audio.play("capture.wav");
+		}
    		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
    		checkFinPartida();
    		Boosts.updateBoost();
