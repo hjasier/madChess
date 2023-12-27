@@ -320,9 +320,9 @@ public class LogicaPartida {
 		piezasComidas.add(pieza);
 		System.out.println(piezasComidas);
 		
-	    ventana.getPanelUsuario2().setPuntos(curPlayer, piezasComidas);
+	    ventana.getPanelUsuario2().setPuntos(jugadores.get(1), piezasComidas);
 	    	
-	    ventana.getPanelUsuario().setPuntos(curPlayer, piezasComidas);
+	    ventana.getPanelUsuario().setPuntos(jugadores.get(2), piezasComidas);
 	    
 	  
 		
