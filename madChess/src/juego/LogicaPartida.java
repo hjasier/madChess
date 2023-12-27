@@ -14,6 +14,8 @@ import javax.swing.*;
 import javax.swing.text.*;
 
 import componentes.InfoMsg;
+import componentes.userInfo;
+import componentes.userPuntos;
 
 import java.awt.*;
 import objetos.Casilla;
@@ -44,6 +46,7 @@ public class LogicaPartida {
 	private Boolean DEBUG_MODE = Configuracion.DEBUG_MODE; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
 	protected ArrayList<Casilla> casillas;
 	protected ArrayList<Casilla> casillasDiponibles;
+	protected ArrayList<Pieza> piezasComidas = new ArrayList<>();
 	protected HashMap<String,Pieza> piezas = new HashMap<String,Pieza>();
 	private HashMap<Pieza, ArrayList<Casilla>> piezasDefensa;
 	protected Tablero tablero;
@@ -51,6 +54,7 @@ public class LogicaPartida {
 	private Jugador curPlayer; //Jugador actual
 	protected ArrayList<Jugador> jugadores;
 	protected Bot bot;
+	
 
 	protected DatosPartida datosPartida;
 	
@@ -295,6 +299,8 @@ public class LogicaPartida {
 		if(piezaComida == null) {
 			Audio.play("move-self.wav");
 		}else {
+			addPiezaComida(piezaComida);
+			
 			Audio.play("capture.wav");
 		}
    		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
@@ -306,7 +312,15 @@ public class LogicaPartida {
 		
 	}
 
-
+	public ArrayList<Pieza> getPiezasComidas() {
+		return piezasComidas;
+	}
+	
+	public void addPiezaComida(Pieza pieza) {
+		piezasComidas.add(pieza);
+		System.out.println(piezasComidas);
+		
+	}
 
 
 

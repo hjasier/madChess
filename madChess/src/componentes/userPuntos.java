@@ -60,9 +60,10 @@ public class userPuntos extends JPanel{
 	    
 	    
 	    setLayout(null);
+	    add(puntosTag);
 	    add(piezaImgLabel);
 	    add(puntosLabel);
-	    add(puntosTag);
+	    
 
 	}
 
