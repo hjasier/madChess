@@ -23,7 +23,7 @@ import utils.utils;
 
 public class userPuntos extends JPanel{
 	double escala = 0.85;
-	private JLabel puntosLabel = new JLabel("+1");
+	private JLabel puntosLabel = new JLabel("Ventaja");
 	private JLabel piezaImgLabel = new JLabel();
 	
 	public userPuntos() {
@@ -96,8 +96,10 @@ public class userPuntos extends JPanel{
 		}
 		
 		if (ventaja <= ventajaOponente) {
+			
 			puntosLabel.setText(""); //Porque no hay ventaja
 		}else {
+			ventaja = ventaja - ventajaOponente;
 			puntosLabel.setText("+" + ventaja);
 		}
 		

@@ -322,7 +322,7 @@ public class LogicaPartida {
 		
 	    ventana.getPanelUsuario2().setPuntos(jugadores.get(1), piezasComidas);
 	    	
-	    ventana.getPanelUsuario().setPuntos(jugadores.get(2), piezasComidas);
+	    ventana.getPanelUsuario().setPuntos(jugadores.get(0), piezasComidas);
 	    
 	  
 		
