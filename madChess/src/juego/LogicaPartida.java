@@ -825,6 +825,8 @@ public class LogicaPartida {
 			casilla.setDisabled(true);
 		}
 		
+		 Puntuador puntuador = new Puntuador();
+		 puntuador.cambiarPuntuaciones(datosPartida);
 		//TODO: desabilitar los botones de madChess tmb
 		
 		if (Configuracion.DB_DEBUG) {
