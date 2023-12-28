@@ -25,7 +25,7 @@ public class userTag extends JPanel{
 	    
 	    setBackground(Configuracion.BACKGROUND);
 	    setBounds(Escalador.escalar(0), Escalador.escalar(0), Escalador.escalar(190), Escalador.escalar(45));
-	    setPreferredSize(Escalador.newDimension(250, 55));
+	    setPreferredSize(Escalador.newDimension(210, 55));
 
 	    
 	    
