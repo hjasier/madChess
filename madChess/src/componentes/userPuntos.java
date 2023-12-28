@@ -1,6 +1,7 @@
 package componentes;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -23,24 +24,27 @@ import utils.utils;
 
 public class userPuntos extends JPanel{
 	double escala = 0.85;
-	private JLabel puntosLabel = new JLabel("Ventaja");
+	private JLabel puntosLabel = new JLabel("");
 	private JLabel piezaImgLabel = new JLabel();
+	JPanel panelGeneral = new JPanel(new FlowLayout());
+	JPanel panelPeon = new JPanel(); // Panel para los peones
+	JPanel panelTorre = new JPanel(); // Panel para las torres
 	
 	public userPuntos() {
 	   
 	    
 	    setBackground(Configuracion.BACKGROUND);
 	    setBounds(Escalador.escalar(0), Escalador.escalar(0), Escalador.escalar(190), Escalador.escalar(45));
-	    setPreferredSize(Escalador.newDimension(250, 55));
+	    setPreferredSize(Escalador.newDimension(335, 55));
 
 	    
 	    
 	    // Cubierta gris
 	    ImageIcon puntosTagBgft = new ImageIcon(getClass().getResource("/srcmedia/userTagBg.png"));
-	    Image imagenEscalada = puntosTagBgft.getImage().getScaledInstance((int) (Escalador.escalar(237) * escala), (int) (Escalador.escalar(49) * escala), Image.SCALE_SMOOTH);
+	    Image imagenEscalada = puntosTagBgft.getImage().getScaledInstance((int) (Escalador.escalar(335) * escala), (int) (Escalador.escalar(49) * escala), Image.SCALE_SMOOTH);
 	    JLabel puntosTag = new JLabel();
 	    puntosTag.setIcon(new ImageIcon(imagenEscalada));
-	    puntosTag.setBounds(0, 0, (int) (Escalador.escalar(237)*escala), (int) (Escalador.escalar(45)*escala));
+	    puntosTag.setBounds(0, 0, (int) (Escalador.escalar(335)*escala), (int) (Escalador.escalar(45)*escala));
 
 	    
 	    
@@ -64,8 +68,19 @@ public class userPuntos extends JPanel{
 	    add(piezaImgLabel);
 	    add(puntosLabel);
 	    
-
+	    
+	    
+	    
 	}
+	public void addPieza(Pieza pieza) {
+		ImageIcon piezaImg = pieza.getImg();
+		
+		Image imgEscaladaPieza = piezaImg.getImage().getScaledInstance((int) (Escalador.escalar(30) * escala), (int) (Escalador.escalar(30) * escala), Image.SCALE_SMOOTH);
+	    
+	    piezaImgLabel.setIcon(new ImageIcon(imgEscaladaPieza));
+	    
+	    
+    }
 
 	public void setPuntos(Jugador jugador, ArrayList<Pieza> piezasComidas) { 
 		//Hay que crear un metodo que recoja las piezas comidas
@@ -90,6 +105,8 @@ public class userPuntos extends JPanel{
 			
 			if (pieza.getIsWhite() == jugador.getIsWhite()) {
 				ventaja += valor;
+				
+				addPieza(pieza);
 			}else {
 				ventajaOponente += valor;
 			}
