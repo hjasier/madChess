@@ -71,8 +71,8 @@ public class userInfo extends JPanel{
 	}
 	
 
-	public void setPuntos(Jugador jugador, ArrayList<Pieza> piezasComidas) {
-		userPuntos.setPuntos(jugador, piezasComidas);
+	public void setPuntos(Jugador jugador, Pieza pieza) {
+		userPuntos.setPuntos(jugador, pieza);
 	}
 
 

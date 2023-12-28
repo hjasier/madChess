@@ -7,7 +7,7 @@ import objetos.Casilla;
 import objetos.Pieza;
 
 public class Peon extends Pieza implements PiezaMustHave{
-	protected boolean isAlter;
+	
 	public Peon(Boolean isWhite, boolean isAlter) {
 		super("p",isWhite,isAlter);
 	}

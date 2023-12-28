@@ -296,13 +296,8 @@ public class LogicaPartida {
 	        guardarMovimiento(prevCasilla, curCasilla, piezaComida, pieza);
 	    }).start();
 		
-		if(piezaComida == null) {
-			Audio.play("move-self.wav");
-		}else {
-			addPiezaComida(piezaComida);
-			
-			Audio.play("capture.wav");
-		}
+		initPiezaAccion(piezaComida);
+		
    		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
    		checkFinPartida();
    		Boosts.updateBoost();
@@ -311,18 +306,24 @@ public class LogicaPartida {
 		
 		
 	}
-
-	public ArrayList<Pieza> getPiezasComidas() {
-		return piezasComidas;
+	
+	
+	public void initPiezaAccion(Pieza piezaComida) {
+		if(piezaComida == null) {
+			Audio.play("move-self.wav");
+		}else {
+			addPiezaComida(piezaComida);
+			
+			Audio.play("capture.wav");
+		}
 	}
+
 	
 	public void addPiezaComida(Pieza pieza) {
-		piezasComidas.add(pieza);
-		System.out.println(piezasComidas);
 		
-	    ventana.getPanelUsuario2().setPuntos(jugadores.get(1), piezasComidas);
+	    ventana.getPanelUsuario2().setPuntos(jugadores.get(1), pieza);
 	    	
-	    ventana.getPanelUsuario().setPuntos(jugadores.get(0), piezasComidas);
+	    ventana.getPanelUsuario().setPuntos(jugadores.get(0), pieza);
 	    
 	  
 		
