@@ -33,6 +33,7 @@ import objetos.Jugador;
 import objetos.Usuario;
 import utils.Configuracion;
 import utils.Escalador;
+import utils.Infos;
 import utils.Session;
 
 public class VentanaPrincipal extends JFrame{
@@ -213,7 +214,12 @@ public class VentanaPrincipal extends JFrame{
         panelJuego.backBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres salir, se terminará la partida con victoria para el oponente?", "Confirmar derrota", JOptionPane.YES_NO_OPTION);
+                String mensaje = Infos.CONFIRMARDERROTA;
+                
+                if (Session.getDatosPartida().getIsTerminada()) {
+                	mensaje = Infos.SALIR;
+                }
+                int respuesta = JOptionPane.showConfirmDialog(null, mensaje, "", JOptionPane.YES_NO_OPTION);
                 
                 if (respuesta == JOptionPane.YES_OPTION) {
                     cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);

@@ -312,6 +312,7 @@ public class LogicaPartida {
 		initPiezaAccion(piezaComida);
 		
    		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
+   		updateUserInfo();
    		checkFinPartida();
    		Boosts.updateBoost();
    		checkReyInJaque();
@@ -321,6 +322,31 @@ public class LogicaPartida {
 	}
 	
 	
+	private void updateUserInfo() {
+		
+		userInfo panelUsuario;
+		
+		
+		if(curPlayer.getIsWhite()) {
+			panelUsuario = ventana.getPanelUsuario2();
+		}else {
+			panelUsuario = ventana.getPanelUsuario();
+		}
+		panelUsuario.setUsuario(curPlayer);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public void initPiezaAccion(Pieza piezaComida) {
 		if(piezaComida == null) {
 			Audio.play("move-self.wav");
@@ -835,9 +861,11 @@ public class LogicaPartida {
 		pararTemporizador();//parar temporizador del último jugador
 		
 		datosPartida.setIsTerminada(true);
+		new Thread(() -> {
 		for (Casilla casilla : casillas) {
 			casilla.setDisabled(true);
 		}
+		 }).start();
 		
 		 Puntuador puntuador = new Puntuador();
 		 puntuador.cambiarPuntuaciones(datosPartida);
@@ -845,7 +873,9 @@ public class LogicaPartida {
 		
 		if (Configuracion.DB_DEBUG) {
 			//Guardar datos de la partida en la db
-			GestorDB.insertarPartida(datosPartida);
+			new Thread(() -> {
+		        GestorDB.insertarPartida(datosPartida);
+		    }).start();
 		}
 	}
 
@@ -978,7 +1008,7 @@ public class LogicaPartida {
 	
 	protected void resetearVentana() {
 		limpiarTablero();
-		Session.getVentana().getPanelJuego().resetTextAreas();
+		Session.getVentana().getPanelJuego().resetearVentana();
 		tablero.cargarPiezas(jugadores);
 	}
 	

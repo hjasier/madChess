@@ -29,6 +29,8 @@ public class userInfo extends JPanel{
 	private userTag userTag;
 	protected userPuntos userPuntos;
 	
+
+
 	public userInfo() {	
 		
 		
@@ -107,8 +109,9 @@ public class userInfo extends JPanel{
 	    });
 	    timer.start();
 	}
-
-		
+	public userPuntos getUserPuntos() {
+		return userPuntos;
+	}
 
 
 	       

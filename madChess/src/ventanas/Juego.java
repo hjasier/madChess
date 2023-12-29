@@ -665,7 +665,14 @@ public class Juego extends JPanel {
         
 	}
 
-
+	public void resetearVentana() {
+		resetTextAreas();
+		resetUserPuntos();
+	}
+	public void resetUserPuntos() {
+		panelUsuario.getUserPuntos().resetPuntos();
+		panelUsuario2.getUserPuntos().resetPuntos();
+	}
 	public void resetTextAreas() {
 		areaMovimientos.setText("");
 		areaChat.setText("");

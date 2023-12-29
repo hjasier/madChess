@@ -17,6 +17,9 @@ public class Infos {
 	    public static final String SEP2 = "』";
 		public static final String PARTIDA_TERMINADA = "║ 🏁 Partida terminada 🏁 ║";
 		public static final String PARTIDA_TERMINADA_ALERT = "La partida ha terminado";
+		public static final String CONFIRMARDERROTA = "¿Estás seguro de que quieres salir, se terminará la partida con victoria para el oponente?";
+		public static final String SALIR = "Salir de la partida";
+		
 		
 		
 		public static final String REY = "♔";

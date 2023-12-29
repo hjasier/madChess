@@ -94,6 +94,7 @@ public class userPuntos extends JPanel{
 		imgLabel.setIcon(new ImageIcon(imgEscaladaPieza));
 		
 	    panelGeneral.add(imgLabel);
+	    repaint();
     }
 
 	public void setPuntos(Jugador jugador, Pieza pieza) { 
@@ -105,6 +106,7 @@ public class userPuntos extends JPanel{
 			ventaja += valor;
 			
 			addPieza(pieza);
+			
 		}else {
 			ventajaOponente += valor;
 		}
@@ -139,5 +141,9 @@ public class userPuntos extends JPanel{
 		}
 		
 		return valor;
+	}
+	
+	public void resetPuntos() {
+		panelGeneral.removeAll();
 	}
 }
