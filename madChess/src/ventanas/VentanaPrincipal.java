@@ -274,16 +274,9 @@ public class VentanaPrincipal extends JFrame{
 		
 		
 		else if (redirect==Paneles.CONFLOCAL) {
-//			if (!Session.getDatosPartida().getJugadores().contains(logedUser)) {	
-//				panelConfLocal.setUser(logedUser);
-//			}
-//			else {
-//				alert("Ese usuario ya esta en la partida");
-//				return;
-//				
-//			}
 			panelConfLocal.setUser(logedUser);
 		}
+		
 		else if (redirect==Paneles.MENU_INICIO) {
 			Session.setCurrentUser(logedUser);
 			panelMenuInicio.setLoged(true);

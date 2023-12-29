@@ -72,6 +72,7 @@ public class LogicaPartida {
 		if (datosPartida.jugadores!=null) {this.jugadores = datosPartida.jugadores;}
 		this.tablero = ventana.getTablero();
 		casillas = tablero.getCasillas();
+		initPlayers();
 		resetearVentana();
 		
 	        
@@ -124,7 +125,7 @@ public class LogicaPartida {
         
         
 
-        initPlayers();
+        
         
         ventana.initWindow();
         ventana.getPanelBoost().reloadBoosts(curPlayer);
@@ -155,11 +156,9 @@ public class LogicaPartida {
 		int initTime = 600;
 
 		
-		if (Configuracion.BOT_DEBUG) {
-			jugadores.remove(1);
-			Jugador botplayer = new Jugador(new Usuario("BOT"));
-			jugadores.add(botplayer);
-			bot = new Bot(botplayer);
+		if (datosPartida.isBotGame()) {
+			datosPartida.setJugador(new Usuario("BOT"));
+			bot = new Bot(datosPartida.getJugadores().get(1));
 		}
 		
 		Jugador user1 = jugadores.get(0);

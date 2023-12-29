@@ -270,10 +270,18 @@ public class MenuInicio extends JPanel {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		VentanaPrincipal ventanaPrincip = Session.getVentana();
-            	DatosPartida datos = new DatosPartida(modoJuego.LOCAL);
+        		DatosPartida datos = new DatosPartida(modoJuego.LOCAL);
+            	datos.setIsBotGame(true);
             	Session.setDatosPartida(datos);
             	ventanaPrincip.getPanelConfLocal().setDatosPartida(datos);
-            	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFLOCAL);
+        		if (Session.getCurrentUser()!=null) {
+                	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFLOCAL);
+        		}
+        		else {
+					ventanaPrincip.getPanelLogin().setRedirect(Paneles.CONFLOCAL);
+					ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LOGIN);
+        		}
+
         	}
 
         });
@@ -325,6 +333,31 @@ public class MenuInicio extends JPanel {
             }
         });
         
+        
+		localplayLabelBack.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				ventanaConfLocal(2);
+			}
+		});
+        
+		localplayLabelBack2.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				ventanaConfLocal(3);
+				
+			}
+		});
+		
+		localplayLabelBack3.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				ventanaConfLocal(4);
+				
+			}
+		});
+		
+		
         //-----------------FIN Clicks-----------------
         
 
@@ -335,7 +368,22 @@ public class MenuInicio extends JPanel {
 
 }
 
+private DatosPartida ventanaConfLocal(int playerNum) {
+	VentanaPrincipal ventanaPrincip = Session.getVentana();
+	DatosPartida datos = new DatosPartida(modoJuego.LOCAL);
+	Session.setDatosPartida(datos);
+	datos.setPlayerNum(playerNum);
+	ventanaPrincip.getPanelConfLocal().setDatosPartida(datos);
+	
 
+	if (Session.getCurrentUser() != null) {
+		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFLOCAL);
+	} else {
+		ventanaPrincip.getPanelLogin().setRedirect(Paneles.CONFLOCAL);
+		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LOGIN);
+	}
+	return datos;
+}
 
 
 protected void startServerCnx() {

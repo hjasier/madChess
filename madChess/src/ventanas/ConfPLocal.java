@@ -19,12 +19,18 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ConfPLocal extends JPanel {
     protected BButton botonIniciarPartida = new BButton("Iniciar Partida");
     protected RButton volverBtn = new RButton("Volver");
     protected RButton botonUser1 = new RButton("Login");
     protected RButton botonUser2 = new RButton("Login");
+    protected RButton botonUser3 = new RButton("Login");
+    protected RButton botonUser4 = new RButton("Login");
+    protected JPanel jugador3Panel = new JPanel();
+    protected JPanel jugador4Panel = new JPanel();
+    
     protected Color colorFondo = Configuracion.BACKGROUND;
     protected JPanel navBar;
     
@@ -72,6 +78,37 @@ public class ConfPLocal extends JPanel {
 
         JLabel labelNombre2 = new JLabel("Nombre");
         labelNombre2.setVisible(false);
+        
+        
+        JLabel labelJugador3 = new JLabel("Jugador 3:");
+        botonUser3 = new RButton("Login");
+        botonUser3.setMaximumSize(new Dimension(Escalador.escalar(120), Escalador.escalar(25))); // Ajustar el tamaño máximo del botón
+
+        JLabel labelNombre3 = new JLabel("Nombre");
+        labelNombre3.setVisible(false);
+        
+        JLabel labelJugador4 = new JLabel("Jugador 3:");
+        botonUser4 = new RButton("Login");
+        botonUser4.setMaximumSize(new Dimension(Escalador.escalar(120), Escalador.escalar(25))); // Ajustar el tamaño máximo del botón
+
+        JLabel labelNombre4 = new JLabel("Nombre");
+        labelNombre4.setVisible(false);
+        
+        
+        
+        jugador3Panel.setLayout(new BoxLayout(jugador3Panel, BoxLayout.X_AXIS));
+        jugador3Panel.setBackground(colorFondo);
+        jugador3Panel.add(createRowPanel(labelJugador3, botonUser3, labelNombre3));
+        jugador3Panel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
+        jugador3Panel.setVisible(false);
+
+        jugador4Panel.setLayout(new BoxLayout(jugador4Panel, BoxLayout.X_AXIS));
+        jugador4Panel.setBackground(colorFondo);
+        jugador4Panel.add(createRowPanel(labelJugador4, botonUser4, labelNombre4));
+        jugador4Panel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
+        jugador4Panel.setVisible(false);
+
+        
 
         botonIniciarPartida = new BButton("Iniciar Partida");
         botonIniciarPartida.setPreferredSize(new Dimension(Escalador.escalar(150), Escalador.escalar(35)));
@@ -94,6 +131,10 @@ public class ConfPLocal extends JPanel {
         centerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
         centerPanel.add(createRowPanel(labelJugador2, botonUser2, labelNombre2));
         centerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
+        centerPanel.add(jugador3Panel);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        centerPanel.add(jugador4Panel);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         centerPanel.add(createRowPanel(botonIniciarPartida));
         centerPanel.add(Box.createVerticalGlue()); // Espacio en blanco abajo
 
@@ -155,9 +196,7 @@ public class ConfPLocal extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaPrincipal ventana = Session.getVentana();
-				ventana.getPanelLogin().setRedirect(Paneles.CONFLOCAL);
-				ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.LOGIN);
+				loginBtnAction();
 				
 			}
 		});
@@ -165,14 +204,31 @@ public class ConfPLocal extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaPrincipal ventana = Session.getVentana();
-				ventana.getPanelLogin().setRedirect(Paneles.CONFLOCAL);
-				ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.LOGIN);
+				loginBtnAction();
 			}
 		});
-        
-        
+        botonUser3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loginBtnAction();
+			}
+		});
+        botonUser4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loginBtnAction();
+			}
+		});
+     
     }
+    
+	private void loginBtnAction() {
+		VentanaPrincipal ventana = Session.getVentana();
+		ventana.getPanelLogin().setRedirect(Paneles.CONFLOCAL);
+		ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.LOGIN);
+	}
 
 
 	private JPanel createRowPanel(Component... components) {
@@ -191,20 +247,48 @@ public class ConfPLocal extends JPanel {
     public void setDatosPartida(DatosPartida datos) {
 		this.datos = datos;
 		gameId.setText(datos.getGameId());
-	}
-
-
-	public void setUser(Usuario logedUser) {
-		if (datos.getJugadores().isEmpty()) {
-			botonUser1.setText(logedUser.getUsername());
-			botonUser1.setEnabled(false);
+		
+		if (Session.getCurrentUser() != null) {
+			setUser(Session.getCurrentUser());
 		}
-		else {
-			botonUser2.setText(logedUser.getUsername());
+		
+		if (datos.isBotGame()) {
+			botonUser2.setText("BOT");
 			botonUser2.setEnabled(false);
+			
 		}
-		datos.setJugador(logedUser);
+
+		if (datos.getPlayerNum() >= 3) {
+			jugador3Panel.setVisible(true);
+		
+		}
+
+		if (datos.getPlayerNum() == 4) {
+			jugador4Panel.setVisible(true);
+		}
+
 	}
+    
+
+
+
+    public void setUser(Usuario logedUser) {
+        if (datos.getJugadores().isEmpty()) {
+            botonUser1.setText(logedUser.getUsername());
+            botonUser1.setEnabled(false);
+        } else if (datos.getJugadores().size() == 1) {
+            botonUser2.setText(logedUser.getUsername());
+            botonUser2.setEnabled(false);
+        } else if (datos.getJugadores().size() == 2) {
+            botonUser3.setText(logedUser.getUsername());
+            botonUser3.setEnabled(false);
+        } else if (datos.getJugadores().size() == 3) {
+            botonUser4.setText(logedUser.getUsername());
+            botonUser4.setEnabled(false);
+        }
+
+        datos.setJugador(logedUser);
+    }
 
     
     

@@ -30,6 +30,8 @@ public class DatosPartida implements Serializable{
 	protected ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 	protected Boolean isTerminada = false;
 	private boolean isReplay = false;
+	private boolean isBotGame = false;
+	private int playerNum = 2;
 	
 
 	
@@ -156,6 +158,19 @@ public class DatosPartida implements Serializable{
 		this.isTerminada = isTerminada;
 	}
 
+	
+
+
+	public int getPlayerNum() {
+		return playerNum;
+	}
+
+
+
+	public void setPlayerNum(int playerNum) {
+		this.playerNum = playerNum;
+	}
+
 
 
 	private void setGameId() {
@@ -245,6 +260,14 @@ public class DatosPartida implements Serializable{
 
 	public void setDuracionEstablecida(int duracionEstablecida) {
 		this.duracionEstablecida = duracionEstablecida;
+	}
+	
+	public boolean isBotGame() {
+		return isBotGame;
+	}
+	
+	public void setIsBotGame(boolean isBotGame) {
+		this.isBotGame = isBotGame;
 	}
 	
 	
