@@ -321,7 +321,7 @@ class Bomba extends Boost {
 			Session.getPartida().getTablero().initAnimacionExplosion(curCasilla);
         	
         }  
-        else {
+        else if (cont > 0) {
         	Session.getPartida().printMovimientoFormateado(Infos.CONTADOREXPLOSION + cont);
         }
     }
