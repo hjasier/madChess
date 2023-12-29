@@ -162,15 +162,29 @@ public class LogicaPartida {
 		}
 		
 		Jugador user1 = jugadores.get(0);
-		Jugador user2 = jugadores.get(1);
-		
-		
+		user1.setPlayColor(Configuracion.COLORESJUGADORES.get(0));
 		user1.setIsWhite(true);
 		
+		Jugador user2 = jugadores.get(1);
+		user2.setPlayColor(Configuracion.COLORESJUGADORES.get(1));
 		
 		
-		user1.setPlayColor(new Color(255,100,17));
-		user2.setPlayColor(new Color(236,146,225));
+		
+		if (datosPartida.getJugadores().size() >= 3) {
+			Jugador user3 = jugadores.get(2);
+			user3.setPlayColor(Configuracion.COLORESJUGADORES.get(2));
+			user3.setIsWhite(true);
+        }
+		
+		if (datosPartida.getJugadores().size() == 4) {
+			Jugador user3 = jugadores.get(3);
+			user3.setPlayColor(Configuracion.COLORESJUGADORES.get(3));
+        }
+		
+		
+		
+		
+		
 		
 		
         curPlayer = user1;

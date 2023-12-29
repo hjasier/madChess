@@ -3,6 +3,8 @@ package utils;
 import java.awt.Color;
 import java.awt.Font;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Configuracion {
 	
@@ -27,6 +29,12 @@ public class Configuracion {
 	public static final Color BACKGROUND = new Color(28,28,28);
 	public static final Color HOVER = new Color(255,87,50);
 	public static final Font DEFAULTFONT = new Font("Dialog", Font.PLAIN, 12);
+	public static final ArrayList<Color> COLORESJUGADORES = new ArrayList<>(List.of(
+			new Color(255,100,17),
+			new Color(236,146,225),
+			Color.magenta,
+			Color.yellow
+	    ));
 	public static Font CUSTOMFONT;
 	
 	

@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.Timer;
 
 import juego.Boosts;
+import juego.DatosPartida;
 import piezas.Alfil;
 import piezas.Caballo;
 import piezas.Peon;
@@ -506,6 +507,19 @@ public class Tablero extends JPanel{
 		
 		Rey reyBlack = new Rey(false,playerBlack.getAlters().get(1));
 		Rey reyWhite = new Rey(true,playerWhite.getAlters().get(1));
+		
+		DatosPartida datosPartida = Session.getDatosPartida();
+		
+		if (datosPartida.getJugadores().size() >= 3) {
+			datosPartida.getJugadores().get(2).setRey(reyWhite);
+			
+        }
+		
+		if (datosPartida.getJugadores().size() == 4) {
+			datosPartida.getJugadores().get(3).setRey(reyBlack);
+        }
+		
+		
 		playerWhite.setRey(reyWhite);
 		playerBlack.setRey(reyBlack);
 		
