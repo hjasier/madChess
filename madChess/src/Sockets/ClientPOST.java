@@ -28,8 +28,9 @@ public class ClientPOST {
 	}
 	
 	
-	public void createGame() throws IOException {
+	public void createGame(int playerNum) throws IOException {
 		serverOut.writeObject("hostNewGame");
+		serverOut.writeObject(playerNum);
 	}
 	
 	public void postUser() throws IOException {

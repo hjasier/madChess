@@ -289,24 +289,22 @@ public class MenuInicio extends JPanel {
         multiplayerLabelBack.addMouseListener(new MouseAdapter() {
 
             public void mouseClicked(MouseEvent e) {
-            	VentanaPrincipal ventanaPrincip = Session.getVentana();
-            	System.out.println("-----CONSOLA CREADOR------");
-            	if (Session.getCurrentUser()!=null) {
-            		
-            		startServerCnx();
-                	try {
-    					Session.getCtsConnection().createGame();
-    				} catch (IOException e1) {
-    					// TODO Auto-generated catch block
-    					e1.printStackTrace();
-    				}
-                	
-                	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFONLINE);
-                    
-            	}
-            	else {
-            		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LOGIN);
-            	}   
+            	ventanaConfOnline(2); 
+            }
+        });
+        
+        
+        multiplayerLabelBack2.addMouseListener(new MouseAdapter() {
+
+            public void mouseClicked(MouseEvent e) {
+            	ventanaConfOnline(3); 
+            }
+        });
+        
+        multiplayerLabelBack3.addMouseListener(new MouseAdapter() {
+
+            public void mouseClicked(MouseEvent e) {
+            	ventanaConfOnline(4); 
             }
         });
         
@@ -366,49 +364,72 @@ public class MenuInicio extends JPanel {
     
     
 
-}
-
-private DatosPartida ventanaConfLocal(int playerNum) {
-	VentanaPrincipal ventanaPrincip = Session.getVentana();
-	DatosPartida datos = new DatosPartida(modoJuego.LOCAL);
-	Session.setDatosPartida(datos);
-	datos.setPlayerNum(playerNum);
-	ventanaPrincip.getPanelConfLocal().setDatosPartida(datos);
+	}
 	
-
-	if (Session.getCurrentUser() != null) {
-		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFLOCAL);
-	} else {
-		ventanaPrincip.getPanelLogin().setRedirect(Paneles.CONFLOCAL);
-		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LOGIN);
-	}
-	return datos;
-}
-
-
-protected void startServerCnx() {
-	try {
-		Session.startServerCnx();
-	} catch (ClassNotFoundException | IOException e1) {
-		System.out.println("Error al conectarse con el server");
-	}
-}
-
-
-
-
-public void setLoged(boolean b) {
-	if (b) {
-		loginBtn.setText("Perfil");
-	}
-	else {
-		loginBtn.setText("Login");
+	private DatosPartida ventanaConfLocal(int playerNum) {
+		VentanaPrincipal ventanaPrincip = Session.getVentana();
+		DatosPartida datos = new DatosPartida(modoJuego.LOCAL);
+		Session.setDatosPartida(datos);
+		datos.setPlayerNum(playerNum);
+		ventanaPrincip.getPanelConfLocal().setDatosPartida(datos);
+		
+	
+		if (Session.getCurrentUser() != null) {
+			ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFLOCAL);
+		} else {
+			ventanaPrincip.getPanelLogin().setRedirect(Paneles.CONFLOCAL);
+			ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LOGIN);
+		}
+		return datos;
 	}
 	
 	
+	private void ventanaConfOnline(int playerNum) {
+		VentanaPrincipal ventanaPrincip = Session.getVentana();
+    	System.out.println("-----CONSOLA CREADOR------");
+    	if (Session.getCurrentUser()!=null) {
+    		
+    		startServerCnx();
+        	try {
+				Session.getCtsConnection().createGame(playerNum);
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        	
+        	ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.CONFONLINE);
+            
+    	}
+    	else {
+    		ventanaPrincip.getCardLayout().show(ventanaPrincip.getPanelPrincipal(), Paneles.LOGIN);
+    	}  
+		
+	}
+	
+	protected void startServerCnx() {
+		try {
+			Session.startServerCnx();
+		} catch (ClassNotFoundException | IOException e1) {
+			System.out.println("Error al conectarse con el server");
+		}
+	}
 	
 	
-}
+	
+	
+	public void setLoged(boolean b) {
+		if (b) {
+			loginBtn.setText("Perfil");
+		}
+		else {
+			loginBtn.setText("Login");
+		}
+		
+		
+		
+		
+	}
 
     
     

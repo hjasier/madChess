@@ -27,6 +27,11 @@ public class ConfPOnline extends JPanel {
     protected BButton botonIniciarPartida = new BButton("Iniciar Partida");
     protected RButton user1Btn = new RButton("Login");
     protected RButton user2Btn = new RButton("Esperando...");
+    protected RButton botonUser3 = new RButton("Esperando...");
+    protected RButton botonUser4 = new RButton("Esperando...");
+    protected JPanel jugador3Panel = new JPanel();
+    protected JPanel jugador4Panel = new JPanel();
+    
     protected BLabel labelCodigoValor= new BLabel("CÓDIGO");
     protected JPanel navBar;
     protected JPanel opciones = new JPanel();
@@ -163,6 +168,36 @@ public class ConfPOnline extends JPanel {
         fourthRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
         fourthRowPanel.setBackground(colorFondo);
         
+
+
+        JLabel labelJugador3 = new JLabel("Jugador 3:");
+        botonUser3.setMaximumSize(new Dimension(Escalador.escalar(120), Escalador.escalar(25))); // Ajustar el tamaño máximo del botón
+        botonUser3.setEnabled(false);
+        JLabel labelNombre3 = new JLabel("Nombre");
+        labelNombre3.setVisible(false);
+        
+        JLabel labelJugador4 = new JLabel("Jugador 4:");
+        botonUser4.setMaximumSize(new Dimension(Escalador.escalar(120), Escalador.escalar(25))); // Ajustar el tamaño máximo del botón
+        botonUser4.setEnabled(false);
+        
+        JLabel labelNombre4 = new JLabel("Nombre");
+        labelNombre4.setVisible(false);
+        
+        
+        
+        jugador3Panel.setLayout(new BoxLayout(jugador3Panel, BoxLayout.X_AXIS));
+        jugador3Panel.setBackground(colorFondo);
+        jugador3Panel.add(createRowPanel(labelJugador3, botonUser3, labelNombre3));
+        jugador3Panel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
+        jugador3Panel.setVisible(false);
+
+        jugador4Panel.setLayout(new BoxLayout(jugador4Panel, BoxLayout.X_AXIS));
+        jugador4Panel.setBackground(colorFondo);
+        jugador4Panel.add(createRowPanel(labelJugador4, botonUser4, labelNombre4));
+        jugador4Panel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
+        jugador4Panel.setVisible(false);
+        
+        
         botonIniciarPartida = new BButton("Iniciar Partida");
         JPanel fifthRowPanel = new JPanel();
         fifthRowPanel.setLayout(new BoxLayout(fifthRowPanel, BoxLayout.X_AXIS));
@@ -182,6 +217,10 @@ public class ConfPOnline extends JPanel {
         opcionesenY.add(thirdRowPanel);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(10))));// Espacio entre filas
         opcionesenY.add(fourthRowPanel);
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(10))));
+        opcionesenY.add(jugador3Panel);
+        opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(10))));
+        opcionesenY.add(jugador4Panel);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(30)))); // Espacio entre filas
         opcionesenY.add(fifthRowPanel);
         opcionesenY.add(Box.createRigidArea(new Dimension(0, Escalador.escalar(5)))); // Espacio entre botones
@@ -264,26 +303,74 @@ public class ConfPOnline extends JPanel {
 	
 	public void setUser2(Usuario user) {
 		user2Btn.setText(user.getUsername());
+		user2Btn.setEnabled(false);
+	}
+	public void setUser3(Usuario user) {
+		botonUser3.setText(user.getUsername());
+		botonUser3.setEnabled(false);
+	}
+	public void setUser4(Usuario user) {
+		botonUser4.setText(user.getUsername());
+		botonUser4.setEnabled(false);
 	}
 	
 
 
 
 
-
+	
 
 
 	public void setDatosPartida(DatosPartida curDatosPartida) {
 		this.datosPartida = curDatosPartida;
-		
 		labelCodigoValor.setText(curDatosPartida.getGameId());
 		setUser1(curDatosPartida.getJugadores().get(0).getUsuario());
 		try {
-			setUser2(curDatosPartida.getJugadores().get(1).getUsuario());
+			
+			
+			
+			if (curDatosPartida.getPlayerNum() == 2) {
+				setUser2(curDatosPartida.getJugadores().get(1).getUsuario());
+				jugador3Panel.setVisible(false);
+				jugador4Panel.setVisible(false);
+			
+			}
+			else if (curDatosPartida.getPlayerNum() == 3) {
+				if(curDatosPartida.getJugadores().size()>=2) {
+				setUser3(curDatosPartida.getJugadores().get(2).getUsuario());
+				}
+				jugador3Panel.setVisible(true);
+				jugador4Panel.setVisible(false);
+						
+			}
+
+			else if (curDatosPartida.getPlayerNum() == 4) {
+				if(curDatosPartida.getJugadores().size()>=3) {
+				setUser4(curDatosPartida.getJugadores().get(3).getUsuario());
+				}
+				jugador4Panel.setVisible(true);
+				
+				
+			}
+
+
 		} catch (Exception e) {}
 		
 		
 		
 	}
+	
+	
+	private JPanel createRowPanel(Component... components) {
+        JPanel rowPanel = new JPanel();
+        rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
+        rowPanel.setBackground(colorFondo);
+        for (Component component : components) {
+            rowPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+            rowPanel.add(component);
+        }
+        rowPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+        return rowPanel;
+    }
 
 }

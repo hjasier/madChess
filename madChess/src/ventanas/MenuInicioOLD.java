@@ -102,7 +102,7 @@ public class MenuInicioOLD extends JPanel {
             		
             		startServerCnx();
                 	try {
-						Session.getCtsConnection().createGame();
+						Session.getCtsConnection().createGame(2);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

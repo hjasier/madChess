@@ -71,12 +71,15 @@ public class ClientHandler implements Runnable {
     			        
     			    case "hostNewGame":
     			    	DatosPartida datosPartida = new DatosPartida(modoJuego.ONLINE);
+    			    	int playerNum = (int) input.readObject();
+    			    	datosPartida.setPlayerNum(playerNum);
     			    	datosPartida.setJugador(this.user);
     			    	
     			    	checkDatosPartida(datosPartida);
     			    	
     			    	output.writeObject("updateConfData"); 
-    					output.writeObject(curPartida); 
+    					output.writeObject(curPartida);
+    					
     					break;
     			    	
     			   
