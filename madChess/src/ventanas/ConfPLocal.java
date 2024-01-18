@@ -87,7 +87,7 @@ public class ConfPLocal extends JPanel {
         JLabel labelNombre3 = new JLabel("Nombre");
         labelNombre3.setVisible(false);
         
-        JLabel labelJugador4 = new JLabel("Jugador 3:");
+        JLabel labelJugador4 = new JLabel("Jugador 4:");
         botonUser4 = new RButton("Login");
         botonUser4.setMaximumSize(new Dimension(Escalador.escalar(120), Escalador.escalar(25))); // Ajustar el tamaño máximo del botón
 
@@ -256,10 +256,19 @@ public class ConfPLocal extends JPanel {
 			botonUser2.setText("BOT");
 			botonUser2.setEnabled(false);
 			
+		}else {
+			botonUser2.setText("Login");
+			botonUser2.setEnabled(true);
 		}
-
+		
+		if (datos.getPlayerNum() == 2) {
+			jugador3Panel.setVisible(false);
+			jugador4Panel.setVisible(false);
+		
+		}
 		if (datos.getPlayerNum() >= 3) {
 			jugador3Panel.setVisible(true);
+			jugador4Panel.setVisible(false);
 		
 		}
 
