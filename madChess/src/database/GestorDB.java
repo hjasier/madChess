@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import juego.DatosPartida;
 import juego.modoJuego;
@@ -397,6 +399,35 @@ public class GestorDB {
 
 	        return jugadores;
 	    }
+	    
+	    public static String[] getTodasPuntuaciones(String eleccion) {
+	        List<String> listaJugadores = new ArrayList<>();
+
+	        String sql = "SELECT username FROM Usuario ORDER BY " + eleccion + " DESC;";
+
+	        try (Connection conn = ConexionDB.obtenerConexion();
+	             PreparedStatement pstmt = conn.prepareStatement(sql);
+	             ResultSet rs = pstmt.executeQuery()) {
+
+	            while (rs.next()) {
+	                String usuario = rs.getString("username");
+
+	                if (eleccion.equals("rank_classic")) {
+	                    listaJugadores.add(usuario);
+	                } else if (eleccion.equals("rank_mad")) {
+	                    listaJugadores.add(usuario);
+	                }
+	            }
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        // Convertir la lista a un array de cadenas
+	        return listaJugadores.toArray(new String[0]);
+	    }
+
+	    
 
 	    private static Usuario getUsuarioInfo(Connection conn, String username) {
 	    	String sql = "SELECT * FROM Usuario WHERE username = ?";

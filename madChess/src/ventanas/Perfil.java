@@ -21,6 +21,7 @@ import componentes.BButton;
 import componentes.RButton;
 import componentes.SLabel;
 import componentes.navBar;
+import juego.Puntuador;
 import librerias.FontAwesome;
 import librerias.IconFontSwing;
 import utils.Configuracion;
@@ -349,8 +350,8 @@ public class Perfil extends JPanel{
 		nombre.setText(Session.getCurrentUser().getUsername());
 		valormadchess1.setText(Session.getCurrentUser().getRank_madChess()+"");
 		valorClasico1.setText(Session.getCurrentUser().getRank_classic()+"");
-		valormadchess2.setText(Session.getCurrentUser().getRank_madChess()+"");
-		valorClasico2.setText(Session.getCurrentUser().getRank_classic()+"");
+		valormadchess2.setText("#"+ Puntuador.getPosicionLadder(Session.getCurrentUser().getUsername(), "rank_mad"));
+		valorClasico2.setText("#"+ Puntuador.getPosicionLadder(Session.getCurrentUser().getUsername(), "rank_classic"));
 		
         Thread cargaImg = new Thread(new Runnable() {
             @Override
