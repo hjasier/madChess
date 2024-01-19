@@ -78,6 +78,7 @@ public class boostItem extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				setBackground(Configuracion.BACKGROUND);
+				descripcionLabel.setText("");
 			}
 			
 			

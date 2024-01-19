@@ -112,6 +112,13 @@ public class Jugador implements Serializable{
 	public ArrayList<Boolean> getAlters() {
 		return alters;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Jugador [isWhite=" + isWhite ;
+	}
 	
 
+	
 }

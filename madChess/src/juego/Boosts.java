@@ -328,7 +328,10 @@ class Bomba extends Boost {
     
     @Override
 	public void config() {
-    	piezaBomba = Session.getPartida().getTablero().getCasilla(casillaInicial).getPieza();
+    	piezaBomba = Session.getVentana().getPanelJuego().getTablero().getCasilla(casillaInicial).getPieza();
+    	System.out.println(Session.getVentana().getPanelJuego().getTablero().getCasilla(casillaInicial));
+    	//D6
+    	System.out.println(Session.getVentana().getPanelJuego().getTablero().getCasilla(casillaInicial).getPieza());
     	piezaBomba.setIsBomberman(true);
 	}
 

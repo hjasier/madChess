@@ -174,6 +174,7 @@ public class Tablero extends JPanel{
 		
 		if (prevCasilla.getPieza()!=null && !dragging ) {
 			
+			
 			if ((nowPlaying==null || (nowPlaying.getIsWhite()!=prevCasilla.getPieza().getIsWhite()))&&!Configuracion.DEBUG_MODE) {return;}
 			
 			
@@ -508,15 +509,16 @@ public class Tablero extends JPanel{
 		Rey reyBlack = new Rey(false,playerBlack.getAlters().get(1));
 		Rey reyWhite = new Rey(true,playerWhite.getAlters().get(1));
 		
-		DatosPartida datosPartida = Session.getDatosPartida();
 		
-		if (datosPartida.getJugadores().size() >= 3) {
-			datosPartida.getJugadores().get(2).setRey(reyWhite);
+		System.out.println("LISTA DE JUGADORES : "+jugadores.toString());
+		if (jugadores.size() >= 3) {
+			System.out.println(jugadores.get(2).toString());
+			jugadores.get(2).setRey(reyWhite);
 			
         }
 		
-		if (datosPartida.getJugadores().size() == 4) {
-			datosPartida.getJugadores().get(3).setRey(reyBlack);
+		if (jugadores.size() == 4) {
+			jugadores.get(3).setRey(reyBlack);
         }
 		
 		

@@ -34,23 +34,25 @@ public class Bot {
 	HashMap<Integer, int[]> posibilidadesPuntuadas = new HashMap<Integer, int[]>();
 	
 	int test = 0;
-	
+	private int findepth = 3;
 	
 	public Bot(Jugador botplayer) {
 		this.botplayer = botplayer;
 	}
 	
 	public void calculaNuevoMovimiento(ArrayList<Casilla> estadoActual) {
-		minimax(estadoActual, true, 3,new int[2]);
-		System.out.println(posibilidadesPuntuadas);
-		int[] mejorMovimiento = posibilidadesPuntuadas.get(Collections.max(posibilidadesPuntuadas.keySet()));
+		minimax(estadoActual, true, findepth,Integer.MIN_VALUE,Integer.MAX_VALUE);
 		
-		System.out.println("La mejor puntuacion es --> "+Collections.max(posibilidadesPuntuadas.keySet()));
+		System.out.println(posibilidadesPuntuadas);
+		
+		int[] mejorMovimiento = posibilidadesPuntuadas.get(Collections.min(posibilidadesPuntuadas.keySet()));
+		
+		System.out.println("La mejor puntuacion es --> "+Collections.min(posibilidadesPuntuadas.keySet())+"/n MOV:"+mejorMovimiento[0]+"-->"+mejorMovimiento[1]);
 		
 		ejecutarMovimiento(mejorMovimiento);
 		posibilidadesPuntuadas.clear();
-		System.out.println(posibilidadesPuntuadas);
-		//partida.moverPiezaTablero(curCasilla, newCasilla);
+
+		
 		
 	}
 
@@ -61,51 +63,61 @@ public class Bot {
 		partida.moverPiezaTablero(casillaSalida, casillaLlegada);
 	}
 
-	private int minimax(ArrayList<Casilla> estadoActual, boolean turnoIsBot, int depth,int[] movimiento) {
+	private int minimax(ArrayList<Casilla> estadoActual, boolean turnoIsBot, int depth , int alpha, int beta) {
 	    if (checkFinPartida(estadoActual) || depth == 0) {
 	    	int evalu = Evaluador.evaluarTablero(estadoActual);
-	    	test +=1;
-	    	//System.out.println("Evaluando tablero --> "+evalu+"  "+test);
 	        return evalu;
 	    }
 
+
 	    
-	    
-	    if (turnoIsBot) {
+	    if (!turnoIsBot) {
+	    	
+	    	
 	        int maxEval = Integer.MIN_VALUE; //-infinito
 
 	        for (Pieza pieza : calcularPiezasJugador(estadoActual, turnoIsBot)) {
 	        	ArrayList<Casilla> casillasD = casillasDisponiblesPieza(pieza,estadoActual);
 	            for (Casilla movimientoPosible :casillasD) {
-	            	if (movimiento[0]==0&&movimiento[1]==0) {
-	            		movimiento[0]=tablero.indexOf(pieza.getCasillaParent());
-	            		movimiento[1]=tablero.indexOf(movimientoPosible);
-	            		
-	            		System.out.println(movimiento);
-		        	}
+	            	        	
 	                ArrayList<Casilla> nuevoEstado = crearNuevoEstado(estadoActual, pieza.getCasillaParent(), movimientoPosible);
-	                int eval = minimax(nuevoEstado, false, depth - 1,movimiento);
-	                //System.out.println("Evaluando movimiento de pieza aliada --> "+eval);
+	                int eval = minimax(nuevoEstado, false, depth - 1,alpha,beta);
 	                maxEval = Math.max(maxEval, eval);
-	                
-					if (depth - 1 == 0) {
-						//System.out.println("Guardando movimeinto " + eval);//Solo va a guardar uno de cada es decir si dos movs tienen la misma puntuacion solo guardara el último
-						
-						posibilidadesPuntuadas.put(eval, movimiento);
+	                alpha = Math.max(alpha, eval);
+					if (beta <= alpha) {
+						break;
 					}
+	                
+					
 	            }
 	        }
 
 	        return maxEval;
+	        
 	    } else {
+	    	
+	    	
+	    	
 	        int minEval = Integer.MAX_VALUE; //infinito
 
 	        for (Pieza pieza : calcularPiezasJugador(estadoActual, turnoIsBot)) {
 	            for (Casilla movimientoPosible : casillasDisponiblesPieza(pieza,estadoActual)) {
 	                ArrayList<Casilla> nuevoEstado = crearNuevoEstado(estadoActual, pieza.getCasillaParent(), movimientoPosible);
-	                int eval = minimax(nuevoEstado, true, depth - 1,movimiento);
-	                System.out.println("Evaluando movimiento de pieza enemiga --> "+eval);
+	                int eval = minimax(nuevoEstado, true, depth - 1,alpha,beta);
 	                minEval = Math.min(minEval, eval);
+	                beta = Math.min(beta, eval);
+	                if (beta <= alpha) {
+	                	break;
+	                }
+	                
+	                if (depth == findepth) {
+	    	    		System.out.println("Turno del bot y primer movimiento");
+	    	    		System.out.println(eval);
+	    	    	}
+	                
+					if (depth == findepth) {
+						posibilidadesPuntuadas.put(eval, new int[] {tablero.indexOf(pieza.getCasillaParent()),tablero.indexOf(movimientoPosible)});
+					}
 	            }
 	        }
 

@@ -14,6 +14,7 @@ import java.util.List;
 import juego.DatosPartida;
 import juego.modoJuego;
 import juego.partidaTipo;
+import utils.Configuracion;
 import utils.Session;
 import objetos.Jugador;
 import objetos.Movimiento;
@@ -67,7 +68,7 @@ public class GestorDB {
 
 	 public static String insertarUsuario(String username, String passw) {
 		    
-		 	String img_route = "https://media.madchess.online/media/test.png";
+		 	String img_route = Configuracion.UPLOAD_URL+Configuracion.UPLOAD_DIR+"test.png";
 		 	int rank_classic = 0;
 		 	int rank_mad = 0;
 		 	String tablero_theme = "MADCHESS";

@@ -283,7 +283,7 @@ public class VentanaPrincipal extends JFrame{
 			panelConfLocal.setUser(logedUser);
 		}
 		
-		else if (redirect==Paneles.MENU_INICIO) {
+		if (redirect==Paneles.MENU_INICIO || Session.getCurrentUser()==null) {
 			Session.setCurrentUser(logedUser);
 			panelMenuInicio.setLoged(true);
 		}

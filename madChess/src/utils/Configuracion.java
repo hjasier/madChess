@@ -18,7 +18,7 @@ public class Configuracion {
 	public static final String VERSION = "V2.3"; 
 	public static final int PUERTO = 6968; 
 	
-	//public static final String HOST = "madchess.tabernagogorra.eu"; 
+	//public static final String HOST = "server.madchess.online"; 
 	public static final String HOST = "localhost"; 
 	
 	

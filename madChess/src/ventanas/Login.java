@@ -147,8 +147,8 @@ public class Login extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String username = inputNombre.getText();
-				String passw = inputContra.getText(); //FIXME : las passwords no se gettean así
-
+				char[] passwordChars = inputContra.getPassword();
+			    String passw = new String(passwordChars);
 				
 				loginBtn.setEnabled(false);
 				boolean loginSucces = GestorDB.iniciarSesion(username, passw);

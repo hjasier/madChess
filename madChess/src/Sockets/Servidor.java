@@ -29,7 +29,7 @@ public class Servidor {
             e.printStackTrace();
         }
     }
-
+    
 	public void iniciar() {
     	System.out.println("Esperando jugadores");
         while (true) {
