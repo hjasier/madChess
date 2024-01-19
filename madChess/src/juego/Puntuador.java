@@ -1,9 +1,14 @@
 package juego;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import database.GestorDB;
 import objetos.Jugador;
 
 public class Puntuador {
@@ -139,8 +144,28 @@ public class Puntuador {
     }
     
 
-    
-    
+    public static int getPosicionLadder(String eleccion, String username) {
+        String[] listaJugadores = GestorDB.getTodasPuntuaciones(eleccion);
 
+        int posicion = -1;
+        for (int i = 0; i < listaJugadores.length; i++) {
+            if (listaJugadores[i].equals(username)) {
+                posicion = i + 1; // Sumar 1 porque las posiciones suelen empezar desde 1, no desde 0
+                break;
+            }
+        }
+
+        if (posicion != -1) {
+            return posicion;
+        } else {
+            return -1;
+        }
+    }
+    
+    
 
 }
+    
+
+
+
