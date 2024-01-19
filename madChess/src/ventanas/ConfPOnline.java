@@ -89,13 +89,10 @@ public class ConfPOnline extends JPanel {
 		
         JLabel labelCodigoPartida = new JLabel("Código de la partida:");
         JPanel opcionesenX = new JPanel();
-		opcionesenX.setLayout(new BoxLayout(opcionesenX, BoxLayout.X_AXIS));
-		
-		opcionesenX.add(labelCodigoPartida);
-		opcionesenX.add(Box.createRigidArea(new Dimension(5, 0)));
-		opcionesenX.add(labelCodigoValor);
-		opcionesenX.add(Box.createRigidArea(new Dimension(115, 0)));
-		opcionesenX.setBackground(colorFondo);
+        opcionesenX.setLayout(new BoxLayout(opcionesenX, BoxLayout.Y_AXIS));
+
+        opcionesenX.add(createRowPanel(labelCodigoPartida, labelCodigoValor));
+        opcionesenX.setBackground(colorFondo);
 		
 		//BJRadioButton
 		
@@ -110,10 +107,10 @@ public class ConfPOnline extends JPanel {
 		JPanel privacidadRowPanel = new JPanel();
 		privacidadRowPanel.setLayout(new BoxLayout(privacidadRowPanel, BoxLayout.X_AXIS));
 		privacidadRowPanel.add(labelPrivacidad);
-		privacidadRowPanel.add(Box.createRigidArea(new Dimension(104, 0)));
+		privacidadRowPanel.add(Box.createRigidArea(new Dimension(Escalador.escalar(104), Escalador.escalar(0))));
 		privacidadRowPanel.add(publicoButton);
 		privacidadRowPanel.add(privadoButton);
-		privacidadRowPanel.add(Box.createRigidArea(new Dimension(170, 0)));
+		privacidadRowPanel.add(Box.createRigidArea(new Dimension(Escalador.escalar(170), Escalador.escalar(0))));
 		privacidadRowPanel.setBackground(colorFondo);
 		
 		
@@ -123,50 +120,28 @@ public class ConfPOnline extends JPanel {
 		// Panel para la segunda fila de componentes
 		JLabel labelModoJuego = new JLabel("Modo de juego:");
 		JComboBox<String> comboModoJuego = new JComboBox<>(new String[]{"Clásico", "madChess"});
-		comboModoJuego.setMaximumSize(new Dimension(200, 40));
-		JPanel secondRowPanel = new JPanel();
-        secondRowPanel.setLayout(new BoxLayout(secondRowPanel, BoxLayout.X_AXIS));
-        
-        secondRowPanel.add(labelModoJuego);
-        secondRowPanel.add(Box.createRigidArea(new Dimension(35, 0)));
-        secondRowPanel.add(comboModoJuego);
-        secondRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
-        secondRowPanel.setBackground(colorFondo);
+		comboModoJuego.setMaximumSize(new Dimension(Escalador.escalar(150), Escalador.escalar(35)));
+
+		JPanel secondRowPanel = createRowPanel(labelModoJuego, comboModoJuego);
+		secondRowPanel.setBackground(colorFondo);
         
         
         
 
-        JLabel labelJugador1 = new JLabel("Jugador 1:");
-        
+		JLabel labelJugador1 = new JLabel("Jugador 1:");
+		JLabel labelNombre1 = new JLabel("Nombre");
+		labelNombre1.setVisible(false);
 
-        JLabel labelNombre1 = new JLabel("Nombre");
-        labelNombre1.setVisible(false);
-        
-        JPanel thirdRowPanel = new JPanel();
-        thirdRowPanel.setLayout(new BoxLayout(thirdRowPanel, BoxLayout.X_AXIS));
-        
-        thirdRowPanel.add(labelJugador1);
-        thirdRowPanel.add(Box.createRigidArea(new Dimension(55, 0)));
-        thirdRowPanel.add(user1Btn);
-        thirdRowPanel.add(labelNombre1);
-        thirdRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
-        //labelNombre1.setVisible(false);
-        thirdRowPanel.setBackground(colorFondo);
+		JPanel thirdRowPanel = createRowPanel(labelJugador1, user1Btn, labelNombre1);
+		thirdRowPanel.setBackground(colorFondo);
         
         
-        JLabel labelJugador2 = new JLabel("Jugador 2:");
-  
-        JLabel labelNombre2 = new JLabel("Nombre");
-        labelNombre2.setVisible(false);
-        
-        JPanel fourthRowPanel = new JPanel();
-        fourthRowPanel.setLayout(new BoxLayout(fourthRowPanel, BoxLayout.X_AXIS));
-        fourthRowPanel.add(labelJugador2);
-        fourthRowPanel.add(Box.createRigidArea(new Dimension(55, 0)));
-        fourthRowPanel.add(user2Btn);
-        fourthRowPanel.add(labelNombre2);
-        fourthRowPanel.add(Box.createRigidArea(new Dimension(115, 0)));
-        fourthRowPanel.setBackground(colorFondo);
+		JLabel labelJugador2 = new JLabel("Jugador 2:");
+		JLabel labelNombre2 = new JLabel("Nombre");
+		labelNombre2.setVisible(false);
+
+		JPanel fourthRowPanel = createRowPanel(labelJugador2, user2Btn, labelNombre2);
+		fourthRowPanel.setBackground(colorFondo);
         
 
 
@@ -188,13 +163,13 @@ public class ConfPOnline extends JPanel {
         jugador3Panel.setLayout(new BoxLayout(jugador3Panel, BoxLayout.X_AXIS));
         jugador3Panel.setBackground(colorFondo);
         jugador3Panel.add(createRowPanel(labelJugador3, botonUser3, labelNombre3));
-        jugador3Panel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
+        jugador3Panel.add(Box.createRigidArea(new Dimension(Escalador.escalar(0), Escalador.escalar(20)))); // Espacio vertical entre filas
         jugador3Panel.setVisible(false);
 
         jugador4Panel.setLayout(new BoxLayout(jugador4Panel, BoxLayout.X_AXIS));
         jugador4Panel.setBackground(colorFondo);
         jugador4Panel.add(createRowPanel(labelJugador4, botonUser4, labelNombre4));
-        jugador4Panel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical entre filas
+        jugador4Panel.add(Box.createRigidArea(new Dimension(Escalador.escalar(0), Escalador.escalar(20)))); // Espacio vertical entre filas
         jugador4Panel.setVisible(false);
         
         
@@ -330,7 +305,9 @@ public class ConfPOnline extends JPanel {
 			
 			
 			if (curDatosPartida.getPlayerNum() == 2) {
+				if(curDatosPartida.getJugadores().size()>=2) {
 				setUser2(curDatosPartida.getJugadores().get(1).getUsuario());
+				}
 				jugador3Panel.setVisible(false);
 				jugador4Panel.setVisible(false);
 			
@@ -348,6 +325,7 @@ public class ConfPOnline extends JPanel {
 				if(curDatosPartida.getJugadores().size()>=3) {
 				setUser4(curDatosPartida.getJugadores().get(3).getUsuario());
 				}
+				jugador3Panel.setVisible(true);
 				jugador4Panel.setVisible(true);
 				
 				
@@ -366,10 +344,10 @@ public class ConfPOnline extends JPanel {
         rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
         rowPanel.setBackground(colorFondo);
         for (Component component : components) {
-            rowPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+            rowPanel.add(Box.createRigidArea(new Dimension(Escalador.escalar(15), 0)));
             rowPanel.add(component);
         }
-        rowPanel.add(Box.createRigidArea(new Dimension(15, 0)));
+        rowPanel.add(Box.createRigidArea(new Dimension(Escalador.escalar(15), 0)));
         return rowPanel;
     }
 
