@@ -853,7 +853,7 @@ public class LogicaPartida {
 		printMovimiento();
 	}
 	
-	private void initPartidaAcabada() {
+	public void initPartidaAcabada() {
 		
 		addInfo(Infos.PARTIDA_TERMINADA,Color.yellow,true,true);
 		printMovimiento();

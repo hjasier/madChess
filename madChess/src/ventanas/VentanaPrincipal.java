@@ -224,6 +224,10 @@ public class VentanaPrincipal extends JFrame{
                 if (respuesta == JOptionPane.YES_OPTION) {
                     cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);
                     //TODO: hacer que se termine la partida con derrota para el jugador
+                    if (!Session.getDatosPartida().getIsTerminada()) {
+                    	Session.getPartida().initPartidaAcabada();
+                    }
+                    
                 } else {
                 }
             }
