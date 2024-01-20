@@ -40,7 +40,7 @@ public class Configuracion {
 	//MODOS DEBUG
 	
 	public static final boolean DEBUG_MODE = false;
-	public static final boolean LOGIN_DEBUG = true;
+	public static final boolean LOGIN_DEBUG = false;
 	public static final boolean BOT_DEBUG = false;
 	public static final boolean DB_DEBUG = false;
 

@@ -151,17 +151,14 @@ public class Puntuador {
         String[] listaJugadores = GestorDB.getTodasPuntuaciones(eleccion);
 
         int posicion = -1;
-        for (int i = 1; i < listaJugadores.length; i++) {
+        for (int i = 0; i < listaJugadores.length; i++) {
             if (listaJugadores[i].equals(username)) {
+                posicion = i + 1; // Incrementa la posición ya que los índices comienzan en 0
                 break;
             }
         }
 
-        if (posicion != -1) {
-            return posicion;
-        } else {
-            return -1;
-        }
+        return posicion;
     }
     
     
