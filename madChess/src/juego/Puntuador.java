@@ -30,6 +30,11 @@ public class Puntuador {
     	ArrayList<Jugador> listaJugadores = partida.getJugadores();
     	ArrayList<Jugador> listaGanadores = partida.getGanadores();
     	
+    	
+    	System.out.println("jugadores" + listaJugadores);
+    	System.out.println("ganadores" + listaGanadores);
+    	
+    	
     	int max = diferenciaPuntuaciones(partida, "max");
     	int min = diferenciaPuntuaciones(partida, "min");
     	
@@ -121,10 +126,10 @@ public class Puntuador {
     public void actualizarPuntuacion(Jugador jugador, partidaTipo tipo, int cambio) {
     	int anterior = getPuntuacion(jugador, tipo);
     	if("CLASICA".equals(tipo.name())) {	
-    		jugador.getUsuario().setRank_classic(anterior - cambio);
+    		jugador.getUsuario().setRank_classic(anterior + cambio);
     		
     	} else if ("MADCHESS".equals(tipo.name())) {		
-    		jugador.getUsuario().setRank_madChess(anterior - cambio);
+    		jugador.getUsuario().setRank_madChess(anterior + cambio);
     	}
         	Usuario usuario = jugador.getUsuario();
         	GestorDB.modificarUsuario(usuario);

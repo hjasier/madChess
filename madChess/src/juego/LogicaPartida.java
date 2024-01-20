@@ -842,6 +842,12 @@ public class LogicaPartida {
 		printMovimiento();
 	}
 	
+	public void comprobarGanador() {
+		
+	}
+	
+	
+	
 	public void initPartidaAcabada() {
 		
 		addInfo(Infos.PARTIDA_TERMINADA,Color.yellow,true,true);
@@ -855,6 +861,23 @@ public class LogicaPartida {
 			casilla.setDisabled(true);
 		}
 		 }).start();
+		
+//		datosPartida.getGanadores().add(curPlayer.getIsWhite()s);
+		if(curPlayer.getIsWhite()) {
+			for (Jugador jugador : datosPartida.getJugadores()) {
+				if(!jugador.getIsWhite()) {
+					datosPartida.getGanadores().add(jugador);
+				}
+			}
+		}else if(!curPlayer.getIsWhite()){
+			for (Jugador jugador : datosPartida.getJugadores()) {
+				if(jugador.getIsWhite()) {
+					datosPartida.getGanadores().add(jugador);
+				}
+			}
+		}
+		
+	
 		
 		 Puntuador puntuador = new Puntuador();
 		 puntuador.cambiarPuntuaciones(datosPartida);
@@ -922,13 +945,14 @@ public class LogicaPartida {
 
 	protected void checkFinPartida() {
 		if(checkReyIsAlive()) {
+			
 			initPartidaAcabada();
 			InfoMsg.alert(Infos.PARTIDA_TERMINADA_ALERT);
 			
 		}
 	}
 	
-	protected boolean checkReyIsAlive() {
+	protected boolean checkReyIsAlive() { //true si jugador actual no tiene rey
 		return curPlayer.getRey().getCasillaParent() == null;
 	}
 	
