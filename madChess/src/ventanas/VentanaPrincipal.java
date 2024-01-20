@@ -223,7 +223,7 @@ public class VentanaPrincipal extends JFrame{
         panelListaPartidas.backBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent  e) {
-				
+				panelListaPartidas.detenerRotacion();
 				cardLayout.show(panelPrincipal, Paneles.MENU_INICIO);
 			}
 		});

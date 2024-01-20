@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
 
 import javax.swing.border.*;
 
@@ -33,6 +36,7 @@ public class ListaPartidas extends JPanel {
     private JPanel listaPanel = new JPanel();
     protected RButton backBtn = new RButton("Volver");;
     private static volatile boolean rotate = true;
+    private ExecutorService executorService;
     
     public ListaPartidas() {
         setLayout(new BorderLayout());
@@ -87,6 +91,7 @@ public class ListaPartidas extends JPanel {
         // Agregar el centro en la posición CENTER
         add(centerPanel, BorderLayout.CENTER);
         
+        executorService = Executors.newSingleThreadExecutor();
         
         labelRecargar.addMouseListener(new MouseAdapter() {
         	@Override
@@ -104,23 +109,30 @@ public class ListaPartidas extends JPanel {
                 rotateLabel();
             }
         	private void rotateLabel() {
-                new Thread(() -> {
-                    while (rotate) {
-                        try {
-                            Thread.sleep(50); // Adjust the sleep duration as needed
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
+        	    executorService.execute(() -> {
+        	        try {
+        	            while (rotate) {
+        	                Thread.sleep(50); // Ajusta la duración del sueño según sea necesario
 
-                        AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(5),
-                        		labelRecargar.getWidth() / 2.0, labelRecargar.getHeight() / 2.0);
-                        labelRecargar.setIcon(new ImageIcon(((ImageIcon) labelRecargar.getIcon()).getImage().getScaledInstance(labelRecargar.getWidth(), labelRecargar.getHeight(), Image.SCALE_DEFAULT)));
-                        ((Graphics2D) labelRecargar.getGraphics()).drawImage(((ImageIcon) labelRecargar.getIcon()).getImage(), transform, null);
+        	                SwingUtilities.invokeLater(() -> {
+        	                    try {
+        	                        AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(5),
+        	                                labelRecargar.getWidth() / 2.0, labelRecargar.getHeight() / 2.0);
+        	                        labelRecargar.setIcon(new ImageIcon(((ImageIcon) labelRecargar.getIcon()).getImage().getScaledInstance(labelRecargar.getWidth(), labelRecargar.getHeight(), Image.SCALE_DEFAULT)));
+        	                        ((Graphics2D) labelRecargar.getGraphics()).drawImage(((ImageIcon) labelRecargar.getIcon()).getImage(), transform, null);
 
-                        labelRecargar.repaint();
-                    }
-                }).start();
-            
+        	                        labelRecargar.repaint();
+        	                    } catch (RejectedExecutionException e) {
+        	                     
+        	                        //e.printStackTrace(); s
+        	                    }
+        	                });
+        	            }
+        	        } catch (InterruptedException ex) {
+        	            
+        	            //ex.printStackTrace(); 
+        	        }
+        	    });
         	}
         	
 		});
@@ -222,5 +234,10 @@ public class ListaPartidas extends JPanel {
         public boolean isBorderOpaque() {
             return true;
         }
+    }
+    
+    public void detenerRotacion() {
+        rotate = false;
+        executorService.shutdownNow(); // Detener el hilo de rotación
     }
 }
