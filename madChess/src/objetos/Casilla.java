@@ -269,6 +269,7 @@ public class Casilla extends JPanel implements Serializable {
 	                e.printStackTrace();
 	            }
 	        });
+	        colorChangeThread.start();
 
 	}
 	

@@ -141,13 +141,27 @@ public class ClientHandler implements Runnable {
                 	
 					case "reloadDatosPartida":
 						DatosPartida newDatos = (DatosPartida) input.readObject();
-						reenviar2Datos("reloadDatosPartida",newDatos);
+						updateDatosPartida(newDatos);
+						reenviar2Datos("updateConfData",curPartida);
 					    break;
                 		
 					case "postBoost":
 						Object boost = input.readObject();
 						reenviar2Datos("postBoost", boost);
 						break;
+						
+					case "postMadSelects":
+						ArrayList<Boolean> alters = (ArrayList<Boolean>) input.readObject();
+						ArrayList<Boolean> boosts = (ArrayList<Boolean>) input.readObject();
+						updatePlayerSelects(alters,boosts);
+						reenviar2Datos("updateConfData",curPartida);
+						break;
+						
+						
+					case "postInitSelectMadConf":
+						reenviarObjetoRaw("initSelectMadConf");
+						break;
+						
     			    
 				}
     				
@@ -178,7 +192,21 @@ public class ClientHandler implements Runnable {
 	
 	
 	
+	
+	private void updatePlayerSelects(ArrayList<Boolean> alters, ArrayList<Boolean> boosts) {
+		Jugador jugador = curPartida.getJugador(this.user);
+		
+		jugador.setAlters(alters);
+		jugador.setBoosts(boosts);
+		
+		if (!curPartida.getJugadoresListos().contains(jugador)) {
+			curPartida.addJugadorListo(jugador);
+		}
+	}
+
+
 	private void updateDatosPartida(DatosPartida newDatos) {
+		System.out.println("CAMBIANDO PARTIDA A :"+newDatos.getTipoPartida());
 		curPartida.setTipoPartida(newDatos.getTipoPartida());
 		//mas cosas
 	}

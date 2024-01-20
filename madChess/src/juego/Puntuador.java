@@ -148,9 +148,8 @@ public class Puntuador {
         String[] listaJugadores = GestorDB.getTodasPuntuaciones(eleccion);
 
         int posicion = -1;
-        for (int i = 0; i < listaJugadores.length; i++) {
+        for (int i = 1; i < listaJugadores.length; i++) {
             if (listaJugadores[i].equals(username)) {
-                posicion = i + 1; // Sumar 1 porque las posiciones suelen empezar desde 1, no desde 0
                 break;
             }
         }

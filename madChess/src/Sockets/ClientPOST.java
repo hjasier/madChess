@@ -102,15 +102,43 @@ public class ClientPOST {
 
 
 	public void postDatosPartida() throws IOException {
-		serverOut.writeObject("reloadDatosPartida");
-		serverOut.writeObject(Session.getDatosPartida());	
+		if (Session.getDatosPartida().getJugadores().get(0).getUsuario().getUsername().equals(Session.getCurrentUser().getUsername())) {
+			serverOut.reset();
+			serverOut.writeObject("reloadDatosPartida");
+			System.out.println("ENVIANDO:"+Session.getDatosPartida().getTipoPartida());
+			serverOut.writeObject(Session.getDatosPartida());	
+		} 
+		
 	}
 
 
 	public void postBoost(Boost boost) throws IOException {
+		serverOut.reset();
 		serverOut.writeObject("postBoost");
 		serverOut.writeObject(boost);	
 	}
+
+
+
+	public void postReadyStatus() throws IOException {
+		serverOut.writeObject("postReadyStatus");
+	}
+
+
+	public void postInitSelectMadConf() throws IOException {
+		serverOut.writeObject("postInitSelectMadConf");
+	}
+
+
+	public void postMadSelects(ArrayList<Boolean> selectedAlters, ArrayList<Boolean> selectedBoosts) throws IOException {
+		serverOut.writeObject("postMadSelects");
+		serverOut.writeObject(selectedAlters);
+		serverOut.writeObject(selectedBoosts);
+		
+		
+	}
+	
+	
 
 
 

@@ -1,5 +1,6 @@
 package juego;
 
+import java.awt.Component;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class DatosPartida implements Serializable{
 	private boolean isReplay = false;
 	private boolean isBotGame = false;
 	private int playerNum = 2;
+	private ArrayList<Jugador> jugadoresListos = new ArrayList<Jugador>();
 	
 
 	
@@ -200,7 +202,6 @@ public class DatosPartida implements Serializable{
 
 	public void setMovientos(byte[] bs) {
 		try {
-			System.out.println("Longitud del array de bytes: " + bs.length);
 			movimientos = deserializarMovimientos(bs);
 			System.out.println(movimientos);
 		} catch (ClassNotFoundException e) {
@@ -269,6 +270,30 @@ public class DatosPartida implements Serializable{
 	public void setIsBotGame(boolean isBotGame) {
 		this.isBotGame = isBotGame;
 	}
+
+
+
+	public ArrayList<Jugador> getJugadoresListos() {
+		return jugadoresListos;
+	}
+
+	
+	public void addJugadorListo(Jugador jugador) {
+		this.jugadoresListos.add(jugador);
+	}
+
+
+
+	public Jugador getJugador(Usuario user) {
+		for (Jugador jugador : jugadores) {
+			if (jugador.getUsuario().getUsername().equals(user.getUsername())) {
+				return jugador;
+			}
+		}
+		return null;
+	}
+
+
 	
 	
 

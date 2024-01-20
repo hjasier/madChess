@@ -44,6 +44,8 @@ public class ConfPOnline extends JPanel {
 
     
 	private DatosPartida datosPartida; 
+	
+	private JComboBox<String> comboModoJuego;
 
     
 
@@ -119,7 +121,7 @@ public class ConfPOnline extends JPanel {
 		
 		// Panel para la segunda fila de componentes
 		JLabel labelModoJuego = new JLabel("Modo de juego:");
-		JComboBox<String> comboModoJuego = new JComboBox<>(new String[]{"Clásico", "madChess"});
+		comboModoJuego = new JComboBox<>(new String[]{"Clásico", "madChess"});
 		comboModoJuego.setMaximumSize(new Dimension(Escalador.escalar(150), Escalador.escalar(35)));
 
 		JPanel secondRowPanel = createRowPanel(labelModoJuego, comboModoJuego);
@@ -244,7 +246,32 @@ public class ConfPOnline extends JPanel {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-            	Session.getVentana().initGame();
+            	
+            	DatosPartida datos = Session.getDatosPartida();
+            	VentanaPrincipal ventana = Session.getVentana();
+            	
+            	if (!(datos.getTipoPartida()==partidaTipo.MADCHESS)) {
+            		Session.getVentana().getPanelJuego().getTablero().loadUserPreferences();
+            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.JUEGO);
+            		new LogicaPartida();
+            		try {
+						Session.getCtsConnection().postInitGame();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+            	}
+            	else {
+            		ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.CONFMADCHESS);
+            		try {
+						Session.getCtsConnection().postInitSelectMadConf();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+            		
+            	}
+            	
             	}
             	else {
             		JOptionPane.showMessageDialog(null, "No eres el admin o faltan jugadores", "Error", JOptionPane.ERROR_MESSAGE);
@@ -292,18 +319,35 @@ public class ConfPOnline extends JPanel {
 
 
 
-
+	private void loadisAdmin() {
+		if (Session.getDatosPartida().getJugadores().get(0).getUsuario().getUsername().equals(Session.getCurrentUser().getUsername())) {
+			botonIniciarPartida.setEnabled(true);
+		} else {
+			botonIniciarPartida.setEnabled(false);
+			comboModoJuego.setEnabled(false);
+		}
+	}
 	
 
 
 	public void setDatosPartida(DatosPartida curDatosPartida) {
+		System.out.println("Cargando datos de partida");
+		loadisAdmin();
 		this.datosPartida = curDatosPartida;
 		labelCodigoValor.setText(curDatosPartida.getGameId());
+		
+		System.out.println(curDatosPartida.getTipoPartida());
+		if (curDatosPartida.getTipoPartida().equals(partidaTipo.MADCHESS)) {
+			comboModoJuego.setSelectedItem("madChess");
+		}
+		else {
+			comboModoJuego.setSelectedItem("Clásico");
+		}
+			
 		setUser1(curDatosPartida.getJugadores().get(0).getUsuario());
+		
 		try {
-			
-			
-			
+					
 			if (curDatosPartida.getPlayerNum() == 2) {
 				if(curDatosPartida.getJugadores().size()>=2) {
 				setUser2(curDatosPartida.getJugadores().get(1).getUsuario());

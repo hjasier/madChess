@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -129,9 +130,12 @@ public class MadChessConfig extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	VentanaPrincipal ventana = Session.getVentana();
             	
-            	curPlayer.setAlters(getSelectedAlters());
-            	curPlayer.setBoosts(getSelectedBoosts());
             	
+            	
+            	if (!Session.getDatosPartida().isOnline()) {
+        		curPlayer.setAlters(getSelectedAlters());
+            	curPlayer.setBoosts(getSelectedBoosts());
+            		
             	if (players.indexOf(curPlayer) == players.size()-1) {
             		//Si es el ultimo jugador
             		ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.JUEGO);
@@ -140,14 +144,39 @@ public class MadChessConfig extends JPanel {
             	else {
             		curPlayer = players.get(players.indexOf(curPlayer)+1);
             		resetSelections();
-            		
-            		
-            		
+
             		
             	}
-            		
         		
-            	
+            	}
+            	else {
+            		try {
+						Session.getCtsConnection().postMadSelects(getSelectedAlters(), getSelectedBoosts());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+            		
+            		
+            		if (Session.getDatosPartida().getJugadores().get(0).getUsuario().getUsername().equals(Session.getCurrentUser().getUsername())) {
+            			
+						if (Session.getDatosPartida().getJugadoresListos().size() == Session.getDatosPartida().getJugadores().size()) {
+							ventana.getCardLayout().show(ventana.getPanelPrincipal(), Paneles.JUEGO);
+							new LogicaPartida();
+							try {
+								Session.getCtsConnection().postInitGame();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						} else {
+							System.out.println("Esperando a que los jugadores se preparen");
+						}
+            		}
+            		else {//no admin
+            			System.out.println("respuesta enviada");
+            		}
+            	}
             }
 
 			

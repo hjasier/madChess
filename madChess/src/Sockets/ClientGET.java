@@ -45,9 +45,7 @@ public class ClientGET implements Runnable {
                 		break;
                 	case "updateConfData":	
                 		DatosPartida datosPartida = (DatosPartida) serverIn.readObject();
-                		
-                		System.out.println(datosPartida.getJugadores());
-                		
+
                 		Session.setDatosPartida(datosPartida);  
                 		Session.getVentana().getPanelConfOnline().setDatosPartida(datosPartida);
                         
@@ -88,16 +86,16 @@ public class ClientGET implements Runnable {
                 			Session.getPartida().getTablero().resetDraggPieza();
                 		}
                 		break;
-                	
-                	case "reloadDatosPartida":
-						DatosPartida newDatos = (DatosPartida) serverIn.readObject();
-						System.out.println("Recibido reload data");
-						break;
+               
 						
                 	case "postBoost":
                 		Boost boost = (Boost) serverIn.readObject();
                 		Boosts.getStcBoost(boost);
                 		break;
+                	case "initSelectMadConf":
+						Session.getVentana().initSelectMadConf();
+						break;
+                	
                 }
             }
                 

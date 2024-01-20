@@ -113,15 +113,7 @@ public class VentanaPrincipal extends JFrame{
             }
         });
         
-        
-        
-        
-        
-
-        
-        
-
-        
+   
         
         
         
@@ -258,6 +250,12 @@ public class VentanaPrincipal extends JFrame{
         
 	}
 
+	
+	public void initSelectMadConf() {
+		cardLayout.show(panelPrincipal, Paneles.CONFMADCHESS);
+	}
+
+
 	public void initGame() {
 		cardLayout.show(panelPrincipal, Paneles.JUEGO);
         new LogicaPartida();
@@ -339,6 +337,8 @@ public class VentanaPrincipal extends JFrame{
 	public PartidasJugadas getPartidas() {
 		return partidas;
 	}
+
+	
 
 
 

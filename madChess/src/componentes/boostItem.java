@@ -24,6 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class boostItem extends JPanel{
+	private BButton usarButton;
 	
 	public boostItem(JLabel descripcionLabel, String nombre, String descripcion, String icono) {
 
@@ -44,7 +45,7 @@ public class boostItem extends JPanel{
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		
 		
-		BButton usarButton = new BButton("Usar");
+		usarButton = new BButton("Usar");
 		usarButton.setBounds(Escalador.newBounds(209, 20, 72, 35));
 		
 		panel.add(usarButton);
@@ -91,6 +92,12 @@ public class boostItem extends JPanel{
 				activarBoost(nombre);
 			}
 		});
+	}
+	
+	
+	
+	public void setButtonEnabled(boolean status) {
+		usarButton.setEnabled(status);
 	}
 	
 	private void activarBoost(String boost) {

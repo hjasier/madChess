@@ -43,7 +43,7 @@ import database.GestorDB;
  */
 
 public class LogicaPartida {
-	private Boolean DEBUG_MODE = Configuracion.DEBUG_MODE; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
+	private boolean DEBUG_MODE = Configuracion.DEBUG_MODE; // Si activado, no se tiene en cuenta el orden de los turnos ni a donde se puede mover una pieza
 	protected ArrayList<Casilla> casillas;
 	protected ArrayList<Casilla> casillasDiponibles;
 	protected ArrayList<Pieza> piezasComidas = new ArrayList<>();
@@ -84,6 +84,11 @@ public class LogicaPartida {
         	@Override
         	public void mouseReleased(MouseEvent e) {
         		if (datosPartida.getIsTerminada()) {return;};
+        		
+        		if (datosPartida.isOnline()&&!(curPlayer.getUsuario().getUsername().equals(Session.getCurrentUser().getUsername()))){
+        			System.out.println("Evitando soltar");
+        			return;}
+        		
         		resetMouseSocket();
         		Casilla curCasilla = tablero.getCurCasilla(e);
         		moverPiezaTablero(tablero.prevCasilla,curCasilla);
@@ -121,11 +126,7 @@ public class LogicaPartida {
                 
             }
 		});
-        
-        
-        
-
-        
+                
         
         ventana.initWindow();
         ventana.getPanelBoost().reloadBoosts(curPlayer);
@@ -146,15 +147,8 @@ public class LogicaPartida {
 
 
 
-
-
-
-
-
-
 	private void initPlayers() {
 		int initTime = 600;
-
 		
 		if (datosPartida.isBotGame()) {
 			datosPartida.setJugador(new Usuario("BOT"));
@@ -168,8 +162,6 @@ public class LogicaPartida {
 		Jugador user2 = jugadores.get(1);
 		user2.setPlayColor(Configuracion.COLORESJUGADORES.get(1));
 		
-		
-		
 		if (datosPartida.getJugadores().size() >= 3) {
 			Jugador user3 = jugadores.get(2);
 			user3.setPlayColor(Configuracion.COLORESJUGADORES.get(2));
@@ -181,12 +173,6 @@ public class LogicaPartida {
 			user3.setPlayColor(Configuracion.COLORESJUGADORES.get(3));
         }
 		
-		
-		
-		
-		
-		
-		
         curPlayer = user1;
         tablero.setCurPlayer(curPlayer);
         
@@ -195,15 +181,13 @@ public class LogicaPartida {
 			player.setTiempoRestante(initTime);
 		}
 		
-		iniciarTemporizador();
-		
 		ventana.getPanelUsuario().setUsuario(user2);
 		ventana.getPanelUsuario2().setUsuario(user1);
 		
 		ventana.getPanelUsuario().setTemp(initTime);
 		ventana.getPanelUsuario2().setTemp(initTime);
 		
-		ventana.getPanelUsuario2().startTemp();
+		iniciarTemporizador();
 	}
 
 	
@@ -216,7 +200,10 @@ public class LogicaPartida {
 	        Pieza piezaComida = null;
 	        ArrayList<Casilla> casillasDisp = pieza.getCasillasDisponibles(prevCasilla, casillas);
 
+	        
+	        
 	        if (!cumpleCondicionesMovimiento(prevCasilla, casillasDisp)) {
+	        	System.out.println("No cumple condiciones de movimiento");
 	            return;
 	        }
 	        
@@ -313,6 +300,7 @@ public class LogicaPartida {
 		
    		setNextPlayer();// Cambiamos el jugador y paramos su temporizador
    		updateUserInfo();
+   		
    		checkFinPartida();
    		Boosts.updateBoost();
    		checkReyInJaque();
@@ -322,6 +310,13 @@ public class LogicaPartida {
 	}
 	
 	
+	
+
+
+
+
+
+
 	private void updateUserInfo() {
 		
 		userInfo panelUsuario;
@@ -334,12 +329,6 @@ public class LogicaPartida {
 		}
 		panelUsuario.setUsuario(curPlayer);
 	}
-
-
-
-
-
-
 
 
 
@@ -942,7 +931,7 @@ public class LogicaPartida {
 	private boolean cumpleCondicionesMovimiento(Casilla prevCasilla,ArrayList<Casilla> casillasDisp) {
 		return (
 				!(prevCasilla.getIsHielo())&&
-                !(prevCasilla.getPieza().getIsWhite()!=curPlayer.getIsWhite()&&!DEBUG_MODE)&&
+                ((prevCasilla.getPieza().getIsWhite().equals(curPlayer.getIsWhite()))||DEBUG_MODE)&&
                 !(casillasDisp==null)
 				);
 	}

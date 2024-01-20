@@ -15,6 +15,7 @@ import javax.swing.Timer;
 
 import juego.Boosts;
 import juego.DatosPartida;
+import juego.modoJuego;
 import piezas.Alfil;
 import piezas.Caballo;
 import piezas.Peon;
@@ -54,10 +55,10 @@ public class Tablero extends JPanel{
 	public JPanel promocionPanel;
 	
 	
-	public JButton promReina = new JButton("Reina");
-	public JButton promAlfil = new JButton("Alfil");
-	public JButton promCaballo = new JButton("Caballo");
-	public JButton promTorre = new JButton("Torre");
+	public JButton promReina = new JButton("♔ Reina");
+	public JButton promAlfil = new JButton("♗ Alfil");
+	public JButton promCaballo = new JButton("♘ Caballo");
+	public JButton promTorre = new JButton("♖ Torre");
 	public Jugador nowPlaying;
 
 	
@@ -175,7 +176,12 @@ public class Tablero extends JPanel{
 		if (prevCasilla.getPieza()!=null && !dragging ) {
 			
 			
-			if ((nowPlaying==null || (nowPlaying.getIsWhite()!=prevCasilla.getPieza().getIsWhite()))&&!Configuracion.DEBUG_MODE) {return;}
+			if ((nowPlaying==null || !(nowPlaying.getIsWhite().equals(prevCasilla.getPieza().getIsWhite()))) &&!Configuracion.DEBUG_MODE) {
+				return;}
+			
+			if (Session.getDatosPartida().isOnline()&&!nowPlaying.getUsuario().getUsername().equals(Session.getCurrentUser().getUsername())){ 
+				return;
+				}
 			
 			
 			dragging = true;
@@ -197,7 +203,7 @@ public class Tablero extends JPanel{
 		dragImg.setLocation(e.getX()-imgOffset,e.getY()-imgOffset);
 		
 		
-		if (Session.getDatosPartida().getModoDeJuego().equals("online")) {
+		if (Session.getDatosPartida().getModoDeJuego().equals(modoJuego.ONLINE)) {
 			//Enviamos el movimiento al resto de clientes
 			try {Session.getCtsConnection().postMouseDragged(e,prevCasilla);} catch (IOException e1) {e1.printStackTrace();}
 	        
@@ -554,6 +560,8 @@ public class Tablero extends JPanel{
 			casillas.get(i).setPieza(new Peon(true,playerBlack.getAlters().get(3)));
 		}
 	}
+
+
 	
 
 	

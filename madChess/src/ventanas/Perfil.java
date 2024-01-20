@@ -348,10 +348,24 @@ public class Perfil extends JPanel{
 
 	public void reloadData() {
 		nombre.setText(Session.getCurrentUser().getUsername());
-		valormadchess1.setText(Session.getCurrentUser().getRank_madChess()+"");
-		valorClasico1.setText(Session.getCurrentUser().getRank_classic()+"");
-		valormadchess2.setText("#"+ Puntuador.getPosicionLadder(Session.getCurrentUser().getUsername(), "rank_mad"));
-		valorClasico2.setText("#"+ Puntuador.getPosicionLadder(Session.getCurrentUser().getUsername(), "rank_classic"));
+		
+		
+		Thread cargaPerfil = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                	valormadchess1.setText(Session.getCurrentUser().getRank_madChess()+"");
+            		valorClasico1.setText(Session.getCurrentUser().getRank_classic()+"");
+            		valormadchess2.setText("#"+ Puntuador.getPosicionLadder(Session.getCurrentUser().getUsername(), "rank_mad"));
+            		valorClasico2.setText("#"+ Puntuador.getPosicionLadder(Session.getCurrentUser().getUsername(), "rank_classic"));
+            		
+                } catch (Exception e) {
+                    System.out.println("Error al cargar el perfil");
+                }
+            }
+        });
+		
+		
 		
         Thread cargaImg = new Thread(new Runnable() {
             @Override
@@ -366,6 +380,7 @@ public class Perfil extends JPanel{
         });
 
         cargaImg.start();
+        cargaPerfil.start();
 		
 	} 
 }

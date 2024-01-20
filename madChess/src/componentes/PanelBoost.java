@@ -83,6 +83,7 @@ public class PanelBoost extends JPanel {
 
 
 	public void reloadBoosts(Jugador curPlayer) {
+		
 		panelElementos.removeAll();
 		int i= 0;
 		for (boolean boost : curPlayer.getBoosts()) {
@@ -91,6 +92,19 @@ public class PanelBoost extends JPanel {
 		        
 			}
 			i++;
+		}
+		
+		if (!(Session.getDatosPartida().isOnline()||Session.getDatosPartida().isBotGame()))  {
+			boolean enable = true;
+			if (curPlayer.getUsuario().equals(Session.getCurrentUser().getUsername())) {
+				enable = true;
+			}
+			else {
+				enable = false;
+			}
+			for (boostItem boost : boosts) {
+				boost.setButtonEnabled(false);
+			}
 		}
 	}
 	
