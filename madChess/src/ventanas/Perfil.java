@@ -350,8 +350,8 @@ public class Perfil extends JPanel{
 		nombre.setText(Session.getCurrentUser().getUsername());
 		valormadchess1.setText(Session.getCurrentUser().getRank_madChess()+"");
 		valorClasico1.setText(Session.getCurrentUser().getRank_classic()+"");
-		valormadchess2.setText("#"+ Puntuador.getPosicionLadder(Session.getCurrentUser().getUsername(), "rank_mad"));
-		valorClasico2.setText("#"+ Puntuador.getPosicionLadder(Session.getCurrentUser().getUsername(), "rank_classic"));
+		valormadchess2.setText("#"+ Puntuador.getPosicionLadder("rank_mad", Session.getCurrentUser().getUsername()));
+		valorClasico2.setText("#"+ Puntuador.getPosicionLadder("rank_classic", Session.getCurrentUser().getUsername() ));
 		
         Thread cargaImg = new Thread(new Runnable() {
             @Override
