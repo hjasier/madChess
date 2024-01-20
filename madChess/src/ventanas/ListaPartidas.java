@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,10 +36,9 @@ import juego.DatosPartida;
 public class ListaPartidas extends JPanel {
     private Color colorFondo = Configuracion.BACKGROUND;
     private JPanel listaPanel = new JPanel();
-    protected RButton backBtn = new RButton("Volver");;
-    private static volatile boolean rotate = true;
-    private ExecutorService executorService;
-    private Timer rotationTimer;
+    protected RButton backBtn = new RButton("Volver");
+    protected JLabel labelRecargar;
+
     
     public ListaPartidas() {
         setLayout(new BorderLayout());
@@ -67,8 +67,10 @@ public class ListaPartidas extends JPanel {
 
         JLabel labelListaPartidas = new JLabel("Lista de partidas:");
         Icon recargarIcon = IconFontSwing.buildIcon(FontAwesome.REFRESH, Escalador.escalar(15), new Color(220,220,220));
-        JLabel labelRecargar = new JLabel(recargarIcon);
+        labelRecargar = new JLabel(recargarIcon);
         labelRecargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    
+
         
         
         labelPanel.add(Box.createRigidArea(new Dimension(300, 0))); // Espacio a la izquierda del label
@@ -79,6 +81,8 @@ public class ListaPartidas extends JPanel {
 
         centerPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio vertical superior
         centerPanel.add(labelPanel);
+        
+        
         
         listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
         listaPanel.setBackground(colorFondo);
@@ -93,7 +97,7 @@ public class ListaPartidas extends JPanel {
         // Agregar el centro en la posición CENTER
         add(centerPanel, BorderLayout.CENTER);
         
-        executorService = Executors.newSingleThreadExecutor();
+
         
         labelRecargar.addMouseListener(new MouseAdapter() {
         	@Override
@@ -105,105 +109,15 @@ public class ListaPartidas extends JPanel {
         		labelRecargar.setBackground(Color.white);
         		
         	}
+        	
         	@Override
             public void mouseClicked(MouseEvent e) {
-                rotate = true; // Start rotation
-                rotateLabel();
-            }
+        		
+        		reLoadCurrentGames(null);
+       	}
         	
-//        	private void rotateLabel() {
-//        	    executorService.execute(() -> {
-//        	        try {
-//        	            while (rotate) {
-//        	                Thread.sleep(50); // Ajusta la duración del sueño según sea necesario
-//
-//        	                SwingUtilities.invokeLater(() -> {
-//        	                    try {
-//        	                        AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(5),
-//        	                                labelRecargar.getWidth() / 2.0, labelRecargar.getHeight() / 2.0);
-//        	                        labelRecargar.setIcon(new ImageIcon(((ImageIcon) labelRecargar.getIcon()).getImage().getScaledInstance(labelRecargar.getWidth(), labelRecargar.getHeight(), Image.SCALE_DEFAULT)));
-//        	                        ((Graphics2D) labelRecargar.getGraphics()).drawImage(((ImageIcon) labelRecargar.getIcon()).getImage(), transform, null);
-//
-//        	                        labelRecargar.repaint();
-//        	                    } catch (RejectedExecutionException e) {
-//        	                     
-//        	                        //e.printStackTrace(); 
-//        	                    }
-//        	                });
-//        	            }
-//        	        } catch (InterruptedException ex) {
-//        	            
-//        	            //ex.printStackTrace(); 
-//        	        }
-//        	    });
-//        	}
-        	private void rotateIcon() {
-        	    ImageIcon icon = (ImageIcon) labelRecargar.getIcon();
-        	    Image image = icon.getImage();
-        	    int width = labelRecargar.getWidth();
-        	    int height = labelRecargar.getHeight();
 
-        	    BufferedImage rotatedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        	    Graphics2D g2d = rotatedImage.createGraphics();
-
-        	    // Crea una imagen transparente con el tamaño de la etiqueta
-        	    BufferedImage transparentImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        	    Graphics2D tg2d = transparentImage.createGraphics();
-        	    tg2d.setColor(new Color(0, 0, 0, 0));
-        	    tg2d.fillRect(0, 0, width, height);
-
-        	    // Gira la imagen transparente
-        	    AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(5), width / 2.0, height / 2.0);
-        	    tg2d.setTransform(transform);
-        	    tg2d.drawImage(image, 0, 0, null);
-
-        	    // Dibuja el icono sobre la imagen girada
-        	    g2d.drawImage(transparentImage, 0, 0, null);
-        	    g2d.dispose();
-        	    tg2d.dispose();
-
-        	    ImageIcon rotatedIcon = new ImageIcon(rotatedImage);
-        	    labelRecargar.setIcon(rotatedIcon);
-        	    labelRecargar.repaint();
-        	}
-
-        	private void rotateLabel() {
-        	    int delay = 50; // Ajusta según sea necesario
-        	    int rotationDuration = 3000; // Duración de la rotación en milisegundos (3 segundos)
-        	    int[] rotationTime = {0}; // Utilizar un array para almacenar el valor mutable
-
-        	    rotationTimer = new Timer(delay, e -> {
-        	        if (rotate) {
-        	            rotateIcon();
-        	            rotationTime[0] += delay;
-
-        	            if (rotationTime[0] >= rotationDuration) {
-        	                stopRotation();
-        	            }
-        	        } else {
-        	            stopRotation();
-        	            resetIcon();
-        	        }
-        	    });
-        	    rotationTimer.start();
-        	}
-
-        	private void stopRotation() {
-        	    rotationTimer.stop();
-        	    rotate = false;
-        	}
-        	public void resetIcon() {
-        	    try {
-        	        AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(0),
-        	                labelRecargar.getWidth() / 2.0, labelRecargar.getHeight() / 2.0);
-        	        labelRecargar.setIcon(new ImageIcon(((ImageIcon) labelRecargar.getIcon()).getImage().getScaledInstance(labelRecargar.getWidth(), labelRecargar.getHeight(), Image.SCALE_DEFAULT)));
-        	        ((Graphics2D) labelRecargar.getGraphics()).drawImage(((ImageIcon) labelRecargar.getIcon()).getImage(), transform, null);
-        	        
-        	        labelRecargar.repaint();
-        	    } catch (RejectedExecutionException e) {
-        	        // Manejar la excepción si es necesario
-        	    }
-        	}
+        	
         	
 
 		});
@@ -307,15 +221,6 @@ public class ListaPartidas extends JPanel {
         }
     }
     
-//    public void detenerRotacion() {
-//        rotate = false;
-//        executorService.shutdownNow(); // Detener el hilo de rotación
-//    }
-    public void detenerRotacion() {
-        rotate = false;
-        if (rotationTimer != null) {
-            rotationTimer.stop();
-        }
-    }
-    
+ 
+
 }
