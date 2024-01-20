@@ -47,8 +47,8 @@ public class GestorDB {
 	                Usuario user = new Usuario(
 	                        rs.getString("username"),
 	                        rs.getString("img_route"),
-	                        rs.getInt("rank_classic"),
 	                        rs.getInt("rank_mad"),
+	                        rs.getInt("rank_classic"),
 	                        rs.getString("tablero_theme"),
 	                        rs.getString("pieza_theme"));
 
