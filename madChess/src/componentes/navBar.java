@@ -2,6 +2,7 @@ package componentes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
 
@@ -55,6 +56,7 @@ public class navBar extends JPanel{
    		setLayout(null);
    		
    		
+
            
    		panelBorder.add(panelLogo, BorderLayout.WEST);
    		panelBorder.add(panelBtn, BorderLayout.EAST);

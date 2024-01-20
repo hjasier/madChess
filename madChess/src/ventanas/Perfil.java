@@ -239,7 +239,7 @@ public class Perfil extends JPanel{
   		JButton contraCambiar = new JButton("Cambiar Contraseña");
   		contraCambiar.setBounds(new Rectangle(Escalador.escalar(406), Escalador.escalar(505), Escalador.escalar(183), Escalador.escalar(47)));
   		panel.add(contraCambiar);
-  		
+  		contraCambiar.setCursor(new Cursor(Cursor.HAND_CURSOR));
   		
   		
   		// Ajustes label
@@ -300,24 +300,24 @@ public class Perfil extends JPanel{
             }
         });
         
-		fotoPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				Image curImg = ((ImageIcon) fotoPerfil.getIcon()).getImage();
-				Image imgHover = utils.adjustImageOpacity(curImg, 0.3);
-				fotoPerfil.setIcon(new ImageIcon(imgHover));
-				setCursor(new Cursor(Cursor.HAND_CURSOR));
-				
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				BufferedImage imagenRedonda = utils.getRoundImg(Session.getCurrentUser().getImg_route(),Escalador.escalar(85));
-				fotoPerfil.setIcon(new ImageIcon(imagenRedonda));
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
+        fotoPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Image curImg = ((ImageIcon) fotoPerfil.getIcon()).getImage();
+                Image imgHover = utils.adjustImageOpacity(curImg, 0.3);
+                fotoPerfil.setIcon(new ImageIcon(imgHover));
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); // Cambiar a Cursor.DEFAULT_CURSOR al entrar
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                BufferedImage imagenRedonda = utils.getRoundImg(Session.getCurrentUser().getImg_route(), Escalador.escalar(85));
+                fotoPerfil.setIcon(new ImageIcon(imagenRedonda));
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setDialogTitle("Seleccionar Foto");
 
                 // Mostrar el explorador de archivos y esperar a que el usuario elija un archivo
@@ -327,12 +327,12 @@ public class Perfil extends JPanel{
                     File selectedFile = fileChooser.getSelectedFile();
                     // Aquí puedes manejar el archivo seleccionado (por ejemplo, mostrar la ruta)
                     
-					utils.uploadFile(selectedFile);
-					
+                    utils.uploadFile(selectedFile);
                 }
-			}
-			
-		});
+            }
+
+        });
+
 		
 		
 		vermisPartidas.addActionListener(new ActionListener() {

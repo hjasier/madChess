@@ -38,7 +38,6 @@ public class MenuInicio extends JPanel {
       //--------------------- NAVBAR-------------------------------------------
   		Icon icon = IconFontSwing.buildIcon(FontAwesome.USER_CIRCLE, Escalador.escalarF(15));
 		loginBtn.setIcon(icon);
-  		
 		JPanel navBarContainer = new JPanel(new FlowLayout());
 		navBarContainer.add(new navBar(loginBtn));
         navBarContainer.setBackground(Configuracion.BACKGROUND);
