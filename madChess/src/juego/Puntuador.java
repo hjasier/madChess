@@ -120,10 +120,10 @@ public class Puntuador {
     public void actualizarPuntuacion(Jugador jugador, partidaTipo tipo, int cambio) {
     	int anterior = getPuntuacion(jugador, tipo);
     	if("CLASICA".equals(tipo.name())) {	
-    		jugador.getUsuario().setRank_classic(anterior + cambio);
+    		jugador.getUsuario().setRank_classic(anterior - cambio);
     		
     	} else if ("MADCHESS".equals(tipo.name())) {		
-    		jugador.getUsuario().setRank_madChess(anterior + cambio);
+    		jugador.getUsuario().setRank_madChess(anterior - cambio);
     	}
     	
     	
