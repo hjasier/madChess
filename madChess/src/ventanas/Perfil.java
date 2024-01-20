@@ -349,7 +349,6 @@ public class Perfil extends JPanel{
 	public void reloadData() {
 		nombre.setText(Session.getCurrentUser().getUsername());
 		
-		
 		Thread cargaPerfil = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -364,7 +363,6 @@ public class Perfil extends JPanel{
                 }
             }
         });
-		
 		
 		
         Thread cargaImg = new Thread(new Runnable() {
