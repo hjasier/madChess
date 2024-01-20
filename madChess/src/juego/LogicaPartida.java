@@ -869,12 +869,17 @@ public class LogicaPartida {
 		
 		 Puntuador puntuador = new Puntuador();
 		 puntuador.cambiarPuntuaciones(datosPartida);
+		 
+		 
 		//TODO: desabilitar los botones de madChess tmb
 		
 		if (Configuracion.DB_DEBUG) {
 			//Guardar datos de la partida en la db
 			new Thread(() -> {
+				
 		        GestorDB.insertarPartida(datosPartida);
+
+		        
 		    }).start();
 		}
 	}

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import database.GestorDB;
 import objetos.Jugador;
+import objetos.Usuario;
 
 public class Puntuador {
 
@@ -125,8 +126,10 @@ public class Puntuador {
     	} else if ("MADCHESS".equals(tipo.name())) {		
     		jugador.getUsuario().setRank_madChess(anterior - cambio);
     	}
-    	
-    	
+        	Usuario usuario = jugador.getUsuario();
+        	GestorDB.modificarUsuario(usuario);
+		
+        
     }
     
     
