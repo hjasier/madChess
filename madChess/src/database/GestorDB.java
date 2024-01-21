@@ -51,8 +51,13 @@ public class GestorDB {
 	                        rs.getInt("rank_classic"),
 	                        rs.getString("tablero_theme"),
 	                        rs.getString("pieza_theme"));
-
-	                Session.getVentana().loginReturn(user);
+	                
+	                try {
+	                	Session.getVentana().loginReturn(user);
+					} catch (Exception e) {
+						
+					}
+	                
 
 	                return true;
 	            } else {
@@ -239,17 +244,50 @@ public class GestorDB {
 	    
 	    
 	    
+		public static void eliminarPartida(String gameId) {
+		    if (existePartida(gameId)) {
+		        try (Connection conn = ConexionDB.obtenerConexion()) {
+		            // Eliminar relaciones de jugadores
+		            eliminarRelacionesJugadores(conn, gameId);
+
+		            // Eliminar relaciones de ganadores
+		            eliminarRelacionesGanadores(conn, gameId);
+
+		            // Eliminar la partida
+		            String sql = "DELETE FROM Partida WHERE gameId = ? ";
+		            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		                pstmt.setString(1, gameId);
+		                pstmt.executeUpdate();
+		                System.out.println("Partida eliminada correctamente.");
+		            } catch (Exception e) {
+		                e.printStackTrace();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    } else {
+		        System.out.println("No se puede eliminar una partida inexistente");
+		    }
+		}
+
+		private static void eliminarRelacionesJugadores(Connection conn, String gameId) throws SQLException {
+		    String sql = "DELETE FROM PartidaJugador WHERE partidaId = ?";
+		    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		        pstmt.setString(1, gameId);
+		        pstmt.executeUpdate();
+		    }
+		}
+
+		private static void eliminarRelacionesGanadores(Connection conn, String gameId) throws SQLException {
+		    String sql = "DELETE FROM PartidaGanador WHERE partidaId = ?";
+		    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		        pstmt.setString(1, gameId);
+		        pstmt.executeUpdate();
+		    }
+		}
+
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	 
+
 
 	 public static void eliminarUsuario(String username) {
 		 if(existeUsuario(username)) {
@@ -271,24 +309,24 @@ public class GestorDB {
 	 
 	 
 	 
-	 public static void eliminarPartida(String gameId) {
-		 if(existeUsuario(gameId)) {
-			 String sql = "DELETE FROM Partida WHERE gameId = ? ";
-			 
-			 try (Connection conn = ConexionDB.obtenerConexion();
-		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		            
-				 pstmt.setString(1, gameId);
-		            pstmt.executeUpdate();
-		            System.out.println("Partida eliminada correctamente.");
-		        } catch (Exception e) {
-				e.printStackTrace();
-			}
-		 } else {
-			 System.out.println("No se puede eliminar una partida inexistente");
-		 }
-	 }
-	 
+//	 public static void eliminarPartida(String gameId) {
+//		 if(existeUsuario(gameId)) {
+//			 String sql = "DELETE FROM Partida WHERE gameId = ? ";
+//			 
+//			 try (Connection conn = ConexionDB.obtenerConexion();
+//		            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//		            
+//				 pstmt.setString(1, gameId);
+//		            pstmt.executeUpdate();
+//		            System.out.println("Partida eliminada correctamente.");
+//		        } catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		 } else {
+//			 System.out.println("No se puede eliminar una partida inexistente");
+//		 }
+//	 }
+//	 
 	 
 	 public static void modificarUsuario(Usuario user) {
 		 if(existeUsuario(user.getUsername())) {
