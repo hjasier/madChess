@@ -26,9 +26,9 @@ public class Casilla extends JPanel implements Serializable {
     private static final long serialVersionUID = 1L;
     protected Color initColor;
     protected Color color;
+    protected Pieza pieza;
     protected int fila;
 	protected char columna;
-    protected Pieza pieza;
     protected int imgSize;
     
     protected boolean dragging = false;
@@ -36,7 +36,6 @@ public class Casilla extends JPanel implements Serializable {
     protected boolean isDisponible = false;
     protected boolean isHielo = false;
     protected boolean isMina = false;
-    protected boolean isAlerted = false;
     protected boolean isBlack = false;
     protected boolean disabled = false;
 

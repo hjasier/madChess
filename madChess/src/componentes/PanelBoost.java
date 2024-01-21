@@ -26,7 +26,7 @@ public class PanelBoost extends JPanel {
     private boostItem boostMina = new boostItem(descripcionLabel,"Mina","Bomba en casilla","mina");
     private boostItem debug = new boostItem(descripcionLabel,"Explosión","Explosión","bomba");
     
-    private ArrayList<boostItem> boosts = new ArrayList<>(Arrays.asList(boostMalPresagio, boostHielo, boostBomba, boostControl, boostMina, debug));
+    private ArrayList<boostItem> boosts = new ArrayList<>(Arrays.asList(boostBomba, boostHielo, boostMalPresagio, boostControl, boostMina ,debug));
     JPanel panelElementos = new JPanel();
     
     
@@ -83,7 +83,7 @@ public class PanelBoost extends JPanel {
 
 
 	public void reloadBoosts(Jugador curPlayer) {
-		
+		System.out.println(curPlayer.getBoosts());
 		panelElementos.removeAll();
 		int i= 0;
 		for (boolean boost : curPlayer.getBoosts()) {
@@ -94,7 +94,7 @@ public class PanelBoost extends JPanel {
 			i++;
 		}
 		
-		if (!(Session.getDatosPartida().isOnline()||Session.getDatosPartida().isBotGame()))  {
+		if ((Session.getDatosPartida().isOnline()||Session.getDatosPartida().isBotGame()))  {
 			boolean enable = true;
 			if (curPlayer.getUsuario().equals(Session.getCurrentUser().getUsername())) {
 				enable = true;
@@ -103,7 +103,7 @@ public class PanelBoost extends JPanel {
 				enable = false;
 			}
 			for (boostItem boost : boosts) {
-				boost.setButtonEnabled(false);
+				boost.setButtonEnabled(enable);
 			}
 		}
 	}

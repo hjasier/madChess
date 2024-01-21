@@ -240,12 +240,6 @@ public class ConfPOnline extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	ArrayList<Jugador> jugadores = Session.getDatosPartida().getJugadores();
             	if (jugadores.size()>1&&jugadores.get(0).getUsuario().getUsername().equals(Session.getCurrentUser().getUsername())) {
-            	try {
-					Session.getCtsConnection().postInitGame();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
             	
             	DatosPartida datos = Session.getDatosPartida();
             	VentanaPrincipal ventana = Session.getVentana();

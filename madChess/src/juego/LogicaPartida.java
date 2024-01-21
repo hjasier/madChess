@@ -148,7 +148,6 @@ public class LogicaPartida {
 
 
 	private void initPlayers() {
-		int initTime = 600;
 		
 		if (datosPartida.isBotGame()) {
 			datosPartida.setJugador(new Usuario("BOT"));
@@ -178,14 +177,14 @@ public class LogicaPartida {
         
         
 		for (Jugador player:jugadores) {
-			player.setTiempoRestante(initTime);
+			player.setTiempoRestante(Configuracion.DURACION_PARTIDA);
 		}
 		
-		ventana.getPanelUsuario().setUsuario(user2);
+		ventana.getPanelUsuario().setUsuario(user2); //cada player podría tener su propio atributo panelUsuario para simplificar y hacerlo en un bucle
 		ventana.getPanelUsuario2().setUsuario(user1);
 		
-		ventana.getPanelUsuario().setTemp(initTime);
-		ventana.getPanelUsuario2().setTemp(initTime);
+		ventana.getPanelUsuario().setTemp(Configuracion.DURACION_PARTIDA);
+		ventana.getPanelUsuario2().setTemp(Configuracion.DURACION_PARTIDA);
 		
 		iniciarTemporizador();
 	}
@@ -199,8 +198,6 @@ public class LogicaPartida {
 	        Pieza pieza = prevCasilla.getPieza();
 	        Pieza piezaComida = null;
 	        ArrayList<Casilla> casillasDisp = pieza.getCasillasDisponibles(prevCasilla, casillas);
-
-	        
 	        
 	        if (!cumpleCondicionesMovimiento(prevCasilla, casillasDisp)) {
 	        	System.out.println("No cumple condiciones de movimiento");
@@ -212,7 +209,6 @@ public class LogicaPartida {
 	        	movimientoEstandar(prevCasilla, curCasilla, pieza, piezaComida);
 	        }
 	        resetAgarrarPieza(prevCasilla, casillasDisp);
-
 	        
 	    }
 	}
@@ -234,7 +230,6 @@ public class LogicaPartida {
 
 	
 	private void esMovimientoEspecial(Casilla prevCasilla, Casilla curCasilla, Pieza pieza) {
-	    
 	    if (checkEnroqueCorto(pieza, curCasilla)) {
 	        ejecutarEnroque(prevCasilla, curCasilla, 1, Infos.ENROQUE_CORTO);
 	    } else if (checkEnroqueLargo(pieza, curCasilla)) {
@@ -310,18 +305,10 @@ public class LogicaPartida {
 	}
 	
 	
-	
-
-
-
-
 
 
 	private void updateUserInfo() {
-		
 		userInfo panelUsuario;
-		
-		
 		if(curPlayer.getIsWhite()) {
 			panelUsuario = ventana.getPanelUsuario2();
 		}else {
@@ -329,9 +316,6 @@ public class LogicaPartida {
 		}
 		panelUsuario.setUsuario(curPlayer);
 	}
-
-
-
 
 
 
@@ -348,17 +332,16 @@ public class LogicaPartida {
 
 	
 	public void addPiezaComida(Pieza pieza) {
-		
 	    ventana.getPanelUsuario2().setPuntos(jugadores.get(1), pieza);
-	    	
 	    ventana.getPanelUsuario().setPuntos(jugadores.get(0), pieza);
-	    
-	  
-		
 	}
 
+	
+	
+	
+	
 
-
+	//FIXME: Separad este método en submétodos
 	private void checkAlters(Casilla prevCasilla, Casilla curCasilla, Pieza pieza, Pieza piezaComida) {
 		if(pieza instanceof Alfil && ((Alfil) pieza).isAlter() && piezaComida != null) {
             // Revertimos el movimiento
@@ -407,7 +390,8 @@ public class LogicaPartida {
 
 	private void killPieza(Casilla casilla) {
 		casilla.setPieza(null);
-		//tablero.animateAsync(casilla,"kill4",0.3,0.7);
+		//FIXME el gif sale feo y no se ve bien
+		//tablero.animateAsync(casilla,"kill4",0.3,0.7); 
 		//tablero.animateAsync(casillas.get(0),"kill4",1,1);
 	}
 
@@ -842,10 +826,14 @@ public class LogicaPartida {
 		printMovimiento();
 	}
 	
-	public void comprobarGanador() {
-		
+	protected void checkFinPartida() {
+		if(checkReyIsAlive()) {
+			
+			initPartidaAcabada();
+			InfoMsg.alert(Infos.PARTIDA_TERMINADA_ALERT);
+			
+		}
 	}
-	
 	
 	
 	public void initPartidaAcabada() {
@@ -885,13 +873,10 @@ public class LogicaPartida {
 		 
 		//TODO: desabilitar los botones de madChess tmb
 		
-		if (Configuracion.DB_DEBUG) {
+		if (!Configuracion.DB_DEBUG&&!datosPartida.isOnline()) {
 			//Guardar datos de la partida en la db
 			new Thread(() -> {
-				
-		        GestorDB.insertarPartida(datosPartida);
-
-		        
+				GestorDB.insertarPartida(datosPartida);
 		    }).start();
 		}
 	}
@@ -941,16 +926,7 @@ public class LogicaPartida {
 				prevCasilla.getPieza() instanceof Rey))	
 				);
 	}
-	
 
-	protected void checkFinPartida() {
-		if(checkReyIsAlive()) {
-			
-			initPartidaAcabada();
-			InfoMsg.alert(Infos.PARTIDA_TERMINADA_ALERT);
-			
-		}
-	}
 	
 	protected boolean checkReyIsAlive() { //true si jugador actual no tiene rey
 		return curPlayer.getRey().getCasillaParent() == null;

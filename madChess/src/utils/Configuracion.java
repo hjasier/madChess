@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Configuracion {
 	
+	public static final int DURACION_PARTIDA = 600;
+
 	
 	//CDN 
 	public static final String UPLOAD_URL = "https://media.madchess.online/";
@@ -14,11 +16,11 @@ public class Configuracion {
 	
 	//SOCKETS
 	
-	public static final String VERSION = "V2.3"; 
+	public static final String VERSION = "V2.4"; 
 	public static final int PUERTO = 6968; 
 	
-	//public static final String HOST = "server.madchess.online"; 
-	public static final String HOST = "localhost"; 
+	public static final String HOST = "144.24.197.228"; 
+	//public static final String HOST = "localhost"; 
 	
 	
 	public static final boolean MLTPLY_PIEZA_DRAG = false;
@@ -39,12 +41,10 @@ public class Configuracion {
 	
 	//MODOS DEBUG
 	
-	public static final boolean DEBUG_MODE = true;
+	public static final boolean DEBUG_MODE = false;
 	public static final boolean LOGIN_DEBUG = false;
 	public static final boolean BOT_DEBUG = false;
-	public static final boolean DB_DEBUG = false;
-
-	
+	public static final boolean DB_DEBUG = false; // en true no se guarda nada en la DB
 	
 
 }

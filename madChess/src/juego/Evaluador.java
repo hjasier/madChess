@@ -31,20 +31,18 @@ public class Evaluador {
         int pesoSeguridadRey = 2;
         int pesoJaqueMate = 100;
         int pesoPiezasRestantes = 2;
-        int pesoPartidaGanada = 100;
         
 
         evaluacionTotal += pesoEstructuraPeones * evaluarEstructuraPeones(estadoActual);
         evaluacionTotal += pesoSeguridadRey * evaluarSeguridadRey(estadoActual);
         evaluacionTotal += pesoJaqueMate * evaluarJaqueMate(estadoActual);
         evaluacionTotal += pesoPiezasRestantes * evaluarPiezasRestantes(estadoActual);
-        pesoPartidaGanada += pesoPartidaGanada * evaluarPartidaGanada(estadoActual);
         
         return evaluacionTotal;
     }
     
     
-
+    
 	private static int evaluarJaqueMate(ArrayList<Casilla> estadoActual) {
 	    boolean reyBlancoPresente = false;
 	    boolean reyNegroPresente = false;
@@ -63,15 +61,13 @@ public class Evaluador {
 	        }
 	    }
 	    
-		if (!reyBlancoPresente) {
-			System.out.println("Jaque Mate al jugador Blanco");
-			return 50;
-		} else if (!reyNegroPresente){
-			return -50;
-		}
-		else {
-			return 0;
-		}
+	    if (!reyBlancoPresente) {
+	    	return -999;
+	    }
+		else if (!reyNegroPresente) {
+			return  999;
+		} 
+	    return 0;
 	    
     }
 
@@ -130,34 +126,7 @@ public class Evaluador {
 	/*
 	 * Evalua si la partida ha terminado
 	 */
-    private static int evaluarPartidaGanada(ArrayList<Casilla> estadoActual) {
-    	boolean reyBlancoPresente = false;
-	    boolean reyNegroPresente = false;
-	    int valorPartidaGanada = 0;
 
-	    for (Casilla casilla : estadoActual) {
-	        Pieza pieza = casilla.getPieza();
-	        if (pieza != null && pieza instanceof Rey) {
-	            if (pieza.getIsWhite()) {
-	                reyBlancoPresente = true;
-	            } else {
-	                reyNegroPresente = true;
-	            }
-				
-	            
-	        }
-	    }
-
-	    if (!reyBlancoPresente) {
-	    	valorPartidaGanada = -999;
-	    }
-		else if (!reyNegroPresente) {
-			valorPartidaGanada = 999;
-		} 
-	    
-	    return valorPartidaGanada;
-	}
-    
     
     
     

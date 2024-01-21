@@ -3,6 +3,7 @@ package juego;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
 import objetos.Casilla;
 import objetos.Jugador;
@@ -33,13 +34,14 @@ public class Bot {
 	Jugador botplayer;
 	HashMap<Integer, int[]> posibilidadesPuntuadas = new HashMap<Integer, int[]>();
 	
-	int test = 0;
+	
 	private int findepth = 3;
 	
 	public Bot(Jugador botplayer) {
 		this.botplayer = botplayer;
 	}
 	
+
 	public void calculaNuevoMovimiento(ArrayList<Casilla> estadoActual) {
 		minimax(estadoActual, true, findepth,Integer.MIN_VALUE,Integer.MAX_VALUE);
 		
@@ -47,24 +49,22 @@ public class Bot {
 		
 		int[] mejorMovimiento = posibilidadesPuntuadas.get(Collections.min(posibilidadesPuntuadas.keySet()));
 		
-		System.out.println("La mejor puntuacion es --> "+Collections.min(posibilidadesPuntuadas.keySet())+"/n MOV:"+mejorMovimiento[0]+"-->"+mejorMovimiento[1]);
-		
 		ejecutarMovimiento(mejorMovimiento);
 		posibilidadesPuntuadas.clear();
 
 		
 		
 	}
-
 	
 	private void ejecutarMovimiento(int[] mejorMovimiento) {
 		Casilla casillaSalida = tablero.get(mejorMovimiento[0]);
 		Casilla casillaLlegada = tablero.get(mejorMovimiento[1]);
 		partida.moverPiezaTablero(casillaSalida, casillaLlegada);
 	}
+	
 
 	private int minimax(ArrayList<Casilla> estadoActual, boolean turnoIsBot, int depth , int alpha, int beta) {
-	    if (checkFinPartida(estadoActual) || depth == 0) {
+	    if (checkFinPartida(estadoActual)|| depth == 0) {
 	    	int evalu = Evaluador.evaluarTablero(estadoActual);
 	        return evalu;
 	    }
@@ -116,7 +116,15 @@ public class Bot {
 	    	    	}
 	                
 					if (depth == findepth) {
-						posibilidadesPuntuadas.put(eval, new int[] {tablero.indexOf(pieza.getCasillaParent()),tablero.indexOf(movimientoPosible)});
+						if (posibilidadesPuntuadas.containsKey(eval)) {
+							
+							if (new Random().nextInt(3) == 0) {
+								posibilidadesPuntuadas.put(eval, new int[] {tablero.indexOf(pieza.getCasillaParent()),tablero.indexOf(movimientoPosible)});
+							}
+						} 
+						else {
+							posibilidadesPuntuadas.put(eval, new int[] {tablero.indexOf(pieza.getCasillaParent()),tablero.indexOf(movimientoPosible)});
+						}
 					}
 	            }
 	        }
